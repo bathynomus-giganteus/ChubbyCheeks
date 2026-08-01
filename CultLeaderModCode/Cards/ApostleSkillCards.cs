@@ -1,16 +1,20 @@
-using BaseLib.Utils;
+﻿using BaseLib.Utils;
 using CultLeaderMod.CultLeaderModCode.Extensions;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using System.Reflection;
 
 namespace CultLeaderMod.CultLeaderModCode.Cards;
 
-public abstract class ApostleTestCard<TPower>(ApostlePersonality personality, CardRarity rarity) :
+public abstract class ApostleTestCard<TPower>(
+    ApostlePersonality personality,
+    CardRarity rarity) :
     CultLeaderModCard(0, CardType.Skill, rarity, TargetType.Self), IApostleCard
     where TPower : PowerModel
 {
@@ -23,14 +27,40 @@ public abstract class ApostleTestCard<TPower>(ApostlePersonality personality, Ca
     public override string PortraitPath => ApostleCardVisuals.PortraitPath(Personality);
     public override string BetaPortraitPath => PortraitPath;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-    [
-        HoverTipFactory.FromPower<TPower>()
-    ];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [];
+
+    private static readonly MethodInfo PowerCmdApplyMethod = typeof(PowerCmd)
+        .GetMethods(BindingFlags.Public | BindingFlags.Static)
+        .First(m => m.Name == "Apply" && m.IsGenericMethodDefinition
+            && m.GetParameters().Length == 6
+            && m.GetParameters()[1].ParameterType == typeof(Creature));
+
+    private Task ApplyPower(PlayerChoiceContext ctx, Type powerType, decimal amount)
+    {
+        var typedApply = PowerCmdApplyMethod.MakeGenericMethod(powerType);
+        return (Task)typedApply.Invoke(null, [ctx, Owner.Creature, amount, Owner.Creature, this, false])!;
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<TPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        // 1. Draw 1 card
+        await CardPileCmd.Draw(choiceContext, 1m, Owner);
+
+        // 2. Elder Form transforms base power -> elder power
+        bool hasElderForm = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
+        Type effectiveType = hasElderForm
+            ? ApostlePersonalityMap.ElderPowerType(Personality)
+            : ApostlePersonalityMap.BasePowerType(Personality);
+
+        // 3. Apply base power stack
+        await ApplyPower(choiceContext, effectiveType, 1m);
+
+        // 4. Authority amplification
+        int authorityStacks = (int)Owner.Creature.GetPowerAmount<CultLeaderAuthorityPower>();
+        if (authorityStacks > 0)
+            await ApplyPower(choiceContext, effectiveType, authorityStacks);
+
+
     }
 }
 
@@ -47,7 +77,6 @@ public static class ApostleCardVisuals
             ApostlePersonality.Melancholy => new Color("8b5ce6"),
             _ => Colors.White
         };
-
         return ShaderUtils.GenerateHsv(color.H, color.S, color.V);
     }
 
@@ -67,3 +96,7 @@ public static class ApostleCardVisuals
         _ => "card"
     };
 }
+
+
+
+

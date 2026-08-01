@@ -1,4 +1,4 @@
-using BaseLib.Utils;
+﻿using BaseLib.Utils;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using CultLeaderMod.CultLeaderModCode.Extensions;
 using MegaCrit.Sts2.Core.Commands;
@@ -22,14 +22,21 @@ public sealed class CultLeaderManifestation() :
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (Owner.Creature.GetPowerAmount<CultLeaderAuthorityPower>() >= CultLeaderAuthorityPower.MaxStacks)
-            return;
-
         await PowerCmd.Apply<CultLeaderAuthorityPower>(
             choiceContext,
             Owner.Creature,
             1m,
             Owner.Creature,
             this);
+
+        // Trigger Elder Form when authority reaches 5
+        if (Owner.Creature.GetPowerAmount<CultLeaderAuthorityPower>() >= CultLeaderAuthorityPower.MaxStacks
+            && Owner.Creature.GetPowerAmount<ElderFormPower>() == 0)
+        {
+            await PowerCmd.Apply<CultLeaderAuthorityPower>(
+                choiceContext, Owner.Creature, -CultLeaderAuthorityPower.MaxStacks, Owner.Creature, this);
+            await PowerCmd.Apply<ElderFormPower>(
+                choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        }
     }
 }
