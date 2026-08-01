@@ -1,0 +1,16 @@
+{
+  "CULTLEADERMOD-CULT_LEADER_MOD.title": "教主",
+  "CULTLEADERMOD-CULT_LEADER_MOD.titleObject": "教主",
+  "CULTLEADERMOD-CULT_LEADER_MOD.description": "一位将信念化作生存力量的神秘领袖。",
+  "CULTLEADERMOD-CULT_LEADER_MOD.pronounObject": "其",
+  "CULTLEADERMOD-CULT_LEADER_MOD.possessiveAdjective": "其",
+  "CULTLEADERMOD-CULT_LEADER_MOD.pronounPossessive": "其",
+  "CULTLEADERMOD-CULT_LEADER_MOD.pronounSubject": "其",
+  "CULTLEADERMOD-CULT_LEADER_MOD.goldMonologue": "黄金亦可为教众所用。",
+  "CULTLEADERMOD-CULT_LEADER_MOD.eventDeathPrevention": "教众仍需要他们的领袖。",
+  "CULTLEADERMOD-CULT_LEADER_MOD.aromaPrinciple": "信念比任何香气都更加长久。",
+  "CULTLEADERMOD-CULT_LEADER_MOD.cardsModifierTitle": "教主卡牌",
+  "CULTLEADERMOD-CULT_LEADER_MOD.cardsModifierDescription": "教主的卡牌会出现在奖励与商店中。",
+  "CULTLEADERMOD-CULT_LEADER_MOD.banter.alive.endTurnPing": "坚守信念。",
+  "CULTLEADERMOD-CULT_LEADER_MOD.banter.dead.endTurnPing": "没有我，也要继续前进。"
+}

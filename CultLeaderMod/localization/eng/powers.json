@@ -1,0 +1,20 @@
+{
+  "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.title": "Cult Leader's Authority",
+  "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.description": "Currently has no effect. Minimum 0, maximum 5 stacks.",
+  "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.smartDescription": "Currently has no effect. Minimum 0, maximum 5 stacks.",
+  "CULTLEADERMOD-LIFE_ESSENCE_POWER.title": "Life Essence",
+  "CULTLEADERMOD-LIFE_ESSENCE_POWER.description": "Currently has no effect.",
+  "CULTLEADERMOD-LIFE_ESSENCE_POWER.smartDescription": "Currently has no effect.",
+  "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.title": "Frozen Fortitude",
+  "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.description": "Currently has no effect.",
+  "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.smartDescription": "Currently has no effect.",
+  "CULTLEADERMOD-FANATICISM_POWER.title": "Fanaticism",
+  "CULTLEADERMOD-FANATICISM_POWER.description": "Currently has no effect.",
+  "CULTLEADERMOD-FANATICISM_POWER.smartDescription": "Currently has no effect.",
+  "CULTLEADERMOD-PAIN_POWER.title": "Pain",
+  "CULTLEADERMOD-PAIN_POWER.description": "Currently has no effect.",
+  "CULTLEADERMOD-PAIN_POWER.smartDescription": "Currently has no effect.",
+  "CULTLEADERMOD-HAPPINESS_POWER.title": "Happiness",
+  "CULTLEADERMOD-HAPPINESS_POWER.description": "Currently has no effect.",
+  "CULTLEADERMOD-HAPPINESS_POWER.smartDescription": "Currently has no effect."
+}

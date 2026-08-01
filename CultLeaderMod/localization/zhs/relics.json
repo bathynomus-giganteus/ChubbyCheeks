@@ -1,0 +1,12 @@
+{
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.title": "咏春的祝福",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.description": "{PersonalityOne}和{PersonalityTwo}性格的使徒出现概率提升。",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.unselectedDescription": "开局选择的两种性格的使徒出现概率提升。",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.flavor": "UP卡池开始了，教主的抽卡券攒够了么？",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.selectionScreenPrompt": "选择2种本局重点招募的性格，然后点击确认",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.purePersonality": "纯粹",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.calmPersonality": "冷静",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.fanaticPersonality": "狂热",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.livelyPersonality": "活泼",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.melancholyPersonality": "忧郁"
+}

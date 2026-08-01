@@ -1,0 +1,16 @@
+{
+  "CULTLEADERMOD-CULT_LEADER_MOD.title": "The Cult Leader",
+  "CULTLEADERMOD-CULT_LEADER_MOD.titleObject": "the Cult Leader",
+  "CULTLEADERMOD-CULT_LEADER_MOD.description": "A mysterious leader who turns faith into endurance.",
+  "CULTLEADERMOD-CULT_LEADER_MOD.pronounObject": "them",
+  "CULTLEADERMOD-CULT_LEADER_MOD.possessiveAdjective": "their",
+  "CULTLEADERMOD-CULT_LEADER_MOD.pronounPossessive": "theirs",
+  "CULTLEADERMOD-CULT_LEADER_MOD.pronounSubject": "they",
+  "CULTLEADERMOD-CULT_LEADER_MOD.goldMonologue": "Even gold may serve the congregation.",
+  "CULTLEADERMOD-CULT_LEADER_MOD.eventDeathPrevention": "The congregation still needs its leader.",
+  "CULTLEADERMOD-CULT_LEADER_MOD.aromaPrinciple": "Faith lingers longer than any fragrance.",
+  "CULTLEADERMOD-CULT_LEADER_MOD.cardsModifierTitle": "Cult Leader Cards",
+  "CULTLEADERMOD-CULT_LEADER_MOD.cardsModifierDescription": "Cult Leader cards now appear in rewards and shops.",
+  "CULTLEADERMOD-CULT_LEADER_MOD.banter.alive.endTurnPing": "Hold fast.",
+  "CULTLEADERMOD-CULT_LEADER_MOD.banter.dead.endTurnPing": "Carry on without me."
+}

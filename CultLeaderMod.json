@@ -1,0 +1,14 @@
+﻿{
+  "id": "CultLeaderMod",
+  "name": "教主",
+  "author": "888",
+  "description": "新增可玩角色“教主”的示例角色 Mod。",
+  "version": "v0.1.0",
+  "min_game_version": "0.110.1",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": [
+    {"id": "BaseLib", "min_version": "3.4.0"}
+  ],
+  "affects_gameplay": true
+}

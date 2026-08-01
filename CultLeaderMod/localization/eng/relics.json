@@ -1,0 +1,12 @@
+{
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.title": "Yongchun's Blessing",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.description": "Apostles with the {PersonalityOne} and {PersonalityTwo} personalities are more likely to appear.",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.unselectedDescription": "Apostles with the two personalities chosen at the start of the run are more likely to appear.",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.flavor": "The rate-up banner has begun. Has the Cult Leader saved enough summon tickets?",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.selectionScreenPrompt": "Choose 2 personalities, then confirm",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.purePersonality": "Pure",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.calmPersonality": "Calm",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.fanaticPersonality": "Fanatic",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.livelyPersonality": "Lively",
+  "CULTLEADERMOD-CULT_LEADER_STARTING_RELIC.melancholyPersonality": "Melancholy"
+}
