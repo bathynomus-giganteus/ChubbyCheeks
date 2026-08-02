@@ -1,38 +1,61 @@
-﻿{
-    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.title":  "教主的权能",
-    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.description":  "使徒牌获得祝福的层数+1。层数达到5时，进入[gold]埃尔德形态[/gold]。",
-    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.smartDescription":  "使徒牌祝福层数+1。达到5层进入埃尔德形态。",
-    "CULTLEADERMOD-LIFE_ESSENCE_POWER.title":  "生命本源",
-    "CULTLEADERMOD-LIFE_ESSENCE_POWER.description":  "每获得一层时提升5最大生命值，每失去一层时减少5最大生命值。",
-    "CULTLEADERMOD-LIFE_ESSENCE_POWER.smartDescription":  "每层：获得/失去时 +/-5 最大生命值。",
-    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.title":  "固若坚冰",
-    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.description":  "每层使[gold]格挡[/gold]获得量+1。回合结束时获得1点[gold]格挡[/gold]（每层）。",
-    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.smartDescription":  "每层：格挡获得量+1。回合结束：获得1格挡/层。",
-    "CULTLEADERMOD-FANATICISM_POWER.title":  "狂热",
-    "CULTLEADERMOD-FANATICISM_POWER.description":  "每层使下一次攻击的伤害+3。攻击后消耗1层并失去3点生命。",
-    "CULTLEADERMOD-FANATICISM_POWER.smartDescription":  "每层：攻击伤害+3。攻击后消耗1层并失去3HP。",
-    "CULTLEADERMOD-BITTER_PAIN_POWER.title":  "苦痛",
-    "CULTLEADERMOD-BITTER_PAIN_POWER.description":  "不会随回合减少。回合结束时每层对所有敌人和自身随机施加一种负面效果（1[gold]易伤[/gold]、1[gold]虚弱[/gold]、1[gold]脆弱[/gold]、3[gold]中毒[/gold]或6[gold]厄运[/gold]）。",
-    "CULTLEADERMOD-BITTER_PAIN_POWER.smartDescription":  "回合结束：每层随机负面效果作用于所有敌人和自身。",
-    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.title":  "苦痛爆发",
-    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.description":  "回合结束时每层对所有敌人施加1[gold]易伤[/gold]、1[gold]虚弱[/gold]、1[gold]脆弱[/gold]、3[gold]中毒[/gold]和6[gold]厄运[/gold]。",
-    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.smartDescription":  "回合结束：每层对所有敌人施加负面效果。",
-    "CULTLEADERMOD-ELDER_FORM_POWER.title":  "埃尔德形态",
-    "CULTLEADERMOD-ELDER_FORM_POWER.description":  "升级所有使徒牌相关形态：[gold]再生[/gold]→[gold]生命本源[/gold]，[gold]覆甲[/gold]→[gold]固若坚冰[/gold]，[gold]活力[/gold]→[gold]狂热[/gold]，[gold]苦痛[/gold]→[gold]苦痛爆发[/gold]，[gold]人工制品[/gold]→[gold]幸福[/gold]。",
-    "CULTLEADERMOD-ELDER_FORM_POWER.smartDescription":  "升级所有使徒牌祝福效果。",
-    "CULTLEADERMOD-HAPPINESS_POWER.title":  "幸福",
-    "CULTLEADERMOD-HAPPINESS_POWER.description":  "层数不小于3时，消耗3层幸福，获得1点能量并抽2张牌。",
-    "CULTLEADERMOD-HAPPINESS_POWER.smartDescription":  "3层时：消耗3层，获得1能量并抽2张牌。",
-    "CULTLEADERMOD-CULT_REGEN_POWER.title":  "??",
-    "CULTLEADERMOD-CULT_REGEN_POWER.description":  "???????",
-    "CULTLEADERMOD-CULT_REGEN_POWER.smartDescription":  "???????",
-    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.title":  "??",
-    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.description":  "???????",
-    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.smartDescription":  "???????",
-    "CULTLEADERMOD-CULT_VIGOR_POWER.title":  "??",
-    "CULTLEADERMOD-CULT_VIGOR_POWER.description":  "???????",
-    "CULTLEADERMOD-CULT_VIGOR_POWER.smartDescription":  "???????",
-    "CULTLEADERMOD-CULT_ARTIFACT_POWER.title":  "????",
-    "CULTLEADERMOD-CULT_ARTIFACT_POWER.description":  "???????",
-    "CULTLEADERMOD-CULT_ARTIFACT_POWER.smartDescription":  "???????"
+{
+    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.title": "教主的权能",
+    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.description": "使徒牌获得祝福的层数+1。教主的权能达到5时，进入埃尔德形态。",
+    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.smartDescription": "祝福+1。5层：埃尔德形态。",
+
+    "CULTLEADERMOD-REGEN_POWER.title": "再生",
+    "CULTLEADERMOD-REGEN_POWER.description": "回合结束时回复生命并减少1层。",
+    "CULTLEADERMOD-REGEN_POWER.smartDescription": "回合结束回血，-1层。",
+
+    "CULTLEADERMOD-LIFE_ESSENCE_POWER.title": "生命本源",
+    "CULTLEADERMOD-LIFE_ESSENCE_POWER.description": "获得时+5最大生命。回合结束时消耗1层，回复5生命。",
+    "CULTLEADERMOD-LIFE_ESSENCE_POWER.smartDescription": "每层+5最大生命。回合结束回5血。",
+
+    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.title": "固若坚冰",
+    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.description": "每层格挡获得量+1。回合结束时获得1点格挡。",
+    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.smartDescription": "+1格挡获得，回合结束+格挡。",
+
+    "CULTLEADERMOD-FANATICISM_POWER.title": "狂热",
+    "CULTLEADERMOD-FANATICISM_POWER.description": "下一张攻击牌伤害+3。消耗1层，失去3生命。",
+    "CULTLEADERMOD-FANATICISM_POWER.smartDescription": "下张攻击+3伤害，消耗1层-3HP。",
+
+    "CULTLEADERMOD-HAPPINESS_POWER.title": "幸福",
+    "CULTLEADERMOD-HAPPINESS_POWER.description": "不小于3层时消耗3层：获得1能量，抽2张牌。",
+    "CULTLEADERMOD-HAPPINESS_POWER.smartDescription": "3层：消耗3，+1费+2牌。",
+
+    "CULTLEADERMOD-BITTER_PAIN_POWER.title": "苦痛",
+    "CULTLEADERMOD-BITTER_PAIN_POWER.description": "回合结束：每层对所有敌人和自身施加随机减益。",
+    "CULTLEADERMOD-BITTER_PAIN_POWER.smartDescription": "回合结束随机减益。",
+
+    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.title": "苦痛爆发",
+    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.description": "回合结束：每层为所有敌人施加易伤、虚弱、脆弱、3中毒、6灾厄。",
+    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.smartDescription": "回合结束全减益。",
+
+    "CULTLEADERMOD-ELDER_FORM_POWER.title": "埃尔德形态",
+    "CULTLEADERMOD-ELDER_FORM_POWER.description": "基础使徒祝福升级为高级形态。",
+    "CULTLEADERMOD-ELDER_FORM_POWER.smartDescription": "祝福升级。",
+
+    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.title": "覆甲",
+    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.description": "回合结束获得格挡。",
+    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.smartDescription": "回合结束+格挡。",
+
+    "CULTLEADERMOD-HEAL_DAMAGE_POWER.title": "汁液泵机",
+    "CULTLEADERMOD-HEAL_DAMAGE_POWER.description": "恢复生命时对随机敌人造成伤害。",
+    "CULTLEADERMOD-HEAL_DAMAGE_POWER.smartDescription": "恢复生命时造成伤害。",
+
+    "CULTLEADERMOD-HEAL_ENERGY_POWER.title": "远程充电",
+    "CULTLEADERMOD-HEAL_ENERGY_POWER.description": "每N次回复生命获得1能量。",
+    "CULTLEADERMOD-HEAL_ENERGY_POWER.smartDescription": "每N次回血+1费。",
+
+    "CULTLEADERMOD-HACK_INTRUSION_POWER.title": "黑客侵入",
+    "CULTLEADERMOD-HACK_INTRUSION_POWER.description": "回复生命时对此敌人造成额外伤害。",
+    "CULTLEADERMOD-HACK_INTRUSION_POWER.smartDescription": "回血时额外伤害。",
+
+    "CULTLEADERMOD-SELF_STUN_POWER.title": "眩晕",
+    "CULTLEADERMOD-SELF_STUN_POWER.description": "结束本回合，跳过下回合。",
+    "CULTLEADERMOD-SELF_STUN_POWER.smartDescription": "跳过本回合和下回合。",
+
+    "CULTLEADERMOD-TEMP_HP_TRACKER_POWER.title": "临时生命",
+    "CULTLEADERMOD-TEMP_HP_TRACKER_POWER.description": "战斗结束后失去此临时最大生命值。",
+    "CULTLEADERMOD-TEMP_HP_TRACKER_POWER.smartDescription": "临时最大生命值。"
 }

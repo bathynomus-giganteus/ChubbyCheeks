@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using System.Reflection;
 
@@ -117,20 +118,19 @@ public sealed class HappinessPower : PersonalityPower
         if (Amount < Threshold) return;
 
         _triggering = true;
-        await PowerCmd.ModifyAmount(new BlockingPlayerChoiceContext(), this, -Threshold, applier, cardSource);
         if (base.Owner.Player != null)
             await PlayerCmd.GainEnergy(1m, base.Owner.Player);
-        if (base.Owner.Player != null)
-            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 2m, base.Owner.Player);
+                await PlayerCmd.GainEnergy(1m, base.Owner.Player);
+        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 2m, base.Owner.Player!, false);
         _triggering = false;
     }
 }
 
 // ══════════════════════════════════════════════
-//  Debuff powers
+//  Base buffs (personality signature powers)
 // ══════════════════════════════════════════════
 
-/// <summary>Bitter Pain (苦痛) — does NOT decay. End of player turn: per stack, random debuff to all enemies + self.</summary>
+/// <summary>Bitter Pain (苦痛) — per stack at turn end, random debuff to all enemies + self.</summary>
 public sealed class BitterPainPower : CultLeaderModPower
 {
     public override PowerType Type => PowerType.Debuff;
@@ -228,7 +228,7 @@ public sealed class BitterPainBurstPower : CultLeaderModPower
 }
 
 // ══════════════════════════════════════════════
-//  Marker powers
+//  Marker powers and utilities
 // ══════════════════════════════════════════════
 
 public sealed class ElderFormPower : CultLeaderModPower
@@ -236,6 +236,40 @@ public sealed class ElderFormPower : CultLeaderModPower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     public override bool AllowNegative => false;
+}
+
+/// <summary>Self-stun: end current turn and skip next turn.</summary>
+public sealed class SelfStunPower : CultLeaderModPower
+{
+    public override PowerType Type => PowerType.Debuff;
+    public override PowerStackType StackType => PowerStackType.Single;
+    public override bool AllowNegative => false;
+
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        if (participants.Contains(base.Owner) && side == CombatSide.Player)
+        {
+            Flash();
+            if (base.Owner.Player != null)
+                CombatManager.Instance.SetReadyToEndTurn(base.Owner.Player, false, null);
+            await PowerCmd.Remove(this);
+        }
+    }
+}
+
+/// <summary>Track temporary max HP added by LookAtMe card. Removed at combat end.</summary>
+public sealed class TempHpTrackerPower : CultLeaderModPower
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    public override bool AllowNegative => false;
+
+    public override async Task AfterCombatEnd(CombatRoom room)
+    {
+        int amount = Amount;
+        if (amount > 0 && base.Owner.IsAlive)
+            await CreatureCmd.SetMaxHp(base.Owner, Math.Max(1, base.Owner.MaxHp - amount));
+    }
 }
 
 /// <summary>Plated Armor wrapper — end of player turn: gain Block per stack.</summary>
@@ -253,4 +287,3 @@ public sealed class CultPlatedArmorPower : CultLeaderModPower
             await CreatureCmd.GainBlock(base.Owner, (decimal)stacks, ValueProp.Move, null!, false);
     }
 }
-

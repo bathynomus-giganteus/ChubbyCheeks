@@ -1,38 +1,61 @@
 {
-  "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.title": "Cult Leader's Authority",
-  "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.description": "+1 extra stack when gaining blessings from Apostle cards. At 5 stacks, enter [gold]Elder Form[/gold].",
-  "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.smartDescription": "Apostle card blessing gains +1 per stack. At 5 stacks, enter Elder Form.",
-  "CULTLEADERMOD-LIFE_ESSENCE_POWER.title": "Life Essence",
-  "CULTLEADERMOD-LIFE_ESSENCE_POWER.description": "Each stack gained increases Max HP by 5. Each stack lost decreases Max HP by 5.",
-  "CULTLEADERMOD-LIFE_ESSENCE_POWER.smartDescription": "Each stack: +/-5 Max HP when gained/lost.",
-  "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.title": "Frozen Fortitude",
-  "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.description": "Each stack grants +1 [gold]Block[/gold] gained. End of turn: gain 1 [gold]Block[/gold] per stack.",
-  "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.smartDescription": "Each stack: +1 Block gained. End of turn: gain 1 Block per stack.",
-  "CULTLEADERMOD-FANATICISM_POWER.title": "Fanaticism",
-  "CULTLEADERMOD-FANATICISM_POWER.description": "Each stack: next Attack deals +3 damage. On Attack: consume 1 stack and lose 3 HP.",
-  "CULTLEADERMOD-FANATICISM_POWER.smartDescription": "Each stack: next Attack +3 damage. Consumes 1 stack + 3 HP per Attack.",
-  "CULTLEADERMOD-BITTER_PAIN_POWER.title": "Bitter Pain",
-  "CULTLEADERMOD-BITTER_PAIN_POWER.description": "Does NOT decay. End of turn: per stack, apply a random debuff to ALL enemies and self (1 [gold]Vulnerable[/gold], 1 [gold]Weak[/gold], 1 [gold]Frail[/gold], 3 [gold]Poison[/gold], or 6 [gold]Calamity[/gold]).",
-  "CULTLEADERMOD-BITTER_PAIN_POWER.smartDescription": "End of turn: per stack, random debuff to all enemies and self.",
-  "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.title": "Bitter Pain Burst",
-  "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.description": "End of turn: per stack, all enemies gain 1 [gold]Vulnerable[/gold], 1 [gold]Weak[/gold], 1 [gold]Frail[/gold], 3 [gold]Poison[/gold], and 6 [gold]Calamity[/gold].",
-  "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.smartDescription": "End of turn: per stack, debuff all enemies.",
-  "CULTLEADERMOD-ELDER_FORM_POWER.title": "Elder Form",
-  "CULTLEADERMOD-ELDER_FORM_POWER.description": "Apostle card power grants are upgraded: [gold]Regen[/gold] -> [gold]Life Essence[/gold], [gold]Plated Armor[/gold] -> [gold]Frozen Fortitude[/gold], [gold]Vigor[/gold] -> [gold]Fanaticism[/gold], [gold]Bitter Pain[/gold] -> [gold]Bitter Pain Burst[/gold], [gold]Artifact[/gold] -> [gold]Happiness[/gold].",
-  "CULTLEADERMOD-ELDER_FORM_POWER.smartDescription": "Upgrades all Apostle card power grants.",
-  "CULTLEADERMOD-HAPPINESS_POWER.title": "Happiness",
-  "CULTLEADERMOD-HAPPINESS_POWER.description": "When stacks >= 3, consume 3 stacks: gain [energy_icon] and draw 2 cards.",
-  "CULTLEADERMOD-HAPPINESS_POWER.smartDescription": "At 3+ stacks: consume 3, gain 1 Energy and draw 2.",
-  "CULTLEADERMOD-CULT_REGEN_POWER.title": "Regen",
-  "CULTLEADERMOD-CULT_REGEN_POWER.description": "Granted by Apostle cards.",
-  "CULTLEADERMOD-CULT_REGEN_POWER.smartDescription": "Granted by Apostle cards.",
-  "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.title": "Plated Armor",
-  "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.description": "Granted by Apostle cards.",
-  "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.smartDescription": "Granted by Apostle cards.",
-  "CULTLEADERMOD-CULT_VIGOR_POWER.title": "Vigor",
-  "CULTLEADERMOD-CULT_VIGOR_POWER.description": "Granted by Apostle cards.",
-  "CULTLEADERMOD-CULT_VIGOR_POWER.smartDescription": "Granted by Apostle cards.",
-  "CULTLEADERMOD-CULT_ARTIFACT_POWER.title": "Artifact",
-  "CULTLEADERMOD-CULT_ARTIFACT_POWER.description": "Granted by Apostle cards.",
-  "CULTLEADERMOD-CULT_ARTIFACT_POWER.smartDescription": "Granted by Apostle cards."
+    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.title": "Authority of the Cult Leader",
+    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.description": "Apostle card blessings gain +1 per stack. At 5 stacks, enter Elder Form.",
+    "CULTLEADERMOD-CULT_LEADER_AUTHORITY_POWER.smartDescription": "Apostle blessings +1. At 5: Elder Form.",
+
+    "CULTLEADERMOD-REGEN_POWER.title": "Regen",
+    "CULTLEADERMOD-REGEN_POWER.description": "Heal HP and lose 1 stack at end of turn.",
+    "CULTLEADERMOD-REGEN_POWER.smartDescription": "Heal HP, lose 1 per turn.",
+
+    "CULTLEADERMOD-LIFE_ESSENCE_POWER.title": "Life Essence",
+    "CULTLEADERMOD-LIFE_ESSENCE_POWER.description": "+5 max HP per stack. Loses 1 stack per turn, healing 5 HP.",
+    "CULTLEADERMOD-LIFE_ESSENCE_POWER.smartDescription": "+5 max HP per stack. Heal 5, lose 1 per turn.",
+
+    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.title": "Frozen Fortitude",
+    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.description": "+1 Block gained per stack. End of turn: gain 1 Block per stack.",
+    "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.smartDescription": "+1 Block gained per stack. Gain Block at turn end.",
+
+    "CULTLEADERMOD-FANATICISM_POWER.title": "Fanaticism",
+    "CULTLEADERMOD-FANATICISM_POWER.description": "Next attack deals +3 damage per stack. Consumes 1 stack, loses 3 HP.",
+    "CULTLEADERMOD-FANATICISM_POWER.smartDescription": "Next attack +3 dmg. Consume 1 stack, lose 3 HP.",
+
+    "CULTLEADERMOD-HAPPINESS_POWER.title": "Happiness",
+    "CULTLEADERMOD-HAPPINESS_POWER.description": "At 3+ stacks, consume 3: gain 1 Energy, draw 2.",
+    "CULTLEADERMOD-HAPPINESS_POWER.smartDescription": "At 3: consume 3 for 1 Energy + draw 2.",
+
+    "CULTLEADERMOD-BITTER_PAIN_POWER.title": "Bitter Pain",
+    "CULTLEADERMOD-BITTER_PAIN_POWER.description": "End of turn: per stack, apply random debuff (Vuln/Weak/Frail/Poison/Doom) to ALL enemies + self.",
+    "CULTLEADERMOD-BITTER_PAIN_POWER.smartDescription": "Random debuff per stack at turn end.",
+
+    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.title": "Bitter Pain Burst",
+    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.description": "End of turn: per stack, ALL enemies gain Vuln, Weak, Frail, 3 Poison, 6 Doom.",
+    "CULTLEADERMOD-BITTER_PAIN_BURST_POWER.smartDescription": "Per stack: all enemies get full debuff set.",
+
+    "CULTLEADERMOD-ELDER_FORM_POWER.title": "Elder Form",
+    "CULTLEADERMOD-ELDER_FORM_POWER.description": "Base apostle blessings upgraded to their elder forms.",
+    "CULTLEADERMOD-ELDER_FORM_POWER.smartDescription": "Apostle blessings upgraded.",
+
+    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.title": "Plated Armor",
+    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.description": "End of turn: gain Block per stack.",
+    "CULTLEADERMOD-CULT_PLATED_ARMOR_POWER.smartDescription": "Gain Block per stack at turn end.",
+
+    "CULTLEADERMOD-HEAL_DAMAGE_POWER.title": "Sap Pump",
+    "CULTLEADERMOD-HEAL_DAMAGE_POWER.description": "Whenever you heal HP, deal damage to a random enemy.",
+    "CULTLEADERMOD-HEAL_DAMAGE_POWER.smartDescription": "On heal, deal damage to random enemy.",
+
+    "CULTLEADERMOD-HEAL_ENERGY_POWER.title": "Remote Charging",
+    "CULTLEADERMOD-HEAL_ENERGY_POWER.description": "Every N times you heal HP, gain 1 Energy.",
+    "CULTLEADERMOD-HEAL_ENERGY_POWER.smartDescription": "Every N heals, gain 1 Energy.",
+
+    "CULTLEADERMOD-HACK_INTRUSION_POWER.title": "Hack Intrusion",
+    "CULTLEADERMOD-HACK_INTRUSION_POWER.description": "On heal, deal bonus damage to this enemy.",
+    "CULTLEADERMOD-HACK_INTRUSION_POWER.smartDescription": "On heal, deal bonus damage.",
+
+    "CULTLEADERMOD-SELF_STUN_POWER.title": "Self-Stun",
+    "CULTLEADERMOD-SELF_STUN_POWER.description": "End current turn, skip next turn.",
+    "CULTLEADERMOD-SELF_STUN_POWER.smartDescription": "Skip this and next turn.",
+
+    "CULTLEADERMOD-TEMP_HP_TRACKER_POWER.title": "Temp HP",
+    "CULTLEADERMOD-TEMP_HP_TRACKER_POWER.description": "Tracks temporary max HP gained. Lost after combat.",
+    "CULTLEADERMOD-TEMP_HP_TRACKER_POWER.smartDescription": "Temporary max HP tracker."
 }

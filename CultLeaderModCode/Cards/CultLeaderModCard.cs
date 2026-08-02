@@ -1,4 +1,5 @@
 ﻿using BaseLib.Abstracts;
+using Godot;
 using BaseLib.Extensions;
 using BaseLib.Utils;
 using CultLeaderMod.CultLeaderModCode.Character;
@@ -8,10 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 namespace CultLeaderMod.CultLeaderModCode.Cards;
 
 /// <summary>
-/// This is the base class for your mod's cards, which is set up to load the card's images from your mod's resources.
-/// When creating a card, right click the Cards folder and create a new file with the Custom Card template.
-/// This will generate a class that extends this one.
-/// You can also just create the class manually; just make sure to inherit from this class.
+/// This is the base class for your mod''s cards, which is set up to load the card''s images from your mod''s resources.
 /// </summary>
 [Pool(typeof(CultLeaderModCardPool))]
 public abstract class CultLeaderModCard(
@@ -23,16 +21,13 @@ public abstract class CultLeaderModCard(
     bool autoAdd = true) :
     CustomCardModel(cost, type, rarity, target, showInCardLibrary, autoAdd)
 {
-    //Image size:
-    //Normal art: 1000x760 (Using 500x380 should also work, it will simply be scaled.)
-    //Full art: 606x852
     public override string CustomPortraitPath => "card.png".BigCardImagePath();
-    
-    //Smaller variants of card images for efficiency:
-    //Smaller variant of fullart: 250x350
-    //Smaller variant of normalart: 250x190
-    
-    //Uses card_portraits/card_name.png as image path. These should be smaller images.
     public override string PortraitPath => "card.png".CardImagePath();
     public override string BetaPortraitPath => "card.png".CardImagePath();
+
+    /// <summary>Optional star icon shown below energy orb. Override to set per-card.</summary>
+    public virtual string? StarIconPath => null;
+
+    public override Material? CreateCustomFrameMaterial =>
+        this is IApostleCard apostle ? ApostleCardVisuals.CreateFrameMaterial(apostle.Personality) : null;
 }

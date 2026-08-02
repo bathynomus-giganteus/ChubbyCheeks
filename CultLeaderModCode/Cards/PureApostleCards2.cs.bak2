@@ -1,0 +1,400 @@
+using BaseLib.Utils;
+using CultLeaderMod.CultLeaderModCode.Powers;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.ValueProps;
+
+namespace CultLeaderMod.CultLeaderModCode.Cards;
+
+// ================================================================
+//  Pure Apostle Cards batch 2 (#10-#25)
+// ================================================================
+
+/// <summary>Sherren — Witch Archive</summary>
+public sealed class PureWitchArchive() :
+    CultLeaderModCard(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "谢伦";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/sherren_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/sherren_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/sherren_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    private const string RegenVarName = "RegenPower";
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<RegenPower>(RegenVarName, 0m)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        int count = Owner.RunState.Deck.Count(c => c is IApostleCard a && a.Personality == ApostlePersonality.Pure);
+        if (count <= 0) return;
+        bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, count, this, elder);
+    }
+    protected override void OnUpgrade() => EnergyCost.BaseValue = 2;
+}
+
+/// <summary>Hailey — Non Grata</summary>
+public sealed class PureNonGrata() :
+    CultLeaderModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "海莉";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/hailey_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/hailey_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/hailey_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DamageVar(5m, ValueProp.Move), new DamageVar("BonusDamage", 8m, ValueProp.Move)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).Targeting(cardPlay.Target).Execute(choiceContext);
+        int stacks = ApostleCardHelper.TotalRegenStacks(Owner.Creature);
+        if (stacks >= 2)
+        {
+            var regen = Owner.Creature.GetPower<RegenPower>();
+            if (regen != null && regen.Amount >= 2)
+                await PowerCmd.ModifyAmount(choiceContext, regen, -2m, Owner.Creature, this);
+            else
+            {
+                var le = Owner.Creature.GetPower<LifeEssencePower>();
+                if (le != null && le.Amount >= 2)
+                    await PowerCmd.ModifyAmount(choiceContext, le, -2m, Owner.Creature, this);
+                else
+                {
+                    if (regen != null && regen.Amount > 0)
+                    {
+                        decimal fromRegen = Math.Min(2m, regen.Amount);
+                        await PowerCmd.ModifyAmount(choiceContext, regen, -fromRegen, Owner.Creature, this);
+                        decimal remaining = 2m - fromRegen;
+                        var le2 = Owner.Creature.GetPower<LifeEssencePower>();
+                        if (le2 != null && remaining > 0)
+                            await PowerCmd.ModifyAmount(choiceContext, le2, -remaining, Owner.Creature, this);
+                    }
+                }
+            }
+            await DamageCmd.Attack(DynamicVars["BonusDamage"].BaseValue).FromCard(this, cardPlay).Targeting(cardPlay.Target).Execute(choiceContext);
+        }
+    }
+    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(3m); DynamicVars["BonusDamage"].UpgradeValueBy(2m); }
+}
+
+/// <summary>Naya — Waters Baptism</summary>
+public sealed class PureWatersBaptism() :
+    CultLeaderModCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "奈亚";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/naya_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/naya_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/naya_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(0m, ValueProp.Move)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        int triggerCount = IsUpgraded ? 3 : 2;
+        int hpBefore = (int)Owner.Creature.CurrentHp;
+        await ApostleCardHelper.TriggerRegenOrLifeEssence(choiceContext, Owner.Creature, triggerCount, this);
+        int hpHealed = (int)Owner.Creature.CurrentHp - hpBefore;
+        if (hpHealed <= 0) return;
+        var enemies = CombatState!.Enemies.Where(e => !e.IsDead).ToList();
+        foreach (var enemy in enemies)
+            await DamageCmd.Attack((decimal)hpHealed).FromCard(this, cardPlay).Targeting(enemy).Execute(choiceContext);
+    }
+}
+
+/// <summary>Carrot — Sap Pump Launch (POWER)</summary>
+public sealed class PureSapPump() :
+    CultLeaderModCard(2, CardType.Power, CardRarity.Uncommon, TargetType.Self), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "卡罗特";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/carrot_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/carrot_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/carrot_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Source)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await PowerCmd.Apply<HealDamagePower>(choiceContext, Owner.Creature, DynamicVars.Damage.BaseValue, Owner.Creature, this);
+    }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+}
+
+/// <summary>Daya — Diamond Pierce</summary>
+public sealed class PureDiamondPierce() :
+    CultLeaderModCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "达雅";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/daya_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/daya_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/daya_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10m, ValueProp.Move)];
+
+    private async Task ExecuteAttack(PlayerChoiceContext ctx, CardPlay cardPlay)
+    {
+        var enemies = CombatState!.Enemies.Where(e => !e.IsDead).ToList();
+        if (enemies.Count == 0) return;
+        decimal dmg = DynamicVars.Damage.BaseValue + ApostleCardHelper.TotalRegenStacks(Owner.Creature);
+        foreach (var enemy in enemies)
+            await DamageCmd.Attack(dmg).FromCard(this, cardPlay).Targeting(enemy).Execute(ctx);
+    }
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await ExecuteAttack(choiceContext, cardPlay);
+        bool anyDead = CombatState!.Enemies.Any(e => e.IsDead);
+        if (anyDead)
+            await ExecuteAttack(choiceContext, cardPlay);
+    }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+}
+
+/// <summary>Elfen — Dodge This!! Eek...?</summary>
+public sealed class PureDodgeThis() :
+    CultLeaderModCard(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "埃尔芬";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/elfen_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/elfen_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/elfen_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(50m, ValueProp.Move)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var enemies = CombatState!.Enemies.Where(e => !e.IsDead).ToList();
+        foreach (var enemy in enemies)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).Targeting(enemy).Execute(choiceContext);
+        await PowerCmd.Apply<StunPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+    }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(15m);
+}
+
+/// <summary>Opal — Opal Dust</summary>
+public sealed class PureOpalDust() :
+    CultLeaderModCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "欧珀";
+    public override bool GainsBlock => true;
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/opal_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/opal_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/opal_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        int perStack = IsUpgraded ? 2 : 1;
+        int stacks = ApostleCardHelper.TotalRegenStacks(Owner.Creature);
+        await CreatureCmd.GainBlock(Owner.Creature, (decimal)(stacks * perStack), cardPlay);
+    }
+}
+
+/// <summary>Laika — Remote Charging (POWER)</summary>
+public sealed class PureRemoteCharging() :
+    CultLeaderModCard(2, CardType.Power, CardRarity.Rare, TargetType.Self), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "莱卡";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/laika_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/laika_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/laika_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        decimal threshold = IsUpgraded ? 3m : 4m;
+        await PowerCmd.Apply<HealEnergyPower>(choiceContext, Owner.Creature, threshold, Owner.Creature, this);
+    }
+}
+
+/// <summary>Cathy — Sudden Shock</summary>
+public sealed class PureSuddenShock() :
+    CultLeaderModCard(2, CardType.Skill, CardRarity.Rare, TargetType.Self), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "凯茜";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/cathy_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/cathy_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/cathy_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await PowerCmd.Apply<BufferPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        int stacks = ApostleCardHelper.TotalRegenStacks(Owner.Creature);
+        if (stacks >= 5)
+            await PowerCmd.Apply<BufferPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+    }
+    protected override void OnUpgrade() => EnergyCost.BaseValue = 1;
+}
+
+/// <summary>Mute — Basic Hack Attack</summary>
+public sealed class PureBasicHack() :
+    CultLeaderModCard(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "缪特";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/mute_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/mute_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/mute_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        decimal multiplier = IsUpgraded ? 3m : 2m;
+        await PowerCmd.Apply<HackIntrusionPower>(choiceContext, cardPlay.Target, multiplier, Owner.Creature, this);
+    }
+}
+
+/// <summary>Delia — Help Me, Friends!</summary>
+public sealed class PureHelpMeFriends() :
+    CultLeaderModCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "黛莉娅";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/delia_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/delia_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/delia_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10m, ValueProp.Move)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        int stacks = ApostleCardHelper.TotalRegenStacks(Owner.Creature);
+        if (stacks > 0)
+            await PowerCmd.Apply<TemporaryStrengthPower>(choiceContext, Owner.Creature, stacks, Owner.Creature, this);
+        var enemies = CombatState!.Enemies.Where(e => !e.IsDead).ToList();
+        foreach (var enemy in enemies)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).Targeting(enemy).Execute(choiceContext);
+    }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+}
+
+/// <summary>Id (Recovery) — Clear Boundaries</summary>
+public sealed class PureClearBoundaries() :
+    CultLeaderModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "伊德（康复）";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/id_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/id_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/id_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        int times = IsUpgraded ? 2 : 1;
+        await ApostleCardHelper.TriggerRegenOrLifeEssence(choiceContext, Owner.Creature, times, this);
+        await CardPileCmd.Draw(choiceContext, times, Owner);
+    }
+}
+
+/// <summary>Big Wood — Look~ Look At Me~</summary>
+public sealed class PureLookAtMe() :
+    CultLeaderModCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "大木头";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/bigwood_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/bigwood_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/bigwood_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        decimal steal = IsUpgraded ? 15m : 10m;
+        int actual = (int)Math.Min(steal, cardPlay.Target.MaxHp - 1);
+        if (actual <= 0) return;
+        await CreatureCmd.SetMaxHp(cardPlay.Target, cardPlay.Target.MaxHp - actual);
+        await CreatureCmd.SetMaxHp(Owner.Creature, Owner.Creature.MaxHp + actual);
+        await CreatureCmd.Heal(Owner.Creature, actual);
+        var tracker = Owner.Creature.GetPower<TempHpTrackerPower>();
+        if (tracker == null)
+            await PowerCmd.Apply<TempHpTrackerPower>(choiceContext, Owner.Creature, actual, Owner.Creature, this);
+        else
+            await PowerCmd.ModifyAmount(choiceContext, tracker, actual, Owner.Creature, this);
+    }
+}
+
+/// <summary>Lonie — Surrender! I Surrendered...</summary>
+public sealed class PureSurrender() :
+    CultLeaderModCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "洛涅";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/lonie_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/lonie_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/lonie_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        decimal amount = IsUpgraded ? -20m : -15m;
+        await PowerCmd.Apply<TemporaryStrengthPower>(choiceContext, Owner.Creature, amount, Owner.Creature, this);
+        foreach (var enemy in CombatState!.Enemies)
+            await PowerCmd.Apply<TemporaryStrengthPower>(choiceContext, enemy, amount, Owner.Creature, this);
+    }
+}
+
+/// <summary>Alette — Shovel Strike</summary>
+public sealed class PureShovelStrike() :
+    CultLeaderModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "阿莱特";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/alette_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/alette_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/alette_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(0m, ValueProp.Move)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        decimal fraction = IsUpgraded ? 0.25m : 0.20m;
+        decimal dmg = Math.Floor(Owner.Creature.MaxHp * fraction);
+        if (dmg > 0)
+            await DamageCmd.Attack(dmg).FromCard(this, cardPlay).Targeting(cardPlay.Target).Execute(choiceContext);
+    }
+}
+
+/// <summary>Joey — Cucumber Oil</summary>
+public sealed class PureCucumberOil() :
+    CultLeaderModCard(0, CardType.Skill, CardRarity.Common, TargetType.Self), IApostleCard
+{
+    public ApostlePersonality Personality => ApostlePersonality.Pure;
+    public string ApostleName => "乔伊";
+    public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/joey_avatar.png";
+    public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/joey_card.png";
+    public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/joey_card.png";
+    public override string BetaPortraitPath => PortraitPath;
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 2m, this, elder);
+        if (IsUpgraded)
+            await CardPileCmd.Draw(choiceContext, 1m, Owner);
+    }
+}
