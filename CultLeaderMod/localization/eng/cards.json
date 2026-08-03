@@ -1,4 +1,4 @@
-{
+﻿{
   "CULTLEADERMOD-APOSTLE_TAG.title": "Apostle Card",
   "CULTLEADERMOD-APOSTLE_TAG.description": "{ApostleName}\nPersonality: {PersonalityName}",
   "CULTLEADERMOD-APOSTLE_TAG.purePersonality": "Pure",
@@ -11,7 +11,7 @@
   "CULTLEADERMOD-CULT_LEADER_DEFEND.title": "Defend",
   "CULTLEADERMOD-CULT_LEADER_DEFEND.description": "Gain {Block:diff()} Block.",
   "CULTLEADERMOD-RANDOM_RECRUITMENT.title": "TEST",
-  "CULTLEADERMOD-RANDOM_RECRUITMENT.description": "Add one of each Pure Apostle card to your draw pile, then draw to fill your hand.",
+  "CULTLEADERMOD-RANDOM_RECRUITMENT.description": "Add one of each Fanatic Apostle card to your draw pile, then draw to fill your hand.",
   "CULTLEADERMOD-PURE_PERSONALITY_CHOICE.title": "Pure Personality",
   "CULTLEADERMOD-PURE_PERSONALITY_CHOICE.description": "Select Pure personality. Cards provide [gold]Regen[/gold] blessings.",
   "CULTLEADERMOD-CALM_PERSONALITY_CHOICE.title": "Calm Personality",
@@ -293,7 +293,7 @@
   "CULTLEADERMOD-PURE_MARGOMA_RECOVERY.title": "Margoma Recovery",
   "CULTLEADERMOD-PURE_MARGOMA_RECOVERY.description": "If Regen < 5, gain {RegenPower:diff()} Regen. If >= 5, trigger Regen 3 times and draw 2 cards.",
   "CULTLEADERMOD-PURE_WITCH_ARCHIVE.title": "Witch Archive",
-  "CULTLEADERMOD-PURE_WITCH_ARCHIVE.description": "Gain Regen equal to the number of Pure Apostle cards in your deck.",
+  "CULTLEADERMOD-PURE_WITCH_ARCHIVE.description": "Gain Regen equal to the number of Fanatic Apostle cards in your deck.",
   "CULTLEADERMOD-PURE_NON_GRATA.title": "Non Grata",
   "CULTLEADERMOD-PURE_NON_GRATA.description": "Deal {Damage:diff()} damage. If >= 2 Regen/Life Essence, remove 2 and deal {BonusDamage:diff()} more damage.",
   "CULTLEADERMOD-PURE_WATERS_BAPTISM.title": "Receive the Water's Baptism!",

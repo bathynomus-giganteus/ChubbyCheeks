@@ -23,9 +23,9 @@ public sealed class RandomRecruitment : CultLeaderModCard
         var combatState = Owner.Creature.CombatState;
         if (combatState == null) return;
 
-        // Get all Pure Apostle cards from the card pool
+        // Get all Fanatic Apostle cards from the card pool
         var allPureCards = Owner.Character.CardPool.AllCards
-            .Where(c => c is IApostleCard a && a.Personality == ApostlePersonality.Pure)
+            .Where(c => c is IApostleCard a && a.Personality == ApostlePersonality.Fanatic)
             .ToList();
 
         foreach (var card in allPureCards)

@@ -1,4 +1,4 @@
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,26 +18,34 @@ public static class ApostleCardHelper
             && m.GetParameters().Length == 6
             && m.GetParameters()[1].ParameterType == typeof(Creature));
 
-    public static Task ApplyRegenOrLifeEssence(
+    /// <summary>Get the base power type for a personality (Regen, Plating, Vigor, BitterPain, Artifact).</summary>
+    public static Type BasePowerTypeFor(ApostlePersonality p) => ApostlePersonalityMap.BasePowerType(p);
+
+    /// <summary>Get the elder power type for a personality (LifeEssence, FrozenFortitude, Fanaticism, etc.).</summary>
+    public static Type ElderPowerTypeFor(ApostlePersonality p) => ApostlePersonalityMap.ElderPowerType(p);
+
+    /// <summary>Apply base buff or elder buff depending on Elder Form state, per personality.</summary>
+    public static Task ApplyBaseOrElder(
         PlayerChoiceContext ctx, Creature target, decimal amount,
-        Creature applier, CardModel source, bool hasElderForm)
+        Creature applier, CardModel source, bool hasElderForm, ApostlePersonality personality)
     {
         Type effectiveType = hasElderForm
-            ? typeof(Powers.LifeEssencePower)
-            : typeof(MegaCrit.Sts2.Core.Models.Powers.RegenPower);
+            ? ElderPowerTypeFor(personality)
+            : BasePowerTypeFor(personality);
         var typedApply = PowerCmdApplyTyped.MakeGenericMethod(effectiveType);
         return (Task)typedApply.Invoke(null, [ctx, target, amount, applier, source, false])!;
     }
 
+    /// <summary>Apply buff + authority bonus + elder-form side effects.</summary>
     public static async Task ApplyWithAuthority(
         PlayerChoiceContext ctx, Creature owner, decimal baseAmount,
-        CardModel source, bool hasElderForm)
+        CardModel source, bool hasElderForm, ApostlePersonality personality)
     {
-        await ApplyRegenOrLifeEssence(ctx, owner, baseAmount, owner, source, hasElderForm);
+        await ApplyBaseOrElder(ctx, owner, baseAmount, owner, source, hasElderForm, personality);
         int authority = (int)owner.GetPowerAmount<Powers.CultLeaderAuthorityPower>();
         if (authority > 0)
-            await ApplyRegenOrLifeEssence(ctx, owner, authority, owner, source, hasElderForm);
-        if (hasElderForm)
+            await ApplyBaseOrElder(ctx, owner, authority, owner, source, hasElderForm, personality);
+        if (hasElderForm && personality == ApostlePersonality.Pure)
             await SyncLifeEssenceHp(ctx, owner);
     }
 
@@ -48,7 +56,6 @@ public static class ApostleCardHelper
         var tracker = owner.GetPower<Powers.TempHpTrackerPower>();
         int current = tracker != null ? (int)tracker.Amount : 0;
         int delta = desired - current;
-        System.IO.File.AppendAllText("C:\\Users\\888\\OneDrive\\codex\\sts2_debug.log", $"[{System.DateTime.Now:HH:mm:ss.fff}] SyncLifeEssence: le={le?.Amount}, desired={desired}, tracker={current}, delta={delta}, maxHpBefore={owner.MaxHp}\n");
         if (delta == 0) return;
 
         await CreatureCmd.SetMaxHp(owner, Math.Max(1, owner.MaxHp + delta));

@@ -91,7 +91,7 @@ public sealed class FanaticKillingTime : CultLeaderModCard, IApostleCard
         foreach (var enemy in enemies)
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).Targeting(enemy).Execute(choiceContext);
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["VigorPower"].BaseValue, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["VigorPower"].BaseValue, this, elder, ApostlePersonality.Fanatic);
     }
     protected override void OnUpgrade()
     {
@@ -117,7 +117,7 @@ public sealed class FanaticWorldTreeRevelation : CultLeaderModCard, IApostleCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["VigorPower"].BaseValue, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["VigorPower"].BaseValue, this, elder, ApostlePersonality.Fanatic);
         int vigorNow = (int)Owner.Creature.GetPowerAmount<VigorPower>();
         int mult = IsUpgraded ? 3 : 2;
         await CreatureCmd.GainBlock(Owner.Creature, (decimal)(vigorNow * mult), ValueProp.Move, cardPlay, false);
@@ -186,7 +186,7 @@ public sealed class FanaticArcana : CultLeaderModCard, IApostleCard
         {
             int roll = new Random().Next(3);
             if (roll == 0) { var el = CombatState!.Enemies.Where(x => !x.IsDead).ToList(); if (el.Count > 0) await DamageCmd.Attack(6m).FromCard(this, cardPlay).Targeting(el[new Random().Next(el.Count)]).Execute(choiceContext); }
-            else if (roll == 1) { bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0; await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 3m, this, elder); }
+            else if (roll == 1) { bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0; await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 3m, this, elder, ApostlePersonality.Fanatic); }
             else await CreatureCmd.GainBlock(Owner.Creature, 5m, ValueProp.Move, cardPlay, false);
         }
     }
@@ -254,7 +254,7 @@ public sealed class FanaticBiasedCommentary : CultLeaderModCard, IApostleCard
         int val = IsUpgraded ? 7 : 5;
         await PowerCmd.Apply<FanaticTempStrDownPower>(choiceContext, cardPlay.Target, val, Owner.Creature, this, false);
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, val, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, val, this, elder, ApostlePersonality.Fanatic);
     }
     protected override void OnUpgrade() { }
 }
@@ -273,7 +273,7 @@ public sealed class FanaticSpiralDrillCharge : CultLeaderModCard, IApostleCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["VigorPower"].BaseValue, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["VigorPower"].BaseValue, this, elder, ApostlePersonality.Fanatic);
     }
     protected override void OnUpgrade() => DynamicVars["VigorPower"].UpgradeValueBy(6m);
 }
@@ -297,7 +297,7 @@ public sealed class FanaticSeducedByChaos : CultLeaderModCard, IApostleCard
         if ((int)Owner.Creature.GetPowerAmount<VigorPower>() >= threshold)
         {
             bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, IsUpgraded ? 6m : 5m, this, elder);
+            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, IsUpgraded ? 6m : 5m, this, elder, ApostlePersonality.Fanatic);
         }
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
@@ -319,7 +319,7 @@ public sealed class FanaticSaluteFairyKingdom : CultLeaderModCard, IApostleCard
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay, false);
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["VigorPower"].BaseValue, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["VigorPower"].BaseValue, this, elder, ApostlePersonality.Fanatic);
     }
     protected override void OnUpgrade() { DynamicVars.Block.UpgradeValueBy(2m); DynamicVars["VigorPower"].UpgradeValueBy(2m); }
 }

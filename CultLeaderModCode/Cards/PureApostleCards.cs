@@ -1,4 +1,4 @@
-using BaseLib.Utils;
+ï»¿using BaseLib.Utils;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -17,11 +17,11 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 //  Pure Apostle Cards (#1-#9)
 // ================================================================
 
-/// <summary>Elfen (King) ¡ª Mana Wild Strike</summary>
+/// <summary>Elfen (King) ï¿½ï¿½ Mana Wild Strike</summary>
 public sealed class PureManaWildStrike : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "°£¶û·Ò£¨ÍõµÀ£©";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½ï¿½Ò£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/elfen_king_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/elfen_king_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/elfen_king_card.png";
@@ -51,11 +51,11 @@ public sealed class PureManaWildStrike : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
-/// <summary>Viviana ¡ª Come to the Maiden's Side?</summary>
+/// <summary>Viviana ï¿½ï¿½ Come to the Maiden's Side?</summary>
 public sealed class PureComeToMaidensSide : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "Þ±Þ±°²ÄÈ";
+    public string ApostleName => "Þ±Þ±ï¿½ï¿½ï¿½ï¿½";
     public override bool GainsBlock => true;
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/viviana_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/viviana_card.png";
@@ -70,7 +70,7 @@ public sealed class PureComeToMaidensSide : CultLeaderModCard, IApostleCard
     {
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay, false);
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["RegenPower"].BaseValue, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["RegenPower"].BaseValue, this, elder, ApostlePersonality.Pure);
     }
     protected override void OnUpgrade()
     {
@@ -79,11 +79,11 @@ public sealed class PureComeToMaidensSide : CultLeaderModCard, IApostleCard
     }
 }
 
-/// <summary>Ran ¡ª Encirclement Hunt</summary>
+/// <summary>Ran ï¿½ï¿½ Encirclement Hunt</summary>
 public sealed class PureEncirclementHunt : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "á°";
+    public string ApostleName => "ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/ran_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/ran_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/ran_card.png";
@@ -104,11 +104,11 @@ public sealed class PureEncirclementHunt : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => EnergyCost.SetCustomBaseCost(1);
 }
 
-/// <summary>Aira ¡ª Vacation Escape</summary>
+/// <summary>Aira ï¿½ï¿½ Vacation Escape</summary>
 public sealed class PureVacationEscape : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "°¢ÒÁÀ­";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     public override bool GainsBlock => true;
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/aira_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/aira_card.png";
@@ -122,7 +122,7 @@ public sealed class PureVacationEscape : CultLeaderModCard, IApostleCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["RegenPower"].BaseValue, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["RegenPower"].BaseValue, this, elder, ApostlePersonality.Pure);
         int totalStacks = ApostleCardHelper.TotalRegenStacks(Owner.Creature);
         await CreatureCmd.GainBlock(Owner.Creature, totalStacks * (int)DynamicVars.Block.BaseValue, ValueProp.Move, cardPlay, false);
     }
@@ -133,11 +133,11 @@ public sealed class PureVacationEscape : CultLeaderModCard, IApostleCard
     }
 }
 
-/// <summary>Mayo (Super Cool) ¡ª Strongest Collectible</summary>
+/// <summary>Mayo (Super Cool) ï¿½ï¿½ Strongest Collectible</summary>
 public sealed class PureStrongestCollectible : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "ÂêÔ¼";
+    public string ApostleName => "ï¿½ï¿½Ô¼";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/mayo_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/mayo_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/mayo_card.png";
@@ -157,13 +157,13 @@ public sealed class PureStrongestCollectible : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(5m);
 }
 
-/// <summary>Spicy ¡ª Pumpkin Magic</summary>
+/// <summary>Spicy ï¿½ï¿½ Pumpkin Magic</summary>
 public sealed class PurePumpkinMagic : CultLeaderModCard, IApostleCard
 {
     private readonly HashSet<CardKeyword> _keywords = [CardKeyword.Exhaust];
 
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "Ë¹Æ¤Ææ";
+    public string ApostleName => "Ë¹Æ¤ï¿½ï¿½";
     public override bool GainsBlock => true;
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/spicy_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/spicy_card.png";
@@ -176,17 +176,17 @@ public sealed class PurePumpkinMagic : CultLeaderModCard, IApostleCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 2m, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 2m, this, elder, ApostlePersonality.Pure);
         await CreatureCmd.GainBlock(Owner.Creature, 5m, ValueProp.Move, cardPlay, false);
     }
     protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
 }
 
-/// <summary>Gavia ¡ª "I'll... protect you..."</summary>
+/// <summary>Gavia ï¿½ï¿½ "I'll... protect you..."</summary>
 public sealed class PureProtectYou : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "¼ÓÎ¬ÑÇ";
+    public string ApostleName => "ï¿½ï¿½Î¬ï¿½ï¿½";
     public override bool GainsBlock => true;
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/gavia_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/gavia_card.png";
@@ -202,17 +202,17 @@ public sealed class PureProtectYou : CultLeaderModCard, IApostleCard
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay, false);
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["RegenPower"].BaseValue, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars["RegenPower"].BaseValue, this, elder, ApostlePersonality.Pure);
         await CardPileCmd.Draw(choiceContext, DynamicVars["Draw"].BaseValue, Owner, false);
     }
     protected override void OnUpgrade() => DynamicVars["Draw"].UpgradeValueBy(1m);
 }
 
-/// <summary>Sally ¡ª Mischievous Smile</summary>
+/// <summary>Sally ï¿½ï¿½ Mischievous Smile</summary>
 public sealed class PureMischievousSmile : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "É¯Àò";
+    public string ApostleName => "É¯ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/sally_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/sally_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/sally_card.png";
@@ -229,7 +229,7 @@ public sealed class PureMischievousSmile : CultLeaderModCard, IApostleCard
         if (debuffCount > 0)
         {
             bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, debuffCount, this, elder);
+            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, debuffCount, this, elder, ApostlePersonality.Pure);
         }
         if (!IsUpgraded)
             EnergyCost.AddThisCombat(1, false);
@@ -237,12 +237,12 @@ public sealed class PureMischievousSmile : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() { }
 }
 
-/// <summary>Margo ¡ª Margoma Recovery</summary>
+/// <summary>Margo ï¿½ï¿½ Margoma Recovery</summary>
 public sealed class PureMargomaRecovery : CultLeaderModCard, IApostleCard
 {
     private readonly HashSet<CardKeyword> _keywords = [CardKeyword.Exhaust];
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "Âê¸ê";
+    public string ApostleName => "ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/margo_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/margo_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/margo_card.png";
@@ -259,7 +259,7 @@ public sealed class PureMargomaRecovery : CultLeaderModCard, IApostleCard
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
         if (currentRegen < 5)
         {
-            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars[RegenVarName].BaseValue, this, elder);
+            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, DynamicVars[RegenVarName].BaseValue, this, elder, ApostlePersonality.Pure);
         }
         else
         {

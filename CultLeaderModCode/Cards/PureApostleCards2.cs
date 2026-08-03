@@ -1,4 +1,4 @@
-using BaseLib.Utils;
+ï»¿using BaseLib.Utils;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -16,11 +16,11 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 //  Pure Apostle Cards batch 2 (#10-#25)
 // ================================================================
 
-/// <summary>Sherren ¡ª Witch Archive</summary>
+/// <summary>Sherren ï¿½ï¿½ Witch Archive</summary>
 public sealed class PureWitchArchive : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "Ð»Â×";
+    public string ApostleName => "Ð»ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/sherren_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/sherren_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/sherren_card.png";
@@ -36,16 +36,16 @@ public sealed class PureWitchArchive : CultLeaderModCard, IApostleCard
         int count = Owner.Deck.Cards.Count(c => c is IApostleCard a && a.Personality == ApostlePersonality.Pure);
         if (count <= 0) return;
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, count, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, count, this, elder, ApostlePersonality.Pure);
     }
     protected override void OnUpgrade() => EnergyCost.SetCustomBaseCost(2);
 }
 
-/// <summary>Hailey ¡ª Non Grata</summary>
+/// <summary>Hailey ï¿½ï¿½ Non Grata</summary>
 public sealed class PureNonGrata : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "º£Àò";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/hailey_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/hailey_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/hailey_card.png";
@@ -93,11 +93,11 @@ public sealed class PureNonGrata : CultLeaderModCard, IApostleCard
     }
 }
 
-/// <summary>Naya ¡ª Accept the Water's Baptism!</summary>
+/// <summary>Naya ï¿½ï¿½ Accept the Water's Baptism!</summary>
 public sealed class PureWatersBaptism : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "ÄÎÑÇ";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/naya_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/naya_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/naya_card.png";
@@ -146,11 +146,11 @@ public sealed class PureWatersBaptism : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() { }
 }
 
-/// <summary>Carrot ¡ª Sap Pump Fire!</summary>
+/// <summary>Carrot ï¿½ï¿½ Sap Pump Fire!</summary>
 public sealed class PureSapPump : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "¿¨ÂÞÌØ";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/carrot_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/carrot_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/carrot_card.png";
@@ -167,11 +167,11 @@ public sealed class PureSapPump : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
-/// <summary>Daya ¡ª Diamond Pierce</summary>
+/// <summary>Daya ï¿½ï¿½ Diamond Pierce</summary>
 public sealed class PureDiamondPierce : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "´ïÑÅ";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/daya_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/daya_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/daya_card.png";
@@ -200,11 +200,11 @@ public sealed class PureDiamondPierce : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
-/// <summary>Elfen ¡ª Dodge This!!! Eh...?</summary>
+/// <summary>Elfen ï¿½ï¿½ Dodge This!!! Eh...?</summary>
 public sealed class PureDodgeThis : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "°£¶û·Ò";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/elfen_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/elfen_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/elfen_card.png";
@@ -224,11 +224,11 @@ public sealed class PureDodgeThis : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(15m);
 }
 
-/// <summary>Opal ¡ª Opal Dust</summary>
+/// <summary>Opal ï¿½ï¿½ Opal Dust</summary>
 public sealed class PureOpalDust : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "Å·çê";
+    public string ApostleName => "Å·ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/opal_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/opal_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/opal_card.png";
@@ -246,11 +246,11 @@ public sealed class PureOpalDust : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() { }
 }
 
-/// <summary>Laika ¡ª Remote Charging</summary>
+/// <summary>Laika ï¿½ï¿½ Remote Charging</summary>
 public sealed class PureRemoteCharging : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "À³¿¨";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/laika_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/laika_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/laika_card.png";
@@ -266,11 +266,11 @@ public sealed class PureRemoteCharging : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() { }
 }
 
-/// <summary>Cathy ¡ª Sudden Shock</summary>
+/// <summary>Cathy ï¿½ï¿½ Sudden Shock</summary>
 public sealed class PureSuddenShock : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "¿­Î÷";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/cathy_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/cathy_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/cathy_card.png";
@@ -288,11 +288,11 @@ public sealed class PureSuddenShock : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => EnergyCost.SetCustomBaseCost(1);
 }
 
-/// <summary>Mute ¡ª Basic Hack Attack</summary>
+/// <summary>Mute ï¿½ï¿½ Basic Hack Attack</summary>
 public sealed class PureBasicHack : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "çÑÌØ";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/mute_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/mute_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/mute_card.png";
@@ -314,11 +314,11 @@ public sealed class PureBasicHack : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => EnergyCost.SetCustomBaseCost(0);
 }
 
-/// <summary>Delia ¡ª Help Me, Friends!</summary>
+/// <summary>Delia ï¿½ï¿½ Help Me, Friends!</summary>
 public sealed class PureHelpMeFriends : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "÷ìÀòæ«";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/delia_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/delia_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/delia_card.png";
@@ -340,11 +340,11 @@ public sealed class PureHelpMeFriends : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
-/// <summary>Id (Recovery) ¡ª Clear Boundaries</summary>
+/// <summary>Id (Recovery) ï¿½ï¿½ Clear Boundaries</summary>
 public sealed class PureClearBoundaries : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "ÒÁµÂ";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/id_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/id_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/id_card.png";
@@ -361,11 +361,11 @@ public sealed class PureClearBoundaries : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() { }
 }
 
-/// <summary>Big Wood ¡ª Look~ Look at Me~</summary>
+/// <summary>Big Wood ï¿½ï¿½ Look~ Look at Me~</summary>
 public sealed class PureLookAtMe : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "´óÄ¾Í·";
+    public string ApostleName => "ï¿½ï¿½Ä¾Í·";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/bigwood_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/bigwood_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/bigwood_card.png";
@@ -390,11 +390,11 @@ public sealed class PureLookAtMe : CultLeaderModCard, IApostleCard
     }
 }
 
-/// <summary>Lonie ¡ª Surrender! I Surrendered...</summary>
+/// <summary>Lonie ï¿½ï¿½ Surrender! I Surrendered...</summary>
 public sealed class PureSurrender : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "ÂåÄù";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/lonie_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/lonie_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/lonie_card.png";
@@ -412,11 +412,11 @@ public sealed class PureSurrender : CultLeaderModCard, IApostleCard
     }
 }
 
-/// <summary>Alette ¡ª Shovel Strike</summary>
+/// <summary>Alette ï¿½ï¿½ Shovel Strike</summary>
 public sealed class PureShovelStrike : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "°¢À³ÌØ";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/alette_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/alette_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/alette_card.png";
@@ -435,11 +435,11 @@ public sealed class PureShovelStrike : CultLeaderModCard, IApostleCard
     }
 }
 
-/// <summary>Joey ¡ª Cucumber Oil</summary>
+/// <summary>Joey ï¿½ï¿½ Cucumber Oil</summary>
 public sealed class PureCucumberOil : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "ÇÇÒÁ";
+    public string ApostleName => "ï¿½ï¿½ï¿½ï¿½";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/joey_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/joey_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/joey_card.png";
@@ -450,15 +450,15 @@ public sealed class PureCucumberOil : CultLeaderModCard, IApostleCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 2m, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 2m, this, elder, ApostlePersonality.Pure);
         if (IsUpgraded)
             await CardPileCmd.Draw(choiceContext, 1m, Owner, false);
     }
 }
 
-// ¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T
+// ï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½T
 //  Temporary Strength powers for Pure cards
-// ¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T
+// ï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½Tï¿½T
 
 public sealed class HelpMeFriendsTempStrengthPower : TemporaryStrengthPower
 {

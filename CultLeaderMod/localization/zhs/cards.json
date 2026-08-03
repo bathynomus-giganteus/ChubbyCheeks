@@ -1,4 +1,4 @@
-{
+﻿{
   "CULTLEADERMOD-APOSTLE_TAG.title": "使徒牌",
   "CULTLEADERMOD-APOSTLE_TAG.description": "{ApostleName}\n性格：{PersonalityName}",
   "CULTLEADERMOD-APOSTLE_TAG.purePersonality": "纯粹",
@@ -11,7 +11,7 @@
   "CULTLEADERMOD-CULT_LEADER_DEFEND.title": "防御",
   "CULTLEADERMOD-CULT_LEADER_DEFEND.description": "获得{Block:diff()}点格挡。",
   "CULTLEADERMOD-RANDOM_RECRUITMENT.title": "TEST",
-  "CULTLEADERMOD-RANDOM_RECRUITMENT.description": "向抽牌堆中添加所有纯粹使徒牌各一张，然后抽满手牌。",
+  "CULTLEADERMOD-RANDOM_RECRUITMENT.description": "向抽牌堆中添加所有狂热使徒牌各一张，然后抽满手牌。",
   "CULTLEADERMOD-PURE_PERSONALITY_CHOICE.title": "纯粹性格",
   "CULTLEADERMOD-PURE_PERSONALITY_CHOICE.description": "选择纯粹性格。使徒牌提供[gold]再生[/gold]祝福。",
   "CULTLEADERMOD-CALM_PERSONALITY_CHOICE.title": "冷静性格",
@@ -293,7 +293,7 @@
   "CULTLEADERMOD-PURE_MARGOMA_RECOVERY.title": "玛戈玛恢复",
   "CULTLEADERMOD-PURE_MARGOMA_RECOVERY.description": "如果再生不足5层，获得 {RegenPower:diff()} 层再生；如果超过5层，立即触发3次再生并抽2张牌。",
   "CULTLEADERMOD-PURE_WITCH_ARCHIVE.title": "魔女档案",
-  "CULTLEADERMOD-PURE_WITCH_ARCHIVE.description": "获得与卡组中纯粹使徒牌数量相等的再生。",
+  "CULTLEADERMOD-PURE_WITCH_ARCHIVE.description": "获得与卡组中狂热使徒牌数量相等的再生。",
   "CULTLEADERMOD-PURE_NON_GRATA.title": "谢绝",
   "CULTLEADERMOD-PURE_NON_GRATA.description": "造成 {Damage:diff()} 点伤害。如果再生或生命本源层数不低于2，减少2层并再造成 {BonusDamage:diff()} 点伤害。",
   "CULTLEADERMOD-PURE_WATERS_BAPTISM.title": "接受水的洗礼吧！",

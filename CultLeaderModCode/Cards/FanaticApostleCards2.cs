@@ -48,7 +48,7 @@ public sealed class FanaticNextTurnVigorPower : CultLeaderModPower
         if (amount <= 0) return;
         Flash();
         bool elder = Owner.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(new ThrowingPlayerChoiceContext(), Owner, amount, null!, elder);
+        await ApostleCardHelper.ApplyWithAuthority(new ThrowingPlayerChoiceContext(), Owner, Amount, null!, elder, ApostlePersonality.Fanatic);
         await PowerCmd.Remove(this);
     }
 }
@@ -66,7 +66,7 @@ public sealed class FanaticCampfirePower : CultLeaderModPower
         if (side != MegaCrit.Sts2.Core.Combat.CombatSide.Player || !participants.Contains(base.Owner)) return;
         Flash();
         bool elder = Owner.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(new ThrowingPlayerChoiceContext(), Owner, Amount, null!, elder);
+        await ApostleCardHelper.ApplyWithAuthority(new ThrowingPlayerChoiceContext(), Owner, Amount, null!, elder, ApostlePersonality.Fanatic);
     }
 }
 
@@ -82,7 +82,7 @@ public sealed class FanaticHealToVigorPower : CultLeaderModPower
         if (amount <= 0) return;
         Flash();
         bool elder = Owner.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(ctx, Owner, amount, null!, elder);
+        await ApostleCardHelper.ApplyWithAuthority(ctx, Owner, amount, null!, elder, ApostlePersonality.Fanatic);
     }
 }
 
@@ -110,7 +110,7 @@ public sealed class FanaticDeterminationPower : CultLeaderModPower
             await PowerCmd.ModifyAmount(ctx, this, (decimal)(_threshold - current), Owner, null, false);
             Flash();
             bool elder = Owner.GetPowerAmount<ElderFormPower>() > 0;
-            await ApostleCardHelper.ApplyWithAuthority(ctx, Owner, 2m, null!, elder);
+            await ApostleCardHelper.ApplyWithAuthority(ctx, Owner, 2m, null!, elder, ApostlePersonality.Fanatic);
         }
         else
         {
@@ -146,7 +146,7 @@ public sealed class FanaticTimeToCollect : CultLeaderModCard, IApostleCard
         int vigorPer = IsUpgraded ? 5 : 3;
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
         await CreatureCmd.GainBlock(Owner.Creature, (decimal)(count * blockPer), ValueProp.Move, cardPlay, false);
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, count * vigorPer, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, count * vigorPer, this, elder, ApostlePersonality.Fanatic);
     }
     protected override void OnUpgrade() { }
 }
@@ -167,7 +167,7 @@ public sealed class FanaticTimeInterrupt : CultLeaderModCard, IApostleCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 15m, this, elder);
+        await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 15m, this, elder, ApostlePersonality.Fanatic);
         var enemies = CombatState!.Enemies.Where(e => !e.IsDead).ToList();
         foreach (var enemy in enemies)
         {
@@ -203,7 +203,7 @@ public sealed class FanaticApplauseActor : CultLeaderModCard, IApostleCard
         if (IsUpgraded)
         {
             bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 5m, this, elder);
+            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 5m, this, elder, ApostlePersonality.Fanatic);
         }
     }
     protected override void OnUpgrade() { }
@@ -238,7 +238,7 @@ public sealed class FanaticInfiltratingInterview : CultLeaderModCard, IApostleCa
         if (totalCost > 0)
         {
             bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
-            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, totalCost, this, elder);
+            await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, totalCost, this, elder, ApostlePersonality.Fanatic);
         }
     }
     protected override void OnUpgrade() { }
