@@ -8,8 +8,8 @@
     "CULTLEADERMOD-REGEN_POWER.smartDescription": "Heal HP, lose 1 per turn.",
 
     "CULTLEADERMOD-LIFE_ESSENCE_POWER.title": "Life Essence",
-    "CULTLEADERMOD-LIFE_ESSENCE_POWER.description": "+5 max HP per stack. Loses 1 stack per turn, healing 5 HP.",
-    "CULTLEADERMOD-LIFE_ESSENCE_POWER.smartDescription": "+5 max HP per stack. Heal 5, lose 1 per turn.",
+    "CULTLEADERMOD-LIFE_ESSENCE_POWER.description": "+5 temporary max HP per stack gained, -5 per stack lost. Loses 1 stack per turn, healing 5 HP.",
+    "CULTLEADERMOD-LIFE_ESSENCE_POWER.smartDescription": "+5 temp max HP per stack. Heal 5, lose 1 per turn.",
 
     "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.title": "Frozen Fortitude",
     "CULTLEADERMOD-FROZEN_FORTITUDE_POWER.description": "+1 Block gained per stack. End of turn: gain 1 Block per stack.",

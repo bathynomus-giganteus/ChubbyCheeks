@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
+using CultLeaderMod.CultLeaderModCode.Cards;
 using System.Reflection;
 
 namespace CultLeaderMod.CultLeaderModCode.Powers;
@@ -59,5 +60,6 @@ public static class ElderFormHelper
             await (Task)typedApply.Invoke(null, [ctx, creature, (decimal)stacks, creature, null!, false])!;
             await PowerCmd.Remove(power);
         }
+        await ApostleCardHelper.SyncLifeEssenceHp(ctx, creature);
     }
 }

@@ -13,7 +13,7 @@ public static class ApostlePersonalityMap
     public static Type BasePowerType(ApostlePersonality p) => p switch
     {
         ApostlePersonality.Pure        => typeof(RegenPower),
-        ApostlePersonality.Calm        => typeof(CultPlatedArmorPower),
+        ApostlePersonality.Calm        => typeof(MegaCrit.Sts2.Core.Models.Powers.PlatingPower),
         ApostlePersonality.Fanatic     => typeof(VigorPower),
         ApostlePersonality.Melancholy  => typeof(BitterPainPower),
         ApostlePersonality.Lively      => typeof(ArtifactPower),

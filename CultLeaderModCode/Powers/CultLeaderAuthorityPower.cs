@@ -39,5 +39,6 @@ public sealed class CultLeaderAuthorityPower : CultLeaderModPower
         var ctx = new BlockingPlayerChoiceContext();
         await PowerCmd.ModifyAmount(ctx, this, -MaxStacks, applier, cardSource);
         await PowerCmd.Apply<ElderFormPower>(ctx, base.Owner, 1m, applier, cardSource);
+        await ElderFormHelper.ConvertBaseBuffsToElder(ctx, base.Owner);
     }
 }

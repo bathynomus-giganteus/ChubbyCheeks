@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using System.Collections.Generic;
 
 namespace CultLeaderMod.CultLeaderModCode.Cards;
 
@@ -159,6 +160,7 @@ public sealed class PureStrongestCollectible : CultLeaderModCard, IApostleCard
 /// <summary>Spicy — Pumpkin Magic</summary>
 public sealed class PurePumpkinMagic : CultLeaderModCard, IApostleCard
 {
+    private readonly HashSet<CardKeyword> _keywords = [CardKeyword.Exhaust];
 
     public ApostlePersonality Personality => ApostlePersonality.Pure;
     public string ApostleName => "斯皮奇";
@@ -167,18 +169,17 @@ public sealed class PurePumpkinMagic : CultLeaderModCard, IApostleCard
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/spicy_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/spicy_card.png";
     public override string BetaPortraitPath => PortraitPath;
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-          IsUpgraded ? [] : [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => _keywords;
 
-      public PurePumpkinMagic() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public PurePumpkinMagic() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
         await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 2m, this, elder);
         await CreatureCmd.GainBlock(Owner.Creature, 5m, ValueProp.Move, cardPlay, false);
-      }
-      protected override void OnUpgrade() { }
+    }
+    protected override void OnUpgrade() => _keywords.Clear();
 }
 
 /// <summary>Gavia — "I'll... protect you..."</summary>
@@ -239,22 +240,22 @@ public sealed class PureMischievousSmile : CultLeaderModCard, IApostleCard
 /// <summary>Margo — Margoma Recovery</summary>
 public sealed class PureMargomaRecovery : CultLeaderModCard, IApostleCard
 {
+    private readonly HashSet<CardKeyword> _keywords = [CardKeyword.Exhaust];
     public ApostlePersonality Personality => ApostlePersonality.Pure;
     public string ApostleName => "玛戈";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/margo_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/margo_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/margo_card.png";
     public override string BetaPortraitPath => PortraitPath;
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-          IsUpgraded ? [] : [CardKeyword.Exhaust];
-      private const string RegenVarName = "RegenPower";
+    public override IEnumerable<CardKeyword> CanonicalKeywords => _keywords;
+    private const string RegenVarName = "RegenPower";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<RegenPower>(RegenVarName, 3m)];
 
     public PureMargomaRecovery() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-          int currentRegen = (int)Owner.Creature.GetPowerAmount<RegenPower>();
+        int currentRegen = ApostleCardHelper.TotalRegenStacks(Owner.Creature);
         bool elder = Owner.Creature.GetPowerAmount<ElderFormPower>() > 0;
         if (currentRegen < 5)
         {
@@ -262,15 +263,9 @@ public sealed class PureMargomaRecovery : CultLeaderModCard, IApostleCard
         }
         else
         {
-            for (int i = 0; i < 3; i++)
-            {
-                var regenPower = Owner.Creature.GetPower<RegenPower>();
-                if (regenPower == null || regenPower.Amount <= 0) break;
-                await CreatureCmd.Heal(Owner.Creature, regenPower.Amount);
-                await PowerCmd.Decrement(regenPower);
-            }
+            await ApostleCardHelper.TriggerRegenOrLifeEssence(choiceContext, Owner.Creature, 3, this);
             await CardPileCmd.Draw(choiceContext, 2m, Owner, false);
         }
     }
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade() => _keywords.Clear();
 }
