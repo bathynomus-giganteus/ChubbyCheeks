@@ -1,4 +1,4 @@
-using BaseLib.Utils;
+﻿using BaseLib.Utils;
 using CultLeaderMod.CultLeaderModCode.Extensions;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using Godot;
@@ -60,7 +60,9 @@ public abstract class ApostleTestCard<TPower>(
         if (authorityStacks > 0)
             await ApplyPower(choiceContext, effectiveType, authorityStacks);
 
-
+        // 5. Sync HP if LifeEssence was applied
+        if (hasElderForm)
+            await ApostleCardHelper.SyncLifeEssenceHp(choiceContext, Owner.Creature);
     }
 }
 

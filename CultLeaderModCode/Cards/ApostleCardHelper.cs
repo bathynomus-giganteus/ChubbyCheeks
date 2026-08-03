@@ -10,6 +10,8 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 /// <summary>Shared helpers for apostle cards that apply powers with Elder Form switching.</summary>
 public static class ApostleCardHelper
 {
+    private const int LifeEssenceHpPerStack = 5;
+
     private static readonly MethodInfo PowerCmdApplyTyped = typeof(PowerCmd)
         .GetMethods(BindingFlags.Public | BindingFlags.Static)
         .First(m => m.Name == "Apply" && m.IsGenericMethodDefinition
@@ -35,6 +37,35 @@ public static class ApostleCardHelper
         int authority = (int)owner.GetPowerAmount<Powers.CultLeaderAuthorityPower>();
         if (authority > 0)
             await ApplyRegenOrLifeEssence(ctx, owner, authority, owner, source, hasElderForm);
+        if (hasElderForm)
+            await SyncLifeEssenceHp(ctx, owner);
+    }
+
+    public static async Task SyncLifeEssenceHp(PlayerChoiceContext ctx, Creature owner)
+    {
+        var le = owner.GetPower<Powers.LifeEssencePower>();
+        int desired = le != null ? (int)le.Amount * LifeEssenceHpPerStack : 0;
+        var tracker = owner.GetPower<Powers.TempHpTrackerPower>();
+        int current = tracker != null ? (int)tracker.Amount : 0;
+        int delta = desired - current;
+        System.IO.File.AppendAllText("C:\\Users\\888\\OneDrive\\codex\\sts2_debug.log", $"[{System.DateTime.Now:HH:mm:ss.fff}] SyncLifeEssence: le={le?.Amount}, desired={desired}, tracker={current}, delta={delta}, maxHpBefore={owner.MaxHp}\n");
+        if (delta == 0) return;
+
+        await CreatureCmd.SetMaxHp(owner, Math.Max(1, owner.MaxHp + delta));
+        if (delta > 0)
+            await CreatureCmd.Heal(owner, delta);
+
+        if (tracker != null)
+        {
+            if (desired == 0)
+                await PowerCmd.Remove(tracker);
+            else
+                await PowerCmd.ModifyAmount(ctx, tracker, delta, owner, null, false);
+        }
+        else if (desired > 0)
+        {
+            await PowerCmd.Apply<Powers.TempHpTrackerPower>(ctx, owner, desired, owner, null, false);
+        }
     }
 
     public static async Task TriggerRegenOrLifeEssence(
@@ -52,6 +83,7 @@ public static class ApostleCardHelper
                     await CreatureCmd.Heal(owner, 5m);
                     await PowerCmd.Decrement(le);
                 }
+                await SyncLifeEssenceHp(ctx, owner);
             }
         }
         else

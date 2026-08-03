@@ -25,37 +25,11 @@ public abstract class PersonalityPower : CultLeaderModPower
     public override bool AllowNegative => false;
 }
 
-/// <summary>Life Essence — +5 temp max HP per stack. Uses native AfterPowerAmountChanged for HP sync.</summary>
+/// <summary>Life Essence — marker power. HP sync handled externally via ApostleCardHelper.</summary>
 public sealed class LifeEssencePower : PersonalityPower
 {
-    private const int HpPerStack = 5;
-
-    public override async Task AfterPowerAmountChanged(
-        PlayerChoiceContext choiceContext,
-        PowerModel power,
-        decimal amount,
-        Creature? applier,
-        CardModel? cardSource)
-    {
-        int hpDelta = (int)amount * HpPerStack;
-        if (hpDelta > 0)
-        {
-            await CreatureCmd.SetMaxHp(Owner, Owner.MaxHp + hpDelta);
-            await CreatureCmd.Heal(Owner, hpDelta);
-        }
-        else if (hpDelta < 0)
-        {
-            await CreatureCmd.SetMaxHp(Owner, Math.Max(1, Owner.MaxHp + hpDelta));
-        }
-    }
-
-    public override async Task AfterCombatEnd(CombatRoom room)
-    {
-        int amount = Amount;
-        if (amount > 0 && Owner.IsAlive)
-            await CreatureCmd.SetMaxHp(Owner, Math.Max(1, Owner.MaxHp - amount * HpPerStack));
-    }
 }
+
 
 /// <summary>Frozen Fortitude — each stack: +1 Block gained; end of turn: gain 1 Block per stack.</summary>
 public sealed class FrozenFortitudePower : PersonalityPower

@@ -60,5 +60,6 @@ public static class ElderFormHelper
             await (Task)typedApply.Invoke(null, [ctx, creature, (decimal)stacks, creature, null!, false])!;
             await PowerCmd.Remove(power);
         }
+        await ApostleCardHelper.SyncLifeEssenceHp(ctx, creature);
     }
 }
