@@ -1,4 +1,4 @@
-ï»¿using BaseLib.Utils;
+using BaseLib.Utils;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -17,11 +17,11 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 //  Pure Apostle Cards (#1-#9)
 // ================================================================
 
-/// <summary>Elfen (King) â€” Mana Wild Strike</summary>
+/// <summary>Elfen (King) ¡ª Mana Wild Strike</summary>
 public sealed class PureManaWildStrike : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "åŸƒå°”èŠ¬ï¼ˆçŽ‹é“ï¼‰";
+    public string ApostleName => "°£¶û·Ò£¨ÍõµÀ£©";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/elfen_king_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/elfen_king_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/elfen_king_card.png";
@@ -51,11 +51,11 @@ public sealed class PureManaWildStrike : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
-/// <summary>Viviana â€” Come to the Maiden's Side?</summary>
+/// <summary>Viviana ¡ª Come to the Maiden's Side?</summary>
 public sealed class PureComeToMaidensSide : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "è–‡è–‡å®‰å¨œ";
+    public string ApostleName => "Þ±Þ±°²ÄÈ";
     public override bool GainsBlock => true;
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/viviana_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/viviana_card.png";
@@ -79,11 +79,11 @@ public sealed class PureComeToMaidensSide : CultLeaderModCard, IApostleCard
     }
 }
 
-/// <summary>Ran â€” Encirclement Hunt</summary>
+/// <summary>Ran ¡ª Encirclement Hunt</summary>
 public sealed class PureEncirclementHunt : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "å²š";
+    public string ApostleName => "á°";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/ran_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/ran_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/ran_card.png";
@@ -104,11 +104,11 @@ public sealed class PureEncirclementHunt : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => EnergyCost.SetCustomBaseCost(1);
 }
 
-/// <summary>Aira â€” Vacation Escape</summary>
+/// <summary>Aira ¡ª Vacation Escape</summary>
 public sealed class PureVacationEscape : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "é˜¿ä¼Šæ‹‰";
+    public string ApostleName => "°¢ÒÁÀ­";
     public override bool GainsBlock => true;
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/aira_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/aira_card.png";
@@ -133,11 +133,11 @@ public sealed class PureVacationEscape : CultLeaderModCard, IApostleCard
     }
 }
 
-/// <summary>Mayo (Super Cool) â€” Strongest Collectible</summary>
+/// <summary>Mayo (Super Cool) ¡ª Strongest Collectible</summary>
 public sealed class PureStrongestCollectible : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "çŽ›çº¦";
+    public string ApostleName => "ÂêÔ¼";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/mayo_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/mayo_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/mayo_card.png";
@@ -157,19 +157,17 @@ public sealed class PureStrongestCollectible : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(5m);
 }
 
-/// <summary>Spicy â€” Pumpkin Magic</summary>
+/// <summary>Spicy ¡ª Pumpkin Magic</summary>
 public sealed class PurePumpkinMagic : CultLeaderModCard, IApostleCard
 {
-    private readonly HashSet<CardKeyword> _keywords = [CardKeyword.Exhaust];
-
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "æ–¯çš®å¥‡";
+    public string ApostleName => "Ë¹Æ¤Ææ";
     public override bool GainsBlock => true;
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/spicy_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/spicy_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/spicy_card.png";
     public override string BetaPortraitPath => PortraitPath;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => _keywords;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public PurePumpkinMagic() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
@@ -179,14 +177,14 @@ public sealed class PurePumpkinMagic : CultLeaderModCard, IApostleCard
         await ApostleCardHelper.ApplyWithAuthority(choiceContext, Owner.Creature, 2m, this, elder);
         await CreatureCmd.GainBlock(Owner.Creature, 5m, ValueProp.Move, cardPlay, false);
     }
-    protected override void OnUpgrade() => _keywords.Clear();
+    protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
 }
 
-/// <summary>Gavia â€” "I'll... protect you..."</summary>
+/// <summary>Gavia ¡ª "I'll... protect you..."</summary>
 public sealed class PureProtectYou : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "åŠ ç»´äºš";
+    public string ApostleName => "¼ÓÎ¬ÑÇ";
     public override bool GainsBlock => true;
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/gavia_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/gavia_card.png";
@@ -208,11 +206,11 @@ public sealed class PureProtectYou : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() => DynamicVars["Draw"].UpgradeValueBy(1m);
 }
 
-/// <summary>Sally â€” Mischievous Smile</summary>
+/// <summary>Sally ¡ª Mischievous Smile</summary>
 public sealed class PureMischievousSmile : CultLeaderModCard, IApostleCard
 {
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "èŽŽèŽ‰";
+    public string ApostleName => "É¯Àò";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/sally_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/sally_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/sally_card.png";
@@ -237,17 +235,16 @@ public sealed class PureMischievousSmile : CultLeaderModCard, IApostleCard
     protected override void OnUpgrade() { }
 }
 
-/// <summary>Margo â€” Margoma Recovery</summary>
+/// <summary>Margo ¡ª Margoma Recovery</summary>
 public sealed class PureMargomaRecovery : CultLeaderModCard, IApostleCard
 {
-    private readonly HashSet<CardKeyword> _keywords = [CardKeyword.Exhaust];
     public ApostlePersonality Personality => ApostlePersonality.Pure;
-    public string ApostleName => "çŽ›æˆˆ";
+    public string ApostleName => "Âê¸ê";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/margo_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/margo_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/margo_card.png";
     public override string BetaPortraitPath => PortraitPath;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => _keywords;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     private const string RegenVarName = "RegenPower";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<RegenPower>(RegenVarName, 3m)];
 
@@ -267,5 +264,5 @@ public sealed class PureMargomaRecovery : CultLeaderModCard, IApostleCard
             await CardPileCmd.Draw(choiceContext, 2m, Owner, false);
         }
     }
-    protected override void OnUpgrade() => _keywords.Clear();
+    protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
 }
