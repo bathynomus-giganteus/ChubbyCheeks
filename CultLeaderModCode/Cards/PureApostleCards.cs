@@ -160,6 +160,8 @@ public sealed class PureStrongestCollectible : CultLeaderModCard, IApostleCard
 /// <summary>Spicy ¡ª Pumpkin Magic</summary>
 public sealed class PurePumpkinMagic : CultLeaderModCard, IApostleCard
 {
+    private readonly HashSet<CardKeyword> _keywords = [CardKeyword.Exhaust];
+
     public ApostlePersonality Personality => ApostlePersonality.Pure;
     public string ApostleName => "Ë¹Æ¤Ææ";
     public override bool GainsBlock => true;
@@ -167,7 +169,7 @@ public sealed class PurePumpkinMagic : CultLeaderModCard, IApostleCard
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/spicy_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/spicy_card.png";
     public override string BetaPortraitPath => PortraitPath;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => _keywords;
 
     public PurePumpkinMagic() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
@@ -238,13 +240,14 @@ public sealed class PureMischievousSmile : CultLeaderModCard, IApostleCard
 /// <summary>Margo ¡ª Margoma Recovery</summary>
 public sealed class PureMargomaRecovery : CultLeaderModCard, IApostleCard
 {
+    private readonly HashSet<CardKeyword> _keywords = [CardKeyword.Exhaust];
     public ApostlePersonality Personality => ApostlePersonality.Pure;
     public string ApostleName => "Âê¸ê";
     public override string? StarIconPath => "res://CultLeaderMod/images/apostle_icons/margo_avatar.png";
     public override string CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/big/margo_card.png";
     public override string PortraitPath => "res://CultLeaderMod/images/card_portraits/pure/margo_card.png";
     public override string BetaPortraitPath => PortraitPath;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => _keywords;
     private const string RegenVarName = "RegenPower";
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<RegenPower>(RegenVarName, 3m)];
 
