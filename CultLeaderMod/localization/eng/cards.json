@@ -1,0 +1,6 @@
+{
+  "CULT_LEADER_STRIKE.title": "Strike",
+  "CULT_LEADER_STRIKE.description": "Deal {Damage:diff()} damage.",
+  "CULT_LEADER_DEFEND.title": "Defend",
+  "CULT_LEADER_DEFEND.description": "Gain {Block:diff()} Block."
+}

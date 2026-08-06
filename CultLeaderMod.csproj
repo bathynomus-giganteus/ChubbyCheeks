@@ -1,0 +1,56 @@
+﻿<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
+    <Import Project=".\Sts2PathDiscovery.props"/>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework><ImplicitUsings>true</ImplicitUsings>
+        <Nullable>enable</Nullable><AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase><PathMap>$(AppOutputBase)=.\</PathMap>
+        <GodotDisabledSourceGenerators>GodotPluginsInitializer</GodotDisabledSourceGenerators>
+        <RitsuLibDeployDir>$(Sts2Dir)/mods/STS2-RitsuLib/</RitsuLibDeployDir>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+        <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)\obj\</BaseIntermediateOutputPath>
+    </PropertyGroup>
+    <PropertyGroup><NoWarn>$(NoWarn);MSB3270</NoWarn></PropertyGroup>
+    <ItemGroup Condition="Exists('$(Sts2DataDir)')">
+        <Reference Include="0Harmony"><HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath><Private>false</Private></Reference>
+        <Reference Include="sts2"><HintPath>$(Sts2DataDir)/sts2.dll</HintPath><Private>false</Private></Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="STS2.RitsuLib" Version="*" PrivateAssets="All"/>
+        <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
+        <AdditionalFiles Include="CultLeaderMod/localization/**/*.json"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove=".godot/**" />
+        <Compile Remove="CultLeaderMod/**" />
+        <Compile Remove="CultLeaderModCode/MainFile.cs" />
+        <Compile Remove="CultLeaderModCode/Extensions/**" />
+        <Compile Remove="CultLeaderModCode/Potions/CultLeaderModPotion.cs" />
+        <Compile Remove="CultLeaderModCode/Powers/CultLeaderModPower.cs" />
+        <Compile Remove="Scripts/**" />
+        <Compile Remove="tmp/**" />
+        <EmbeddedResource Remove="CultLeaderMod/**" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="CultLeaderMod.json" /><None Include="project.godot"/><None Include="CultLeaderMod/**" />
+    </ItemGroup>
+    <Target Name="CheckDependencyPaths">
+        <Error Text="STS2 data not found" Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
+    </Target>
+    <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
+        <Message Text="Copying mod..." Importance="high" />
+        <MakeDir Directories="$(ModsPath)CultLeaderMod/" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)CultLeaderMod/" />
+        <Copy SourceFiles="CultLeaderMod.json" DestinationFolder="$(ModsPath)CultLeaderMod/" />
+        <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsPath)CultLeaderMod/" />
+    </Target>
+
+
+    <Target Name="ExportPck">
+        <Message Text="Exporting PCK to mods folder..." Importance="high" />
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;Windows Desktop&quot; &quot;$(ModsPath)CultLeaderMod/CultLeaderMod.pck&quot;"
+              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
+              ContinueOnError="WarnAndContinue" />
+    </Target>
+
+</Project>

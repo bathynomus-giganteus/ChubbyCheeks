@@ -1,0 +1,32 @@
+# Godot
+.godot/imported/
+.godot/shader_cache/
+.godot/uid_cache.bin
+.godot/global_script_class_cache.cfg
+.godot/mono/
+exported/
+
+# Build output
+bin/
+obj/
+.export/
+*.pdb
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp / decompiled
+tmp/
+
+# Editor
+editor/
+
+# Godot editor files
+*.uid

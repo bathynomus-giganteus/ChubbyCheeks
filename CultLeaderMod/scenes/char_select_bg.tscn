@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw26qwhbojg1w"]
+
+[ext_resource type="Texture2D" uid="uid://dohlsfi0t27qu" path="res://CultLeaderMod/images/charui/char_select_bg.jpg" id="1_8ciyw"]
+
+[node name="CharSelectBg" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 400.0
+offset_top = 100.0
+offset_right = 400.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("1_8ciyw")
+expand_mode = 2
+stretch_mode = 2

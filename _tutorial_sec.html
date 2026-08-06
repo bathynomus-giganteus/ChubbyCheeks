@@ -1,0 +1,3227 @@
+﻿<!DOCTYPE html>
+
+
+
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		
+			<meta name="description" content="ææ®å°å¡2ï¼Slay the Spire 2ï¼ä¸­ææ¨¡ç»å¶ä½æç¨ã" />
+			<meta property="og:description" content="ææ®å°å¡2ï¼Slay the Spire 2ï¼ä¸­ææ¨¡ç»å¶ä½æç¨ã" />
+		
+		
+			<meta name="keywords" content="ææ®å°å¡2,Slay the Spire 2,STS2,mod,æ¨¡ç»,æç¨,RitsuLib,BaseLib,Harmony,Godot" />
+		
+		<meta property="og:locale" content="zh_CN" />
+		<meta property="og:site_name" content="ææ®å°å¡2modå¶ä½æç¨" />
+		
+			<meta property="og:title" content="æ¬¡è¦èµæº" />
+		
+		
+<link rel="stylesheet" href="../../../css/layout.css">
+
+		
+		<title> æ¬¡è¦èµæº -  ææ®å°å¡2modå¶ä½æç¨</title>
+		<!-- <link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css" /> -->
+		<!-- <script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script> -->
+		
+<link rel="stylesheet" href="../../../lib/mdui/mdui.min.css">
+
+		
+<script src="../../../lib/mdui/mdui.min.js"></script>
+
+		<!-- lazyload -->
+		
+<script src="../../../lib/lazysizes.js"></script>
+
+		<!-- smooth-scrolling -->
+		
+<script src="../../../lib/smooth-scrolling.js"></script>
+
+		<!-- highlight -->
+		
+<link rel="stylesheet" href="../../../lib/highlight/atom-one-dark.min.css">
+
+		
+<script src="../../../lib/highlight/highlight.min.js"></script>
+
+		<!-- é¢ç½® kiraicon -->
+		
+<link rel="stylesheet" href="../../../lib/iconfont/iconfont.css">
+
+		
+		<link
+			rel="shortcut icon"
+			href="/icon.ico"
+			type="image/x-icon"
+		/>
+		
+<link rel="stylesheet" href="../../../deps/css/APlayer.min.css">
+
+		
+			
+				
+<link rel="stylesheet" href="../../../docs-nav.css">
+
+			
+		
+		
+			
+				
+<script src="../../../docs-anchors.js"></script>
+
+			
+				
+<script src="../../../docs-panels.js"></script>
+
+			
+				
+<script src="../../../community-qq.js"></script>
+
+			
+				
+<script src="../../../lang-switch.js"></script>
+
+			
+		
+		
+<script src="../../../deps/js/APlayer.min.js"></script>
+<script src="../../../deps/js/Meting.min.js"></script>
+
+	<meta name="generator" content="Hexo 7.3.0"></head>
+
+	<body class="">
+		<div
+			class="kira-background"
+			style="background-image: url('/images/qq20260307.png')"
+		></div>
+		<div class="kira-header">
+    <a
+        class="kira-drawer-button mdui-ripple"
+        title="å¯¼èªæ "
+        onclick="document.querySelector('.kira-sidebar-modal').classList.add('show');document.querySelector('.kira-sidebar#sidebar').classList.add('show');"
+    >
+        <i class="kirafont icon-menu"></i>
+    </a>
+    <a class="kira-header-home" href="../../../index.html" title="ææ®å°å¡2modå¶ä½æç¨">
+        <img
+			src=""
+			alt="Reme"
+		/>
+    </a>
+    <a
+        class="kira-header-link mdui-ripple"
+        href="https://github.com/GlitchedReme/SlayTheSpire2ModdingTutorials"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="GitHub ä»åº"
+    >
+        <i class="kirafont icon-github"></i>
+    </a>
+</div>
+		<div class="kira-body">
+			<div class="kira-sidebar" id="sidebar">
+	<div class="kira-avatar mdui-ripple">
+		<a href="" title="Reme">
+			<img src="" alt="Reme" />
+		</a>
+	</div>
+	<div class="kira-count">
+		<div><span>æç« </span>
+			162
+		</div>
+		<div><span>æ ç­¾</span>
+			0
+		</div>
+		<div><span>åç±»</span>
+			1
+		</div>
+	</div>
+	<button type="button" class="kira-panel-reopen" id="kira-sidebar-reopen" hidden title="å±å¼å¯¼èª" aria-label="å±å¼å¯¼èª">
+		<i class="kirafont icon-caret-up kira-reopen-icon" aria-hidden="true"></i>
+	</button>
+	<div class="kira-sidebar-inner">
+		<div class="kira-sidebar-top">
+			<div class="kira-search-panel">
+				<div class="kira-search-input-wrap">
+					<i class="kirafont icon-search"></i>
+					<input id="kira-search-input" type="search" placeholder="æç´¢å¨é¨æç« åå®¹..." autocomplete="off" />
+				</div>
+				<div id="kira-search-results" class="kira-search-results" hidden></div>
+			</div>
+			<button type="button" class="kira-collapse-toggle" id="kira-sidebar-collapse" aria-expanded="true"
+				aria-controls="kira-sidebar-scroll" title="æå å¯¼èª" aria-label="æå å¯¼èª">
+				<i class="kirafont icon-caret-up kira-collapse-icon" aria-hidden="true"></i>
+			</button>
+		</div>
+		<div class="kira-sidebar-scroll kira-scrollbar" id="kira-sidebar-scroll">
+			<div class="kira-list kira-docs-tree kira-explorer">
+				
+					<ul class="kira-explorer-list kira-explorer-root">
+						
+							<li class="kira-explorer-node is-file is-open "
+								data-level="0" data-node-id="tree-node-0-1"
+								style="--node-order:1;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../../index.html"
+														title="é¦é¡µ">
+														<i
+															class="kirafont icon-home"></i>
+														<span class="kira-explorer-text">
+															é¦é¡µ
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-folder is-open "
+								data-level="0" data-node-id="tree-node-0-2"
+								style="--node-order:2;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="true"
+											aria-controls="tree-node-0-2">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="åºç¡">
+															<i
+																class="kirafont icon-book"></i>
+															<span class="kira-explorer-text">
+																åºç¡
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-0-2">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-3"
+								style="--node-order:3;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../01-env-setup/"
+														title="01 ç¯å¢éç½®">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															01 ç¯å¢éç½®
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-4"
+								style="--node-order:4;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../02-install-view-source-and-patch/"
+														title="02 å¸¸è§é®é¢">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															02 å¸¸è§é®é¢
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-5"
+								style="--node-order:5;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-choose-base-library/"
+														title="03 éæ©åºç¡åº">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															03 éæ©åºç¡åº
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-6"
+								style="--node-order:6;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../05-variable-and-description/"
+														title="04 åéä¸æè¿°">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															04 åéä¸æè¿°
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-7"
+								style="--node-order:7;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../08-ancient-dialogue/"
+														title="05 åå¤å¯¹è¯">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															05 åå¤å¯¹è¯
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-8"
+								style="--node-order:8;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../07-quick-debug-and-hot-reload/"
+														title="06 å¿«éè°è¯&amp;ç­éè½½">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															06 å¿«éè°è¯&amp;ç­éè½½
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-9"
+								style="--node-order:9;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../08-launch-arguments/"
+														title="07 å¯å¨é¡¹åæ°">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															07 å¯å¨é¡¹åæ°
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-10"
+								style="--node-order:10;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../09-console-commands/"
+														title="08 æ§å¶å°æä»¤">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															08 æ§å¶å°æä»¤
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-11"
+								style="--node-order:11;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../10-patch/"
+														title="09 Patch">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															09 Patch
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-12"
+								style="--node-order:12;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../11-upload-workshop/"
+														title="10 ä¸ä¼ å·¥å">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															10 ä¸ä¼ å·¥å
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+							<li class="kira-explorer-node is-folder is-open "
+								data-level="0" data-node-id="tree-node-0-13"
+								style="--node-order:13;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="true"
+											aria-controls="tree-node-0-13">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="RitsuLib">
+															<i
+																class="kirafont icon-book"></i>
+															<span class="kira-explorer-text">
+																RitsuLib
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-0-13">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open is-active"
+								data-level="1" data-node-id="tree-node-1-14"
+								style="--node-order:14;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../"
+														title="00 æ»è§">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															00 æ»è§
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-folder is-open "
+								data-level="1" data-node-id="tree-node-1-15"
+								style="--node-order:15;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="true"
+											aria-controls="tree-node-1-15">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="01 æ·»å åºç¡åå®¹">
+															<i
+																class="kirafont icon-folder"></i>
+															<span class="kira-explorer-text">
+																01 æ·»å åºç¡åå®¹
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-1-15">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-16"
+								style="--node-order:16;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-01-add-card/"
+														title="01 æ·»å å¡ç">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															01 æ·»å å¡ç
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-17"
+								style="--node-order:17;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-02-custom-config/"
+														title="02 èªå®ä¹éç½®">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															02 èªå®ä¹éç½®
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-18"
+								style="--node-order:18;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-03-add-relic/"
+														title="03 æ·»å æ°éç©">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															03 æ·»å æ°éç©
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-19"
+								style="--node-order:19;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-04-card-properties/"
+														title="04 æ·»å å¡çå±æ§">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															04 æ·»å å¡çå±æ§
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-20"
+								style="--node-order:20;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-05-add-power/"
+														title="05 æ·»å æ°è½å">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															05 æ·»å æ°è½å
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-21"
+								style="--node-order:21;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-06-add-potion/"
+														title="06 æ·»å æ°è¯æ°´">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															06 æ·»å æ°è¯æ°´
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-22"
+								style="--node-order:22;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-07-add-ancient/"
+														title="07 æ·»å åå¤ä¹æ°">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															07 æ·»å åå¤ä¹æ°
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-23"
+								style="--node-order:23;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-08-add-orb/"
+														title="08 æ·»å åè½ç">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															08 æ·»å åè½ç
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-24"
+								style="--node-order:24;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-09-add-timeline/"
+														title="09 æ·»å æ¶é´çº¿">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															09 æ·»å æ¶é´çº¿
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-25"
+								style="--node-order:25;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-10-add-audio/"
+														title="10 æ·»å é³é¢">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															10 æ·»å é³é¢
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-26"
+								style="--node-order:26;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-11-add-monster/"
+														title="11 æ·»å æ°æªç©">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															11 æ·»å æ°æªç©
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-27"
+								style="--node-order:27;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-12-add-event/"
+														title="12 æ·»å æ°äºä»¶">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															12 æ·»å æ°äºä»¶
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-28"
+								style="--node-order:28;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-13-add-enchantment/"
+														title="13 æ·»å æ°éé­">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															13 æ·»å æ°éé­
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-29"
+								style="--node-order:29;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-14-add-new-character/"
+														title="14 æ·»å æ°äººç©">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															14 æ·»å æ°äººç©
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-30"
+								style="--node-order:30;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-15-add-singleton/"
+														title="15 æ·»å åä¾">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															15 æ·»å åä¾
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-31"
+								style="--node-order:31;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-15-1-add-card-pool/"
+														title="16 æ·»å å¡æ± ">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															16 æ·»å å¡æ± 
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-32"
+								style="--node-order:32;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-15-2-character-animation/"
+														title="17 è§è²å¨ç»">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															17 è§è²å¨ç»
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-33"
+								style="--node-order:33;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-18-add-capability/"
+														title="18 æ·»å ç»ä»¶">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															18 æ·»å ç»ä»¶
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+							<li class="kira-explorer-node is-folder  "
+								data-level="1" data-node-id="tree-node-1-34"
+								style="--node-order:34;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="false"
+											aria-controls="tree-node-1-34">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="02 ç©æ³åºåº">
+															<i
+																class="kirafont icon-folder"></i>
+															<span class="kira-explorer-text">
+																02 ç©æ³åºåº
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-1-34">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-35"
+								style="--node-order:35;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-16-health-bar-overlay/"
+														title="01 è¡æ¡è¦ç">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															01 è¡æ¡è¦ç
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-36"
+								style="--node-order:36;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-18-max-hand-size/"
+														title="02 æçä¸é">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															02 æçä¸é
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-37"
+								style="--node-order:37;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-19-hand-outline/"
+														title="03 æçæ³å">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															03 æçæ³å
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-38"
+								style="--node-order:38;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-20-custom-card-pile/"
+														title="04 èªå®ä¹å¡çå ">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															04 èªå®ä¹å¡çå 
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-39"
+								style="--node-order:39;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-21-top-bar-button/"
+														title="05 é¡¶æ æé®">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															05 é¡¶æ æé®
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-40"
+								style="--node-order:40;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-22-notification/"
+														title="06 éç¥æç¤º">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															06 éç¥æç¤º
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-41"
+								style="--node-order:41;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-22-1-extra-badge/"
+														title="07 é¢å¤è§æ ">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															07 é¢å¤è§æ 
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-42"
+								style="--node-order:42;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-22-2-common-tools/"
+														title="08 å¸¸ç¨å·¥å·">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															08 å¸¸ç¨å·¥å·
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-43"
+								style="--node-order:43;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-22-3-in-run-data/"
+														title="09 å±åæ°æ®">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															09 å±åæ°æ®
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-44"
+								style="--node-order:44;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-22-4-custom-reward/"
+														title="10 èªå®ä¹å¥å±">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															10 èªå®ä¹å¥å±
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-45"
+								style="--node-order:45;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-22-5-custom-targeting/"
+														title="11 èªå®ä¹ç®æ ">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															11 èªå®ä¹ç®æ 
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-46"
+								style="--node-order:46;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-22-6-right-click/"
+														title="12 å³é®äº¤äº">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															12 å³é®äº¤äº
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open is-active"
+								data-level="2" data-node-id="tree-node-2-47"
+								style="--node-order:47;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href=""
+														title="13 æ¬¡è¦èµæº">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															13 æ¬¡è¦èµæº
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+							<li class="kira-explorer-node is-folder  "
+								data-level="1" data-node-id="tree-node-1-48"
+								style="--node-order:48;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="false"
+											aria-controls="tree-node-1-48">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="03 æ¨¡ç»å·¥å·">
+															<i
+																class="kirafont icon-folder"></i>
+															<span class="kira-explorer-text">
+																03 æ¨¡ç»å·¥å·
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-1-48">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-49"
+								style="--node-order:49;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-17-data-save/"
+														title="01 æ°æ®ä¿å­">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															01 æ°æ®ä¿å­
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-50"
+								style="--node-order:50;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-23-lifecycle-events/"
+														title="02 çå½å¨æäºä»¶">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															02 çå½å¨æäºä»¶
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-51"
+								style="--node-order:51;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-24-patch-system/"
+														title="03 è¡¥ä¸ç³»ç»">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															03 è¡¥ä¸ç³»ç»
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-52"
+								style="--node-order:52;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-25-update-checker/"
+														title="04 æ´æ°æ£æ¥">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															04 æ´æ°æ£æ¥
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-53"
+								style="--node-order:53;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-26-runtime-hotkey/"
+														title="05 è¿è¡æ¶ç­é®">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															05 è¿è¡æ¶ç­é®
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-54"
+								style="--node-order:54;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-27-content-registry/"
+														title="06 åå®¹æ³¨å">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															06 åå®¹æ³¨å
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-55"
+								style="--node-order:55;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-28-node-attachment/"
+														title="07 èç¹éå ">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															07 èç¹éå 
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-56"
+								style="--node-order:56;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-29-telemetry/"
+														title="09 æ°æ®é¥æµ">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															09 æ°æ®é¥æµ
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-57"
+								style="--node-order:57;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../04-30-mod-integration/"
+														title="10 æ¨¡ç»èå¨">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															10 æ¨¡ç»èå¨
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+							<li class="kira-explorer-node is-folder  "
+								data-level="0" data-node-id="tree-node-0-58"
+								style="--node-order:58;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="false"
+											aria-controls="tree-node-0-58">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="BaseLib">
+															<i
+																class="kirafont icon-book"></i>
+															<span class="kira-explorer-text">
+																BaseLib
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-0-58">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-59"
+								style="--node-order:59;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/"
+														title="00 æ»è§">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															00 æ»è§
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-60"
+								style="--node-order:60;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-01-add-card/"
+														title="01 æ·»å å¡ç">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															01 æ·»å å¡ç
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-61"
+								style="--node-order:61;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-02-mod-config/"
+														title="02 èªå®ä¹æ¨¡ç»éç½®">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															02 èªå®ä¹æ¨¡ç»éç½®
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-62"
+								style="--node-order:62;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-03-add-relic/"
+														title="03 æ·»å æ°éç©">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															03 æ·»å æ°éç©
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-63"
+								style="--node-order:63;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-04-card-properties/"
+														title="04 æ·»å å¡çå±æ§">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															04 æ·»å å¡çå±æ§
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-64"
+								style="--node-order:64;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-05-add-power/"
+														title="05 æ·»å æ°è½å">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															05 æ·»å æ°è½å
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-65"
+								style="--node-order:65;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-06-add-potion/"
+														title="06 æ·»å æ°è¯æ°´">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															06 æ·»å æ°è¯æ°´
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-66"
+								style="--node-order:66;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-07-add-ancient/"
+														title="07 æ·»å åå¤ä¹æ°">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															07 æ·»å åå¤ä¹æ°
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-67"
+								style="--node-order:67;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-08-add-orb/"
+														title="08 æ·»å åè½ç">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															08 æ·»å åè½ç
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-68"
+								style="--node-order:68;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-09-run-save/"
+														title="09 å±åä¿å­">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															09 å±åä¿å­
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-69"
+								style="--node-order:69;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-10-mod-integration/"
+														title="10 modèå¨">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															10 modèå¨
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-70"
+								style="--node-order:70;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-11-add-monster/"
+														title="11 æ·»å æ°æªç©">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															11 æ·»å æ°æªç©
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-71"
+								style="--node-order:71;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-12-add-event/"
+														title="12 æ·»å æ°äºä»¶">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															12 æ·»å æ°äºä»¶
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-72"
+								style="--node-order:72;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-13-add-enchantment/"
+														title="13 æ·»å æ°éé­">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															13 æ·»å æ°éé­
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-73"
+								style="--node-order:73;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../04-add-new-character/"
+														title="14 æ·»å æ°äººç©">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															14 æ·»å æ°äººç©
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-74"
+								style="--node-order:74;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-15-add-singleton/"
+														title="15 æ·»å åä¾">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															15 æ·»å åä¾
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-75"
+								style="--node-order:75;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../03-baselib/03-16-max-hand-size/"
+														title="16 æçä¸é">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															16 æçä¸é
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+							<li class="kira-explorer-node is-folder is-open "
+								data-level="0" data-node-id="tree-node-0-76"
+								style="--node-order:76;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="true"
+											aria-controls="tree-node-0-76">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="è¿ç§»">
+															<i
+																class="kirafont icon-book"></i>
+															<span class="kira-explorer-text">
+																è¿ç§»
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-0-76">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-77"
+								style="--node-order:77;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../07-migration-99-100/"
+														title="01 æµè¯ç è³ æ­£å¼ç">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															01 æµè¯ç è³ æ­£å¼ç
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-78"
+								style="--node-order:78;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../08-migration-baselib-to-ritsulib/"
+														title="02 BaseLib è³ RitsuLib">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															02 BaseLib è³ RitsuLib
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+							<li class="kira-explorer-node is-folder  "
+								data-level="0" data-node-id="tree-node-0-79"
+								style="--node-order:79;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="false"
+											aria-controls="tree-node-0-79">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="è§è§">
+															<i
+																class="kirafont icon-book"></i>
+															<span class="kira-explorer-text">
+																è§è§
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-0-79">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-80"
+								style="--node-order:80;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../05-card-art-and-skin-replacement/"
+														title="01 å¡å¾&amp;Spine">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															01 å¡å¾&amp;Spine
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-81"
+								style="--node-order:81;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../06-style-art-drawing/"
+														title="02 é£æ ¼åç»ç»å¶">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															02 é£æ ¼åç»ç»å¶
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-folder  "
+								data-level="1" data-node-id="tree-node-1-82"
+								style="--node-order:82;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="false"
+											aria-controls="tree-node-1-82">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="03 ç¹æä¸å¨ç»">
+															<i
+																class="kirafont icon-folder"></i>
+															<span class="kira-explorer-text">
+																03 ç¹æä¸å¨ç»
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-1-82">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-83"
+								style="--node-order:83;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../09-01-frame-animation/"
+														title="01 å¸§å¨ç»çå¤ç">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															01 å¸§å¨ç»çå¤ç
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-84"
+								style="--node-order:84;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../09-02-texture-atlas/"
+														title="02 æè´¨å¾é">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															02 æè´¨å¾é
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-85"
+								style="--node-order:85;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../09-03-vfx-instantiation/"
+														title="03 ç¹æçæ­æ¾(å®ä¾å)ä¸ç¼å­">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															03 ç¹æçæ­æ¾(å®ä¾å)ä¸ç¼å­
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-86"
+								style="--node-order:86;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../09-04-particle-vfx/"
+														title="04 ç²å­ç¹æ">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															04 ç²å­ç¹æ
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-87"
+								style="--node-order:87;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../09-05-world-environment/"
+														title="05 å¨å±ç¯å¢åç§">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															05 å¨å±ç¯å¢åç§
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-88"
+								style="--node-order:88;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../09-06-shader/"
+														title="06 Shader">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															06 Shader
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="2" data-node-id="tree-node-2-89"
+								style="--node-order:89;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../09-07-game-builtin-vfx/"
+														title="07 æ¸¸ææ¬ä½ç¹æ">
+														<i
+															class="kirafont icon-file"></i>
+														<span class="kira-explorer-text">
+															07 æ¸¸ææ¬ä½ç¹æ
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+							<li class="kira-explorer-node is-folder is-open "
+								data-level="0" data-node-id="tree-node-0-90"
+								style="--node-order:90;">
+								<div class="kira-explorer-row">
+									
+										<button class="kira-explorer-toggle" type="button"
+											aria-expanded="true"
+											aria-controls="tree-node-0-90">
+											<span class="kira-explorer-caret"></span>
+										</button>
+										
+
+												
+														<span class="kira-explorer-link is-label"
+															title="å·¥å·">
+															<i
+																class="kirafont icon-book"></i>
+															<span class="kira-explorer-text">
+																å·¥å·
+															</span>
+														
+								</div>
+
+								
+									<div class="kira-explorer-children" id="tree-node-0-90">
+										<ul class="kira-explorer-list">
+											
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-91"
+								style="--node-order:91;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../../tools/id-generator/"
+														title="ID çæå¨">
+														<i
+															class="kirafont icon-container"></i>
+														<span class="kira-explorer-text">
+															ID çæå¨
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-92"
+								style="--node-order:92;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../../tools/card-frame-preview/"
+														title="å¡æ¡é¢è§å¨">
+														<i
+															class="kirafont icon-container"></i>
+														<span class="kira-explorer-text">
+															å¡æ¡é¢è§å¨
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-93"
+								style="--node-order:93;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../../tools/text-preview/"
+														title="ææ¬é¢è§å¨">
+														<i
+															class="kirafont icon-container"></i>
+														<span class="kira-explorer-text">
+															ææ¬é¢è§å¨
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+							<li class="kira-explorer-node is-file is-open "
+								data-level="1" data-node-id="tree-node-1-94"
+								style="--node-order:94;">
+								<div class="kira-explorer-row">
+									
+											<span class="kira-explorer-toggle-spacer"></span>
+											
+
+												
+													<a class="kira-explorer-link mdui-ripple"
+														href="../../../tools/dialogue-preview/"
+														title="å¯¹è¯é¢è§å¨">
+														<i
+															class="kirafont icon-container"></i>
+														<span class="kira-explorer-text">
+															å¯¹è¯é¢è§å¨
+														</span>
+													</a>
+													
+								</div>
+
+								
+							</li>
+							
+										</ul>
+									</div>
+									
+							</li>
+							
+					</ul>
+					<div class="kira-explorer-hover-indicator" aria-hidden="true"></div>
+					
+			</div>
+			<aside id="kira-sidebar">
+				
+			</aside>
+			<div class="kira-copyright">
+				&copy; 2026
+					<a href="../../../index.html">
+						Reme
+					</a>
+					Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> &
+						<a href="https://github.com/ch1ny/kira-hexo/" target="_blank">Kira-Hexo</a>
+						<br />
+						
+								
+			</div>
+		</div>
+	</div>
+</div>
+<div class="kira-sidebar-modal" id="sidebar-modal" onclick="(function(self) {
+		self.classList.remove('show');
+		document.querySelector('.kira-sidebar.show#sidebar').classList.remove('show');
+	})(this)"></div>
+<script>
+	(function () {
+		var tree = document.querySelector('.kira-docs-tree.kira-explorer');
+		if (!tree) return;
+
+		var folders = tree.querySelectorAll('.kira-explorer-node.is-folder');
+		var indicator = tree.querySelector('.kira-explorer-hover-indicator');
+		var foldAnimTimer = null;
+		var storageKey = 'kira:docs-tree:open-state';
+		var sidebarScrollKey = 'kira:sidebar-scroll-top';
+		var sidebarScroll = document.getElementById('kira-sidebar-scroll');
+		var storedFolderState = readFolderState();
+
+		function saveSidebarScroll() {
+			if (!sidebarScroll || !window.localStorage) return;
+			try {
+				localStorage.setItem(sidebarScrollKey, String(sidebarScroll.scrollTop));
+			} catch (error) { }
+		}
+
+		function restoreSidebarScroll() {
+			if (!sidebarScroll || !window.localStorage) return;
+			try {
+				var raw = localStorage.getItem(sidebarScrollKey);
+				if (raw == null) return;
+				var top = parseInt(raw, 10);
+				if (!isNaN(top) && top >= 0) sidebarScroll.scrollTop = top;
+			} catch (error) { }
+		}
+
+		function readFolderState() {
+			try {
+				var raw = window.localStorage ? localStorage.getItem(storageKey) : null;
+				return raw ? JSON.parse(raw) : null;
+			} catch (error) {
+				return null;
+			}
+		}
+
+		function writeFolderState() {
+			try {
+				if (!window.localStorage) return;
+				var state = {};
+				folders.forEach(function (folder) {
+					var nodeId = folder.getAttribute('data-node-id');
+					if (nodeId) state[nodeId] = folder.classList.contains('is-open');
+				});
+				localStorage.setItem(storageKey, JSON.stringify(state));
+			} catch (error) {
+			}
+		}
+
+		function getChildrenBox(folder) {
+			return folder.querySelector(':scope > .kira-explorer-children');
+		}
+
+		function updateChildrenHeight(folder) {
+			var box = getChildrenBox(folder);
+			if (!box) return;
+			box.style.setProperty('--children-height', box.scrollHeight + 'px');
+		}
+
+		function refreshAncestorHeights(fromNode) {
+			var cursor = fromNode;
+			while (cursor && cursor !== tree) {
+				if (cursor.classList && cursor.classList.contains('kira-explorer-node') && cursor.classList.contains('is-folder')) {
+					updateChildrenHeight(cursor);
+				}
+				cursor = cursor.parentElement;
+			}
+		}
+
+		function refreshAllFolderHeights() {
+			Array.prototype
+				.slice.call(folders)
+				.sort(function (a, b) {
+					return Number(b.getAttribute('data-level') || 0) - Number(a.getAttribute('data-level') || 0);
+				})
+				.forEach(function (folder) {
+					updateChildrenHeight(folder);
+				});
+		}
+
+		function scheduleHeightSync() {
+			refreshAllFolderHeights();
+			requestAnimationFrame(function () {
+				refreshAllFolderHeights();
+				requestAnimationFrame(function () {
+					refreshAllFolderHeights();
+				});
+			});
+			setTimeout(refreshAllFolderHeights, 120);
+			setTimeout(refreshAllFolderHeights, 360);
+		}
+
+		function triggerFoldAnimationWindow() {
+			tree.classList.add('is-fold-animating');
+			if (foldAnimTimer) clearTimeout(foldAnimTimer);
+			foldAnimTimer = setTimeout(function () {
+				tree.classList.remove('is-fold-animating');
+				foldAnimTimer = null;
+			}, 520);
+		}
+
+		function setFolderOpen(folder, shouldOpen, animate, persist) {
+			if (!folder) return;
+			if (animate) triggerFoldAnimationWindow();
+			updateChildrenHeight(folder);
+			folder.classList.toggle('is-open', shouldOpen);
+			var btn = folder.querySelector(':scope > .kira-explorer-row .kira-explorer-toggle');
+			if (btn) btn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+			if (persist !== false) writeFolderState();
+			requestAnimationFrame(function () {
+				refreshAncestorHeights(folder);
+				requestAnimationFrame(function () {
+					refreshAncestorHeights(folder);
+				});
+			});
+		}
+
+		function openAncestors(node) {
+			var parent = node ? node.parentElement : null;
+			while (parent && parent !== tree) {
+				if (parent.classList && parent.classList.contains('kira-explorer-children')) {
+					var folderNode = parent.closest('.kira-explorer-node.is-folder');
+					if (folderNode) setFolderOpen(folderNode, true, false, false);
+				}
+				parent = parent.parentElement;
+			}
+		}
+
+		folders.forEach(function (folder) {
+			var nodeId = folder.getAttribute('data-node-id');
+			if (storedFolderState && Object.prototype.hasOwnProperty.call(storedFolderState, nodeId)) {
+				folder.classList.toggle('is-open', !!storedFolderState[nodeId]);
+				var btn = folder.querySelector(':scope > .kira-explorer-row .kira-explorer-toggle');
+				if (btn) btn.setAttribute('aria-expanded', storedFolderState[nodeId] ? 'true' : 'false');
+			}
+			updateChildrenHeight(folder);
+			var children = getChildrenBox(folder);
+			if (children) {
+				Array.prototype.forEach.call(children.querySelectorAll(':scope > .kira-explorer-list > .kira-explorer-node'), function (child, index) {
+					child.style.setProperty('--child-index', index);
+				});
+			}
+		});
+
+		function toggleFolderFromRow(event, row) {
+			if (event.target.closest('.kira-explorer-toggle')) return;
+			var folder = row.closest('.kira-explorer-node.is-folder');
+			if (!folder) return;
+			var link = event.target.closest('a.kira-explorer-link');
+			if (link && (event.ctrlKey || event.metaKey || event.shiftKey || event.button === 1)) {
+				return;
+			}
+			if (link && !link.classList.contains('is-label')) {
+				event.preventDefault();
+			}
+			setFolderOpen(folder, !folder.classList.contains('is-open'), true);
+		}
+
+		tree.querySelectorAll('.kira-explorer-toggle').forEach(function (btn) {
+			btn.addEventListener('click', function (event) {
+				event.preventDefault();
+				event.stopPropagation();
+				var folder = btn.closest('.kira-explorer-node.is-folder');
+				if (!folder) return;
+				setFolderOpen(folder, !folder.classList.contains('is-open'), true);
+			});
+		});
+
+		tree.querySelectorAll('.kira-explorer-node.is-folder > .kira-explorer-row').forEach(function (row) {
+			row.addEventListener('click', function (event) {
+				toggleFolderFromRow(event, row);
+			});
+		});
+
+		var activeNode = tree.querySelector('.kira-explorer-node.is-active');
+		if (activeNode) openAncestors(activeNode);
+		scheduleHeightSync();
+
+		tree.querySelectorAll('a.kira-explorer-link[href]').forEach(function (link) {
+			link.addEventListener('click', saveSidebarScroll);
+		});
+
+		restoreSidebarScroll();
+		requestAnimationFrame(function () {
+			restoreSidebarScroll();
+		});
+		window.addEventListener('load', restoreSidebarScroll);
+		window.addEventListener('pageshow', restoreSidebarScroll);
+		window.addEventListener('beforeunload', saveSidebarScroll);
+
+		function moveIndicatorTo(link, visible) {
+			if (!indicator) return;
+			if (!link || visible === false) {
+				indicator.classList.remove('is-visible');
+				return;
+			}
+
+			var rootRect = tree.getBoundingClientRect();
+			var rect = link.getBoundingClientRect();
+			indicator.style.setProperty('--hover-x', (rect.left - rootRect.left) + 'px');
+			indicator.style.setProperty('--hover-y', (rect.top - rootRect.top) + 'px');
+			indicator.style.setProperty('--hover-w', rect.width + 'px');
+			indicator.style.setProperty('--hover-h', rect.height + 'px');
+			indicator.classList.add('is-visible');
+		}
+
+		var activeLink = activeNode ? activeNode.querySelector(':scope > .kira-explorer-row .kira-explorer-link') : null;
+		if (activeLink) moveIndicatorTo(activeLink, true);
+
+		tree.querySelectorAll('.kira-explorer-link').forEach(function (link) {
+			link.addEventListener('mouseenter', function () {
+				moveIndicatorTo(link, true);
+			});
+		});
+
+		tree.addEventListener('mouseleave', function () {
+			if (activeLink) {
+				moveIndicatorTo(activeLink, true);
+				return;
+			}
+			moveIndicatorTo(null, false);
+		});
+
+		window.addEventListener('resize', function () {
+			refreshAllFolderHeights();
+			if (indicator && indicator.classList.contains('is-visible')) {
+				moveIndicatorTo(activeLink, !!activeLink);
+			}
+		});
+
+		window.addEventListener('load', function () {
+			scheduleHeightSync();
+		});
+
+		if (document.fonts && document.fonts.ready) {
+			document.fonts.ready.then(function () {
+				scheduleHeightSync();
+			});
+		}
+
+		if (window.ResizeObserver) {
+			var resizeObserver = new ResizeObserver(function () {
+				refreshAllFolderHeights();
+			});
+			folders.forEach(function (folder) {
+				var box = getChildrenBox(folder);
+				if (box) resizeObserver.observe(box);
+			});
+		}
+
+	})();
+</script>
+<script>
+	(function () {
+		var input = document.getElementById('kira-search-input');
+		var results = document.getElementById('kira-search-results');
+		var docsTree = document.querySelector('.kira-docs-tree');
+		if (!input || !results || !docsTree) return;
+
+		var baseRoot = '/';
+		var indexedPosts = [];
+		var loadingPromise = null;
+
+		function escapeHtml(text) {
+			return (text || '')
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#39;');
+		}
+
+		function normalize(text) {
+			return (text || '').toLowerCase();
+		}
+
+		function resolveUrl(url) {
+			if (!url) return '#';
+			if (/^https?:\/\//i.test(url)) return url;
+			url = url.replace(/^\/{2,}/, '/'); // fix double slashes from hexo generator
+			if (url.indexOf(baseRoot) === 0) return url;
+			if (url.charAt(0) === '/') return url;
+			return baseRoot + url.replace(/^\/+/, '');
+		}
+
+		function getSnippet(content, query) {
+			var plain = (content || '').replace(/\s+/g, ' ').trim();
+			if (!plain) return '';
+			var lower = plain.toLowerCase();
+			var keywordIndex = lower.indexOf(query);
+			if (keywordIndex < 0) return plain.slice(0, 100);
+			var start = Math.max(0, keywordIndex - 25);
+			var end = Math.min(plain.length, keywordIndex + 75);
+			return (start > 0 ? 'â¦' : '') + plain.slice(start, end) + (end < plain.length ? 'â¦' : '');
+		}
+
+		function setResultHtml(html) {
+			results.innerHTML = html;
+			results.hidden = false;
+			docsTree.style.display = 'none';
+		}
+
+		function resetSearchView() {
+			results.innerHTML = '';
+			results.hidden = true;
+			docsTree.style.display = '';
+		}
+
+		async function loadIndex() {
+			if (indexedPosts.length) return indexedPosts;
+			if (!loadingPromise) {
+				loadingPromise = fetch('../../../search.json')
+					.then(function (response) {
+						if (!response.ok) throw new Error('Search index request failed');
+						return response.json();
+					})
+					.then(function (payload) {
+						var records = Array.isArray(payload) ? payload : (payload.posts || []);
+						indexedPosts = records
+							.map(function (item) {
+								return {
+									title: item.title || '',
+									content: item.content || '',
+									url: item.url || item.path || ''
+								};
+							})
+							.filter(function (item) {
+								return item.url;
+							});
+						return indexedPosts;
+					});
+			}
+			return loadingPromise;
+		}
+
+		input.addEventListener('input', async function () {
+			var rawQuery = input.value || '';
+			var query = normalize(rawQuery.trim());
+			if (!query) {
+				resetSearchView();
+				return;
+			}
+			setResultHtml('<div class="kira-search-state">æ­£å¨æç´¢...</div>');
+
+			try {
+				var posts = await loadIndex();
+				var onEnPage = window.location.pathname.indexOf('/en/') === 0 || window.location.pathname === '/en';
+				var matched = posts.filter(function (item) {
+					var isEnResult = item.url && (item.url.indexOf('/en/') >= 0);
+					if (onEnPage !== isEnResult) return false; // match page language â result language
+					return normalize(item.title).indexOf(query) !== -1 || normalize(item.content).indexOf(query) !== -1;
+				}).slice(0, 20);
+
+				if (!matched.length) {
+					setResultHtml('<div class="kira-search-state">æ²¡ææ¾å°å¹éåå®¹</div>');
+					return;
+				}
+
+				var html = matched.map(function (item) {
+					var title = escapeHtml(item.title || 'æªå½åæç« ');
+					var snippet = escapeHtml(getSnippet(item.content, query));
+					var href = escapeHtml(resolveUrl(item.url));
+					return '<a class="kira-search-item" href="' + href + '"><div class="kira-search-item-title">' + title + '</div><div class="kira-search-item-snippet">' + snippet + '</div></a>';
+				}).join('');
+
+				setResultHtml(html);
+			} catch (error) {
+				setResultHtml('<div class="kira-search-state">æç´¢ç´¢å¼å è½½å¤±è´¥ï¼è¯·ç¨åéè¯</div>');
+			}
+		});
+	})();
+</script>
+			<div class="kira-content">
+				<div id="kira-top-header"></div>
+				<div class="kira-main-content">
+					
+<link rel="stylesheet" href="../../../css/kira-image.css">
+
+
+<script src="../../../js/kira-image.js"></script>
+
+<div class="kira-image">
+    <div class="kira-image-modal">
+        <div class="kira-image-header">
+            <div class="kira-image-counter"></div>
+            <div class="kira-image-title"></div>
+            <div class="kira-image-operation">
+                <div class="kira-image-operation-button" id="kira-image-operation-button-zoom">
+                    <i class="kirafont icon-zoom-in"></i>
+                </div>
+                <div class="kira-image-operation-button" id="kira-image-operation-button-close">
+                    <i class="kirafont icon-close"></i>
+                </div>
+            </div>
+        </div>
+        <div class="kira-image-container">
+            <div class="kira-image-prev-button-panel">
+                <div class="kira-image-exchange-button">
+                    <i class="kirafont icon-left"></i>
+                </div>
+            </div>
+            <div class="kira-image-list">
+                <div class="kira-image-prev">
+                    <img />
+                </div>
+                <div class="kira-image-now">
+                    <img />
+                </div>
+                <div class="kira-image-next">
+                    <img />
+                </div>
+            </div>
+            <div class="kira-image-next-button-panel">
+                <div class="kira-image-exchange-button">
+                    <i class="kirafont icon-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	
+		
+<link rel="stylesheet" href="../../../css/kira-code-copy.css">
+
+			
+<script src="../../../js/kira-code-copy.js"></script>
+
+				
+					<div class="kira-post">
+						<article>
+							<div class="kira-post-title">
+								<h1><strong>
+										æ¬¡è¦èµæº
+									</strong></h1>
+							</div>
+							
+							
+							<div class="kira-post-meta kira-rainbow" style="margin:10px 0!important;">
+								<a><i class="kirafont icon-calendar-fill"></i>2026å¹´06æ09æ¥</a>
+								<a><i class="kirafont icon-edit-fill"></i>
+									1.9k å­
+								</a>
+								<a><i class="kirafont icon-time-circle-fill"></i>å¤§æ¦ 8 åé</a>
+								
+								
+								<a class="kira-post-meta-author"><i class="kirafont icon-user"></i>Reme</a>
+								
+							</div>
+							
+							<html><head></head><body><blockquote>
+<p>è¯¥åè½å¤äºæµè¯é¶æ®µï¼å¦æé®é¢è¯·æåº</p>
+</blockquote>
+<p>æ¬¡çº§èµæºï¼SecondaryResourceï¼æ¯ä¸å¥ç±»ä¼¼<code>æè¾</code>ç<strong>ç¬¬äºå¥ææèµæºç³»ç»</strong>ãä½ å¯ä»¥ç¨å®å¶ä½éè¦é¢å¤è´¹ç¨æé¢å¤èµæºç®¡ççå¡çãéç©åè½åã</p>
+<h2><span id="%E6%B3%A8%E5%86%8C%E8%B5%84%E6%BA%90">æ³¨åèµæº</span></h2><p>æ¯ä¸ªèµæºéè¦åæ³¨åå®ä¹ï¼ä¹åæè½å¨ææä¸­ä½¿ç¨ãå¨åå§åå½æ°ä¸­æ³¨åã</p>
+<p>æä»¬å¯ä»¥å»ºä¸ä¸ªæ°çç±»æ¥ç®¡çï¼åæ¶ä¹å¯ä»¥ç´æ¥æ¾å¨ä½ çä¸»ç±»éãåªè¦ä¿è¯å¨åå§åä¸­è°ç¨å³å¯ã</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> STS2RitsuLib;<br><span class="hljs-keyword">using</span> STS2RitsuLib.Combat.SecondaryResources;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ModResources</span><br>{<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SecondaryResourceDefinition ManaDefinition { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">null</span>!;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SecondaryResourceDefinition RageDefinition { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">null</span>!;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">string</span> ManaId { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-built_in">string</span>.Empty;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">string</span> RageId { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-built_in">string</span>.Empty;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Register</span>()</span><br>    {<br>        <span class="hljs-keyword">var</span> registry = RitsuLibFramework.GetSecondaryResourceRegistry(Entry.ModId);<br><br>        <span class="hljs-comment">// è¿æ¯ä¸ä¸ªâé­åå¼âèµæºï¼æé«3ç¹ï¼è·¨å±å­å¨ï¼æ¯æ¬¡åæ»¡ã</span><br>        ManaDefinition = registry.Register(<span class="hljs-string">"mana"</span>, <span class="hljs-keyword">new</span> SecondaryResourceDefinition(<br>            defaultAmount: <span class="hljs-number">0</span>,<br>            baseMaxAmount: <span class="hljs-number">3</span>,<br>            turnStartPolicy: SecondaryResourceTurnStartPolicy.AddMaxToCurrent,<br>            persistencePolicy: SecondaryResourcePersistencePolicy.Run,<br>            smallIconPath: <span class="hljs-string">"res://Test/images/resources/mana_small.png"</span>,<br>            largeIconPath: <span class="hljs-string">"res://Test/images/resources/mana_large.png"</span><br>        ));<br>        ManaId = ManaDefinition.Id;<br><br>        <span class="hljs-comment">// è¿æ¯ä¸ä¸ªâææ°âèµæºï¼æ ä¸éï¼æ¯ååå¼å§æ¸é¶ï¼ææåå­å¨ã</span><br>        RageDefinition = registry.Register(<span class="hljs-string">"rage"</span>, <span class="hljs-keyword">new</span> SecondaryResourceDefinition(<br>            defaultAmount: <span class="hljs-number">0</span>,<br>            baseMaxAmount: <span class="hljs-literal">null</span>,<br>            turnStartPolicy: SecondaryResourceTurnStartPolicy.Clear,<br>            persistencePolicy: SecondaryResourcePersistencePolicy.Combat,<br>            smallIconPath: <span class="hljs-string">"res://Test/images/resources/rage_small.png"</span>,<br>            largeIconPath: <span class="hljs-string">"res://Test/images/resources/rage_large.png"</span><br>        ));<br>        RageId = RageDefinition.Id;<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p><strong>ç¶åä¸è¦å¿è®°å¨ä½ ç <code>Entry.Init</code> ä¸­è°ç¨ã</strong></p>
+<ul>
+<li><code>Register</code> çç¬¬ä¸ä¸ªåæ° <code>"mana"</code> æ¯æ¬å° IDï¼è¿åæ ¼å¼ä¸º <code>TEST_SECONDARY_RESOURCE_MANA</code>ï¼<code>{MODID}_{TYPE}_{LOCALID}</code>ï¼ã</li>
+</ul>
+<p><code>turnStartPolicy</code>æ¯ååå¼å§æ¶çèªå¨è¡ä¸ºï¼åæ¬ä»¥ä¸ç±»åï¼</p>
+<table>
+<thead>
+<tr>
+<th>ç­ç¥</th>
+<th>ææ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>None</code></td>
+<td>ä»ä¹é½ä¸å</td>
+</tr>
+<tr>
+<td><code>ResetToMax</code></td>
+<td>å°å½åæ°éåæ»¡å°ä¸é</td>
+</tr>
+<tr>
+<td><code>AddMaxToCurrent</code></td>
+<td>å°ä¸éæ°å¼å å°å½åæ°éä¸ï¼å¦èè½ï¼</td>
+</tr>
+<tr>
+<td><code>Clear</code></td>
+<td>æ¸é¶</td>
+</tr>
+</tbody></table>
+<p><code>persistencePolicy</code>æ¯å­æ¡£æä¹åèå´ï¼åæ¬ï¼</p>
+<table>
+<thead>
+<tr>
+<th>ç­ç¥</th>
+<th>ææ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>None</code></td>
+<td>ä¸å­æ¡£ï¼ä»è¿è¡æ¶å­å¨</td>
+</tr>
+<tr>
+<td><code>Combat</code></td>
+<td>å¨å½åææåæ¢å¤</td>
+</tr>
+<tr>
+<td><code>Run</code></td>
+<td>è·¨æææä¹åï¼æ´å±ææï¼</td>
+</tr>
+</tbody></table>
+<h2><span id="%E4%BF%AE%E6%94%B9%E8%B5%84%E6%BA%90%E6%95%B0%E9%87%8F">ä¿®æ¹èµæºæ°é</span></h2><p>ä½¿ç¨ <code>SecondaryResourceCmd</code> éæç±»æä½èµæºï¼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> STS2RitsuLib.Combat.SecondaryResources;<br><br><span class="hljs-comment">// è¯»åå½åæ°é</span><br><span class="hljs-built_in">int</span> currentMana = SecondaryResourceCmd.Get(player, ModResources.ManaId);<br><br><span class="hljs-comment">// è¯»åå½åä¸éï¼æ ä¸éçèµæºè¿å nullï¼</span><br><span class="hljs-built_in">int</span>? maxMana = SecondaryResourceCmd.GetMax(player, ModResources.ManaId);<br><br><span class="hljs-comment">// è·å¾ 2 ç¹æ³åï¼ä¼ç»è¿ Gain Hook ä¿®æ­£ï¼</span><br><span class="hljs-keyword">await</span> SecondaryResourceCmd.Gain(player, ModResources.ManaId, <span class="hljs-number">2</span>);<br><br><span class="hljs-comment">// å¤±å» 1 ç¹æ³å</span><br><span class="hljs-keyword">await</span> SecondaryResourceCmd.Lose(player, ModResources.ManaId, <span class="hljs-number">1</span>);<br><br><span class="hljs-comment">// ç´æ¥è®¾ä¸º 5 ç¹</span><br><span class="hljs-keyword">await</span> SecondaryResourceCmd.Set(player, ModResources.ManaId, <span class="hljs-number">5</span>);<br><br><span class="hljs-comment">// æ¶è 3 ç¹æ³åï¼ä¼ç»è¿ Spend Hookï¼ä¸è¶³ä¸ä¼æ£é¤ä¸è¿å falseï¼</span><br><span class="hljs-built_in">bool</span> success = <span class="hljs-keyword">await</span> SecondaryResourceCmd.Spend(player, ModResources.ManaId, <span class="hljs-number">3</span>);<br><br><span class="hljs-comment">// éç½®ä¸ºé»è®¤å¼ï¼toMax: true åéç½®å°ä¸éï¼</span><br><span class="hljs-keyword">await</span> SecondaryResourceCmd.Reset(player, ModResources.ManaId, toMax: <span class="hljs-literal">true</span>);<br></code></pre></td></tr></tbody></table></figure>
+
+<h2><span id="%E7%BB%99%E5%8D%A1%E7%89%8C%E6%B7%BB%E5%8A%A0%E6%AC%A1%E7%BA%A7%E8%B5%84%E6%BA%90%E8%B4%B9%E7%94%A8">ç»å¡çæ·»å æ¬¡çº§èµæºè´¹ç¨</span></h2><p>å¡ççè´¹ç¨éè¿ <code>SecondaryCosts()</code> æ©å±æ¹æ³éå å° <code>CardModel</code> ä¸ï¼å¨æé å½æ°ä¸­è®¾ç½®ï¼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> STS2RitsuLib.Combat.SecondaryResources;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TestManaCard</span> : <span class="hljs-title">ModCardTemplate</span><br>{<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TestManaCard</span>()</span><br>    {<br>        <span class="hljs-comment">// åºå®è´¹ç¨ï¼æåºæ­¤çéè¦æ¶è 2 ç¹æ³å</span><br>        <span class="hljs-keyword">this</span>.SecondaryCosts().Set(ModResources.ManaId, <span class="hljs-number">2</span>);<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<h3><span id="%E8%AE%BE%E7%BD%AE%E8%B4%B9%E7%94%A8%E6%B6%88%E8%80%97">è®¾ç½®è´¹ç¨æ¶è</span></h3><p>X è´¹ç¨ï¼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">this</span>.SecondaryCosts().Set(ModResources.ManaId, SecondaryResourceCost.X());       <span class="hljs-comment">// æ¶èæææ³å</span><br><span class="hljs-keyword">this</span>.SecondaryCosts().Set(ModResources.ManaId, SecondaryResourceCost.X(<span class="hljs-number">2</span>));      <span class="hljs-comment">// æ¶èæææ³åï¼X æ°å¼ä¹ä»¥ 2</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p><code>Set</code> çç¬¬ä¸ä¸ªåæ° <code>duration</code> å¯ä»¥ç»å¡çè®¾ç½®<strong>ä¸´æ¶ç</strong>æ¬¡çº§èµæºæ¶èï¼å°æèªå¨æ¸é¤ï¼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">this</span>.SecondaryCosts().Set(ModResources.ManaId, <span class="hljs-number">1</span>, SecondaryResourceCostDuration.ThisTurn);    <span class="hljs-comment">// ä»æ¬ååï¼æ¶è1ç¹æ³å</span><br><span class="hljs-keyword">this</span>.SecondaryCosts().Set(ModResources.RageId, <span class="hljs-number">2</span>, SecondaryResourceCostDuration.ThisCombat);  <span class="hljs-comment">// ä»æ¬åºææï¼æ¶è1ç¹æ³å</span><br><span class="hljs-keyword">this</span>.SecondaryCosts().Set(ModResources.ManaId, <span class="hljs-number">1</span>, SecondaryResourceCostDuration.UntilPlayed); <span class="hljs-comment">// æ¶è1ç¹æ³åï¼æåºåæ¸é¤</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>å¦éæå¨æ¸çå°æè´¹ç¨ï¼å¯ä½¿ç¨æ©å±æ¹æ³ï¼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp">card.ClearSecondaryCostsThisTurn();       <span class="hljs-comment">// ååç»ææ¶æ¡æ¶èªå¨è°ç¨ï¼ä¸è¬æ éæå¨å</span><br>card.ClearSecondaryCostsUntilPlayed();    <span class="hljs-comment">// æåºåæ¡æ¶èªå¨è°ç¨</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>åè´¹æåºæèç§»é¤è´¹ç¨æ¶èï¼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">this</span>.SecondaryCosts().Set(ModResources.ManaId, SecondaryResourceCost.Free, SecondaryResourceCostDuration.UntilPlayed);  <span class="hljs-comment">// åè´¹æåºä¸æ¬¡</span><br><span class="hljs-keyword">this</span>.SecondaryCosts().Clear(ModResources.ManaId);  <span class="hljs-comment">// å®å¨ç§»é¤è¯¥èµæºçè´¹ç¨ï¼ä¸åæ¾ç¤º</span><br></code></pre></td></tr></tbody></table></figure>
+
+<h3><span id="%E8%8E%B7%E5%8F%96-x-%E7%9A%84%E6%95%88%E6%9E%9C%E6%95%B0%E5%80%BC">è·å X çæææ°å¼</span></h3><p>å¦æè´¹ç¨è®¾ä¸º Xï¼æ¶èå¨é¨ï¼ï¼éè¦å¨å¡çç <code>OnPlay</code> ä¸­è·åå®éçæçæ°å¼ï¼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> STS2RitsuLib.Combat.SecondaryResources;<br><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnPlay</span>(<span class="hljs-params">PlayerChoiceContext choiceContext, CardPlay cardPlay</span>)</span><br>{<br>    <span class="hljs-comment">// è·å X è´¹ç¨çæææ°å¼ï¼å½åææé Ã XMultiplierï¼å¹¶ç»è¿ Hook ä¿®æ­£åï¼</span><br>    <span class="hljs-built_in">int</span> effectValue = cardPlay.SecondaryResources().Value(ModResources.ManaId);<br><br>    <span class="hljs-comment">// æ£æ¥æ¯å¦ä¸º X è´¹ç¨</span><br>    <span class="hljs-built_in">bool</span> wasX = cardPlay.SecondaryResources().CostsX(ModResources.ManaId);<br><br>    <span class="hljs-comment">// è·åå®éæ¶èé</span><br>    <span class="hljs-built_in">int</span> spent = cardPlay.SecondaryResources().Spent(ModResources.ManaId);<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<h2><span id="hook-%E7%B3%BB%E7%BB%9F">Hook ç³»ç»</span></h2><p>å¨éç©ãè½åæè§è²ä¸å®ç° <code>ISecondaryResourceHookListener</code> æ¥å£æ¥ä¿®æ¹èµæºè¡ä¸ºã<strong>ææé©å­é½æé»è®¤å®ç°ï¼åªééåä½ éè¦çæ¹æ³ã</strong></p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> STS2RitsuLib.Combat.SecondaryResources;<br><span class="hljs-keyword">using</span> STS2RitsuLib.Interop.AutoRegistration;<br><span class="hljs-keyword">using</span> STS2RitsuLib.Scaffolding.Content;<br><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">Test.Scripts</span>;<br><br>[<span class="hljs-meta">RegisterRelic(typeof(SharedRelicPool))</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ManaRelic</span> : <span class="hljs-title">ModRelicTemplate</span>, <span class="hljs-title">ISecondaryResourceHookListener</span><br>{<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> RelicRarity Rarity =&gt; RelicRarity.Boss;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> RelicAssetProfile AssetProfile =&gt; <span class="hljs-keyword">new</span>(<br>        IconPath: <span class="hljs-string">"res://Test/images/relics/ManaRelic.png"</span>,<br>        IconOutlinePath: <span class="hljs-string">"res://Test/images/relics/ManaRelic.png"</span>,<br>        BigIconPath: <span class="hljs-string">"res://Test/images/relics/ManaRelic.png"</span><br>    );<br><br>    <span class="hljs-comment">// å¢å æ³åä¸é +2</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">decimal</span> <span class="hljs-title">ModifyMaxSecondaryResource</span>(<span class="hljs-params">SecondaryResourceMaxContext context, <span class="hljs-built_in">decimal</span> amount</span>)</span><br>    {<br>        <span class="hljs-keyword">if</span> (context.Definition.Id == ModResources.ManaId)<br>            <span class="hljs-keyword">return</span> amount + <span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">return</span> amount;<br>    }<br><br>    <span class="hljs-comment">// è·å¾æ³åæ¶é¢å¤ +1</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">decimal</span> <span class="hljs-title">ModifySecondaryResourceGain</span>(<span class="hljs-params">SecondaryResourceContext context, <span class="hljs-built_in">decimal</span> amount</span>)</span><br>    {<br>        <span class="hljs-keyword">if</span> (context.Definition.Id == ModResources.ManaId)<br>            <span class="hljs-keyword">return</span> amount + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> amount;<br>    }<br><br>    <span class="hljs-comment">// æ³åååæ¶ï¼å¦æå½é¶åå¤±å»çå½</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">AfterSecondaryResourceChanged</span>(<span class="hljs-params">SecondaryResourceChangeContext context</span>)</span><br>    {<br>        <span class="hljs-keyword">if</span> (context.Definition.Id != ModResources.ManaId || context.NewAmount &gt; <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">return</span>;<br><br>        <span class="hljs-keyword">await</span> context.Player.LoseHp(<span class="hljs-number">2</span>, context.Player);<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p>é©å­éè¿ <code>context.Definition.Id</code> å¤æ­æ¯åªä¸ªèµæºï¼å <code>ModResources.ManaId</code> æ¯è¾å³å¯ã</p>
+<p>æ¥å£æä¾çå¨é¨é©å­ï¼</p>
+<table>
+<thead>
+<tr>
+<th>é©å­</th>
+<th>ç¨é</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ModifySecondaryResourceGain</code></td>
+<td>ä¿®æ­£è·å¾æ°é</td>
+</tr>
+<tr>
+<td><code>ModifyMaxSecondaryResource</code></td>
+<td>ä¿®æ­£ä¸é</td>
+</tr>
+<tr>
+<td><code>ModifySecondaryResourceCost</code></td>
+<td>ä¿®æ­£å¡çåºå®è´¹ç¨ï¼ä¸å« X é¨åï¼</td>
+</tr>
+<tr>
+<td><code>ModifySecondaryResourceXValue</code></td>
+<td>ä¿®æ­£ X è´¹ç¨å¼</td>
+</tr>
+<tr>
+<td><code>ShouldGainSecondaryResource</code></td>
+<td>é»æ­¢èµæºè·å¾ï¼è¿å <code>false</code> åä¸è·å¾ï¼</td>
+</tr>
+<tr>
+<td><code>ShouldSpendSecondaryResource</code></td>
+<td>é»æ­¢èµæºæ¶èï¼è¿å <code>false</code> åä¸æ¶èï¼</td>
+</tr>
+<tr>
+<td><code>ShouldResetSecondaryResource</code></td>
+<td>é»æ­¢ååéç½®ï¼è¿å <code>false</code> åä¸éç½®ï¼</td>
+</tr>
+<tr>
+<td><code>AfterSecondaryResourceChanged</code></td>
+<td>æ°éååååè°</td>
+</tr>
+<tr>
+<td><code>AfterSecondaryResourceSpent</code></td>
+<td>èµæºè¢«æ¶èååè°</td>
+</tr>
+<tr>
+<td><code>AfterSecondaryResourceReset</code></td>
+<td>èµæºè¢«éç½®ååè°</td>
+</tr>
+</tbody></table>
+<h2><span id="%E6%88%98%E6%96%97-ui">ææ UI</span></h2><p>å¯ä»¥éè¿<code>RegisterCombatUi</code>å<code>RegisterCardUi</code>æ³¨åæ¬¡çº§èµæºçææçé¢åç´ ã</p>
+<p>ritsulibåç½®å°è£å¥½çè½éçåå¡çè´¹ç¨å±ç¤ºçç»ä»¶ï¼ä¾å¦<code>NSecondaryResourceCounter</code>å<code>NSecondaryResourceCardCostUi</code>ã</p>
+<p>å¦æä½ æ³è¦èªå®ä¹çuiï¼è¯·åå»ºå¹¶è¿åèªå·±çï¼å¹¶èªè¡ç»å®æ°å¼åç©å®¶ã</p>
+<p>ä»¥ä¸ä½¿ç¨åç½®çUIï¼</p>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> Godot;<br><span class="hljs-keyword">using</span> MegaCrit.Sts2.Core.Nodes.Combat;<br><span class="hljs-keyword">using</span> MegaCrit.Sts2.Core.Nodes.Cards;<br><span class="hljs-keyword">using</span> STS2RitsuLib.Combat.SecondaryResources;<br><br><span class="hljs-comment">// å¨ ModResources.Register() ä¸­è¿½å ï¼</span><br><br><span class="hljs-comment">// ææè®¡æ°å¨ãä½¿ç¨çå¾æ å°±æ¯ä½ æ³¨åæ¶æä¾çå¾æ </span><br>registry.RegisterCombatUi(<br>    <span class="hljs-string">"mana_combat_counter"</span>,<br>    parent =&gt;<br>    {<br>        <span class="hljs-keyword">var</span> row = NSecondaryResourceCounter.Create(ManaDefinition, <span class="hljs-keyword">new</span> SecondaryResourceCounterStyle<br>        {<br>            FontSize = <span class="hljs-number">32</span>,<br>            PositiveColor = Colors.Cyan,<br>            FormatAmount = (amount, max) =&gt; amount.ToString(),<br>            IconStyle = SecondaryResourceIconStyle.Default <span class="hljs-keyword">with</span><br>            {<br>                Size = <span class="hljs-keyword">new</span> Vector2(<span class="hljs-number">80</span>, <span class="hljs-number">80</span>),<br>                HoverTip = SecondaryResourceHoverTipStyle.Default,<br>            },<br>        });<br>        <span class="hljs-comment">// èªç±æå®ä½ç½®ãä¾å¦è¿éæä»¬æ¾å°è½éè®¡æ°å¨çä½ç½®ï¼æ¾å¨å®æè¾¹</span><br>        <span class="hljs-keyword">var</span> energyCounter = parent.GetNode&lt;Control&gt;(<span class="hljs-string">"%EnergyCounterContainer"</span>);<br>        row.Position = energyCounter.Position + <span class="hljs-keyword">new</span> Vector2(<span class="hljs-number">120</span>, <span class="hljs-number">-120</span>);<br>        <span class="hljs-keyword">return</span> row;<br>    },<br>    ctx =&gt; ctx.Node.Bind(ctx.Player)<br>);<br><br><span class="hljs-comment">// å¡çé¢ä¸çæ¬¡çº§èµæºè´¹ç¨æ¾ç¤ºãä½¿ç¨çå¾æ å°±æ¯ä½ æ³¨åæ¶æä¾çå¾æ </span><br>registry.RegisterCardUi(<br>    <span class="hljs-string">"mana_card_ui"</span>,<br>    parent =&gt;<br>    {<br>        <span class="hljs-keyword">var</span> ui = NSecondaryResourceCardCostUi.Create(ManaId, <span class="hljs-keyword">new</span> SecondaryResourceCardCostUiStyle<br>        {<br>            IconSize = <span class="hljs-keyword">new</span> Vector2(<span class="hljs-number">48</span>, <span class="hljs-number">48</span>),<br>            FontSize = <span class="hljs-number">24</span>,<br>        });<br>        <span class="hljs-comment">// èªç±æå®ä½ç½®ãä¾å¦è¿éæä»¬æ¾å°è½éå¾æ çä½ç½®ï¼æ¾å¨å®æè¾¹</span><br>        <span class="hljs-keyword">var</span> energyIcon = parent.GetNode&lt;TextureRect&gt;(<span class="hljs-string">"%EnergyIcon"</span>);<br>        ui.Position = energyIcon.Position + <span class="hljs-keyword">new</span> Vector2(<span class="hljs-number">0</span>, <span class="hljs-number">80</span>);<br>        <span class="hljs-keyword">return</span> ui;<br>    },<br>    ctx =&gt; ctx.Node.Refresh(ctx)<br>);<br><br><span class="hljs-comment">// éå®ä»å¯¹ç¹å®è§è²å§ç»æ¾ç¤º</span><br><span class="hljs-comment">// registry.AlwaysShowInCombatUiForCharacter&lt;Ironclad&gt;(ManaDefinition.LocalId);</span><br><span class="hljs-comment">// æ°¸è¿æ¾ç¤ºï¼ä¸åè§è²éå¶ï¼</span><br>registry.AlwaysShowInCombatUi(ManaDefinition.LocalId);<br><br></code></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><code>RegisterCombatUi</code> åºäº <code>NodeAttachment</code> ç³»ç»èªå¨æè½½ï¼è¯¦è§"èç¹éå "æç¨ï¼ã</li>
+<li><code>SecondaryResourceCounterStyle</code> ç­styleå¯èªç±éç½®åæ¬¢çé£æ ¼ã</li>
+</ul>
+<h2><span id="%E6%9C%AC%E5%9C%B0%E5%8C%96">æ¬å°å</span></h2><p>æ¬¡çº§èµæºçæ¬æµ®æç¤ºé»è®¤è¯»å <code>static_hover_tips</code> è¡¨ã<code>SecondaryResourceDefinition</code>å®ä¹ä¸­ç <code>locTable</code> åæ°å¯æå®èªå®ä¹æ¬å°åè¡¨ã</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"TEST_SECONDARY_RESOURCE_MANA.title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"æ³å"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"TEST_SECONDARY_RESOURCE_MANA.description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"æ¯ååå¼å§æ¶è·å¾æ°å¼ãè·¨ææä¿çã"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"TEST_SECONDARY_RESOURCE_RAGE.title"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ææ°"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"TEST_SECONDARY_RESOURCE_RAGE.description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"æ¯ååå¼å§æ¶æ¸é¶ãæåºæ»å»çå¯è·å¾ææ°ã"</span><br><span class="hljs-punctuation">}</span><br></code></pre></td></tr></tbody></table></figure>
+
+<p>å¦ææ²¡ææä¾ <code>titleKey</code> / <code>descriptionKey</code>ï¼æ¡æ¶ä¼æ <code>{resourceId}.title</code> å <code>{resourceId}.description</code> èªå¨æ¨å¯¼ keyã</p>
+<h2><span id="%E5%9C%A8%E5%8D%A1%E7%89%8C%E6%96%87%E6%9C%AC%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%9B%BE%E6%A0%87">å¨å¡çææ¬ä¸­æ¾ç¤ºå¾æ </span></h2><figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">using</span> STS2RitsuLib.Combat.SecondaryResources;<br><br><span class="hljs-comment">// å¨ CanonicalVars ä¸­è®¾ç½®åé</span><br><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> IEnumerable&lt;DynamicVar&gt; CanonicalVars =&gt; [<br>    SecondaryResourceVars.For(<span class="hljs-string">"Mana"</span>, ModResources.ManaId, <span class="hljs-number">2</span>)<br>];<br><br><span class="hljs-comment">// æ¬å°åææ¬ï¼</span><br><span class="hljs-comment">// "æ¶è {Mana:secondaryResourceIcons()} ç¹æ³åã"</span><br><span class="hljs-comment">// æè {Mana} ä½¿ç¨æ°å­</span><br></code></pre></td></tr></tbody></table></figure>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"d622e9c93cb74f408368b3de275c6fcf","r":1}' crossorigin="anonymous"></script>
+</body></html>
+						</article>
+
+						 
+
+        <div class="kira-post-copyright">
+                    
+                                <strong>çæå£°æï¼</strong>æ¬æéç¨ <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">CC BY-NC-SA 4.0 CN</a> åè®®è¿è¡è®¸å¯
+                                    
+        </div>
+        
+
+								
+											
+												<div class="kira-post-footer">
+													
+
+														
+	<div class="giscus"></div>
+  
+    <script src="https://giscus.app/client.js"
+      data-repo="GlitchedReme/SlayTheSpire2ModdingTutorials"
+      data-repo-id="R_kgDORf0PEA"
+      data-category="Announcements"
+      data-category-id="DIC_kwDORf0PEM4C3zDO"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="dark_dimmed"
+      data-lang="zh-CN"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async  
+    ></script>
+  
+
+												</div>
+												
+					</div>
+
+				</div>
+			</div>
+			
+				<div class="kira-right-column" id="kira-toc-column">
+	<button type="button" class="kira-panel-reopen kira-panel-reopen--toc" id="kira-toc-reopen" hidden title="å±å¼æ¬é¡µç®å½" aria-label="å±å¼æ¬é¡µç®å½">
+		<i class="kirafont icon-caret-up kira-reopen-icon" aria-hidden="true"></i>
+	</button>
+	<div class="kira-chapters-panel" id="kira-chapters-panel">
+		<div class="kira-panel-header">
+			<div class="kira-chapters-title">æ¬é¡µç®å½</div>
+			<button type="button" class="kira-collapse-toggle" id="kira-toc-collapse" aria-expanded="true" aria-controls="kira-chapters-body" title="æå æ¬é¡µç®å½" aria-label="æå æ¬é¡µç®å½">
+				<i class="kirafont icon-caret-up kira-collapse-icon" aria-hidden="true"></i>
+			</button>
+		</div>
+		<div class="kira-chapters-body" id="kira-chapters-body">
+			<nav class="kira-chapters-nav kira-scrollbar" aria-label="æç« ç®å½">
+				<ul id="kira-chapters-list"></ul>
+			</nav>
+		</div>
+	</div>
+	<div class="kira-floating-stack">
+		
+<a class="kira-lang-switch" href="/en/docs/04-ritsulib/04-22-7-secondary-resources/" title="Switch to English" aria-label="Switch language / åæ¢è¯­è¨">
+	<span class="kira-lang-switch-inner" aria-hidden="true">
+		<svg class="kira-lang-switch-icon" viewBox="0 0 24 24" width="22" height="22" focusable="false"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+	</span>
+	<span class="kira-lang-switch-tip">English</span>
+</a>
+
+		
+	<div class="kira-community-dock" aria-label="ç¤¾åºé¾æ¥">
+		
+			
+			<a
+				class="kira-community-dock-btn kira-community-dock-btn--icon mdui-ripple"
+				href="https://github.com/GlitchedReme/SlayTheSpire2ModdingTutorials"
+				target="_blank" rel="noopener noreferrer"
+				title="GitHub"
+				aria-label="GitHub"
+				style="color: #ffffff; background-color: #24292e;"
+			>
+				<i class="kirafont icon-github"></i>
+				<span class="kira-community-dock-tip">GitHub</span>
+			</a>
+		
+	</div>
+
+
+		<a onclick="document.querySelector('#kira-top-header').scrollIntoView({behavior: 'smooth'});" class="kira-backtotop"
+			aria-label="åå°é¡¶é¨" title="åå°é¡¶é¨">
+			<button class="mdui-fab mdui-ripple">
+				<i class="kirafont icon-caret-up"></i>
+			</button>
+		</a>
+	</div>
+</div>
+
+			
+		</div>
+	</body>
+</html>
+

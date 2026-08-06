@@ -1,0 +1,12 @@
+﻿<Project>
+    <PropertyGroup>
+        <IsLinux>false</IsLinux>
+        <IsOSX>false</IsOSX>
+        <IsLinux Condition="$([MSBuild]::IsOSPlatform('Linux'))">true</IsLinux>
+        <IsOSX Condition="$([MSBuild]::IsOSPlatform('OSX'))">true</IsOSX>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(IsLinux)' != 'true' And '$(IsOSX)' != 'true'">
+        <ModsPath>$(Sts2Path)/mods/</ModsPath>
+        <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+    </PropertyGroup>
+</Project>

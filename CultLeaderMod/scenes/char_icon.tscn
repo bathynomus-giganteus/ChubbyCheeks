@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbcdbpvywnsqj"]
+
+[ext_resource type="Texture2D" uid="uid://ccv2gk2syiupi" path="res://CultLeaderMod/images/charui/character_icon_char_name.png" id="1_q1bn1"]
+
+[node name="CharIcon" type="TextureProgressBar"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_q1bn1")
+expand_mode = 1
