@@ -16,8 +16,8 @@ public class BitterPainPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomIconPath => "CultLeaderMod/images/powers/bitterpain.png";
-    public override string CustomBigIconPath => "CultLeaderMod/images/powers/big/bitterpain.png";
+    public override string CustomIconPath => "res://CultLeaderMod/images/powers/bitterpain.png";
+    public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/big/bitterpain.png";
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {

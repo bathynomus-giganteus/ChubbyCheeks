@@ -8,10 +8,6 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace CultLeaderMod.CultLeaderModCode.Patches;
 
-/// <summary>
-/// Patches CardPileCmd.Add (batch) and AddGeneratedCardsToCombat to filter out
-/// unselected personality cards during in-combat card generation.
-/// </summary>
 public static class CombatCardFilterPatch
 {
     [HarmonyPatch(typeof(CardPileCmd), "AddGeneratedCardsToCombat")]
@@ -24,21 +20,29 @@ public static class CombatCardFilterPatch
         CardPilePosition position,
         ref Task<IReadOnlyList<CardModel>> __result)
     {
-        if (!GumBlessRelic.SelectionMade || GumBlessRelic.UnselectedTags == null)
-            return true;
+        try
+        {
+            if (!GumBlessRelic.SelectionMade || GumBlessRelic.UnselectedTags == null)
+                return true;
 
-        var list = cards.ToList();
-        var filtered = GumBlessRelic.FilterUnselectedCards(list);
+            var list = cards.ToList();
+            var filtered = GumBlessRelic.FilterUnselectedCards(list);
 
-        if (ReferenceEquals(filtered, list))
-            return true;
+            if (ReferenceEquals(filtered, list))
+                return true;
 
-        Entry.Logger.Info($"[CombatCardFilter] AddGeneratedCardsToCombat: filtered {list.Count - filtered.Count} cards");
+            Entry.Logger.Info($"[CombatCardFilter] AddGeneratedCardsToCombat: filtered {list.Count - filtered.Count} cards");
 
-        var original = AccessTools.Method(typeof(CardPileCmd), "AddGeneratedCardsToCombat",
-            new[] { typeof(IEnumerable<CardModel>), typeof(PileType), typeof(Creature), typeof(CardPilePosition) });
-        __result = (Task<IReadOnlyList<CardModel>>)original.Invoke(null, new object[] { filtered, destinationPile, target, position })!;
-        return false;
+            var original = AccessTools.Method(typeof(CardPileCmd), "AddGeneratedCardsToCombat",
+                new[] { typeof(IEnumerable<CardModel>), typeof(PileType), typeof(Creature), typeof(CardPilePosition) });
+            __result = (Task<IReadOnlyList<CardModel>>)original.Invoke(null, new object[] { filtered, destinationPile, target, position })!;
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Entry.Logger.Error($"[CombatCardFilter] AddGeneratedCardsToCombat error: {ex}");
+            return true; // fall through to original
+        }
     }
 
     [HarmonyPatch(typeof(CardPileCmd), "Add")]
@@ -52,20 +56,28 @@ public static class CombatCardFilterPatch
         bool skipEvents,
         ref Task<IReadOnlyList<CardModel>> __result)
     {
-        if (!GumBlessRelic.SelectionMade || GumBlessRelic.UnselectedTags == null)
-            return true;
+        try
+        {
+            if (!GumBlessRelic.SelectionMade || GumBlessRelic.UnselectedTags == null)
+                return true;
 
-        var list = cards.ToList();
-        var filtered = GumBlessRelic.FilterUnselectedCards(list);
+            var list = cards.ToList();
+            var filtered = GumBlessRelic.FilterUnselectedCards(list);
 
-        if (ReferenceEquals(filtered, list))
-            return true;
+            if (ReferenceEquals(filtered, list))
+                return true;
 
-        Entry.Logger.Info($"[CombatCardFilter] Add(batch): filtered {list.Count - filtered.Count} cards");
+            Entry.Logger.Info($"[CombatCardFilter] Add(batch): filtered {list.Count - filtered.Count} cards");
 
-        var original = AccessTools.Method(typeof(CardPileCmd), "Add",
-            new[] { typeof(IEnumerable<CardModel>), typeof(PileType), typeof(CardPilePosition), typeof(AbstractModel), typeof(bool) });
-        __result = (Task<IReadOnlyList<CardModel>>)original.Invoke(null, new object[] { filtered, pileType, position, anchor, skipEvents })!;
-        return false;
+            var original = AccessTools.Method(typeof(CardPileCmd), "Add",
+                new[] { typeof(IEnumerable<CardModel>), typeof(PileType), typeof(CardPilePosition), typeof(AbstractModel), typeof(bool) });
+            __result = (Task<IReadOnlyList<CardModel>>)original.Invoke(null, new object[] { filtered, pileType, position, anchor, skipEvents })!;
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Entry.Logger.Error($"[CombatCardFilter] Add(batch) error: {ex}");
+            return true; // fall through to original
+        }
     }
 }

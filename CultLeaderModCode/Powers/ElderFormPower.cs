@@ -14,6 +14,6 @@ public class ElderFormPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomIconPath => "CultLeaderMod/images/powers/elderform.png";
-    public override string CustomBigIconPath => "CultLeaderMod/images/powers/big/elderform.png";
+    public override string CustomIconPath => "res://CultLeaderMod/images/powers/elderform.png";
+    public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/big/elderform.png";
 }

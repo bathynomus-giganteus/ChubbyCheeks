@@ -1,7 +1,8 @@
-using System.Reflection;
+﻿using System.Reflection;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
@@ -14,7 +15,7 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCharacterStarterCard(typeof(CultLeaderModCharacter), 1)]
 public class TestAddApostleCards : ModCardTemplate
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/test_add_cards.png");
 
     public TestAddApostleCards() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
@@ -22,35 +23,41 @@ public class TestAddApostleCards : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var runState = base.Owner.RunState;
-        var assembly = Assembly.GetExecutingAssembly();
-        var apostleCardTypes = assembly.GetTypes()
+        var player = base.Owner;
+
+        var apostleTypes = typeof(TestAddApostleCards).Assembly.GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(ModCardTemplate))
                 && t.GetCustomAttribute<RegisterCardAttribute>() != null
                 && t.Name.StartsWith("Apostle_"))
             .ToList();
 
-        if (apostleCardTypes.Count == 0)
-        {
-            Entry.Logger.Warn("[TestAddApostleCards] No apostle card types found!");
-            return;
-        }
+        if (apostleTypes.Count == 0) return;
 
-        var createCardMethod = typeof(RunState).GetMethod("CreateCard", System.Type.EmptyTypes);
+        var createCardMethod = typeof(RunState).GetMethods()
+            .First(m => m.Name == "CreateCard" && m.IsGenericMethodDefinition && m.GetParameters().Length == 1);
+
         var rng = new Random();
         var cardsToAdd = new List<CardModel>();
 
         for (int i = 0; i < 100; i++)
         {
-            var cardType = apostleCardTypes[rng.Next(apostleCardTypes.Count)];
+            var cardType = apostleTypes[rng.Next(apostleTypes.Count)];
             try
             {
-                var genericMethod = createCardMethod!.MakeGenericMethod(cardType);
-                var card = (CardModel)genericMethod.Invoke(runState, [base.Owner])!;
+                var genericMethod = createCardMethod.MakeGenericMethod(cardType);
+                var card = (CardModel)genericMethod.Invoke(runState, [player])!;
+                
+                // If this TEST card is upgraded, upgrade each created card
+                if (IsUpgraded)
+                {
+                    CardCmd.Upgrade(card);
+                }
+                
                 cardsToAdd.Add(card);
             }
             catch (Exception ex)
             {
-                Entry.Logger.Error($"[TestAddApostleCards] Failed to create {cardType.Name}: {ex}");
+                Entry.Logger.Error($"[TEST] Failed to create {cardType.Name}: {ex.Message}");
             }
         }
 

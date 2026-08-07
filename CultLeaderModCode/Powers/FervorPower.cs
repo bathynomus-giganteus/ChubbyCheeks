@@ -16,6 +16,6 @@ public class FervorPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomIconPath => "CultLeaderMod/images/powers/fervor.png";
-    public override string CustomBigIconPath => "CultLeaderMod/images/powers/big/fervor.png";
+    public override string CustomIconPath => "res://CultLeaderMod/images/powers/fervor.png";
+    public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/big/fervor.png";
 }

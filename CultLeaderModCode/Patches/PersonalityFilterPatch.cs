@@ -8,28 +8,46 @@ namespace CultLeaderMod.CultLeaderModCode.Patches;
 [HarmonyPatch]
 public static class PersonalityFilterPatch
 {
-    /// <summary>
-    /// Patch CardFactory.GetDistinctForCombat to apply personality filtering.
-    /// This covers: potions, Splash, Discovery, Grand Prize, etc.
-    /// </summary>
     [HarmonyPatch(typeof(CardFactory), "GetDistinctForCombat")]
     [HarmonyPrefix]
     private static void Prefix(ref IEnumerable<CardModel> cards)
     {
-        if (!GumBlessRelic.SelectionMade) return;
-
-        var filtered = cards.Where(card =>
+        try
         {
-            if (GumBlessRelic.IsUnselectedPersonalityCard(card))
+            if (!GumBlessRelic.SelectionMade) return;
+
+            Entry.Logger.Info($"[PersonalityFilter] GetDistinctForCombat called, SelectionMade=true");
+
+            var filtered = cards.Where(card =>
             {
-                return Random.Shared.NextDouble() >= 0.85;
-            }
-            return true;
-        }).ToList();
+                try
+                {
+                    if (GumBlessRelic.IsUnselectedPersonalityCard(card))
+                    {
+                        return Random.Shared.NextDouble() >= 0.85;
+                    }
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Entry.Logger.Error($"[PersonalityFilter] Error filtering card {card?.GetType().Name}: {ex}");
+                    return true;
+                }
+            }).ToList();
 
-        if (filtered.Count > 0)
+            if (filtered.Count > 0)
+            {
+                cards = filtered;
+                Entry.Logger.Info($"[PersonalityFilter] Filtered cards count: {filtered.Count}");
+            }
+            else
+            {
+                Entry.Logger.Warn("[PersonalityFilter] All cards filtered out, keeping original");
+            }
+        }
+        catch (Exception ex)
         {
-            cards = filtered;
+            Entry.Logger.Error($"[PersonalityFilter] Prefix error: {ex}");
         }
     }
 }

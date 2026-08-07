@@ -49,7 +49,7 @@ public static class ApostleBadgePatch
         ["Apostle_Pure_22"] = "纯粹_大木头",
         ["Apostle_Pure_23"] = "纯粹_洛涅",
         ["Apostle_Pure_24"] = "纯粹_阿莱特",
-        ["Apostle_Pure_CucumberOil"] = "纯粹_乔伊",
+        ["Apostle_Pure_25"] = "纯粹_乔伊",
         ["TestRainbowCard"] = "乌洛斯",
         // ── 冷静 Calm ──
         ["Apostle_Calm_01"] = "冷静_01", ["Apostle_Calm_02"] = "冷静_02",

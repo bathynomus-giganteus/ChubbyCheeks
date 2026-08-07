@@ -122,7 +122,7 @@ public class GumBlessRelic : CultLeaderModRelic
                 runState.CreateCard<PersonalitySelectMelancholyCard>(player),
             };
 
-            var prefs = new CardSelectorPrefs(new LocString("gameplay_ui", "Select 2 Personalities"), 2)
+            var prefs = new CardSelectorPrefs(new LocString("gameplay_ui", "CULT_LEADER_PERSONALITY_SELECTION.prompt"), 2)
             {
                 Cancelable = false,
                 RequireManualConfirmation = true
@@ -237,19 +237,41 @@ public class GumBlessRelic : CultLeaderModRelic
     }
 public override CardCreationOptions ModifyCardRewardCreationOptions(Player player, CardCreationOptions options)
     {
-        if (!SelectionMade) return options;
-
-        var existingFilter = options.CardPoolFilter;
-        return options.WithFilter(card =>
+        try
         {
-            if (existingFilter != null && !existingFilter(card)) return false;
-
-            if (IsUnselectedPersonalityCard(card))
+            if (!SelectionMade)
             {
-                return _rng.NextDouble() >= 0.85;
+                Entry.Logger.Info("[GumBlessRelic] ModifyCardRewardCreationOptions: selection not made, returning original");
+                return options;
             }
-            return true;
-        });
+
+            var existingFilter = options.CardPoolFilter;
+            Entry.Logger.Info($"[GumBlessRelic] ModifyCardRewardCreationOptions: applying filter, UnselectedTags={UnselectedTags?.Count ?? 0}");
+
+            return options.WithFilter(card =>
+            {
+                try
+                {
+                    if (existingFilter != null && !existingFilter(card)) return false;
+
+                    if (IsUnselectedPersonalityCard(card))
+                    {
+                        return _rng.NextDouble() >= 0.85;
+                    }
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Entry.Logger.Error($"[GumBlessRelic] Filter error for card {card?.GetType().Name}: {ex}");
+                    return true; // keep card on error
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            Entry.Logger.Error($"[GumBlessRelic] ModifyCardRewardCreationOptions error: {ex}");
+            return options;
+        }
     }
 }
 
