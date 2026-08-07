@@ -1,30 +1,30 @@
-# CultLeaderMod — 教主 Mod
+﻿# CultLeaderMod - 教主 Mod
 
-杀戮尖塔2（Slay the Spire 2）的自定义角色 Mod。添加全新角色「教主」以及基于使徒性格的卡牌系统。
+杀戮尖塔2（Slay the Spire 2）的自定义角色 Mod。添加全新角色"教主"以及基于使徒性格的卡牌系统。
 
 ## 角色：教主
 
-掌控使徒之力的神秘教主。通过「咏春的祝福」选择两种使徒性格，在游戏中收集对应性格的使徒卡牌。
+掌控使徒之力的神秘教主。通过"咏春的祝福"选择两种使徒性格，在游戏中收集对应性格的使徒卡牌。
 
 ### 初始遗物：咏春的祝福
 
 - 开局选择两种使徒性格（5选2）
-- 被选中的性格使徒牌出现概率大幅提升（约 85%）
+- 被选中的性格使徒牌出现概率大幅提升（约85%）
 - 未被选中的性格使徒牌出现概率降低
 
 ## 性格系统
 
 游戏包含五种使徒性格，每种对应不同的核心 Buff：
 
-| 性格 | 颜色 | 核心 Buff | 说明 |
-|------|------|-----------|------|
-| 纯粹 | 绿 | 再生 (Regen) | 回合结束回复生命 |
-| 冷静 | 蓝 | 覆甲 (Plating) | 回合结束获得格挡 |
-| 狂热 | 红 | 活力 (Vigor) | 攻击时附加伤害 |
-| 活泼 | 黄 | 人工制品 (Artifact) | 抵挡负面效果 |
-| 忧郁 | 紫 | 敏捷 (Dexterity) | 增加格挡值 |
+| 性格 | 颜色 | 核心 Buff | 升级 Buff | 说明 |
+|------|------|-----------|-----------|------|
+| 纯粹 | 绿 | 再生 (Regen) | 生命本源 (Life Essence) | 回合结束回复生命 |
+| 冷静 | 蓝 | 覆甲 (Plating) | 固若坚冰 (Solid Ice) | 回合结束获得格挡 |
+| 狂热 | 红 | 活力 (Vigor) | 狂热 (Fervor) | 攻击时附加伤害 |
+| 活泼 | 黄 | 人工制品 (Artifact) | 幸福 (Happiness) | 抵挡负面效果 |
+| 忧郁 | 紫 | 苦痛 (Bitter Pain) | 苦痛爆发 (Bitter Pain Burst) | 回合结束施加随机负面 |
 
-每种性格 25 张使徒牌（后续将实装具体效果），共 125 张使徒牌。
+每种性格 25 张使徒牌，共 125 张使徒牌（效果陆续实装中）。
 
 ## 特殊 Buff
 
@@ -32,9 +32,6 @@
 |------|------|
 | 教主的权能 | 核心机制 Buff，叠加到 5 层后触发埃尔德形态 |
 | 埃尔德形态 | 将基础 Buff 转化为升级版 Buff |
-| 苦痛 | 回合结束对全体施加随机负面效果 |
-| 苦痛爆发 | 苦痛的升级版 |
-| 生命本源 | 再生的升级版，回合结束获得临时最大生命 |
 
 ## 卡牌类型
 
@@ -50,10 +47,14 @@ CultLeaderMod/
 │   ├── Cards/               # 卡牌定义
 │   ├── CardTags/            # 自定义标签
 │   ├── Character/           # 角色和卡池定义
+│   ├── Compendium/          # 百科筛选
+│   ├── Extensions/          # 扩展方法
 │   ├── Patches/             # Harmony 补丁
+│   ├── Potions/             # 药水
 │   ├── Powers/              # Buff/状态定义
 │   ├── Relics/              # 遗物定义
-│   └── Entry.cs             # Mod 入口
+│   ├── Entry.cs             # Mod 入口
+│   └── MainFile.cs          # Godot 主文件
 ├── CultLeaderMod/           # Godot 资源
 │   ├── images/              # 图片素材
 │   │   ├── badges/          # 使徒头像徽章
@@ -91,16 +92,12 @@ dotnet build
 & "E:\game\Godot\Godot_v4.5.1-stable_mono_win64.exe" --headless --export-pack "Windows Desktop" "E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\CultLeaderMod\CultLeaderMod.pck"
 ```
 
-> 注意：`dotnet build -t:ExportPck` 可能无法正确触发 Godot 导出，建议手动运行以上命令。
-
 ### 安装
 
 将以下文件放入 `Slay the Spire 2/mods/CultLeaderMod/`：
 - `CultLeaderMod.dll`
 - `CultLeaderMod.pck`
 - `CultLeaderMod.json`
-
-或通过 Steam Workshop 订阅。
 
 ## 依赖
 
@@ -111,17 +108,18 @@ dotnet build
 
 - [x] 角色基础框架
 - [x] 性格系统（5种性格标签）
-- [x] 初始遗物「咏春的祝福」
-- [x] 5选2性格选择界面
+- [x] 初始遗物"咏春的祝福"
+- [x] 5选2 性格选择界面
 - [x] 125 张使徒牌（占位效果）
 - [x] 教主的权能 / 埃尔德形态 Buff
 - [x] 再生 / 覆甲 / 活力 / 人工制品 / 敏捷 Buff
 - [x] 苦痛 / 苦痛爆发 Buff
+- [x] 生命本源 Buff（临时最大生命值）
 - [x] 卡框颜色区分
 - [x] 使徒头像徽章
 - [x] 卡池概率筛选
-- [ ] 使徒牌具体效果
-- [ ] 卡牌升级效果
+- [x] 卡牌升级描述系统（魔力乱打、阿卡那已实装）
+- [ ] 使徒牌具体效果（陆续实装中）
 - [ ] 百科性格筛选
 - [ ] 平衡性调整
 

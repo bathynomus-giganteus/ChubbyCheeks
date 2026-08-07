@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -50,6 +50,7 @@ public static class ApostleBadgePatch
         ["Apostle_Pure_23"] = "纯粹_洛涅",
         ["Apostle_Pure_24"] = "纯粹_阿莱特",
         ["Apostle_Pure_CucumberOil"] = "纯粹_乔伊",
+        ["TestRainbowCard"] = "乌洛斯",
         // ── 冷静 Calm ──
         ["Apostle_Calm_01"] = "冷静_01", ["Apostle_Calm_02"] = "冷静_02",
         ["Apostle_Calm_03"] = "冷静_03", ["Apostle_Calm_04"] = "冷静_04",

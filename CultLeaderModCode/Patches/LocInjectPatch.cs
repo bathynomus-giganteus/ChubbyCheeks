@@ -61,7 +61,7 @@ public static class LocInjectPatch
                 ["CULT_LEADER_MOD_CARD_TEST_ADD_APOSTLE_CARDS.description"] = "向抽牌堆中添加100张随机使徒牌。",
 
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_01.title"] = "魔力乱打",
-                ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_01.description"] = "获得1层再生。\n抽1张牌。",
+                ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_01.description"] = "移除所有再生和生命本源，每移除一层对随机敌人造成{Damage:diff()}点伤害。",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_02.title"] = "要来少女的身边吗？",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_02.description"] = "获得1层再生。\n抽1张牌。",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_03.title"] = "围猎",
@@ -175,7 +175,7 @@ public static class LocInjectPatch
                 ["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_06.title"] = "猩红之雨",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_06.description"] = "获得1层活力。\n抽1张牌。",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_07.title"] = "阿卡那",
-                ["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_07.description"] = "获得1层活力。\n抽1张牌。",
+                ["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_07.description"] = "获得1层活力。\n抽1张牌。\n获得{Energy:diff()}能量点。",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_08.title"] = "淬火击",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_08.description"] = "获得1层活力。\n抽1张牌。",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_09.title"] = "鹿派斩击",
