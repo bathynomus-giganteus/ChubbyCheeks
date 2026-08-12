@@ -63,7 +63,7 @@ public static class LocInjectPatch
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_02.title"] = "要来少女的身边吗？",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_02.description"] = "获得25格挡和4再生\n升级：升级后30格挡和5再生",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_03.title"] = "围猎",
-                ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_03.description"] = "造成{Damage:diff()}点伤害3次。如果目标生命值低于你的最大生命值，则再发动一次。{IfUpgraded:show:\n费用由2变为{DynamicVars.Energy}。|}",
+                ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_03.description"] = "造成{Damage:diff()}点伤害3次。如果目标生命值低于你的最大生命值，则再发动一次。{IfUpgraded:show:\n费用由2变为1。|}",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_04.title"] = "休假中潜逃",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_04.description"] = "获得3再生，每有一层再生或者生命本源获得8点格挡\n升级：升级后4再生和10格挡",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_05.title"] = "最强的收集品",
