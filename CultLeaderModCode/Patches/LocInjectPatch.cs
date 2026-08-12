@@ -56,7 +56,7 @@ public static class LocInjectPatch
                 ["CULT_LEADER_MOD_CARD_ELDER_FORM_CARD.title"] = "埃尔德形态",
                 ["CULT_LEADER_MOD_CARD_ELDER_FORM_CARD.description"] = "获得1层教主的权能，此效果触发5次。",
                 ["CULT_LEADER_MOD_CARD_TEST_ADD_APOSTLE_CARDS.title"] = "TEST",
-                ["CULT_LEADER_MOD_CARD_TEST_ADD_APOSTLE_CARDS.description"] = "向抽牌堆中添加100张随机使徒牌。",
+                ["CULT_LEADER_MOD_CARD_TEST_ADD_APOSTLE_CARDS.description"] = "向弃牌堆中添加测试卡牌。",
 
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_01.title"] = "魔力乱打",
                 ["CULT_LEADER_MOD_CARD_APOSTLE_PURE_01.description"] = "移除所有再生和生命本源，每移除一层对随机敌人造成10点伤害\n升级：升级后每次伤害变为13",

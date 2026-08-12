@@ -31,19 +31,24 @@ public class TestAddApostleCards : ModCardTemplate
             return;
         }
 
-        // 10张纯粹测试卡牌
+        // 13张测试卡牌（未升级）：10张新卡 + 3张基础再生卡
         var testCardTypes = new Type[]
         {
-            typeof(Apostle_Pure_02), // 要来少女的身边吗？
-            typeof(Apostle_Pure_03), // 围猎
-            typeof(Apostle_Pure_04), // 休假中潜逃
-            typeof(Apostle_Pure_05), // 最强的收集品
+            // 基础再生提供
             typeof(Apostle_Pure_06), // 南瓜魔术
             typeof(Apostle_Pure_07), // 我来保护你
-            typeof(Apostle_Pure_16), // 欧珀粉
-            typeof(Apostle_Pure_21), // 清晰的界限
-            typeof(Apostle_Pure_24), // 铁锹击
             typeof(Apostle_Pure_25), // 黄瓜油
+            // 新测试卡牌
+            typeof(Apostle_Pure_08), // 调皮的笑容
+            typeof(Apostle_Pure_09), // 玛戈玛恢复
+            typeof(Apostle_Pure_10), // 魔女档案
+            typeof(Apostle_Pure_11), // 谢绝(Non grata)
+            typeof(Apostle_Pure_12), // 接受水的洗礼吧！
+            typeof(Apostle_Pure_13), // 汁液泵机发射！
+            typeof(Apostle_Pure_14), // 钻石穿刺
+            typeof(Apostle_Pure_15), // 快躲开啊啊!!!噫…?
+            typeof(Apostle_Pure_17), // 远程充电
+            typeof(Apostle_Pure_18), // 突发惊吓
         };
 
         var createCardMethod = typeof(ICombatState)
@@ -62,10 +67,6 @@ public class TestAddApostleCards : ModCardTemplate
             {
                 var genericMethod = createCardMethod.MakeGenericMethod(cardType);
                 var card = (CardModel)genericMethod.Invoke(combatState, [player])!;
-
-                // 添加升级版本
-                CardCmd.Upgrade(card);
-
                 cardsToAdd.Add(card);
             }
             catch (Exception ex)
