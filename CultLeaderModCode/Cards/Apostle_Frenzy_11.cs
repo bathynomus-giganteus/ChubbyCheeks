@@ -13,22 +13,31 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class Apostle_Frenzy_11 : ModCardTemplate
 {
-    protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/螺旋钻头充能.png");
+    protected override HashSet<CardTag> CanonicalTags =>
+        [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("VigorAmt", 12m)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+    public override CardAssetProfile AssetProfile =>
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/螺旋钻头充能.png");
 
-    public Apostle_Frenzy_11() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public Apostle_Frenzy_11()
+        : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<VigorPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
+        var owner = base.Owner.Creature;
+        await ApostleCardPlayHelpers.ApplyFrenzyPower(
+            choiceContext,
+            owner,
+            DynamicVars["VigorAmt"].BaseValue,
+            owner,
+            this
+        );
     }
-
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
-    }}
+        DynamicVars["VigorAmt"].UpgradeValueBy(6m);
+    }
+}
+

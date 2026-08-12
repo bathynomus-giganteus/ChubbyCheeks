@@ -13,22 +13,32 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class Apostle_Calm_11 : ModCardTemplate
 {
-    protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
+    protected override HashSet<CardTag> CanonicalTags =>
+        [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/界限模糊.png");
+    public override CardAssetProfile AssetProfile =>
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/界限模糊.png");
 
-    public Apostle_Calm_11() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public Apostle_Calm_11()
+        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<PlatingPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
+        await ApostleCardPlayHelpers.ApplyCalmPower(
+            choiceContext,
+            base.Owner.Creature,
+            1m,
+            base.Owner.Creature,
+            this
+        );
         await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
     }
 
-
     protected override void OnUpgrade()
     {
         DynamicVars.Energy.UpgradeValueBy(1m);
-    }}
+    }
+}
+

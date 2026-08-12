@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -13,22 +14,38 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class Apostle_Pure_07 : ModCardTemplate
 {
-    protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
+    protected override HashSet<CardTag> CanonicalTags =>
+        [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [
+            new DynamicVar("RegenAmt", 5m),
+            new BlockVar(10m, ValueProp.Move),
+            new DynamicVar("DrawAmt", 1m),
+        ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/我来保护你.png");
+    public override CardAssetProfile AssetProfile =>
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/我来保护你.png");
 
-    public Apostle_Pure_07() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public Apostle_Pure_07()
+        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<RegenPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
+        var owner = base.Owner.Creature;
+        await ApostleCardPlayHelpers.ApplyPurePower(
+            choiceContext,
+            owner,
+            DynamicVars["RegenAmt"].BaseValue,
+            owner,
+            this
+        );
+        await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
+        await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmt"].BaseValue, base.Owner);
     }
-
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
-    }}
+        DynamicVars["DrawAmt"].UpgradeValueBy(1m);
+    }
+}
+

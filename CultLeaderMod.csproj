@@ -8,7 +8,6 @@
         <RitsuLibDeployDir>$(Sts2Dir)/mods/STS2-RitsuLib/</RitsuLibDeployDir>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-        <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)\obj\</BaseIntermediateOutputPath>
     </PropertyGroup>
     <PropertyGroup><NoWarn>$(NoWarn);MSB3270</NoWarn></PropertyGroup>
     <ItemGroup Condition="Exists('$(Sts2DataDir)')">

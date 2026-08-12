@@ -1,4 +1,4 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -13,22 +13,38 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class Apostle_Pure_19 : ModCardTemplate
 {
-    protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/基础黑客攻击.png");
+    protected override HashSet<CardTag> CanonicalTags =>
+        [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+    public override CardAssetProfile AssetProfile =>
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/基础黑客攻击.png");
 
-    public Apostle_Pure_19() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public Apostle_Pure_19()
+        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<RegenPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
-    }
+        var target = cardPlay.Target;
+        if (target == null)
+            return;
 
+        var stacks = ApostleCardEffectHelpers.PureStacks(base.Owner.Creature);
+        if (stacks <= 0)
+            return;
+
+        await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, stacks);
+        await ApostleCardEffectHelpers.ApplyTemporaryStrengthLoss(
+            choiceContext,
+            target,
+            stacks,
+            base.Owner.Creature,
+            this
+        );
+    }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
-    }}
+        // TODO: upgrade should reduce this card's cost to 0 once a safe cost mutator is confirmed.
+    }
+}

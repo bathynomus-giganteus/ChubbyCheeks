@@ -13,22 +13,32 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class Apostle_Pure_17 : ModCardTemplate
 {
-    protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
+    protected override HashSet<CardTag> CanonicalTags =>
+        [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/远程充电.png");
+    public override CardAssetProfile AssetProfile =>
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/远程充电.png");
 
-    public Apostle_Pure_17() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public Apostle_Pure_17()
+        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<RegenPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
+        await ApostleCardPlayHelpers.ApplyPurePower(
+            choiceContext,
+            base.Owner.Creature,
+            1m,
+            base.Owner.Creature,
+            this
+        );
         await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
     }
 
-
     protected override void OnUpgrade()
     {
         DynamicVars.Energy.UpgradeValueBy(1m);
-    }}
+    }
+}
+

@@ -2,5 +2,6 @@
     <PropertyGroup>
         <GodotPath>E:/game/Godot/Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
         <Sts2Path>E:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path>
+        <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)\obj\</BaseIntermediateOutputPath>
     </PropertyGroup>
 </Project>

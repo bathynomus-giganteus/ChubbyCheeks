@@ -1,112 +1,139 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
-
-using Sts2PowerModel = MegaCrit.Sts2.Core.Models.PowerModel;
 using Sts2CardModel = MegaCrit.Sts2.Core.Models.CardModel;
+using Sts2PowerModel = MegaCrit.Sts2.Core.Models.PowerModel;
 
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 [HarmonyPatch]
 public static class PowerInterceptPatch
 {
-    private static readonly Dictionary<Type, Type> BaseToUpgraded = new()
-    {
-        { typeof(RegenPower), typeof(LifeEssencePower) },
-        { typeof(PlatingPower), typeof(SolidIcePower) },
-        { typeof(VigorPower), typeof(FervorPower) },
-        { typeof(BitterPainPower), typeof(BitterPainBurstPower) },
-        { typeof(ArtifactPower), typeof(HappinessPower) },
-    };
-
-    private static readonly HashSet<Type> AllMonitoredTypes = new()
-    {
-        typeof(RegenPower), typeof(PlatingPower), typeof(VigorPower),
-        typeof(BitterPainPower), typeof(ArtifactPower),
-        typeof(LifeEssencePower), typeof(SolidIcePower), typeof(FervorPower),
-        typeof(BitterPainBurstPower), typeof(HappinessPower),
-    };
-
-    private static bool IsApostleCard(Sts2CardModel? card)
-    {
-        if (card == null) return false;
-        var tags = Traverse.Create(card).Property<object>("CanonicalTags").Value;
-        if (tags is System.Collections.Generic.HashSet<MegaCrit.Sts2.Core.Entities.Cards.CardTag> tagSet)
-        {
-            return tagSet.Any(t => t.ToString()?.Contains("Apostle") == true);
-        }
-        return false;
-    }
-
-    [HarmonyPatch(typeof(PowerCmd), "Apply")]
-    [HarmonyPatch(
-        [typeof(PlayerChoiceContext), typeof(Sts2PowerModel), typeof(Creature),
-         typeof(decimal), typeof(Creature), typeof(Sts2CardModel), typeof(bool)])]
-    [HarmonyPrefix]
-    private static void ApplyPrefix(
-        PlayerChoiceContext choiceContext,
-        Sts2PowerModel power,
-        Creature target,
-        ref decimal amount,
-        Creature applier,
-        Sts2CardModel cardSource,
-        bool silent)
-    {
-        if (target == null || amount <= 0) return;
-        var powerType = power.GetType();
-        var authority = target.Powers?.OfType<CultLeaderAuthorityPower>().FirstOrDefault();
-        bool isApostle = IsApostleCard(cardSource);
-
-        if (authority != null && isApostle && AllMonitoredTypes.Contains(powerType))
-        {
-            amount *= (1 + authority.Amount);
-        }
-    }
-
-    [HarmonyPatch(typeof(PowerCmd), "Apply")]
-    [HarmonyPatch(
-        [typeof(PlayerChoiceContext), typeof(Sts2PowerModel), typeof(Creature),
-         typeof(decimal), typeof(Creature), typeof(Sts2CardModel), typeof(bool)])]
+    [HarmonyPatch(typeof(PowerCmd), nameof(PowerCmd.Apply))]
+    [HarmonyPatch([
+        typeof(PlayerChoiceContext),
+        typeof(Sts2PowerModel),
+        typeof(Creature),
+        typeof(decimal),
+        typeof(Creature),
+        typeof(Sts2CardModel),
+        typeof(bool),
+    ])]
     [HarmonyPostfix]
-    private static async void ApplyPostfix(
+    private static void AuthorityApplyPostfix(
         PlayerChoiceContext choiceContext,
         Sts2PowerModel power,
         Creature target,
-        decimal amount,
         Creature applier,
         Sts2CardModel cardSource,
-        bool silent)
+        ref Task __result
+    )
     {
-        if (target == null || amount <= 0) return;
-        var powerType = power.GetType();
+        if (power is CultLeaderAuthorityPower)
+            __result = AwaitApplyAndTryEnterElderForm(
+                __result,
+                choiceContext,
+                power,
+                target,
+                applier,
+                cardSource
+            );
+    }
 
-        var elderForm = target.Powers?.OfType<ElderFormPower>().FirstOrDefault();
-        if (elderForm != null && BaseToUpgraded.TryGetValue(powerType, out var upgradedType))
-        {
-            var existingPower = target.Powers?.FirstOrDefault(p => p.GetType() == powerType && p != power);
-            if (existingPower != null)
-            {
-                await PowerCmd.ModifyAmount(choiceContext, existingPower, -amount, applier, null);
-            }
-            var applyMethod = typeof(PowerCmd).GetMethods()
-                .First(m => m.Name == "Apply" && m.IsGenericMethodDefinition && m.GetParameters().Length == 6);
-            var genericApply = applyMethod.MakeGenericMethod(upgradedType);
-            await (Task)genericApply.Invoke(null, [choiceContext, target, amount, applier, (Sts2CardModel?)cardSource, silent]);
-        }
+    [HarmonyPatch(typeof(PowerCmd), nameof(PowerCmd.ModifyAmount))]
+    [HarmonyPatch([
+        typeof(PlayerChoiceContext),
+        typeof(Sts2PowerModel),
+        typeof(decimal),
+        typeof(Creature),
+        typeof(Sts2CardModel),
+        typeof(bool),
+    ])]
+    [HarmonyPostfix]
+    private static void AuthorityModifyAmountPostfix(
+        PlayerChoiceContext choiceContext,
+        Sts2PowerModel power,
+        Creature applier,
+        Sts2CardModel cardSource,
+        ref Task<int> __result
+    )
+    {
+        if (power is CultLeaderAuthorityPower)
+            __result = AwaitModifyAndTryEnterElderForm(
+                __result,
+                choiceContext,
+                power,
+                power.Owner,
+                applier,
+                cardSource
+            );
+    }
 
-        var authority = target.Powers?.OfType<CultLeaderAuthorityPower>().FirstOrDefault();
-        if (authority != null && authority.Amount >= 5)
-        {
-            var hasElderForm = target.Powers?.OfType<ElderFormPower>().FirstOrDefault();
-            if (hasElderForm == null)
-            {
-                await PowerCmd.ModifyAmount(choiceContext, authority, -5m, applier, null);
-                await PowerCmd.Apply<ElderFormPower>(choiceContext, target, 1m, applier, null);
-            }
-        }
+    private static async Task AwaitApplyAndTryEnterElderForm(
+        Task original,
+        PlayerChoiceContext choiceContext,
+        Sts2PowerModel power,
+        Creature target,
+        Creature? applier,
+        Sts2CardModel? cardSource
+    )
+    {
+        await original;
+        await TryEnterElderForm(choiceContext, power, target, applier, cardSource);
+    }
+
+    private static async Task<int> AwaitModifyAndTryEnterElderForm(
+        Task<int> original,
+        PlayerChoiceContext choiceContext,
+        Sts2PowerModel power,
+        Creature target,
+        Creature? applier,
+        Sts2CardModel? cardSource
+    )
+    {
+        var result = await original;
+        await TryEnterElderForm(choiceContext, power, target, applier, cardSource);
+        return result;
+    }
+
+    private static async Task TryEnterElderForm(
+        PlayerChoiceContext choiceContext,
+        Sts2PowerModel power,
+        Creature target,
+        Creature? applier,
+        Sts2CardModel? cardSource
+    )
+    {
+        if (ApostlePowerRules.IsConverting || power is not CultLeaderAuthorityPower authority)
+            return;
+
+        if (
+            target == null
+            || target != authority.Owner
+            || authority.Amount < 5
+            || target.Powers?.OfType<ElderFormPower>().Any() == true
+        )
+            return;
+
+        Entry.Logger.Info(
+            $"[Authority] {authority.Amount} stacks reached; consuming 5 and entering Elder Form."
+        );
+
+        await PowerCmd.ModifyAmount(
+            choiceContext,
+            authority,
+            -5m,
+            applier ?? target,
+            cardSource,
+            silent: true
+        );
+        await PowerCmd.Apply<ElderFormPower>(
+            choiceContext,
+            target,
+            1m,
+            applier ?? target,
+            cardSource
+        );
     }
 }

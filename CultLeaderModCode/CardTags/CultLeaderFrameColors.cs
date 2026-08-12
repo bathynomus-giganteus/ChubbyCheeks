@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using STS2RitsuLib.Utils;
 
 namespace CultLeaderMod.CultLeaderModCode.CardTags;
@@ -6,6 +6,7 @@ namespace CultLeaderMod.CultLeaderModCode.CardTags;
 public static class CultLeaderFrameColors
 {
     private static ShaderMaterial? _rainbowMaterial;
+
     public static Material Rainbow
     {
         get
@@ -52,14 +53,16 @@ void fragment() {
             };
 
             _rainbowMaterial = new ShaderMaterial { Shader = shader };
-            _rainbowMaterial.SetShaderParameter("alpha".ToString(), Variant.From(0.55f));
+            _rainbowMaterial.SetShaderParameter("alpha", Variant.From(0.55f));
             return _rainbowMaterial;
         }
     }
 
-    public static readonly Material Pure      = MaterialUtils.CreateReplaceHueShaderMaterial(0.65f, 1.12f, 0.55f);
-    public static readonly Material Calm       = MaterialUtils.CreateReplaceHueShaderMaterial(0.37f, 1.13f, 1.29f);
-    public static readonly Material Frenzy     = MaterialUtils.CreateReplaceHueShaderMaterial(1.25f, 0.55f, 0.55f);
-    public static readonly Material Lively     = MaterialUtils.CreateReplaceHueShaderMaterial(1.27f, 1.12f, 0.27f);
+    // These five lines are the only place that should be tuned for personality frame color.
+    // Keep the NCard/%Frame patch stable; do not replace it with overlay UI.
+    public static readonly Material Pure = MaterialUtils.CreateReplaceHueShaderMaterial(0.65f, 1.12f, 0.55f);
+    public static readonly Material Calm = MaterialUtils.CreateReplaceHueShaderMaterial(0.37f, 1.13f, 1.29f);
+    public static readonly Material Frenzy = MaterialUtils.CreateReplaceHueShaderMaterial(1.25f, 0.55f, 0.55f);
+    public static readonly Material Lively = MaterialUtils.CreateReplaceHueShaderMaterial(1.27f, 1.12f, 0.27f);
     public static readonly Material Melancholy = MaterialUtils.CreateReplaceHueShaderMaterial(0.77f, 0.58f, 1.26f);
 }

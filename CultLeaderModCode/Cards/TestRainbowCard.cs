@@ -22,11 +22,41 @@ public class TestRainbowCard : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<RegenPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
-        await PowerCmd.Apply<PlatingPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
-        await PowerCmd.Apply<VigorPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
-        await PowerCmd.Apply<ArtifactPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
-        await PowerCmd.Apply<DexterityPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
+        await ApostleCardPlayHelpers.ApplyPurePower(
+            choiceContext,
+            base.Owner.Creature,
+            1m,
+            base.Owner.Creature,
+            this
+        );
+        await ApostleCardPlayHelpers.ApplyCalmPower(
+            choiceContext,
+            base.Owner.Creature,
+            1m,
+            base.Owner.Creature,
+            this
+        );
+        await ApostleCardPlayHelpers.ApplyFrenzyPower(
+            choiceContext,
+            base.Owner.Creature,
+            1m,
+            base.Owner.Creature,
+            this
+        );
+        await ApostleCardPlayHelpers.ApplyLivelyPower(
+            choiceContext,
+            base.Owner.Creature,
+            1m,
+            base.Owner.Creature,
+            this
+        );
+        await ApostleCardPlayHelpers.ApplyMelancholyPower(
+            choiceContext,
+            base.Owner.Creature,
+            1m,
+            base.Owner.Creature,
+            this
+        );
         await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
     }
 }

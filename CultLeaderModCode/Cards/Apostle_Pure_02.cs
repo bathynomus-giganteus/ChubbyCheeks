@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -13,22 +14,34 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class Apostle_Pure_02 : ModCardTemplate
 {
-    protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/要来少女的身边吗.png");
+    protected override HashSet<CardTag> CanonicalTags =>
+        [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new BlockVar(25m, ValueProp.Move), new DynamicVar("RegenAmt", 4m)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+    public override CardAssetProfile AssetProfile =>
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/要来少女的身边吗.png");
 
-    public Apostle_Pure_02() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public Apostle_Pure_02()
+        : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<RegenPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
+        var owner = base.Owner.Creature;
+        await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
+        await ApostleCardPlayHelpers.ApplyPurePower(
+            choiceContext,
+            owner,
+            DynamicVars["RegenAmt"].BaseValue,
+            owner,
+            this
+        );
     }
-
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
-    }}
+        DynamicVars.Block.UpgradeValueBy(5m);
+        DynamicVars["RegenAmt"].UpgradeValueBy(1m);
+    }
+}
+
