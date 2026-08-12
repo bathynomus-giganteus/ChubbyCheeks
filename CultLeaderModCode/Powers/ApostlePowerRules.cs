@@ -1,4 +1,4 @@
-using System.Threading;
+﻿using System.Threading;
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -75,9 +75,29 @@ internal static class ApostlePowerRules
         where TUpgradedPower : PowerModel, new()
     {
         if (HasElderForm(target))
+        {
             await PowerCmd.Apply<TUpgradedPower>(choiceContext, target, amount, applier, cardSource, silent);
+            // 同步 TempMaxHpPower 视觉标记（1 LifeEssence → 5 TempMaxHpPower）
+            if (typeof(TUpgradedPower) == typeof(LifeEssencePower))
+                await SyncTempMaxHp(choiceContext, target, applier, cardSource);
+        }
         else
+        {
             await PowerCmd.Apply<TBasePower>(choiceContext, target, amount, applier, cardSource, silent);
+        }
+    }
+
+    private static async Task SyncTempMaxHp(
+        PlayerChoiceContext choiceContext, Creature target,
+        Creature? applier, CardModel? cardSource)
+    {
+        var life = target.Powers?.OfType<LifeEssencePower>().FirstOrDefault();
+        int targetAmount = (life?.Amount ?? 0) * 5;
+        var tempHp = target.Powers?.OfType<TempMaxHpPower>().FirstOrDefault();
+        if (tempHp != null)
+            await PowerCmd.ModifyAmount(choiceContext, tempHp, targetAmount - tempHp.Amount, applier, cardSource, silent: true);
+        else if (targetAmount > 0)
+            await PowerCmd.Apply<TempMaxHpPower>(choiceContext, target, targetAmount, applier, cardSource);
     }
 
     public static bool HasElderForm(Creature? target)
@@ -124,7 +144,11 @@ internal static class ApostlePowerRules
     )
     {
         if (powerType == typeof(LifeEssencePower))
+        {
             await PowerCmd.Apply<LifeEssencePower>(choiceContext, target, amount, applier, cardSource, silent: true);
+            // 同步 TempMaxHpPower 视觉标记
+            await SyncTempMaxHp(choiceContext, target, applier, cardSource);
+        }
         else if (powerType == typeof(SolidIcePower))
             await PowerCmd.Apply<SolidIcePower>(choiceContext, target, amount, applier, cardSource, silent: true);
         else if (powerType == typeof(FervorPower))

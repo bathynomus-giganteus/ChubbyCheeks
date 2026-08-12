@@ -31,19 +31,13 @@ public class TestAddApostleCards : ModCardTemplate
             return;
         }
 
-        var apostleTypes = typeof(TestAddApostleCards)
-            .Assembly.GetTypes()
-            .Where(t =>
-                t.IsClass
-                && !t.IsAbstract
-                && t.IsSubclassOf(typeof(ModCardTemplate))
-                && t.GetCustomAttribute<RegisterCardAttribute>() != null
-                && t.Name.StartsWith("Apostle_")
-            )
-            .ToList();
-
-        if (apostleTypes.Count == 0)
-            return;
+        // 测试卡牌组：10张效果简单的纯粹使徒牌
+        var testCardTypes = new Type[]
+        {
+            typeof(Apostle_Pure_06), // 南瓜魔术 — 再生+格挡
+            typeof(Apostle_Pure_07), // 我来保护你 — 再生+格挡+抽牌
+            typeof(Apostle_Pure_25), // 黄瓜油 — 再生+抽牌
+        };
 
         var createCardMethod = typeof(ICombatState)
             .GetMethods()
@@ -53,18 +47,15 @@ public class TestAddApostleCards : ModCardTemplate
                 && m.GetParameters().Length == 1
             );
 
-        var rng = new Random();
         var cardsToAdd = new List<CardModel>();
 
-        for (int i = 0; i < 100; i++)
+        foreach (var cardType in testCardTypes)
         {
-            var cardType = apostleTypes[rng.Next(apostleTypes.Count)];
             try
             {
                 var genericMethod = createCardMethod.MakeGenericMethod(cardType);
                 var card = (CardModel)genericMethod.Invoke(combatState, [player])!;
 
-                // If this TEST card is upgraded, upgrade each created card
                 if (IsUpgraded)
                 {
                     CardCmd.Upgrade(card);
@@ -80,15 +71,12 @@ public class TestAddApostleCards : ModCardTemplate
 
         if (cardsToAdd.Count > 0)
         {
-            var results = await CardPileCmd.Add(
+            await CardPileCmd.Add(
                 cardsToAdd,
                 PileType.Discard,
                 CardPilePosition.Bottom,
                 null,
                 true
-            );
-            Entry.Logger.Info(
-                $"[TEST] Added {results.Count(r => r.success)} generated combat cards to discard. DiscardCount={PileType.Discard.GetPile(player).Cards.Count}"
             );
         }
     }
