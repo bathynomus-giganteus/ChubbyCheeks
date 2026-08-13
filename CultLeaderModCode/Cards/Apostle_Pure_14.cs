@@ -1,13 +1,14 @@
-using CultLeaderMod.CultLeaderModCode.CardTags;
+﻿using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -30,8 +31,25 @@ public class Apostle_Pure_14 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        var damage = DynamicVars.Damage.BaseValue + ApostleCardEffectHelpers.PureStacks(owner);
-        await ApostleCardEffectHelpers.AttackAll(choiceContext, this, cardPlay, owner, damage);
+        decimal damage = DynamicVars.Damage.BaseValue + ApostleCardEffectHelpers.PureStacks(owner);
+
+        await using AttackContext attackContext = await AttackCommand.CreateContextAsync(base.CombatState!, choiceContext, cardPlay);
+        int attackCount = 1;
+        while (attackCount > 0)
+        {
+            attackCount--;
+            IEnumerable<DamageResult> results = await CreatureCmd.Damage(
+                choiceContext,
+                base.CombatState?.HittableEnemies,
+                damage,
+                DynamicVars.Damage.Props,
+                owner,
+                this,
+                cardPlay
+            );
+            attackContext.AddHit(results);
+            attackCount += results.Count(r => r.WasTargetKilled);
+        }
     }
 
     protected override void OnUpgrade()

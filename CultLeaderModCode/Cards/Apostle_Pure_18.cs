@@ -31,12 +31,16 @@ public class Apostle_Pure_18 : ModCardTemplate
     {
         var owner = base.Owner.Creature;
         await PowerCmd.Apply<BufferPower>(choiceContext, owner, DynamicVars["BufferAmt"].BaseValue, owner, this);
-        if (ApostleCardEffectHelpers.PureStacks(owner) >= DynamicVars["Threshold"].BaseValue)
+
+        if (ApostleCardEffectHelpers.PureStacks(owner) > DynamicVars["Threshold"].BaseValue)
+        {
+            await ApostleCardEffectHelpers.RemovePureStacksBulk(choiceContext, owner, DynamicVars["Threshold"].IntValue, this);
             await PowerCmd.Apply<BufferPower>(choiceContext, owner, DynamicVars["BufferAmt"].BaseValue, owner, this);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        // TODO: replace with a real base-cost upgrade once the STS2 cost mutator is confirmed.
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

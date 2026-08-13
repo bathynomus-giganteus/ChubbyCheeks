@@ -21,6 +21,11 @@ public class HappinessPower : ModPowerTemplate
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
         await base.AfterApplied(applier, cardSource);
+        await TriggerAfterGain(applier, cardSource);
+    }
+
+    public async Task TriggerAfterGain(Creature? applier = null, CardModel? cardSource = null)
+    {
         if (base.Amount < 3)
             return;
 

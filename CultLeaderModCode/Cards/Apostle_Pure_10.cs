@@ -1,4 +1,4 @@
-using CultLeaderMod.CultLeaderModCode.CardTags;
+﻿using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -29,7 +29,7 @@ public class Apostle_Pure_10 : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var count = ApostleCardEffectHelpers.CountCombatCards(
+        var count = ApostleCardEffectHelpers.CountDeckCards(
             base.Owner,
             card => ApostlePowerRules.IsApostleCard(card) && card.Tags.Contains(CultLeaderCardTags.Pure)
         );
@@ -39,6 +39,6 @@ public class Apostle_Pure_10 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        // TODO: replace with a real base-cost upgrade once the STS2 cost mutator is confirmed.
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

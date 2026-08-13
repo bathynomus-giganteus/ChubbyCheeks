@@ -30,8 +30,7 @@ public class Apostle_Pure_22 : ModCardTemplate
             return;
 
         var amount = DynamicVars["MaxHpAmt"].BaseValue;
-        await CreatureCmd.LoseMaxHp(choiceContext, target, amount, true);
-        await CreatureCmd.LoseMaxHp(choiceContext, base.Owner.Creature, -amount, true);
+        await PowerCmd.Apply<TempMaxHpLossPower>(choiceContext, target, amount, base.Owner.Creature, this);
         await PowerCmd.Apply<TempMaxHpPower>(choiceContext, base.Owner.Creature, amount, base.Owner.Creature, this);
     }
 

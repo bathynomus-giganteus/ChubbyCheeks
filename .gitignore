@@ -23,6 +23,7 @@ obj/
 Thumbs.db
 
 # Temp / decompiled
+.tmpmods/
 tmp/
 
 # Editor

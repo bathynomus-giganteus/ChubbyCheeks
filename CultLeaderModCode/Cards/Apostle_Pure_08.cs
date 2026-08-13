@@ -34,12 +34,13 @@ public class Apostle_Pure_08 : ModCardTemplate
             return;
 
         await PowerCmd.Apply<WeakPower>(choiceContext, target, DynamicVars["WeakAmt"].BaseValue, base.Owner.Creature, this);
-        var debuffCount = target.Powers.Count(power => power.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff);
+        var debuffCount = target.Powers
+            .Where(power => power.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff)
+            .Sum(power => power.Amount);
         if (debuffCount > 0)
             await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, base.Owner.Creature, debuffCount, base.Owner.Creature, this);
-        // The source design raises this card's cost by 1 for the combat after use.
-        // We intentionally leave that transient cost mutation out until the STS2 card-cost
-        // API is nailed down, because unsafe mutations have previously broken card flow.
+        if (!IsUpgraded)
+            base.EnergyCost.AddThisCombat(1);
     }
 
     protected override void OnUpgrade()

@@ -18,7 +18,7 @@ internal static class ApostlePowerRules
         typeof(RegenPower),
         typeof(PlatingPower),
         typeof(VigorPower),
-        typeof(RetainHandPower),
+        typeof(RetainPower),
         typeof(BitterPainPower),
         typeof(LifeEssencePower),
         typeof(SolidIcePower),
@@ -38,7 +38,7 @@ internal static class ApostlePowerRules
         [typeof(PlatingPower)] = typeof(SolidIcePower),
         [typeof(VigorPower)] = typeof(FervorPower),
         [typeof(BitterPainPower)] = typeof(BitterPainBurstPower),
-        [typeof(RetainHandPower)] = typeof(HappinessPower),
+        [typeof(RetainPower)] = typeof(HappinessPower),
     };
 
     public static bool IsConverting => ConversionDepth.Value > 0;

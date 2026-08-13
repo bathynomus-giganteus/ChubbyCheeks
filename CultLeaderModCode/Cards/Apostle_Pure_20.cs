@@ -33,8 +33,7 @@ public class Apostle_Pure_20 : ModCardTemplate
         var stacks = ApostleCardEffectHelpers.PureStacks(owner);
         if (stacks > 0)
         {
-            await PowerCmd.Apply<StrengthPower>(choiceContext, owner, stacks, owner, this);
-            await PowerCmd.Apply<TempStrengthLossPower>(choiceContext, owner, stacks, owner, this);
+            await PowerCmd.Apply<TempStrengthBuffPower>(choiceContext, owner, stacks, owner, this);
         }
         await ApostleCardEffectHelpers.AttackAll(choiceContext, this, cardPlay, owner, DynamicVars.Damage.BaseValue);
     }

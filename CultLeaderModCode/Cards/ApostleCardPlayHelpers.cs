@@ -1,4 +1,4 @@
-using CultLeaderMod.CultLeaderModCode.Powers;
+﻿using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -75,7 +75,7 @@ internal static class ApostleCardPlayHelpers
         bool silent = false
     )
     {
-        return ApostlePowerRules.ApplyApostlePower<RetainHandPower, HappinessPower>(
+        return ApostlePowerRules.ApplyApostlePower<RetainPower, HappinessPower>(
             choiceContext,
             target,
             amount,

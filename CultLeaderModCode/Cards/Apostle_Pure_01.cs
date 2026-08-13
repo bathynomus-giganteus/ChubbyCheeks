@@ -27,7 +27,7 @@ public class Apostle_Pure_01 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/魔力乱打.png");
 
     public Apostle_Pure_01()
-        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
+        : base(1, CardType.Attack, CardRarity.Rare, TargetType.RandomEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -43,10 +43,7 @@ public class Apostle_Pure_01 : ModCardTemplate
         var lifePower = owner.GetPower<LifeEssencePower>();
         int lifeStacks = lifePower?.Amount ?? 0;
         if (lifePower != null)
-        {
-            for (int i = 0; i < lifeStacks; i++)
-                await lifePower.TriggerActive(choiceContext, owner, this);
-        }
+            await PowerCmd.Remove<LifeEssencePower>(owner);
 
         int totalStacks = regenStacks + lifeStacks;
         if (totalStacks <= 0)

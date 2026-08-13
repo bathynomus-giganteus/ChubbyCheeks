@@ -56,5 +56,7 @@ public class BitterPainPower : ModPowerTemplate
                     break;
             }
         }
+
+        await PowerCmd.Decrement(this);
     }
 }

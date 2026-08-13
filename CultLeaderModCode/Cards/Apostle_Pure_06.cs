@@ -18,7 +18,7 @@ public class Apostle_Pure_06 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(5m, ValueProp.Move)];
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        IsUpgraded ? [] : [CardKeyword.Exhaust];
+        [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/南瓜魔术.png");
 
@@ -32,6 +32,9 @@ public class Apostle_Pure_06 : ModCardTemplate
         await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        RemoveKeyword(CardKeyword.Exhaust);
+    }
 }
 

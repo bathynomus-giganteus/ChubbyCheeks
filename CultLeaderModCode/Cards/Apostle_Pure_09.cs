@@ -20,7 +20,8 @@ public class Apostle_Pure_09 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("RegenAmt", 3m), new DynamicVar("TriggerAmt", 3m), new DynamicVar("Threshold", 5m), new DynamicVar("DrawAmt", 2m)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/玛戈玛恢复.png");
 
@@ -43,5 +44,6 @@ public class Apostle_Pure_09 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

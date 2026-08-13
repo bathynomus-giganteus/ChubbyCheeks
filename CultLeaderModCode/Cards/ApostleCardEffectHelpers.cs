@@ -89,7 +89,6 @@ internal static class ApostleCardEffectHelpers
         if (amount <= 0)
             return;
 
-        await PowerCmd.Apply<StrengthPower>(choiceContext, target, -amount, source, cardSource);
         await PowerCmd.Apply<TempStrengthLossPower>(choiceContext, target, amount, source, cardSource);
     }
 
@@ -112,15 +111,75 @@ internal static class ApostleCardEffectHelpers
             var regen = owner.GetPower<RegenPower>();
             if (regen != null && regen.Amount > 0)
             {
-                await CreatureCmd.Heal(owner, 5m, true);
+                await CreatureCmd.Heal(owner, regen.Amount, true);
                 await PowerCmd.ModifyAmount(choiceContext, regen, -1m, owner, cardSource, silent: true);
             }
         }
     }
 
+    public static async Task RemovePureStacks(
+        PlayerChoiceContext choiceContext,
+        Creature owner,
+        int times,
+        CardModel cardSource
+    )
+    {
+        for (int i = 0; i < times; i++)
+        {
+            var lifeEssence = owner.GetPower<LifeEssencePower>();
+            if (lifeEssence != null && lifeEssence.Amount > 0)
+            {
+                await PowerCmd.ModifyAmount(choiceContext, lifeEssence, -1m, owner, cardSource, silent: true);
+                continue;
+            }
+
+            var regen = owner.GetPower<RegenPower>();
+            if (regen != null && regen.Amount > 0)
+            {
+                await PowerCmd.ModifyAmount(choiceContext, regen, -1m, owner, cardSource, silent: true);
+            }
+        }
+    }
+
+    public static async Task RemovePureStacksBulk(
+        PlayerChoiceContext choiceContext,
+        Creature owner,
+        int amount,
+        CardModel cardSource
+    )
+    {
+        if (amount <= 0)
+            return;
+
+        var lifeEssence = owner.GetPower<LifeEssencePower>();
+        decimal lifeAmount = lifeEssence?.Amount ?? 0m;
+        decimal takeLife = Math.Min(lifeAmount, amount);
+        if (lifeEssence != null && takeLife > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, lifeEssence, -takeLife, owner, cardSource, silent: true);
+
+        decimal remaining = amount - takeLife;
+        if (remaining <= 0m)
+            return;
+
+        var regen = owner.GetPower<RegenPower>();
+        decimal regenAmount = regen?.Amount ?? 0m;
+        decimal takeRegen = Math.Min(regenAmount, remaining);
+        if (regen != null && takeRegen > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, regen, -takeRegen, owner, cardSource, silent: true);
+    }
+
     public static int CountCombatCards(Player player, Func<CardModel, bool> predicate)
     {
         PileType[] piles = [PileType.Draw, PileType.Hand, PileType.Discard, PileType.Exhaust];
+        return piles.Sum(pile => pile.GetPile(player).Cards.Count(predicate));
+    }
+
+    /// <summary>
+    /// 统计当前卡组（抽牌堆 + 手牌 + 弃牌堆，不含消耗堆）中满足条件的卡牌数量。
+    /// </summary>
+    public static int CountDeckCards(Player player, Func<CardModel, bool> predicate)
+    {
+        PileType[] piles = [PileType.Draw, PileType.Hand, PileType.Discard];
         return piles.Sum(pile => pile.GetPile(player).Cards.Count(predicate));
     }
 }

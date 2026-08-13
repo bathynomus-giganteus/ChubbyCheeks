@@ -1,4 +1,4 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -29,13 +29,12 @@ public class Apostle_Pure_23 : ModCardTemplate
     {
         var owner = base.Owner.Creature;
         var amount = DynamicVars["StrLoss"].BaseValue;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, owner, -amount, owner, this);
         await PowerCmd.Apply<TempStrengthLossPower>(choiceContext, owner, amount, owner, this);
         var enemies = owner.CombatState?.GetCreaturesOnSide(CombatSide.Enemy) ?? [];
         foreach (var enemy in enemies)
         {
             if (!enemy.IsDead)
-                await PowerCmd.Apply<StrengthPower>(choiceContext, enemy, -amount, owner, this);
+                await ApostleCardEffectHelpers.ApplyTemporaryStrengthLoss(choiceContext, enemy, amount, owner, this);
         }
     }
 

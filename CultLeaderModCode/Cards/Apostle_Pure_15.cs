@@ -1,4 +1,4 @@
-using CultLeaderMod.CultLeaderModCode.CardTags;
+﻿using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -31,6 +31,8 @@ public class Apostle_Pure_15 : ModCardTemplate
     {
         var owner = base.Owner.Creature;
         await ApostleCardEffectHelpers.AttackAll(choiceContext, this, cardPlay, owner, DynamicVars.Damage.BaseValue);
+        await PowerCmd.Apply<SelfStunPower>(choiceContext, owner, 1m, owner, this);
+        PlayerCmd.EndTurn(base.Owner, canBackOut: false);
     }
 
     protected override void OnUpgrade()

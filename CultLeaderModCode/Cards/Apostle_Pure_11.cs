@@ -1,4 +1,4 @@
-using CultLeaderMod.CultLeaderModCode.CardTags;
+﻿using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
@@ -37,7 +37,7 @@ public class Apostle_Pure_11 : ModCardTemplate
         await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars.Damage.BaseValue);
         if (ApostleCardEffectHelpers.PureStacks(owner) >= DynamicVars["Threshold"].BaseValue)
         {
-            await ApostleCardEffectHelpers.TriggerPureStacks(choiceContext, owner, DynamicVars["Threshold"].IntValue, this);
+            await ApostleCardEffectHelpers.RemovePureStacks(choiceContext, owner, DynamicVars["Threshold"].IntValue, this);
             await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars["BonusDamage"].BaseValue);
         }
     }

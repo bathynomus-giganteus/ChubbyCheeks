@@ -1,8 +1,8 @@
-﻿using HarmonyLib;
+using HarmonyLib;
+using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Models;
 using Sts2CardModel = MegaCrit.Sts2.Core.Models.CardModel;
 using Sts2PowerModel = MegaCrit.Sts2.Core.Models.PowerModel;
@@ -71,24 +71,17 @@ public static class PowerInterceptPatch
                 cardSource
             );
         else if (power is LifeEssencePower life && life.Owner != null)
-            __result = AwaitLifeEssenceModifyHpSync(__result, life, life.Owner);
+            __result = AwaitLifeEssenceModifySync(__result, life, applier, cardSource);
     }
 
-    private static async Task<int> AwaitLifeEssenceModifyHpSync(
-        Task<int> original, LifeEssencePower life, Creature target)
+    private static async Task<int> AwaitLifeEssenceModifySync(
+        Task<int> original,
+        LifeEssencePower life,
+        Creature applier,
+        Sts2CardModel cardSource)
     {
         var result = await original;
-        int targetHp = life.Amount * 5;
-        int delta = targetHp - life.GrantedHp;
-        if (delta != 0)
-        {
-            if (delta > 0)
-                await CreatureCmd.GainMaxHp(target, delta);
-            else
-                await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), target, -delta, false);
-            life.GrantedHp = targetHp;
-        }
-        life.TrackedAmount = life.Amount;
+        await life.SyncTempMaxHp(new ThrowingPlayerChoiceContext(), applier, cardSource);
         return result;
     }
 
@@ -105,10 +98,6 @@ public static class PowerInterceptPatch
         await TryEnterElderForm(choiceContext, power, target, applier, cardSource);
     }
 
-    /// <summary>
-    /// LifeEssencePower 的 HP 变更 + TempMaxHpPower 同步。
-    /// 每次 PowerCmd.Apply 都触发（包括首次和后续层数增加）。
-    /// </summary>
     [HarmonyPatch(typeof(PowerCmd), nameof(PowerCmd.Apply))]
     [HarmonyPatch([
         typeof(PlayerChoiceContext),
@@ -128,36 +117,17 @@ public static class PowerInterceptPatch
         ref Task __result)
     {
         if (power is LifeEssencePower life && target != null)
-            __result = AwaitLifeEssenceHpSync(__result, life, target, applier, cardSource);
+            __result = AwaitLifeEssenceApplySync(__result, life, applier, cardSource);
     }
 
-    private static async Task AwaitLifeEssenceHpSync(
-        Task original, LifeEssencePower life, Creature target, Creature applier, Sts2CardModel cardSource)
+    private static async Task AwaitLifeEssenceApplySync(
+        Task original,
+        LifeEssencePower life,
+        Creature applier,
+        Sts2CardModel cardSource)
     {
         await original;
-        int targetHp = life.Amount * 5;
-        int delta = targetHp - life.GrantedHp;
-        if (delta != 0)
-        {
-            if (delta > 0)
-                await CreatureCmd.GainMaxHp(target, delta);
-            else
-                await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), target, -delta, false);
-            life.GrantedHp = targetHp;
-        }
-        life.TrackedAmount = life.Amount;
-
-        // 同步 TempMaxHpPower 视觉标记
-        try
-        {
-            int targetTempHp = life.Amount * 5;
-            var tempHp = target.Powers?.OfType<TempMaxHpPower>().FirstOrDefault();
-            if (tempHp != null)
-                await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), tempHp, targetTempHp - tempHp.Amount, applier, cardSource, silent: true);
-            else if (targetTempHp > 0)
-                await PowerCmd.Apply<TempMaxHpPower>(new ThrowingPlayerChoiceContext(), target, targetTempHp, applier, cardSource);
-        }
-        catch { }
+        await life.SyncTempMaxHp(new ThrowingPlayerChoiceContext(), applier, cardSource);
     }
 
     private static async Task<int> AwaitModifyAndTryEnterElderForm(
