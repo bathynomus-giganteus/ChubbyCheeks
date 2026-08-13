@@ -32,11 +32,11 @@ public class Apostle_Frenzy_12 : ModCardTemplate
         var target = cardPlay.Target;
         if (target == null)
             return;
-        var before = ApostleCardEffectHelpers.FrenzyStacks(base.Owner.Creature);
+        var owner = base.Owner.Creature;
+        var resource = ApostleCardEffectHelpers.GetFrenzyResourceAmount(owner);
         await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars.Damage.BaseValue);
-        var spent = Math.Max(0, before - ApostleCardEffectHelpers.FrenzyStacks(base.Owner.Creature));
-        if (spent >= DynamicVars["RefundThreshold"].BaseValue)
-            await ApostleCardPlayHelpers.ApplyFrenzyPower(choiceContext, base.Owner.Creature, DynamicVars["RefundVigor"].BaseValue, base.Owner.Creature, this);
+        if (resource >= DynamicVars["RefundThreshold"].BaseValue)
+            await ApostleCardPlayHelpers.ApplyFrenzyPower(choiceContext, owner, DynamicVars["RefundVigor"].BaseValue, owner, this);
     }
 
     protected override void OnUpgrade()

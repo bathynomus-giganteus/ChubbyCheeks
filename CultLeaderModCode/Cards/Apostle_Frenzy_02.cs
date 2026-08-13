@@ -19,7 +19,7 @@ public class Apostle_Frenzy_02 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14m, ValueProp.Move), new DynamicVar("BonusPerThree", 1m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/真正的治愈.png");
@@ -32,11 +32,15 @@ public class Apostle_Frenzy_02 : ModCardTemplate
         var target = cardPlay.Target;
         if (target == null)
             return;
-        await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars.Damage.BaseValue);
+        var owner = base.Owner.Creature;
+        await FrenzySpendTrackerPower.EnsureTracker(choiceContext, owner, owner, this);
+        var tracker = owner.GetPower<FrenzySpendTrackerPower>();
+        var bonus = (tracker?.TotalConsumed ?? 0) / 3 * (int)DynamicVars["BonusPerThree"].BaseValue;
+        await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars.Damage.BaseValue + bonus);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars["BonusPerThree"].UpgradeValueBy(1m);
     }
 }

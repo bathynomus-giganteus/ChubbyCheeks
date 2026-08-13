@@ -27,6 +27,12 @@ internal static class ApostleCardEffectHelpers
             + (owner.GetPower<FervorPower>()?.Amount ?? 0m)
         );
     }
+    public static int GetFrenzyResourceAmount(Creature owner)
+    {
+        return ApostlePowerRules.HasElderForm(owner)
+            ? (int)(owner.GetPower<FervorPower>()?.Amount ?? 0m)
+            : (int)(owner.GetPower<VigorPower>()?.Amount ?? 0m);
+    }
 
     public static List<Creature> AliveEnemies(Creature owner)
     {

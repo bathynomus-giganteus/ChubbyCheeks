@@ -30,7 +30,10 @@ public class Apostle_Frenzy_18 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        var damage = DynamicVars.Damage.BaseValue + ApostleCardEffectHelpers.FrenzyStacks(owner) * 3m * DynamicVars["FervorMultiplier"].BaseValue;
+        var resource = ApostleCardEffectHelpers.GetFrenzyResourceAmount(owner);
+        var perStack = ApostlePowerRules.HasElderForm(owner) ? 3m : 1m;
+        var damage = DynamicVars.Damage.BaseValue
+            + resource * perStack * (DynamicVars["FervorMultiplier"].BaseValue - 1m);
         await ApostleCardEffectHelpers.AttackAll(choiceContext, this, cardPlay, owner, damage);
     }
 

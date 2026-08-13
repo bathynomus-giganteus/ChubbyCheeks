@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using Sts2CardModel = MegaCrit.Sts2.Core.Models.CardModel;
 using Sts2PowerModel = MegaCrit.Sts2.Core.Models.PowerModel;
 
@@ -85,6 +86,41 @@ public static class PowerInterceptPatch
         return result;
     }
 
+    [HarmonyPatch(typeof(PowerCmd), nameof(PowerCmd.Apply))]
+    [HarmonyPatch([
+        typeof(PlayerChoiceContext),
+        typeof(Sts2PowerModel),
+        typeof(Creature),
+        typeof(decimal),
+        typeof(Creature),
+        typeof(Sts2CardModel),
+        typeof(bool),
+    ])]
+    [HarmonyPostfix]
+    private static void VigorFervorTrackerPostfix(
+        PlayerChoiceContext choiceContext,
+        Sts2PowerModel power,
+        Creature target,
+        Creature applier,
+        Sts2CardModel cardSource,
+        ref Task __result
+    )
+    {
+        if ((power is VigorPower || power is FervorPower) && target != null)
+            __result = AwaitVigorFervorTracker(__result, choiceContext, target, applier, cardSource);
+    }
+
+    private static async Task AwaitVigorFervorTracker(
+        Task original,
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        Creature applier,
+        Sts2CardModel cardSource
+    )
+    {
+        await original;
+        await FrenzySpendTrackerPower.EnsureTracker(choiceContext, target, applier, cardSource);
+    }
     private static async Task AwaitApplyAndTryEnterElderForm(
         Task original,
         PlayerChoiceContext choiceContext,

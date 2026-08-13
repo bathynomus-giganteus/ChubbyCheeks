@@ -1,5 +1,7 @@
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Powers;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -14,7 +16,7 @@ public class Apostle_Frenzy_19 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Threshold", 5m), new DynamicVar("VigorAmt", 2m)];
+        [new DynamicVar("Threshold", 5m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/向前迈进的决心.png");
@@ -24,16 +26,13 @@ public class Apostle_Frenzy_19 : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var threshold = (int)DynamicVars["Threshold"].BaseValue;
-        var triggers = threshold <= 0 ? 0 : ApostleCardEffectHelpers.FrenzyStacks(base.Owner.Creature) / threshold;
-        if (triggers <= 0)
-            return;
-
-        await ApostleCardPlayHelpers.ApplyFrenzyPower(
+        var owner = base.Owner.Creature;
+        await FrenzySpendTrackerPower.EnsureTracker(choiceContext, owner, owner, this);
+        await PowerCmd.Apply<ForwardResolvePower>(
             choiceContext,
-            base.Owner.Creature,
-            triggers * DynamicVars["VigorAmt"].BaseValue,
-            base.Owner.Creature,
+            owner,
+            DynamicVars["Threshold"].BaseValue,
+            owner,
             this
         );
     }

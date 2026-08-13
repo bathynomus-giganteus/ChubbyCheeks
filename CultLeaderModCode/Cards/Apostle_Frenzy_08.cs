@@ -32,7 +32,11 @@ public class Apostle_Frenzy_08 : ModCardTemplate
         var target = cardPlay.Target;
         if (target == null)
             return;
-        var damage = DynamicVars.Damage.BaseValue + ApostleCardEffectHelpers.FrenzyStacks(base.Owner.Creature) * 3m * DynamicVars["FervorMultiplier"].BaseValue;
+        var owner = base.Owner.Creature;
+        var resource = ApostleCardEffectHelpers.GetFrenzyResourceAmount(owner);
+        var perStack = ApostlePowerRules.HasElderForm(owner) ? 3m : 1m;
+        var damage = DynamicVars.Damage.BaseValue
+            + resource * perStack * (DynamicVars["FervorMultiplier"].BaseValue - 1m);
         await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, damage);
     }
 

@@ -32,7 +32,11 @@ public class Apostle_Frenzy_23 : ModCardTemplate
         var target = cardPlay.Target;
         if (target == null)
             return;
+        var owner = base.Owner.Creature;
+        var shouldStun = ApostleCardEffectHelpers.GetFrenzyResourceAmount(owner) >= DynamicVars["StunThreshold"].BaseValue;
         await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars.Damage.BaseValue);
+        if (shouldStun)
+            await CreatureCmd.Stun(target);
     }
 
     protected override void OnUpgrade()

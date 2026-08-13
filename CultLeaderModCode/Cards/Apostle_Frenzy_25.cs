@@ -30,7 +30,10 @@ public class Apostle_Frenzy_25 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        var block = Math.Floor(ApostleCardEffectHelpers.FrenzyStacks(owner) / 3m) * DynamicVars["BlockPerThree"].BaseValue;
+        await FrenzySpendTrackerPower.EnsureTracker(choiceContext, owner, owner, this);
+        var tracker = owner.GetPower<FrenzySpendTrackerPower>();
+        var consumed = tracker?.TurnConsumed ?? 0;
+        var block = Math.Floor(consumed / 3m) * DynamicVars["BlockPerThree"].BaseValue;
         if (block > 0)
             await CreatureCmd.GainBlock(owner, block, ValueProp.Move, cardPlay, true);
     }
