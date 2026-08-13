@@ -1,6 +1,7 @@
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -50,6 +51,22 @@ internal static class ApostleCardEffectHelpers
     }
 
     public static Task Attack(
+        PlayerChoiceContext choiceContext,
+        CardModel card,
+        CardPlay cardPlay,
+        Creature target,
+        decimal damage
+    )
+    {
+        return DamageCmd
+            .Attack(damage)
+            .FromCard(card, cardPlay)
+            .Targeting(target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
+    }
+
+    public static Task<AttackCommand> AttackAndGetResult(
         PlayerChoiceContext choiceContext,
         CardModel card,
         CardPlay cardPlay,

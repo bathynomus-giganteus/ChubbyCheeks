@@ -3,6 +3,7 @@ using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -32,9 +33,23 @@ public class Apostle_Frenzy_05 : ModCardTemplate
         var target = cardPlay.Target;
         if (target == null)
             return;
-        await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars.Damage.BaseValue);
-    }
 
+        var attack = await ApostleCardEffectHelpers.AttackAndGetResult(
+            choiceContext,
+            this,
+            cardPlay,
+            target,
+            DynamicVars.Damage.BaseValue
+        );
+
+        if (attack.Results
+            .SelectMany((List<DamageResult> resultGroup) => resultGroup)
+            .Any(result => result.WasTargetKilled))
+        {
+            await PlayerCmd.GainGold(DynamicVars["GoldAmt"].BaseValue, base.Owner, true);
+        }
+
+    }
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);

@@ -32,11 +32,27 @@ public class Apostle_Frenzy_15 : ModCardTemplate
         var owner = base.Owner.Creature;
         await ApostleCardPlayHelpers.ApplyFrenzyPower(choiceContext, owner, DynamicVars["VigorAmt"].BaseValue, owner, this);
         var target = cardPlay.Target;
-        if (target != null)
-            await ApostleCardEffectHelpers.ApplyTemporaryStrengthLoss(choiceContext, target, DynamicVars["StrengthLoss"].BaseValue, owner, this);
+        if (target == null)
+            return;
+
+        if (ApostlePowerRules.HasElderForm(owner))
+        {
+            await CreatureCmd.Stun(target);
+        }
+        else
+        {
+            await ApostleCardEffectHelpers.ApplyTemporaryStrengthLoss(
+                choiceContext,
+                target,
+                DynamicVars["StrengthLoss"].BaseValue,
+                owner,
+                this
+            );
+        }
     }
 
     protected override void OnUpgrade()
     {
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }
