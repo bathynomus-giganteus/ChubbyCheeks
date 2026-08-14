@@ -1,4 +1,5 @@
-﻿using MegaCrit.Sts2.Core.Combat;
+﻿using CultLeaderMod.CultLeaderModCode.Cards;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -18,10 +19,24 @@ public class VigorPerTurnPower : ModPowerTemplate
     public override string? CustomIconPath => "res://CultLeaderMod/images/powers/fervor.png";
     public override string? CustomBigIconPath => "res://CultLeaderMod/images/powers/big/fervor.png";
 
-    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task BeforeSideTurnStart(
+        PlayerChoiceContext choiceContext,
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState)
     {
-        await base.BeforeSideTurnEnd(choiceContext, side, participants);
-        if (!participants.Contains(base.Owner) || base.Amount <= 0) return;
-        await PowerCmd.Apply<VigorPower>(choiceContext, base.Owner, base.Amount, base.Owner, null);
+        await base.BeforeSideTurnStart(choiceContext, side, participants, combatState);
+
+        if (side != CombatSide.Player || !participants.Contains(base.Owner) || base.Amount <= 0)
+            return;
+
+        await ApostleCardPlayHelpers.ApplyFrenzyPower(
+            choiceContext,
+            base.Owner,
+            base.Amount,
+            base.Applier ?? base.Owner,
+            null
+        );
+        await PowerCmd.Remove(this);
     }
 }

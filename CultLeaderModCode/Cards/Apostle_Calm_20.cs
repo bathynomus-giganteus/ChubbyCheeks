@@ -1,10 +1,12 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,30 +17,31 @@ public class Apostle_Calm_20 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/心中的珍珠.png");
 
     public Apostle_Calm_20()
-        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        var owner = base.Owner;
+        int relicCount = owner.Relics.Count(r => !r.IsMelted);
+        await CardPileCmd.Draw(choiceContext, relicCount, owner);
         await ApostleCardPlayHelpers.ApplyCalmPower(
             choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
+            owner.Creature,
+            relicCount,
+            owner.Creature,
             this
         );
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }
-

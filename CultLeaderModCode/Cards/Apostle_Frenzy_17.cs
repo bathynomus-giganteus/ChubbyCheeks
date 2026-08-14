@@ -15,7 +15,7 @@ public class Apostle_Frenzy_17 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Cards", 1m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/潜入采访中.png");
@@ -26,7 +26,7 @@ public class Apostle_Frenzy_17 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        var maxSelect = IsUpgraded ? 2 : 1;
+        var maxSelect = DynamicVars["Cards"].IntValue;
         var cards = await CardSelectCmd.FromHand(
             choiceContext,
             base.Owner,
@@ -48,5 +48,6 @@ public class Apostle_Frenzy_17 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
+        DynamicVars["Cards"].UpgradeValueBy(1m);
     }
 }

@@ -1,4 +1,4 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,7 +20,7 @@ public class Apostle_Pure_24 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("DamagePct", 0.20m)];
+        [new DynamicVar("DamagePct", 20m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/铁锹击.png");
@@ -33,7 +33,7 @@ public class Apostle_Pure_24 : ModCardTemplate
         var target = cardPlay.Target;
         if (target == null) return;
 
-        decimal pct = DynamicVars["DamagePct"].BaseValue;
+        decimal pct = DynamicVars["DamagePct"].BaseValue / 100m;
         decimal dmg = Math.Floor(base.Owner.Creature.MaxHp * pct);
         if (dmg < 1) dmg = 1;
 
@@ -42,6 +42,6 @@ public class Apostle_Pure_24 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["DamagePct"].UpgradeValueBy(0.05m);
+        DynamicVars["DamagePct"].UpgradeValueBy(5m);
     }
 }

@@ -49,23 +49,18 @@ public class Apostle_Pure_01 : ModCardTemplate
         if (totalStacks <= 0)
             return;
 
-        // Get alive enemies
+        // Get combat state; TargetingRandomOpponents picks a fresh target per hit.
         var combatState = owner.CombatState;
-        var enemies = combatState?.Enemies.Where(e => e.IsAlive).ToList();
-        if (enemies == null || enemies.Count == 0)
+        if (combatState == null)
             return;
 
-        var rng = new Random();
-        for (int i = 0; i < totalStacks; i++)
-        {
-            var target = enemies[rng.Next(enemies.Count)];
-            await DamageCmd
-                .Attack(dmg)
-                .FromCard(this, cardPlay)
-                .Targeting(target)
-                .WithHitFx("vfx/vfx_attack_slash")
-                .Execute(choiceContext);
-        }
+        await DamageCmd
+            .Attack(dmg)
+            .FromCard(this, cardPlay)
+            .TargetingRandomOpponents(combatState)
+            .WithHitCount(totalStacks)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

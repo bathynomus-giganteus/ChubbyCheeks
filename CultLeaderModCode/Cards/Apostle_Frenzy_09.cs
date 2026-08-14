@@ -1,3 +1,4 @@
+using System.Linq;
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -44,16 +45,21 @@ public class Apostle_Frenzy_09 : ModCardTemplate
             new CardSelectorPrefs(base.SelectionScreenPrompt, 0, maxCards)
         );
 
+        int hitCount = selected.Count();
         foreach (var card in selected)
         {
             await CardCmd.Exhaust(choiceContext, card);
-            await ApostleCardEffectHelpers.Attack(
-                choiceContext,
-                this,
-                cardPlay,
-                target,
-                DynamicVars.Damage.BaseValue
-            );
+        }
+
+        if (hitCount > 0)
+        {
+            await DamageCmd
+                .Attack(DynamicVars.Damage.BaseValue)
+                .WithHitCount(hitCount)
+                .FromCard(this, cardPlay)
+                .Targeting(target)
+                .WithHitFx("vfx/vfx_attack_slash")
+                .Execute(choiceContext);
         }
     }
 

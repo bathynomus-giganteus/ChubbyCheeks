@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace CultLeaderMod.CultLeaderModCode.Cards;
 
@@ -191,6 +192,68 @@ internal static class ApostleCardEffectHelpers
             await PowerCmd.ModifyAmount(choiceContext, regen, -takeRegen, owner, cardSource, silent: true);
     }
 
+
+    public static int CalmStacks(Creature owner)
+    {
+        return (int)(
+            (owner.GetPower<PlatingPower>()?.Amount ?? 0m)
+            + (owner.GetPower<SolidIcePower>()?.Amount ?? 0m)
+        );
+    }
+
+    public static async Task TriggerCalmStacks(
+        PlayerChoiceContext choiceContext,
+        Creature owner,
+        int times,
+        CardModel cardSource
+    )
+    {
+        for (int i = 0; i < times; i++)
+        {
+            var solidIce = owner.GetPower<SolidIcePower>();
+            if (solidIce != null && solidIce.Amount > 0m)
+            {
+                await solidIce.TriggerActive(choiceContext, owner, cardSource);
+                continue;
+            }
+
+            var plating = owner.GetPower<PlatingPower>();
+            if (plating != null && plating.Amount > 0m)
+            {
+                decimal block = plating.Amount;
+                await PowerCmd.ModifyAmount(choiceContext, plating, -1m, owner, cardSource, silent: true);
+                await CreatureCmd.GainBlock(owner, block, ValueProp.Move, null, true);
+            }
+        }
+    }
+
+    public static async Task RemoveCalmStacks(
+        PlayerChoiceContext choiceContext,
+        Creature owner,
+        int amount,
+        CardModel cardSource
+    )
+    {
+        if (amount <= 0)
+            return;
+
+        var solidIce = owner.GetPower<SolidIcePower>();
+        decimal solidAmount = solidIce?.Amount ?? 0m;
+        decimal takeSolid = Math.Min(solidAmount, amount);
+        if (solidIce != null && takeSolid > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, solidIce, -takeSolid, owner, cardSource, silent: true);
+
+        decimal remaining = amount - takeSolid;
+        if (remaining <= 0m)
+            return;
+
+        var plating = owner.GetPower<PlatingPower>();
+        decimal platingAmount = plating?.Amount ?? 0m;
+        decimal takePlating = Math.Min(platingAmount, remaining);
+        if (plating != null && takePlating > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, plating, -takePlating, owner, cardSource, silent: true);
+    }
+
     public static int CountCombatCards(Player player, Func<CardModel, bool> predicate)
     {
         PileType[] piles = [PileType.Draw, PileType.Hand, PileType.Discard, PileType.Exhaust];
@@ -204,5 +267,30 @@ internal static class ApostleCardEffectHelpers
     {
         PileType[] piles = [PileType.Draw, PileType.Hand, PileType.Discard];
         return piles.Sum(pile => pile.GetPile(player).Cards.Count(predicate));
+    }
+
+    public static async Task<bool> TryTriggerCalmStack(
+        PlayerChoiceContext choiceContext,
+        Creature owner,
+        CardModel cardSource
+    )
+    {
+        var solidIce = owner.GetPower<SolidIcePower>();
+        if (solidIce != null && solidIce.Amount > 0m)
+        {
+            await solidIce.TriggerActive(choiceContext, owner, cardSource);
+            return true;
+        }
+
+        var plating = owner.GetPower<PlatingPower>();
+        if (plating != null && plating.Amount > 0m)
+        {
+            decimal block = plating.Amount;
+            await PowerCmd.ModifyAmount(choiceContext, plating, -1m, owner, cardSource, silent: true);
+            await CreatureCmd.GainBlock(owner, block, ValueProp.Move, null, true);
+            return true;
+        }
+
+        return false;
     }
 }

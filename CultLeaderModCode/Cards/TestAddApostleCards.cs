@@ -1,6 +1,7 @@
 using System.Linq;
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Relics;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -33,8 +34,15 @@ public class TestAddApostleCards : ModCardTemplate
             return;
         }
 
-        var apostleCards = ModelDb.AllCards
+        var allApostleCards = ModelDb.AllCards
             .Where(card => card.Tags.Contains(CultLeaderCardTags.Apostle))
+            .Where(card => card.CanBeGeneratedInCombat)
+            .ToList();
+
+        // Honor the starting relic's personality weighting before sampling.
+        var weightedPool = GumBlessRelic.FilterUnselectedCards(allApostleCards);
+
+        var apostleCards = weightedPool
             .OrderBy(_ => Random.Shared.Next())
             .Take(3)
             .ToList();

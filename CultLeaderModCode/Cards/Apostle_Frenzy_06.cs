@@ -30,8 +30,17 @@ public class Apostle_Frenzy_06 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        for (int i = 0; i < DynamicVars["Hits"].IntValue; i++)
-            await ApostleCardEffectHelpers.AttackAll(choiceContext, this, cardPlay, owner, DynamicVars.Damage.BaseValue);
+        var combatState = owner.CombatState;
+        if (combatState == null)
+            return;
+
+        await DamageCmd
+            .Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(DynamicVars["Hits"].IntValue)
+            .FromCard(this, cardPlay)
+            .TargetingAllOpponents(combatState)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
