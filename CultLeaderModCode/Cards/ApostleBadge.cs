@@ -65,6 +65,7 @@ public static class ApostleBadgePatch
         ["Apostle_Calm_21"] = "冷静_21", ["Apostle_Calm_22"] = "冷静_22",
         ["Apostle_Calm_23"] = "冷静_23", ["Apostle_Calm_24"] = "冷静_24",
         ["Apostle_Calm_25"] = "冷静_25",
+        ["Apostle_Calm_26"] = "冷静_25",
         // ── 狂热 Frenzy ──
         ["Apostle_Frenzy_01"] = "狂热_01", ["Apostle_Frenzy_02"] = "狂热_02",
         ["Apostle_Frenzy_03"] = "狂热_03", ["Apostle_Frenzy_04"] = "狂热_04",
@@ -82,7 +83,8 @@ public static class ApostleBadgePatch
         // ── 活泼 Lively ──
         ["Apostle_Lively_01"] = "活泼_01", ["Apostle_Lively_02"] = "活泼_02",
         ["Apostle_Lively_03"] = "活泼_03", ["Apostle_Lively_04"] = "活泼_04",
-        ["Apostle_Lively_05"] = "活泼_05", ["Apostle_Lively_06"] = "活泼_06",
+        ["Apostle_Lively_05"] = "活泼_05", ["Apostle_Lively_05_1"] = "活泼_05",
+        ["Apostle_Lively_06"] = "活泼_06",
         ["Apostle_Lively_07"] = "活泼_07", ["Apostle_Lively_08"] = "活泼_08",
         ["Apostle_Lively_08_1"] = "活泼_08", ["Apostle_Lively_08_2"] = "活泼_08", ["Apostle_Lively_08_3"] = "活泼_08",
         ["Apostle_Lively_09"] = "活泼_09", ["Apostle_Lively_10"] = "活泼_10",
@@ -97,6 +99,7 @@ public static class ApostleBadgePatch
         ["Apostle_Lively_27"] = "活泼_27",
         // ── 忧郁 Melancholy ──
         ["Apostle_Melancholy_01"] = "忧郁_01", ["Apostle_Melancholy_02"] = "忧郁_02",
+        ["Apostle_Melancholy_02_1"] = "忧郁_02", ["Apostle_Melancholy_02_2"] = "忧郁_02",
         ["Apostle_Melancholy_03"] = "忧郁_03", ["Apostle_Melancholy_04"] = "忧郁_04",
         ["Apostle_Melancholy_05"] = "忧郁_05", ["Apostle_Melancholy_06"] = "忧郁_06",
         ["Apostle_Melancholy_07"] = "忧郁_07", ["Apostle_Melancholy_08"] = "忧郁_08",
@@ -163,11 +166,11 @@ public static class ApostleBadgePatch
             badge.CustomMinimumSize = BadgeSize;
             badge.Size = BadgeSize;
 
-            // Position: top-right
+            // Position: top-right inside the card bounds
             var cardSize = __instance.GetCurrentSize();
             badge.Position = new Vector2(
-                cardSize.X - BadgeSize.X - RightMargin - 2f * BadgeSize.X,
-                TopMargin - 4f * BadgeSize.Y);
+                cardSize.X - BadgeSize.X - RightMargin,
+                TopMargin);
 
             badge.Visible = true;
         }

@@ -20,7 +20,7 @@ public class Apostle_Lively_08 : ModCardTemplate
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public override CardAssetProfile AssetProfile =>
-        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/戏剧性演出.png");
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_08.png");
 
     public Apostle_Lively_08()
         : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
@@ -33,6 +33,11 @@ public class Apostle_Lively_08 : ModCardTemplate
         if (scope == null)
             return;
 
+        int retainStacks = (int)(
+            (owner.GetPower<RetainPower>()?.Amount ?? 0m)
+            + (owner.GetPower<HappinessPower>()?.Amount ?? 0m)
+        );
+
         var options = new List<CardModel>
         {
             scope.CreateCard<Apostle_Lively_08_1>(player),
@@ -40,21 +45,17 @@ public class Apostle_Lively_08 : ModCardTemplate
             scope.CreateCard<Apostle_Lively_08_3>(player),
         };
 
-        var chosen = await CardSelectCmd.FromChooseACardScreen(choiceContext, options, player);
-
-        int retainStacks = (int)(
-            (owner.GetPower<RetainPower>()?.Amount ?? 0m)
-            + (owner.GetPower<HappinessPower>()?.Amount ?? 0m)
-        );
-
         if (retainStacks >= 10)
         {
             foreach (var option in options)
             {
                 await CardPileCmd.Add(option, PileType.Hand, CardPilePosition.Top, this, false);
             }
+            return;
         }
-        else if (chosen != null)
+
+        var chosen = await CardSelectCmd.FromChooseACardScreen(choiceContext, options, player);
+        if (chosen != null)
         {
             await CardPileCmd.Add(chosen, PileType.Hand, CardPilePosition.Top, this, false);
         }
@@ -62,6 +63,6 @@ public class Apostle_Lively_08 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(-2);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using CultLeaderMod.CultLeaderModCode.Cards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -30,7 +31,9 @@ public class SkyRulerPower : ModPowerTemplate
         if (player.Creature != base.Owner || base.Owner == null)
             return;
 
-        var enemies = ApostleCardEffectHelpers.AliveEnemies(base.Owner);
+        var enemies = ApostleCardEffectHelpers.AliveEnemies(base.Owner)
+            .Where(enemy => enemy.GetPower<DebilitatePower>() == null)
+            .ToList();
         if (enemies.Count == 0)
             return;
 

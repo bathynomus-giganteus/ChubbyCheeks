@@ -12,7 +12,7 @@ public class PersonalitySelectCalmCard : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Calm];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/a.png");
+    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/personality_calm.png");
     public PersonalitySelectCalmCard() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self, false) { }
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) => Task.CompletedTask;
 }

@@ -15,11 +15,26 @@ namespace CultLeaderMod.CultLeaderModCode.Powers;
 [RegisterPower]
 public class FrogRainPower : ModPowerTemplate
 {
+    private sealed class Data
+    {
+        public decimal RetainPerTurn = 2m;
+    }
+
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_01.png";
-    public override string CustomBigIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_01.png";
+    public override string CustomIconPath => "res://CultLeaderMod/images/powers/frog_rain.png";
+    public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/frog_rain.png";
+
+    protected override object InitInternalData()
+    {
+        return new Data();
+    }
+
+    public void ConfigureRetainPerTurn(decimal amount)
+    {
+        GetInternalData<Data>().RetainPerTurn = amount;
+    }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
@@ -31,10 +46,11 @@ public class FrogRainPower : ModPowerTemplate
         await ApostleCardPlayHelpers.ApplyLivelyPower(
             choiceContext,
             base.Owner,
-            base.Amount,
+            GetInternalData<Data>().RetainPerTurn,
             base.Owner,
             null
         );
         await CreatureCmd.Heal(base.Owner, 1m);
+        await PowerCmd.Decrement(this);
     }
 }

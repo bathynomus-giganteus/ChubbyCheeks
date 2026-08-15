@@ -15,7 +15,7 @@ public class ElderFormCard : ModCardTemplate
         IsUpgraded ? [] : [CardKeyword.Ethereal];
     public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/elder_form_card.png");
 
-    public ElderFormCard() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+    public ElderFormCard() : base(3, CardType.Power, CardRarity.Ancient, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

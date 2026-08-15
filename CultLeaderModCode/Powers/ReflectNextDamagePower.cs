@@ -24,8 +24,8 @@ public class ReflectNextDamagePower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_13.png";
-    public override string CustomBigIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_13.png";
+    public override string CustomIconPath => "res://CultLeaderMod/images/powers/reflect_next_damage.png";
+    public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/reflect_next_damage.png";
 
     protected override object InitInternalData()
     {
@@ -44,7 +44,7 @@ public class ReflectNextDamagePower : ModPowerTemplate
 
         if (GetInternalData<Data>().Consumed)
             return;
-        if (target != base.Owner || dealer == null || result.UnblockedDamage <= 0m || !props.IsPoweredAttack())
+        if (target != base.Owner || dealer == null || dealer == base.Owner || result.TotalDamage <= 0m || !props.IsPoweredAttack())
             return;
 
         GetInternalData<Data>().Consumed = true;
@@ -52,7 +52,7 @@ public class ReflectNextDamagePower : ModPowerTemplate
         await CreatureCmd.Damage(
             choiceContext,
             dealer,
-            result.UnblockedDamage,
+            result.TotalDamage,
             ValueProp.Unpowered,
             base.Owner
         );

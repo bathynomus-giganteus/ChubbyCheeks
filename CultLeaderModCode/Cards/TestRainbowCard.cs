@@ -1,9 +1,10 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,48 +16,29 @@ public class TestRainbowCard : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure, CultLeaderCardTags.Calm,
          CultLeaderCardTags.Frenzy, CultLeaderCardTags.Lively, CultLeaderCardTags.Melancholy];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/uros_card.png");
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DynamicVar("Damage", 6m)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+    public override CardAssetProfile AssetProfile =>
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/uros_card.png");
 
-    public TestRainbowCard() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
+    public TestRainbowCard()
+        : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ApostleCardPlayHelpers.ApplyPurePower(
+        var owner = base.Owner.Creature;
+        await PowerCmd.Apply<LoopPower>(
             choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
+            owner,
+            DynamicVars["Damage"].BaseValue,
+            owner,
             this
         );
-        await ApostleCardPlayHelpers.ApplyCalmPower(
-            choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
-            this
-        );
-        await ApostleCardPlayHelpers.ApplyFrenzyPower(
-            choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
-            this
-        );
-        await ApostleCardPlayHelpers.ApplyLivelyPower(
-            choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
-            this
-        );
-        await ApostleCardPlayHelpers.ApplyMelancholyPower(
-            choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
-            this
-        );
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
+    }
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars["Damage"].UpgradeValueBy(3m);
     }
 }

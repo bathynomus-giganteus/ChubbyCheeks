@@ -13,7 +13,7 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 public class CultLeaderManifestationCard : ModCardTemplate
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/cult_leader_manifestation.png");
+    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/power_of_leader.jpg");
 
     public CultLeaderManifestationCard() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

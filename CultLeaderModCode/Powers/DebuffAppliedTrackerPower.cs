@@ -1,3 +1,4 @@
+using CultLeaderMod.CultLeaderModCode.Cards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -72,5 +73,9 @@ public class DebuffAppliedTrackerPower : ModPowerTemplate
             return;
 
         GetInternalData<Data>().Total += (int)amount;
+
+        var player = base.Owner?.Player;
+        if (player != null)
+            Apostle_Melancholy_13.RefreshCostsInHand(player);
     }
 }

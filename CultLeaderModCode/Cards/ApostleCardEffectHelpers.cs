@@ -293,4 +293,94 @@ internal static class ApostleCardEffectHelpers
 
         return false;
     }
+
+    public static int LivelyStacks(Creature owner)
+    {
+        return (int)(
+            (owner.GetPower<RetainPower>()?.Amount ?? 0m)
+            + (owner.GetPower<HappinessPower>()?.Amount ?? 0m)
+        );
+    }
+
+    public static async Task RemoveLivelyStacks(
+        PlayerChoiceContext choiceContext,
+        Creature owner,
+        int amount,
+        CardModel cardSource
+    )
+    {
+        if (amount <= 0)
+            return;
+
+        var happiness = owner.GetPower<HappinessPower>();
+        decimal happinessAmount = happiness?.Amount ?? 0m;
+        decimal takeHappiness = Math.Min(happinessAmount, amount);
+        if (happiness != null && takeHappiness > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, happiness, -takeHappiness, owner, cardSource, silent: true);
+
+        decimal remaining = amount - takeHappiness;
+        if (remaining <= 0m)
+            return;
+
+        var retain = owner.GetPower<RetainPower>();
+        decimal retainAmount = retain?.Amount ?? 0m;
+        decimal takeRetain = Math.Min(retainAmount, remaining);
+        if (retain != null && takeRetain > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, retain, -takeRetain, owner, cardSource, silent: true);
+    }
+
+    public static int MelancholyStacks(Creature owner)
+    {
+        return (int)(
+            (owner.GetPower<BitterPainPower>()?.Amount ?? 0m)
+            + (owner.GetPower<BitterPainBurstPower>()?.Amount ?? 0m)
+        );
+    }
+
+    public static async Task RemoveMelancholyStacks(
+        PlayerChoiceContext choiceContext,
+        Creature owner,
+        int amount,
+        CardModel cardSource
+    )
+    {
+        if (amount <= 0)
+            return;
+
+        if (ApostlePowerRules.HasElderForm(owner))
+        {
+            var burst = owner.GetPower<BitterPainBurstPower>();
+            decimal burstAmount = burst?.Amount ?? 0m;
+            decimal takeBurst = Math.Min(burstAmount, amount);
+            if (burst != null && takeBurst > 0m)
+                await PowerCmd.ModifyAmount(choiceContext, burst, -takeBurst, owner, cardSource, silent: true);
+
+            decimal remaining = amount - takeBurst;
+            if (remaining <= 0m)
+                return;
+
+            var bitter = owner.GetPower<BitterPainPower>();
+            decimal bitterAmount = bitter?.Amount ?? 0m;
+            decimal takeBitter = Math.Min(bitterAmount, remaining);
+            if (bitter != null && takeBitter > 0m)
+                await PowerCmd.ModifyAmount(choiceContext, bitter, -takeBitter, owner, cardSource, silent: true);
+            return;
+        }
+
+        var baseBitter = owner.GetPower<BitterPainPower>();
+        decimal baseBitterAmount = baseBitter?.Amount ?? 0m;
+        decimal takeBase = Math.Min(baseBitterAmount, amount);
+        if (baseBitter != null && takeBase > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, baseBitter, -takeBase, owner, cardSource, silent: true);
+
+        decimal remainingBase = amount - takeBase;
+        if (remainingBase <= 0m)
+            return;
+
+        var baseBurst = owner.GetPower<BitterPainBurstPower>();
+        decimal baseBurstAmount = baseBurst?.Amount ?? 0m;
+        decimal takeBaseBurst = Math.Min(baseBurstAmount, remainingBase);
+        if (baseBurst != null && takeBaseBurst > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, baseBurst, -takeBaseBurst, owner, cardSource, silent: true);
+    }
 }

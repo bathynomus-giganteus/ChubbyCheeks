@@ -24,7 +24,7 @@ public class Apostle_Lively_08_3 : ModCardTemplate
         [new DynamicVar("RetainAmt", 3m), new DynamicVar("StrengthAmt", 1m), new DynamicVar("DexterityAmt", 1m)];
 
     public override CardAssetProfile AssetProfile =>
-        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/戏剧性演出.png");
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/dedicated_to_allies.png");
 
     public Apostle_Lively_08_3()
         : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) { }

@@ -1,10 +1,9 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,30 +14,30 @@ public class Apostle_Lively_16 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DynamicVar("RemoveAmt", 3m), new DynamicVar("DrawAmt", 2m)];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+
     public override CardAssetProfile AssetProfile =>
-        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/速邦配送.png");
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_16.png");
 
     public Apostle_Lively_16()
-        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ApostleCardPlayHelpers.ApplyLivelyPower(
-            choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
-            this
-        );
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
+        var owner = base.Owner.Creature;
+        int available = ApostleCardEffectHelpers.LivelyStacks(owner);
+        int remove = Math.Min(DynamicVars["RemoveAmt"].IntValue, available);
+
+        await ApostleCardEffectHelpers.RemoveLivelyStacks(choiceContext, owner, remove, this);
+        await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmt"].BaseValue, base.Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
+        DynamicVars["DrawAmt"].UpgradeValueBy(1m);
     }
 }
-

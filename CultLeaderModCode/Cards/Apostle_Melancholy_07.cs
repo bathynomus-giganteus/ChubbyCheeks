@@ -1,10 +1,14 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using System.Linq;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -13,32 +17,45 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class Apostle_Melancholy_07 : ModCardTemplate
 {
+
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/芬多精波动.png");
 
     public Apostle_Melancholy_07()
-        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ApostleCardPlayHelpers.ApplyMelancholyPower(
-            choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
-            this
-        );
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
+        var target = cardPlay.Target;
+        if (target == null)
+            return;
+
+        var debuffs = target.Powers
+            .Where(power => power.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff)
+            .ToList();
+        int debuffTypes = debuffs.Select(power => power.GetType()).Distinct().Count();
+
+        foreach (var power in debuffs)
+            await PowerCmd.Remove(power);
+
+        if (debuffTypes > 0)
+        {
+            await ApostleCardPlayHelpers.ApplyPurePower(
+                choiceContext,
+                base.Owner.Creature,
+                debuffTypes,
+                base.Owner.Creature,
+                this
+            );
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
+        base.EnergyCost.UpgradeBy(-1);
     }
-}
 
+}

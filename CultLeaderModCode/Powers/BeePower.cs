@@ -22,8 +22,8 @@ public class BeePower : ModPowerTemplate
 
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    public override string CustomIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_26.png";
-    public override string CustomBigIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_26.png";
+    public override string CustomIconPath => "res://CultLeaderMod/images/powers/bee.png";
+    public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/bee.png";
 
     public override async Task AfterSideTurnEnd(
         PlayerChoiceContext choiceContext,

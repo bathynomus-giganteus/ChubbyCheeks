@@ -6,6 +6,58 @@ namespace CultLeaderMod.CultLeaderModCode.CardTags;
 public static class CultLeaderFrameColors
 {
     private static ShaderMaterial? _rainbowMaterial;
+    private static ShaderMaterial? _loopFrameMaterial;
+
+    public static Material Loop
+    {
+        get
+        {
+            if (_loopFrameMaterial != null && GodotObject.IsInstanceValid(_loopFrameMaterial))
+                return _loopFrameMaterial;
+
+            var shader = new Shader
+            {
+                Code = @"shader_type canvas_item;
+
+uniform float alpha : hint_range(0.0, 1.0) = 0.55;
+
+varying vec4 modulate_color;
+
+vec3 hsv2rgb(vec3 c) {
+    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
+vec3 loop_color(float t) {
+    t = clamp(t, 0.0, 1.0);
+    const float stops[3] = float[3](0.0, 0.55, 1.0);
+    const float hues[3]  = float[3](0.33, 0.66, 0.78);
+    int i = 0;
+    for (int j = 0; j < 2; j++) { if (t >= stops[j]) i = j; }
+    float lt = (t - stops[i]) / (stops[i+1] - stops[i]);
+    float hue = mix(hues[i], hues[i+1], lt);
+    return hsv2rgb(vec3(hue, 1.0, 1.0));
+}
+
+void vertex() {
+    modulate_color = COLOR;
+}
+
+void fragment() {
+    vec4 col = texture(TEXTURE, UV);
+    vec3 loop = loop_color(UV.x);
+    float lum = dot(col.rgb, vec3(0.299, 0.587, 0.114));
+    vec3 tinted = mix(vec3(lum), loop, alpha);
+    COLOR = vec4(tinted, col.a) * modulate_color;
+}"
+            };
+
+            _loopFrameMaterial = new ShaderMaterial { Shader = shader };
+            _loopFrameMaterial.SetShaderParameter("alpha", Variant.From(0.55f));
+            return _loopFrameMaterial;
+        }
+    }
 
     public static Material Rainbow
     {

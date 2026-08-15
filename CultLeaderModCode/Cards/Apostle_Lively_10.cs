@@ -1,5 +1,6 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -15,32 +16,42 @@ public class Apostle_Lively_10 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Multiplier", 5m)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(
-            PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/总有一天会发生的事.png"
+            PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_10.png"
         );
 
     public Apostle_Lively_10()
-        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ApostleCardPlayHelpers.ApplyLivelyPower(
+        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+
+        var owner = base.Owner.Creature;
+        decimal retainStacks =
+            (owner.GetPower<RetainPower>()?.Amount ?? 0m)
+            + (owner.GetPower<HappinessPower>()?.Amount ?? 0m);
+        decimal damage = retainStacks * DynamicVars["Multiplier"].BaseValue;
+
+        var power = await PowerCmd.Apply<FateClockPower>(
             choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
+            cardPlay.Target,
+            3m,
+            owner,
             this
         );
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
+        if (power != null)
+        {
+            power.SetDamage(damage);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
+        DynamicVars["Multiplier"].UpgradeValueBy(3m);
     }
 }
 

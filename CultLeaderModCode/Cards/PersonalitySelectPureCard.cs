@@ -12,7 +12,7 @@ public class PersonalitySelectPureCard : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Pure];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/b.png");
+    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png");
     public PersonalitySelectPureCard() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self, false) { }
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) => Task.CompletedTask;
 }

@@ -1,10 +1,11 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,30 +16,34 @@ public class Apostle_Lively_04 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(0)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(12m, ValueProp.Move)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
-        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/强力一击.png");
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_04.png");
 
     public Apostle_Lively_04()
-        : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(2, CardType.Attack, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ApostleCardPlayHelpers.ApplyLivelyPower(
+        var owner = base.Owner.Creature;
+        int handCount = PileType.Hand.GetPile(base.Owner).Cards.Count(c => c != this);
+        decimal damage = DynamicVars.Damage.BaseValue;
+        if (handCount >= 8)
+            damage *= 2m;
+
+        await ApostleCardEffectHelpers.AttackAll(
             choiceContext,
-            base.Owner.Creature,
-            1m,
-            base.Owner.Creature,
-            this
+            this,
+            cardPlay,
+            owner,
+            damage
         );
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, base.Owner);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Energy.UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(4m);
     }
 }
 

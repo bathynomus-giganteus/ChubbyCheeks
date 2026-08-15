@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7ixb3qrmlciq"
-path="res://.godot/imported/魔_弹_射_手.png-28cfd19d20f6af95180f7d53780749d4.ctex"
+uid="uid://ccag1slcp4mm3"
+path="res://.godot/imported/naya_dolphin_water_gun.png-34139b82287684383147431d321b9ef8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://CultLeaderMod/images/card_portraits/melancholy/魔_弹_射_手.png"
-dest_files=["res://.godot/imported/魔_弹_射_手.png-28cfd19d20f6af95180f7d53780749d4.ctex"]
+source_file="res://CultLeaderMod/images/relics/naya_dolphin_water_gun.png"
+dest_files=["res://.godot/imported/naya_dolphin_water_gun.png-34139b82287684383147431d321b9ef8.ctex"]
 
 [params]
 

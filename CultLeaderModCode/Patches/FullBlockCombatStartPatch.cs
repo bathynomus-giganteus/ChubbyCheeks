@@ -31,6 +31,30 @@ public static class FullBlockCombatStartPatch
                 creature,
                 null
             );
+            await RetainCardCounterPower.EnsureTracker(
+                new ThrowingPlayerChoiceContext(),
+                creature,
+                creature,
+                null
+            );
+            await SoftTimePlayTrackerPower.EnsureTracker(
+                new ThrowingPlayerChoiceContext(),
+                creature,
+                creature,
+                null
+            );
+            await DebuffAppliedTrackerPower.EnsureTracker(
+                new ThrowingPlayerChoiceContext(),
+                creature,
+                creature,
+                null
+            );
+            await GuiltyDeclarationReturnPower.EnsureTracker(
+                new ThrowingPlayerChoiceContext(),
+                creature,
+                creature,
+                null
+            );
         }
     }
 }

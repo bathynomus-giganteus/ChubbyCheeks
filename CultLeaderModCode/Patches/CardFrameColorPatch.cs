@@ -1,4 +1,5 @@
 using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.Cards;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Cards;
@@ -25,8 +26,9 @@ public static class CardFrameColorPatch
             var tags = model.Tags;
             Material? mat = null;
 
-            // Rainbow first: card with ALL 5 personality tags.
-            if (
+            if (model is TestRainbowCard)
+                mat = CultLeaderFrameColors.Loop;
+            else if (
                 tags.Contains(CultLeaderCardTags.Pure)
                 && tags.Contains(CultLeaderCardTags.Calm)
                 && tags.Contains(CultLeaderCardTags.Frenzy)

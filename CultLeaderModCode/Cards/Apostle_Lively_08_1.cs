@@ -24,7 +24,7 @@ public class Apostle_Lively_08_1 : ModCardTemplate
         [new DynamicVar("Amount", 1m)];
 
     public override CardAssetProfile AssetProfile =>
-        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/戏剧性演出.png");
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/epicon_assistant.png");
 
     public Apostle_Lively_08_1()
         : base(0, CardType.Power, CardRarity.Rare, TargetType.Self) { }

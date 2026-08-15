@@ -18,8 +18,8 @@ public class EpiconAssistantPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_10.png";
-    public override string CustomBigIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_10.png";
+    public override string CustomIconPath => "res://CultLeaderMod/images/card_portraits/lively/epicon_assistant.png";
+    public override string CustomBigIconPath => "res://CultLeaderMod/images/card_portraits/lively/epicon_assistant.png";
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {

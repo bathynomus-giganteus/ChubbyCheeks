@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -12,8 +13,8 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// Adjust. Each time the owner gains Retain, deal the stored damage to a random enemy,
-/// then permanently increase that damage by 3.
+/// Adjust. Each time the owner gains Retain or Happiness, deal the stored damage to a random enemy,
+/// then increase that damage by 3 for the rest of this combat.
 /// </summary>
 [RegisterPower]
 public class AdjustPower : ModPowerTemplate
@@ -26,8 +27,8 @@ public class AdjustPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_13.png";
-    public override string CustomBigIconPath => "res://CultLeaderMod/images/badges/portraits/活泼_13.png";
+    public override string CustomIconPath => "res://CultLeaderMod/images/powers/adjust.png";
+    public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/adjust.png";
 
     protected override object InitInternalData()
     {
@@ -63,5 +64,11 @@ public class AdjustPower : ModPowerTemplate
             null
         );
         data.Damage += 3m;
+    }
+
+    public override async Task AfterCombatEnd(CombatRoom room)
+    {
+        GetInternalData<Data>().Damage = 3m;
+        await base.AfterCombatEnd(room);
     }
 }

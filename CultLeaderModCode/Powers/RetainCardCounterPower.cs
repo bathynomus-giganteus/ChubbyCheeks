@@ -1,3 +1,5 @@
+using System.Linq;
+using CultLeaderMod.CultLeaderModCode.Cards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -69,5 +71,14 @@ public class RetainCardCounterPower : ModPowerTemplate
             return;
 
         GetInternalData<Data>().Total += retainedCards.Count;
+
+        decimal retainStacks =
+            (base.Owner.GetPower<RetainPower>()?.Amount ?? 0m)
+            + (base.Owner.GetPower<HappinessPower>()?.Amount ?? 0m);
+
+        foreach (var retainedCard in retainedCards.OfType<Apostle_Lively_18>())
+        {
+            retainedCard.DynamicVars["Damage"].BaseValue += retainStacks;
+        }
     }
 }
