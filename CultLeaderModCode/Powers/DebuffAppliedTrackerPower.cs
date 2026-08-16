@@ -72,7 +72,7 @@ public class DebuffAppliedTrackerPower : ModPowerTemplate
         if (power.Type != PowerType.Debuff || power.Owner == null || !power.Owner.IsMonster)
             return;
 
-        GetInternalData<Data>().Total += (int)amount;
+        GetInternalData<Data>().Total += 1;
 
         var player = base.Owner?.Player;
         if (player != null)

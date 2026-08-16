@@ -1,4 +1,4 @@
-﻿using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -24,7 +24,7 @@ public class Apostle_Melancholy_20 : ModCardTemplate
         );
 
     public Apostle_Melancholy_20()
-        : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
+        : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

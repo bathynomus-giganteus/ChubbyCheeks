@@ -1,5 +1,6 @@
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Relics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -94,7 +95,8 @@ public class Apostle_Lively_05 : ModCardTemplate
         if (DamageTaken >= TransformThreshold)
             return;
 
-        DamageTaken += 1;
+        int progress = base.Owner.GetRelic<ButterYellowCardRelic>() != null ? 2 : 1;
+        DamageTaken += progress;
         DynamicVars["Progress"].BaseValue = DamageTaken;
         RefreshProgressVisual();
 

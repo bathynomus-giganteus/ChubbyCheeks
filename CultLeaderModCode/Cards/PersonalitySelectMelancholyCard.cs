@@ -12,8 +12,8 @@ public class PersonalitySelectMelancholyCard : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Melancholy];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/personality_melancholy.png");
-    public PersonalitySelectMelancholyCard() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self, false) { }
+    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/c.png");
+    public PersonalitySelectMelancholyCard() : base(0, CardType.Skill, CardRarity.Event, TargetType.Self, false) { }
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) => Task.CompletedTask;
 }
 

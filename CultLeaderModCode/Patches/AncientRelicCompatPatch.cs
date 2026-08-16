@@ -12,6 +12,7 @@ namespace CultLeaderMod.CultLeaderModCode.Patches;
 [HarmonyPatch(typeof(ArchaicTooth), "TranscendenceUpgrades", MethodType.Getter)]
 public static class ArchaicToothTranscendencePatch
 {
+    [HarmonyPostfix]
     private static void Postfix(ref Dictionary<ModelId, CardModel> __result)
     {
         var starter = ModelDb.Card<CultLeaderManifestationCard>();
@@ -26,11 +27,12 @@ public static class ArchaicToothTranscendencePatch
 [HarmonyPatch(typeof(TouchOfOrobas), nameof(TouchOfOrobas.GetUpgradedStarterRelic))]
 public static class TouchOfOrobasYongchunPatch
 {
+    [HarmonyPostfix]
     private static void Postfix(RelicModel starterRelic, ref RelicModel __result)
     {
         if (starterRelic is GumBlessRelic)
         {
-            __result = ModelDb.Relic<HappinessOfYongchunRelic>().ToMutable();
+            __result = ModelDb.Relic<HappinessOfYongchunRelic>();
         }
     }
 }

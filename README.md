@@ -1,169 +1,158 @@
-# CultLeaderMod - 教主 Mod
+# CultLeaderMod — 教主 Mod
 
-《Slay the Spire 2》自定义角色 Mod，基于 RitsuLib 框架。添加全新角色“教主”，并围绕“使徒性格”构建卡牌与 Buff 体系。
+《Slay the Spire 2》自定义角色 Mod，基于 RitsuLib 框架。添加全新可玩角色 **教主**，并围绕“使徒性格”构建卡牌、Buff、遗物与事件体系。
 
-## 版本
+## 当前版本
 
-- 当前备份标签：`v0.1+基础架构完毕+纯粹使徒测试完毕+文本待修正+20260813-171713`
-- 版本阶段：**v0.1**
-  - 基础架构已完成
-  - 纯粹使徒 25 张卡牌已通过当前效果测试
-  - 中文本地化文本待统一修正
+- Mod 版本：**v0.1.0**
+- 最低游戏版本：**0.110.1**
+- 框架依赖：STS2 RitsuLib **>= 0.5.10**
+- 当前阶段：核心系统已实装，适合开发测试与功能验收；平衡性、文本和部分事件布局仍会继续调整。
 
-## 概述
+## 已实现内容
 
-开局时，初始遗物“咏春的祝福”会让玩家从五种使徒性格中选择两种。选中性格的使徒牌在整局游戏中的出现概率大幅提升，其余三种性格使徒牌出现概率降低。
+### 角色
 
-## 核心系统
+- **教主**：拥有独立卡池、初始卡组、遗物池和事件池。
+- 角色专属内容默认只对教主生效，遗物和事件也带有“仅教主”的获取限制。
 
-### 角色与初始遗物
+### 初始遗物与性格选择
 
-- 角色：**教主**
-- 初始遗物：**咏春的祝福**
-  - 在涅奥遗物选择前弹出 5 选 2 界面
-  - 选中的两种性格使徒牌出现概率提升（约 85%）
-  - 未选中的三种性格使徒牌出现概率降低
-  - 遗物描述会动态显示玩家选择的两种性格
+开局由初始遗物触发 **5 选 2** 性格选择：
 
-### 五种性格与 Buff
+- 纯粹：绿色
+- 冷静：蓝色
+- 狂热：红色
+- 活泼：黄色
+- 忧郁：紫色
 
-每种性格对应一对“基础 Buff → 升级 Buff”：
+选中的两种性格，其对应使徒牌在后续卡牌奖励中出现概率大幅提升；未选中的三种性格出现概率降低。
 
-| 性格 | 颜色 | 基础 Buff | 升级 Buff | 说明 |
-|------|------|-----------|-----------|------|
-| 纯粹 | 绿 | 再生（Regen） | 生命本源（Life Essence） | 回合结束回复生命；生命本源额外提供临时最大生命值 |
-| 冷静 | 蓝 | 覆甲（Plating） | 固若坚冰（Solid Ice） | 固若坚冰为“敏捷 + 回合结束不减少的覆甲” |
-| 狂热 | 红 | 活力（Vigor） | 狂热（Fervor） | 为攻击牌提供额外伤害 |
-| 活泼 | 黄 | 保留（Retain） | 幸福（Happiness） | 保留手牌；幸福满层后消耗层数并回费抽牌 |
-| 忧郁 | 紫 | 苦痛施予（Bitter Pain） | 苦痛爆发（Bitter Pain Burst） | 向敌人施加随机负面效果 |
+初始 5 选 2 卡图使用独立素材 a.png 至 e.png。
 
-### 教主的权能与埃尔德形态
+### 使徒牌与五性格体系
 
-- **教主的权能（CultLeaderAuthorityPower）**
-  - 使徒牌获得对应性格 Buff 时，额外获得等同于权能层数的 Buff 层数
-  - 叠加到 5 层时，自动消耗 5 层并进入埃尔德形态
-- **埃尔德形态（ElderFormPower）**
-  - 进入时，将当前已有的基础 Buff 转换为对应升级 Buff
-  - 形态持续期间，使徒牌获得基础 Buff 时会直接获得升级 Buff
+| 性格 | 颜色 | 基础 Buff | 升级 Buff |
+|------|------|-----------|-----------|
+| 纯粹 | 绿色 | 再生体系 | 生命本源 / 临时最大生命 |
+| 冷静 | 蓝色 | 覆甲体系 | 固若坚冰 |
+| 狂热 | 红色 | 活力体系 | 狂热 |
+| 活泼 | 黄色 | 保留体系 | 计划妥当 / 幸福 |
+| 忧郁 | 紫色 | 苦痛施予体系 | 苦痛爆发 |
 
-### 卡牌
+- 计划包含 5 种性格 × 25 张使徒牌，代码层已基本铺开。
+- 除使徒牌外，还包含基础牌、特殊牌和埃尔德形态相关卡牌。
 
-- 使徒牌：5 种性格 × 25 张，共 125 张
-  - 纯粹使徒 25 张效果已实装并测试
-  - 其余性格使徒牌已接入卡池，部分仍使用测试效果，待逐步实装
-- 基础牌：打击、防御、教主的权现、埃尔德形态、随机招募
-- 全性格卡：独立卡池，不受初始 5 选 2 影响
+### 权能与埃尔德形态
 
-## 测试与调试
+- **教主的权能**：使徒牌获得对应性格 Buff 时，会按权能层数额外叠加。
+- 权能达到阈值后进入 **埃尔德形态**。
+- **埃尔德形态**：
+    - 进入时，把当前基础 Buff 等量转换为对应升级 Buff。
+    - 持续期间，使徒牌获得基础 Buff 时直接转换为升级 Buff。
+    - 实现上保留原生卡牌打出流程，避免卡牌卡在屏幕中央。
 
-### 控制台命令
+### 遗物
 
-游戏中按 `~` / `Shift+8` 等键打开控制台，常用命令：
+当前包含 20+ 教主专属遗物，其中近期新增三个涅奥遗物：
 
-```
-card CULT_LEADER_MOD_CARD_APOSTLE_PURE_19
-upgrade 0
-```
+- **使徒单抽券**：拾起时随机获得一张使徒牌，受初始遗物性格加成影响。
+- **卡牌单抽券**：拾起时随机获得一个遗物，并向卡组加入一张“债务”。
+- **金蜡笔**：每 5 场战斗后，以战斗奖励形式选择卡组中的 1 张使徒牌强化。
 
-- `card <卡牌ID>`：向手牌添加卡牌
-- `upgrade <手牌索引>`：升级手牌，0 为最左侧
-- 其他命令：`remove_card`、`draw`、`discard`、`energy` 等
+### 事件
 
-### 日志调试
+已接入多个教主专属事件，包括龙族斯巴达训练、妖精监视请求、狐狸武器测试、神秘便利店店员、地板元素滚动、猫墩占卜师等。
 
-遇到难以复现的 Buff 触发问题时，可在相关 `Power` 钩子中临时加入日志，观察触发顺序与数值。调试思路记录在 `DEBUG_METHODOLOGY.md`。
+### 失败与主动放弃表现
+
+- 教主战斗失败文案：**“艾里亚斯被无尽的冰雪覆盖”**。
+- 战斗失败、事件或火堆主动放弃时，失败界面角色立绘逆时针旋转 90°。
 
 ## 项目结构
 
-```
-CultLeaderMod/
-├── CultLeaderModCode/       # C# 源代码
-│   ├── Cards/               # 卡牌定义与效果
-│   ├── CardTags/            # 自定义标签（使徒、性格）
-│   ├── Character/           # 角色与卡池定义
-│   ├── Compendium/          # 百科筛选
-│   ├── Patches/             # Harmony 补丁与本地化注入
-│   ├── Powers/              # Buff / Debuff 状态定义
-│   ├── Relics/              # 遗物定义
-│   └── Entry.cs             # Mod 入口
-├── CultLeaderMod/           # Godot 资源
-│   ├── images/              # 卡图、Buff 图标、角色素材等
-│   ├── localization/        # 本地化文件
-│   ├── materials/           # 卡框材质
-│   └── scenes/              # Godot 场景
-├── Directory.Build.props    # 构建路径配置
-├── Sts2PathDiscovery.props  # 游戏目录发现
-├── project.godot
-├── CultLeaderMod.csproj
-├── CultLeaderMod.json
-└── README.md
-```
+    CultLeaderMod/
+    ├── CultLeaderModCode/
+    │   ├── Cards/          # 卡牌定义与效果
+    │   ├── CardTags/       # 使徒、性格等自定义标签
+    │   ├── Character/      # 教主角色与卡池
+    │   ├── Events/         # 自定义事件
+    │   ├── Patches/        # Harmony 补丁、本地化注入
+    │   ├── Powers/         # Buff / Debuff 状态
+    │   └── Relics/         # 遗物定义
+    ├── CultLeaderMod/
+    │   ├── images/         # 卡图、遗物图、事件图、Buff 图标
+    │   ├── localization/   # 本地化资源
+    │   ├── materials/      # 卡框材质
+    │   └── scenes/         # Godot 场景
+    ├── CultLeaderMod.csproj
+    ├── CultLeaderMod.json
+    ├── project.godot
+    └── README.md
 
-## 构建
+## 构建与安装
 
 ### 环境要求
 
 - Windows 10/11
 - .NET 9.0 SDK
-- Godot 4.5.1（Mono 版）
+- Godot 4.5.1 Mono 版
 - Steam 版《Slay the Spire 2》
-- STS2 RitsuLib（Steam 创意工坊订阅）
+- STS2 RitsuLib
 
 ### 路径配置
 
-构建路径在 `Directory.Build.props` 中配置：
+先修改 Directory.Build.props 中的 Godot 与游戏路径：
 
-```xml
-<GodotPath>E:/game/Godot/Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
-<Sts2Path>E:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path>
-```
-
-若你的安装路径不同，请修改这两个值。
+    <GodotPath>E:/game/Godot/Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
+    <Sts2Path>E:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path>
 
 ### 构建 DLL
 
-```powershell
-dotnet build
-```
+    dotnet build
 
-构建成功后会自动将 `CultLeaderMod.dll` 复制到 `<Sts2Path>/mods/CultLeaderMod/`。
+构建成功后会自动把 CultLeaderMod.dll 复制到游戏的 mods/CultLeaderMod/。
 
 ### 导出 PCK
 
-新增或修改图片、场景等资源后需要重新导出 PCK：
+新增或修改图片、场景、Godot 资源后需要重新导出：
 
-```powershell
-dotnet build -t:ExportPck
-```
+    dotnet build -t:ExportPck
 
-也可以直接在 Godot 编辑器中选择对应导出预设导出 PCK。
+### 安装文件
 
-### 安装
+确保游戏 mods/CultLeaderMod/ 下包含：
 
-确保以下文件位于 `Slay the Spire 2/mods/CultLeaderMod/`：
+- CultLeaderMod.dll
+- CultLeaderMod.pck
+- CultLeaderMod.json
 
-- `CultLeaderMod.dll`
-- `CultLeaderMod.pck`
-- `CultLeaderMod.json`
+## 测试与调试
 
-## 备份与回退
+### 控制台命令
 
-当前稳定备份已推送至 GitHub，标签为：
+游戏中打开控制台后可使用：
 
-```
-v0.1+基础架构完毕+纯粹使徒测试完毕+文本待修正+20260813-171713
-```
+    card <卡牌ID>
+    upgrade <手牌索引>
+    remove_card
+    draw
+    discard
+    energy
 
-回退到该版本：
+例如：
 
-```powershell
-git fetch --tags
-git checkout tags/v0.1+基础架构完毕+纯粹使徒测试完毕+文本待修正+20260813-171713
-```
+    card CULT_LEADER_MOD_CARD_APOSTLE_PURE_19
+    upgrade 0
+
+### 当前已知事项
+
+- 当前 dotnet build 为 **0 errors / 4 warnings**。
+- 4 个 warning 主要来自 TempMaxHpPower、TempMaxHpLossPower、LifeEssencePower、Apostle_Melancholy_19，不阻断运行。
+- 自定义事件大图布局仍在调整，事件图片显示位置可能继续优化。
 
 ## 依赖与致谢
 
-- STS2 RitsuLib：Mod 框架，提供卡牌注册、Harmony 补丁、本地化等能力
-- Harmony：运行时方法补丁
-- Trickcal Revive 角色设定灵感
-- STS2 Modding 社区教程与工具
+- **STS2 RitsuLib**：Mod 框架、卡牌/遗物注册与本地化能力
+- **Harmony**：运行时补丁
+- Slay the Spire 2 Modding 社区与工具链

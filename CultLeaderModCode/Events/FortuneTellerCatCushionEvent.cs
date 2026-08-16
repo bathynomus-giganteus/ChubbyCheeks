@@ -1,10 +1,12 @@
 using CultLeaderMod.CultLeaderModCode.Cards;
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Gold;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Models.Acts;
+using MegaCrit.Sts2.Core.Nodes.Events;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -19,7 +21,47 @@ public class FortuneTellerCatCushionEvent : CultLeaderModEventBase
         new(InitialPortraitPath: "res://CultLeaderMod/images/events/fortune_teller_cat_cushion.png");
 
     public override bool IsAllowed(IRunState runState) =>
-        runState.CurrentActIndex >= 1 && !HasSeenEvent(runState);
+        runState.CurrentActIndex >= 1 &&
+        HasCultLeaderPlayer(runState) &&
+        !HasSeenEvent(runState);
+
+    protected override PackedScene? TryCreateLayoutPackedScene()
+    {
+        PackedScene? baseScene = base.TryCreateLayoutPackedScene();
+        if (baseScene is null)
+        {
+            return null;
+        }
+
+        NEventLayout? layout = baseScene.Instantiate<NEventLayout>(PackedScene.GenEditState.Disabled);
+        if (layout is null)
+        {
+            return baseScene;
+        }
+
+        VBoxContainer? optionsContainer = layout.GetNodeOrNull<VBoxContainer>("%OptionsContainer");
+        if (optionsContainer?.GetParent() is VBoxContainer column)
+        {
+            const float shiftUp = 90f;
+            column.OffsetTop -= shiftUp;
+            column.OffsetBottom -= shiftUp;
+        }
+
+        var packedScene = new PackedScene();
+        try
+        {
+            if (packedScene.Pack(layout) == Error.Ok)
+            {
+                return packedScene;
+            }
+        }
+        finally
+        {
+            layout.Free();
+        }
+
+        return baseScene;
+    }
 
     protected override IReadOnlyList<EventOption> GenerateInitialOptions()
     {

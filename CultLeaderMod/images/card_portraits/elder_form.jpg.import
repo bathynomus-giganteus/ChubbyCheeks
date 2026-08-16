@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmnq6ma35ihix"
-path="res://.godot/imported/elder_form_card.png-ded9fca7050a0f67183dc31477fb9137.ctex"
+uid="uid://c2psge8dmdwmi"
+path="res://.godot/imported/elder_form.jpg-36031ac681ada10a0e37a679b1e20474.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://CultLeaderMod/images/card_portraits/elder_form_card.png"
-dest_files=["res://.godot/imported/elder_form_card.png-ded9fca7050a0f67183dc31477fb9137.ctex"]
+source_file="res://CultLeaderMod/images/card_portraits/elder_form.jpg"
+dest_files=["res://.godot/imported/elder_form.jpg-36031ac681ada10a0e37a679b1e20474.ctex"]
 
 [params]
 

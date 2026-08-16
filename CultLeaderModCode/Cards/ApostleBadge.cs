@@ -3,6 +3,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Screens;
 using CultLeaderMod.CultLeaderModCode.CardTags;
 
 namespace CultLeaderMod.CultLeaderModCode.Cards;
@@ -166,11 +167,19 @@ public static class ApostleBadgePatch
             badge.CustomMinimumSize = BadgeSize;
             badge.Size = BadgeSize;
 
-            // Position: top-right inside the card bounds
-            var cardSize = __instance.GetCurrentSize();
-            badge.Position = new Vector2(
-                cardSize.X - BadgeSize.X - RightMargin,
-                TopMargin);
+            // The card library opens NCard at 1.75x scale inside NInspectCardScreen,
+            // so the badge needs a separate position there.
+            var cardSize = __instance.Size;
+            if (cardSize.X <= 0f || cardSize.Y <= 0f)
+                cardSize = NCard.defaultSize;
+            bool isInspectCardDetail = __instance.Name == "Card" && __instance.GetParent() is NInspectCardScreen;
+            badge.Position = isInspectCardDetail
+                ? new Vector2(
+                    cardSize.X - BadgeSize.X - RightMargin - 2f * BadgeSize.X,
+                    TopMargin - 4f * BadgeSize.Y)
+                : new Vector2(
+                    cardSize.X - BadgeSize.X - RightMargin - 2f * BadgeSize.X,
+                    TopMargin - 4f * BadgeSize.Y);
 
             badge.Visible = true;
         }

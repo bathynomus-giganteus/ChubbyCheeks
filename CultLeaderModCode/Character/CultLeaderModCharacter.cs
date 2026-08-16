@@ -20,6 +20,8 @@ public class CultLeaderModCharacter : ModCharacterTemplate<CultLeaderModCardPool
     public override float CastAnimDelay => 0.25f;
 
     public override string CustomVisualsPath => "res://CultLeaderMod/images/charui/avatar_full.png";
+    public override string? CustomMerchantAnimPath => CustomVisualsPath;
+    public override string? CustomRestSiteAnimPath => CustomVisualsPath;
     public override string CustomIconPath => "res://CultLeaderMod/scenes/char_icon.tscn";
     public override string CustomIconTexturePath => "res://CultLeaderMod/images/charui/character_icon_char_name.png";
     public override string CustomCharacterSelectBgPath => "res://CultLeaderMod/scenes/char_select_bg.tscn";

@@ -24,7 +24,7 @@ public class Apostle_Calm_23 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/脑机连接开始.png");
 
     public Apostle_Calm_23()
-        : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+        : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -25,7 +25,7 @@ public class Apostle_Melancholy_07 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/芬多精波动.png");
 
     public Apostle_Melancholy_07()
-        : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+        : base(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

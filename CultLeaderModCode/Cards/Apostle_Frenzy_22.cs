@@ -25,7 +25,7 @@ public class Apostle_Frenzy_22 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/机器人矩阵.png");
 
     public Apostle_Frenzy_22()
-        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

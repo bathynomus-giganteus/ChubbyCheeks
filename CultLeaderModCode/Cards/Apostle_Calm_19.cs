@@ -23,7 +23,7 @@ public class Apostle_Calm_19 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/墨水洗礼.png");
 
     public Apostle_Calm_19()
-        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

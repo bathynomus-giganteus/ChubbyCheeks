@@ -24,7 +24,7 @@ public class Apostle_Lively_10 : ModCardTemplate
         );
 
     public Apostle_Lively_10()
-        : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

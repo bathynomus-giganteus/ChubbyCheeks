@@ -65,7 +65,7 @@ public class DebuffApplyCounterPower : ModPowerTemplate
             return;
 
         var data = GetInternalData<Data>();
-        data.Applied += (int)amount;
+        data.Applied += 1;
         if (data.Threshold <= 0)
             return;
 

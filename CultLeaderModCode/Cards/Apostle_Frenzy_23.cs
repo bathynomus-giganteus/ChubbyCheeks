@@ -25,7 +25,7 @@ public class Apostle_Frenzy_23 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/那个收藏品是我的.png");
 
     public Apostle_Frenzy_23()
-        : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+        : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

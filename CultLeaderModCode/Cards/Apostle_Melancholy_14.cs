@@ -25,7 +25,7 @@ public class Apostle_Melancholy_14 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/非法豆奶.png");
 
     public Apostle_Melancholy_14()
-        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

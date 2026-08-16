@@ -25,7 +25,7 @@ public class Apostle_Frenzy_12 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/被混沌勾引.png");
 
     public Apostle_Frenzy_12()
-        : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+        : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

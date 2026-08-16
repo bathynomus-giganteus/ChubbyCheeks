@@ -24,7 +24,7 @@ public class Apostle_Lively_23 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_23.png");
 
     public Apostle_Lively_23()
-        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

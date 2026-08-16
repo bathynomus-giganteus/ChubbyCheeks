@@ -21,7 +21,7 @@ public class Apostle_Melancholy_17 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("MoonAmt", 5m)];
+        [new DynamicVar("MoonAmt", 3m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/踏光寻月.png");
@@ -42,7 +42,7 @@ public class Apostle_Melancholy_17 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["MoonAmt"].UpgradeValueBy(3m);
+        DynamicVars["MoonAmt"].UpgradeValueBy(1m);
     }
 
 }

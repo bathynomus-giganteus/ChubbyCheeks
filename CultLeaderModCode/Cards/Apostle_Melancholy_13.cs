@@ -30,7 +30,7 @@ public class Apostle_Melancholy_13 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/有罪宣言.png");
 
     public Apostle_Melancholy_13()
-        : base(15, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+        : base(15, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     public override void AfterCreated()
     {

@@ -25,7 +25,7 @@ public class Apostle_Frenzy_15 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/时间中断.png");
 
     public Apostle_Frenzy_15()
-        : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+        : base(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

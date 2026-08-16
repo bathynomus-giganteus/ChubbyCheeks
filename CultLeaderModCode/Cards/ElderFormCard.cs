@@ -13,9 +13,14 @@ public class ElderFormCard : ModCardTemplate
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded ? [] : [CardKeyword.Ethereal];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/elder_form_card.png");
+    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/elder_form.jpg");
 
-    public ElderFormCard() : base(3, CardType.Power, CardRarity.Ancient, TargetType.Self) { }
+    public ElderFormCard() : base(4, CardType.Power, CardRarity.Ancient, TargetType.Self) { }
+
+    protected override void OnUpgrade()
+    {
+        base.EnergyCost.UpgradeBy(-1);
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

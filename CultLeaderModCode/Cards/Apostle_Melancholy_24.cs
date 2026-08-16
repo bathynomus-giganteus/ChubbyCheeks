@@ -46,17 +46,14 @@ public class Apostle_Melancholy_24 : ModCardTemplate
         if (!IsUpgraded)
             return;
 
-        var receivers = attack.Results
-            .SelectMany(hits => hits)
-            .Select(result => result.Receiver)
-            .Where(receiver => receiver != null)
-            .Distinct();
-
-        foreach (var receiver in receivers)
+        foreach (var result in attack.Results.SelectMany(hits => hits))
         {
+            if (result.Receiver == null)
+                continue;
+
             await PowerCmd.Apply<WeakPower>(
                 choiceContext,
-                receiver,
+                result.Receiver,
                 DynamicVars["WeakAmt"].BaseValue,
                 owner,
                 this

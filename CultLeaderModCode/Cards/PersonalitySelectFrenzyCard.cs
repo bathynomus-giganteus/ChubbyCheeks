@@ -12,8 +12,8 @@ public class PersonalitySelectFrenzyCard : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Frenzy];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/personality_frenzy.png");
-    public PersonalitySelectFrenzyCard() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self, false) { }
+    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/d.png");
+    public PersonalitySelectFrenzyCard() : base(0, CardType.Skill, CardRarity.Event, TargetType.Self, false) { }
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) => Task.CompletedTask;
 }
 

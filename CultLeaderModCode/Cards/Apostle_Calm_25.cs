@@ -23,7 +23,7 @@ public class Apostle_Calm_25 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/XG_激光.png");
 
     public Apostle_Calm_25()
-        : base(0, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy) { }
+        : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

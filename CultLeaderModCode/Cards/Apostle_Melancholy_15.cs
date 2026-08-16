@@ -21,7 +21,8 @@ public class Apostle_Melancholy_15 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(15m, ValueProp.Move), new DynamicVar("BonusPerDebuff", 2m)];
+        [new CalculationBaseVar(15m), new ExtraDamageVar(2m), new CalculatedDamageVar(ValueProp.Move)
+            .WithMultiplier((card, _) => DebuffAppliedTrackerPower.GetTotal(card.Owner.Creature))];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/执行教理.png");
@@ -33,9 +34,7 @@ public class Apostle_Melancholy_15 : ModCardTemplate
     {
         var owner = base.Owner.Creature;
         await DebuffAppliedTrackerPower.EnsureTracker(choiceContext, owner, owner, this);
-        int total = DebuffAppliedTrackerPower.GetTotal(owner);
-        decimal damage = DynamicVars.Damage.BaseValue
-            + total * DynamicVars["BonusPerDebuff"].BaseValue;
+        decimal damage = base.DynamicVars.CalculatedDamage.Calculate(null);
 
         await ApostleCardEffectHelpers.AttackAll(
             choiceContext,
@@ -48,7 +47,7 @@ public class Apostle_Melancholy_15 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["BonusPerDebuff"].UpgradeValueBy(1m);
+        DynamicVars.ExtraDamage.UpgradeValueBy(1m);
     }
 
 }

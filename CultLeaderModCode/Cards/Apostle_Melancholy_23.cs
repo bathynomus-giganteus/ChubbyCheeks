@@ -52,4 +52,10 @@ public class Apostle_Melancholy_23 : ModCardTemplate
         }
     }
 
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["VulnAmt"].UpgradeValueBy(1m);
+    }
+
 }
