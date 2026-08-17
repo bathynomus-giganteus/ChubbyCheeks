@@ -10,8 +10,8 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// Hidden tracker for the "摸摸头" card. Marks one or more apostle cards; the next
-/// time one of those cards is played, draw one card.
+/// Hidden tracker for the "摸摸头" card. Marks one or more apostle cards; each
+/// time one of those cards is played this combat, draw one card.
 /// </summary>
 [RegisterPower]
 public class PatCardPower : ModPowerTemplate
@@ -56,7 +56,7 @@ public class PatCardPower : ModPowerTemplate
             return;
 
         var playedCard = cardPlay.Card;
-        if (playedCard == null || !data.MarkedCards.Remove(playedCard))
+        if (playedCard == null || !data.MarkedCards.Contains(playedCard))
             return;
 
         var player = base.Owner.Player;
@@ -64,8 +64,5 @@ public class PatCardPower : ModPowerTemplate
             return;
 
         await CardPileCmd.Draw(choiceContext, 1m, player);
-
-        if (data.MarkedCards.Count == 0)
-            await PowerCmd.Remove(this);
     }
 }

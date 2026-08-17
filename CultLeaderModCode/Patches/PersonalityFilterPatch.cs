@@ -1,6 +1,10 @@
-﻿using HarmonyLib;
+using System.Collections.Generic;
+using System.Linq;
+using HarmonyLib;
 using CultLeaderMod.CultLeaderModCode.Relics;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 
 namespace CultLeaderMod.CultLeaderModCode.Patches;
@@ -48,6 +52,23 @@ public static class PersonalityFilterPatch
         catch (Exception ex)
         {
             Entry.Logger.Error($"[PersonalityFilter] Prefix error: {ex}");
+        }
+    }
+
+    [HarmonyPatch(typeof(Hook), "ModifyMerchantCardPool")]
+    [HarmonyPostfix]
+    private static void Postfix(ref IEnumerable<CardModel> __result)
+    {
+        try
+        {
+            if (!GumBlessRelic.SelectionMade) return;
+
+            var list = __result?.ToList() ?? new List<CardModel>();
+            __result = GumBlessRelic.FilterUnselectedCards(list);
+        }
+        catch (Exception ex)
+        {
+            Entry.Logger.Error($"[PersonalityFilter] Merchant card pool filter error: {ex}");
         }
     }
 }

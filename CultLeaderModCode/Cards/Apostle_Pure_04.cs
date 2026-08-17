@@ -19,7 +19,7 @@ public class Apostle_Pure_04 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("RegenAmt", 3m), new DynamicVar("BlockPerStack", 8m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("RegenAmt", 3m), new BlockVar(8m, ValueProp.Move)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/休假中潜逃.png");
@@ -31,14 +31,11 @@ public class Apostle_Pure_04 : ModCardTemplate
     {
         var owner = base.Owner.Creature;
         await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, owner, DynamicVars["RegenAmt"].BaseValue, owner, this);
-        var block = ApostleCardEffectHelpers.PureStacks(owner) * DynamicVars["BlockPerStack"].BaseValue;
-        if (block > 0)
-            await CreatureCmd.GainBlock(owner, block, ValueProp.Move, cardPlay, true);
+        await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["RegenAmt"].UpgradeValueBy(1m);
-        DynamicVars["BlockPerStack"].UpgradeValueBy(2m);
     }
 }

@@ -4,7 +4,7 @@
 
 ## 当前版本
 
-- Mod 版本：**v0.2.0**
+- Mod 版本：**v0.2.01**
 - 最低游戏版本：**0.110.1**
 - 框架依赖：STS2 RitsuLib **>= 0.5.10**
 - 当前阶段：核心系统已实装，适合开发测试与功能验收；平衡性、文本和部分事件布局仍会继续调整。
@@ -150,6 +150,12 @@
 - 当前 dotnet build 为 **0 errors / 4 warnings**。
 - 4 个 warning 主要来自 TempMaxHpPower、TempMaxHpLossPower、LifeEssencePower、Apostle_Melancholy_19，不阻断运行。
 - 自定义事件大图布局仍在调整，事件图片显示位置可能继续优化。
+
+## 反馈
+
+- 游戏内：设置界面会显示一个 **教主Mod反馈** 按钮，点击后打开 GitHub 问题提交页。
+- 网页：https://github.com/bathynomus-giganteus/ChubbyCheeks/issues/new?template=mod_bug_report.yml
+- 提交前请尽量填写 Mod 版本、问题模块、复现步骤、实际表现和期望表现。
 
 ## 依赖与致谢
 

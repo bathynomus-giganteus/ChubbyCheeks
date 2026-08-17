@@ -1,0 +1,62 @@
+name: Mod 问题反馈
+description: 反馈教主 CultLeaderMod 的 bug、效果错误、文本或显示问题。
+title: "[Bug] "
+labels: ["bug", "mod"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请尽量填写完整信息，方便我们批量定位和修复。
+  - type: input
+    id: version
+    attributes:
+      label: Mod 版本
+      placeholder: v0.2.01
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 问题模块
+      options:
+        - 卡牌
+        - 遗物
+        - 事件
+        - 战斗 / 状态效果
+        - 界面 / 本地化
+        - 构建 / 资源
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      placeholder: 例如：摸摸头升级效果没实装，或者升级文本没修改。
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 复现步骤
+      placeholder: 1. 进入商店；2. 查看使徒牌出现概率；3. 观察是否受到初始 5 选 2 性格加成影响。
+    validations:
+      required: false
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际表现
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望表现
+    validations:
+      required: false
+  - type: input
+    id: character
+    attributes:
+      label: 当前角色
+      placeholder: 教主
+    validations:
+      required: false

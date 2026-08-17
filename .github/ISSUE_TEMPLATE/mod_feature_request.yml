@@ -1,0 +1,30 @@
+name: 建议 / 需求
+description: 给教主 CultLeaderMod 提功能建议或内容需求。
+title: "[建议] "
+labels: ["enhancement", "mod"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        建议类内容会先记录，攒一批后再统一评估和实现。
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 建议内容
+      placeholder: 例如：希望金蜡笔的强化改成战斗奖励形式。
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 原因或参考
+      placeholder: 可选：为什么会想要这个改动，或者参考哪张卡/哪个遗物。
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: Mod 版本
+      placeholder: v0.2.01
+    validations:
+      required: false

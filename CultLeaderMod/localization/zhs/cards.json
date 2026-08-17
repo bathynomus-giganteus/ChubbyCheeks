@@ -1,4 +1,4 @@
-﻿{
+{
   "CULT_LEADER_STRIKE.title": "打击",
   "CULT_LEADER_STRIKE.description": "造成{Damage:diff()}点伤害。",
   "CULT_LEADER_DEFEND.title": "防御",
@@ -6,5 +6,7 @@
   "CULTLEADERMOD_CARD_CULT_LEADER_STRIKE.title": "打击",
   "CULTLEADERMOD_CARD_CULT_LEADER_STRIKE.description": "造成{Damage:diff()}点伤害。",
   "CULTLEADERMOD_CARD_CULT_LEADER_DEFEND.title": "防御",
-  "CULTLEADERMOD_CARD_CULT_LEADER_DEFEND.description": "获得{Block:diff()}点格挡。"
+  "CULTLEADERMOD_CARD_CULT_LEADER_DEFEND.description": "获得{Block:diff()}点格挡。",
+  "CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.title": "使徒出击",
+  "CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.description": "造成{Damage:diff()}点伤害，获得{Block:diff()}点格挡。卡组中每有3张使徒牌，伤害和格挡+{BonusPerThree:diff()}。"
 }

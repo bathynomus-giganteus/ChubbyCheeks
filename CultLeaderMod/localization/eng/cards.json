@@ -2,5 +2,7 @@
   "CULT_LEADER_STRIKE.title": "Strike",
   "CULT_LEADER_STRIKE.description": "Deal {Damage:diff()} damage.",
   "CULT_LEADER_DEFEND.title": "Defend",
-  "CULT_LEADER_DEFEND.description": "Gain {Block:diff()} Block."
+  "CULT_LEADER_DEFEND.description": "Gain {Block:diff()} Block.",
+  "CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.title": "Apostle Attack",
+  "CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.description": "Deal {Damage:diff()} damage and gain {Block:diff()} Block. For every 3 Apostle cards in your deck, damage and Block are increased by {BonusPerThree:diff()}."
 }

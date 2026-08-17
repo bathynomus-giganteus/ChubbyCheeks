@@ -60,9 +60,14 @@ public class LoopPower : ModPowerTemplate
     private static bool IsTrackedPower(PowerModel power)
     {
         return power is RegenPower
+            or LifeEssencePower
             or VigorPower
+            or FervorPower
             or PlatingPower
+            or SolidIcePower
             or RetainPower
-            or BitterPainPower;
+            or HappinessPower
+            or BitterPainPower
+            or BitterPainBurstPower;
     }
 }

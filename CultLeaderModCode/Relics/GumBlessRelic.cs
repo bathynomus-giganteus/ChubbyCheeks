@@ -1,4 +1,4 @@
-﻿using CultLeaderMod.CultLeaderModCode.Cards;
+using CultLeaderMod.CultLeaderModCode.Cards;
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -40,6 +40,8 @@ public class GumBlessRelic : CultLeaderModRelic
     public override bool IsStackable => true;
     public override bool ShowCounter => false;
 
+    private const string DefaultDescription = "选择两种使徒性格，使其出现概率提升。";
+
     public override string? CustomBigIconPath => "res://CultLeaderMod/images/relics/gum_bless.png";
     public override string? CustomIconPath => "res://CultLeaderMod/images/relics/gum_bless.png";
     public override string? CustomIconOutlinePath => "res://CultLeaderMod/images/relics/gum_bless.png";
@@ -56,9 +58,25 @@ public class GumBlessRelic : CultLeaderModRelic
         SelectedTags = null;
         UnselectedTags = null;
         SelectionInProgress = false;
+        RestoreDefaultRelicDescription();
     }
 
-    public static void SetSelection(HashSet<CardTag> selected, HashSet<CardTag> unselected)
+
+    private static void RestoreDefaultRelicDescription()
+    {
+        try
+        {
+            LocManager.Instance.GetTable("relics").MergeWith(new Dictionary<string, string>
+            {
+                ["CULT_LEADER_MOD_RELIC_GUM_BLESS_RELIC.description"] = DefaultDescription
+            });
+            Entry.Logger.Info("[GumBlessRelic] Restored default relic description.");
+        }
+        catch (Exception ex)
+        {
+            Entry.Logger.Warn($"[GumBlessRelic] Failed to restore relic description: {ex.Message}");
+        }
+    }    public static void SetSelection(HashSet<CardTag> selected, HashSet<CardTag> unselected)
     {
         SelectedTags = selected;
         UnselectedTags = unselected;
