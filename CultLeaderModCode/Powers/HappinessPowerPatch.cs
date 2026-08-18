@@ -29,19 +29,11 @@ public static class HappinessPowerPatch
         ref Task<int> __result
     )
     {
-        if (power is HappinessPower happiness && offset > 0m)
-            __result = AwaitTrigger(__result, happiness, applier, cardSource);
-    }
-
-    private static async Task<int> AwaitTrigger(
-        Task<int> original,
-        HappinessPower happiness,
-        Creature? applier,
-        Sts2CardModel? cardSource
-    )
-    {
-        var result = await original;
-        await happiness.TriggerAfterGain(applier, cardSource);
-        return result;
+        // Triggering is handled by HappinessPower.AfterPowerAmountChanged.
+        if (power is HappinessPower && offset > 0m)
+        {
+            _ = applier;
+            _ = cardSource;
+        }
     }
 }

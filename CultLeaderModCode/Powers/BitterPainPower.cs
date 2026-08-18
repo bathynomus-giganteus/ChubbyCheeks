@@ -49,10 +49,10 @@ public class BitterPainPower : ModPowerTemplate
                     await PowerCmd.Apply<WeakPower>(choiceContext, enemy, 1m, base.Owner, null);
                     break;
                 case 2:
-                    await PowerCmd.Apply<PoisonPower>(choiceContext, enemy, 3m, base.Owner, null);
+                    await PowerCmd.Apply<PoisonPower>(choiceContext, enemy, 2m, base.Owner, null);
                     break;
                 default:
-                    await PowerCmd.Apply<DoomPower>(choiceContext, enemy, 6m, base.Owner, null);
+                    await PowerCmd.Apply<DoomPower>(choiceContext, enemy, 4m, base.Owner, null);
                     break;
             }
         }

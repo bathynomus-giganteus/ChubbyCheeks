@@ -16,8 +16,8 @@ public class VigorPerTurnPower : ModPowerTemplate
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string? CustomIconPath => "res://CultLeaderMod/images/powers/fervor.png";
-    public override string? CustomBigIconPath => "res://CultLeaderMod/images/powers/big/fervor.png";
+    public override string? CustomIconPath => "res://CultLeaderMod/images/badges/portraits/狂热_21.png";
+    public override string? CustomBigIconPath => "res://CultLeaderMod/images/badges/portraits/狂热_21.png";
 
     public override async Task BeforeSideTurnStart(
         PlayerChoiceContext choiceContext,

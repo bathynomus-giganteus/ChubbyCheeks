@@ -19,7 +19,7 @@ public class Apostle_Frenzy_16 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8m, ValueProp.Move), new DynamicVar("DrawAmt", 1m), new DynamicVar("VigorAmt", 0m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("DrawAmt", 2m), new DynamicVar("VigorAmt", 3m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/喜欢喝彩的演员.png");
@@ -30,14 +30,13 @@ public class Apostle_Frenzy_16 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
         await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmt"].BaseValue, base.Owner);
-        if (DynamicVars["VigorAmt"].BaseValue > 0)
-            await ApostleCardPlayHelpers.ApplyFrenzyPower(choiceContext, owner, DynamicVars["VigorAmt"].BaseValue, owner, this);
+        await ApostleCardPlayHelpers.ApplyFrenzyPower(choiceContext, owner, DynamicVars["VigorAmt"].BaseValue, owner, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["VigorAmt"].UpgradeValueBy(5m);
+        DynamicVars["DrawAmt"].UpgradeValueBy(1m);
+        DynamicVars["VigorAmt"].UpgradeValueBy(2m);
     }
 }

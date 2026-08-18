@@ -59,10 +59,15 @@ public class Apostle_Melancholy_13 : ModCardTemplate
         if (player == null)
             return;
 
-        foreach (var card in PileType.Hand.GetPile(player).Cards.OfType<Apostle_Melancholy_13>())
+        var pileTypes = new[] { PileType.Draw, PileType.Hand, PileType.Discard, PileType.Exhaust };
+        foreach (var pileType in pileTypes)
         {
-            card.RefreshCost();
-            NCard.FindOnTable(card)?.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
+            foreach (var card in pileType.GetPile(player).Cards.OfType<Apostle_Melancholy_13>())
+            {
+                card.RefreshCost();
+                if (pileType == PileType.Hand)
+                    NCard.FindOnTable(card)?.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
+            }
         }
     }
 

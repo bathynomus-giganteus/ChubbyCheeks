@@ -11,6 +11,7 @@ namespace CultLeaderMod.CultLeaderModCode.CardTags;
 [RegisterOwnedCardKeyword(nameof(Frenzy), CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
 [RegisterOwnedCardKeyword(nameof(Lively), CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
 [RegisterOwnedCardKeyword(nameof(Melancholy), CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
+[RegisterOwnedCardKeyword(nameof(PatHead), CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription, IncludeInCardHoverTip = false)]
 public class CultLeaderCardKeywords
 {
     public static readonly CardKeyword Apostle = ModContentRegistry.GetQualifiedKeywordId("CultLeaderMod", nameof(Apostle)).GetModCardKeyword();
@@ -19,4 +20,5 @@ public class CultLeaderCardKeywords
     public static readonly CardKeyword Frenzy = ModContentRegistry.GetQualifiedKeywordId("CultLeaderMod", nameof(Frenzy)).GetModCardKeyword();
     public static readonly CardKeyword Lively = ModContentRegistry.GetQualifiedKeywordId("CultLeaderMod", nameof(Lively)).GetModCardKeyword();
     public static readonly CardKeyword Melancholy = ModContentRegistry.GetQualifiedKeywordId("CultLeaderMod", nameof(Melancholy)).GetModCardKeyword();
+    public static readonly CardKeyword PatHead = ModContentRegistry.GetQualifiedKeywordId("CultLeaderMod", nameof(PatHead)).GetModCardKeyword();
 }

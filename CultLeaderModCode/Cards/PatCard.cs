@@ -1,4 +1,5 @@
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
@@ -32,6 +33,8 @@ public class PatCard : ModCardTemplate
 
         if (selected == null)
             return;
+
+        selected.AddKeyword(CultLeaderCardKeywords.PatHead);
 
         await PowerCmd.Apply<PatCardPower>(
             choiceContext,

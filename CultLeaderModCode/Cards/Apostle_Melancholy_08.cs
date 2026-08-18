@@ -22,7 +22,7 @@ public class Apostle_Melancholy_08 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(8m, ValueProp.Move)];
+        [new DamageVar(16m, ValueProp.Move)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/通械术.png");
@@ -35,7 +35,7 @@ public class Apostle_Melancholy_08 : ModCardTemplate
         var owner = base.Owner.Creature;
         await using AttackContext attackContext = await AttackCommand.CreateContextAsync(base.CombatState!, choiceContext, cardPlay);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             var target = ApostleCardEffectHelpers.AliveEnemies(owner)
                 .OrderByDescending(enemy => enemy.CurrentHp)

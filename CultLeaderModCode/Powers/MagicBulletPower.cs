@@ -34,7 +34,7 @@ public class MagicBulletPower : ModPowerTemplate
 
         await PowerCmd.Apply<VulnerablePower>(choiceContext, target, 1m, applier, cardSource);
         await PowerCmd.Apply<WeakPower>(choiceContext, target, 1m, applier, cardSource);
-        await PowerCmd.Apply<PoisonPower>(choiceContext, target, 3m, applier, cardSource);
-        await PowerCmd.Apply<DoomPower>(choiceContext, target, 6m, applier, cardSource);
+        await PowerCmd.Apply<PoisonPower>(choiceContext, target, 2m, applier, cardSource);
+        await PowerCmd.Apply<DoomPower>(choiceContext, target, 4m, applier, cardSource);
     }
 }

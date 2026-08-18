@@ -225,7 +225,7 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_15.title"] = "时间中断",
 				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_15.description"] = "获得{VigorAmt:diff()}活力。目标敌人本回合减少{StrengthLoss:diff()}力量。若处于埃尔德形态，改为眩晕该敌人。",
 				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_16.title"] = "喜欢喝彩的演员",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_16.description"] = "获得{Block:diff()}点格挡，抽{DrawAmt}张牌。{IfUpgraded:show:\n获得{VigorAmt}活力。|}",
+				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_16.description"] = "抽{DrawAmt:diff()}张牌，获得{VigorAmt:diff()}活力。",
 				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_17.title"] = "潜入采访中！",
 				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_17.description"] = "消耗{Cards:diff()}张手牌，根据其合计费用获得等量活力。",
 				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_18.title"] = "纯真☆光束",
@@ -331,7 +331,7 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_07.title"] = "芬多精波动",
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_07.description"] = "移除目标敌人的所有减益效果；每移除一种减益，获得1层再生。",
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_08.title"] = "通械术",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_08.description"] = "对生命值最高的敌人造成{Damage:diff()}点伤害；若未斩杀，则再触发一次（最多额外触发2次）。",
+				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_08.description"] = "对生命值最高的敌人造成{Damage:diff()}点伤害；若未斩杀，则再触发一次（最多额外触发1次）。",
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_09.title"] = "魔力喷发",
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_09.description"] = "移除最多{MaxPain:diff()}层苦痛施予，每层获得{BlockPerPain:diff()}点格挡。",
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_10.title"] = "炸猪排市长，洛涅！",
@@ -387,11 +387,11 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_POWER_FERVOR_POWER.title"] = "狂热",
 				["CULT_LEADER_MOD_POWER_FERVOR_POWER.description"] = "每有一层，使下一张攻击牌伤害+3，并失去3点生命。每次触发只消耗1层。",
 				["CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.title"] = "苦痛施予",
-				["CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.description"] = "回合结束时，每有一层苦痛施予，对一名随机敌人随机施加1层易伤、1层虚弱、3层中毒或6层灾厄。所有苦痛施予生效后减少1层。",
+				["CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.description"] = "回合结束时，每有一层苦痛施予，对一名随机敌人随机施加1层易伤、1层虚弱、2层中毒或4层灾厄。所有苦痛施予生效后减少1层。",
 				["CULT_LEADER_MOD_POWER_BITTER_PAIN_BURST_POWER.title"] = "苦痛爆发",
-				["CULT_LEADER_MOD_POWER_BITTER_PAIN_BURST_POWER.description"] = "回合结束时，每有一层苦痛爆发，对所有敌人施加1层易伤、1层虚弱、3层中毒和6层灾厄。此状态不会随回合减少。",
+				["CULT_LEADER_MOD_POWER_BITTER_PAIN_BURST_POWER.description"] = "回合结束时，每有一层苦痛爆发，对所有敌人施加1层易伤、1层虚弱、2层中毒和4层灾厄。此状态不会随回合减少。",
 				["CULT_LEADER_MOD_POWER_HAPPINESS_POWER.title"] = "幸福",
-				["CULT_LEADER_MOD_POWER_HAPPINESS_POWER.description"] = "获得幸福时，如果幸福不少于3层，则消耗3层，抽2张牌并获得1点能量。",
+				["CULT_LEADER_MOD_POWER_HAPPINESS_POWER.description"] = "每获得3层幸福时，抽2张牌并获得1点能量；触发不会消耗幸福。",
 				["CULT_LEADER_MOD_POWER_RETAIN_POWER.title"] = "保留",
 				["CULT_LEADER_MOD_POWER_RETAIN_POWER.description"] = "每有1层，回合结束时至多保留1张手牌。",
 				["CULT_LEADER_MOD_POWER_RETAIN_POWER.selectionScreenPrompt"] = "选择要保留的牌（至多{Amount}张）",
@@ -424,7 +424,7 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_POWER_MOON_FIELD_POWER.title"] = "月之领域",
 				["CULT_LEADER_MOD_POWER_MOON_FIELD_POWER.description"] = "回合开始时，获得等同于层数的临时力量。",
 				["CULT_LEADER_MOD_POWER_MAGIC_BULLET_POWER.title"] = "魔弹",
-				["CULT_LEADER_MOD_POWER_MAGIC_BULLET_POWER.description"] = "打出【魔.弹.の.射.手】时，对目标施加1层易伤、1层虚弱、3层中毒和6层灾厄。",
+				["CULT_LEADER_MOD_POWER_MAGIC_BULLET_POWER.description"] = "打出【魔.弹.の.射.手】时，对目标施加1层易伤、1层虚弱、2层中毒和4层灾厄。",
 				["CULT_LEADER_MOD_POWER_ON_ATTACKED_GAIN_BITTER_PAIN_POWER.title"] = "Elen-A 超频",
 				["CULT_LEADER_MOD_POWER_ON_ATTACKED_GAIN_BITTER_PAIN_POWER.description"] = "每次受到攻击时，获得{Amount}层苦痛施予。",
 				["CULT_LEADER_MOD_POWER_DEBUFF_APPLY_COUNTER_POWER.title"] = "炸猪排市长",
@@ -484,6 +484,8 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_KEYWORD_LIVELY.description"] = "活泼使徒，与保留相关。",
 				["CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title"] = "忧郁",
 				["CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description"] = "忧郁使徒，与苦痛施予相关。",
+				["CULT_LEADER_MOD_KEYWORD_PAT_HEAD.title"] = "抽1张牌",
+				["CULT_LEADER_MOD_KEYWORD_PAT_HEAD.description"] = "本场战斗中，该使徒牌每次打出时抽1张牌。",
 			});
 			Log.Info("[CultLeaderMod] Keyword localization injected");
 		}
@@ -636,8 +638,23 @@ public static class LocInjectPatch
 			Log.Info("[CultLeaderMod] Event localization injected");
 		}
 
+		if (tables.TryGetValue("ancients", out var ancientsTable))
+		{
+			ancientsTable.MergeWith(new Dictionary<string, string>
+			{
+				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-0.char"] = "你就是这次次元边境最后的boss了么？",
+				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-0.next"] = "继续",
+				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-1.ancient"] = "你不应该在这里",
+				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-1.next"] = "继续",
+				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-2.char"] = "世界树，缺损了。我需要这座塔的一部分",
+				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-2.next"] = "继续",
+				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-3.ancient"] = "你的世界存亡与我何干",
+				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-endattack"] = "Both",
+			});
+			Log.Info("[CultLeaderMod] Architect dialogue localization injected");
+		}
 
-			if (tables.TryGetValue("gameplay_ui", out var guiTable))
+		if (tables.TryGetValue("gameplay_ui", out var guiTable))
 		{
 			guiTable.MergeWith(new Dictionary<string, string>
 			{

@@ -18,25 +18,28 @@ public class HappinessPower : ModPowerTemplate
     public override string CustomIconPath => "res://CultLeaderMod/images/powers/happiness.png";
     public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/big/happiness.png";
 
-    public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(
+        PlayerChoiceContext choiceContext,
+        PowerModel power,
+        decimal amount,
+        Creature? applier,
+        CardModel? cardSource)
     {
-        await base.AfterApplied(applier, cardSource);
-        await TriggerAfterGain(applier, cardSource);
-    }
+        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
 
-    public async Task TriggerAfterGain(Creature? applier = null, CardModel? cardSource = null)
-    {
-        if (base.Amount < 3)
+        if (power != this || amount <= 0m)
             return;
 
         var player = GetOwnerPlayer();
         if (player == null)
             return;
 
-        var choiceContext = new ThrowingPlayerChoiceContext();
-        while (base.Amount >= 3)
+        int previousTriggers = (int)Math.Floor((base.Amount - amount) / 3m);
+        int currentTriggers = (int)Math.Floor(base.Amount / 3m);
+        int triggerCount = Math.Max(0, currentTriggers - previousTriggers);
+
+        for (int i = 0; i < triggerCount; i++)
         {
-            await PowerCmd.ModifyAmount(choiceContext, this, -3m, applier, cardSource, silent: true);
             await CardPileCmd.Draw(choiceContext, 2m, player);
             await PlayerCmd.GainEnergy(1m, player);
         }

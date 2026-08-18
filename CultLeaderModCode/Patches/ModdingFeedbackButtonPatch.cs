@@ -41,6 +41,7 @@ public static class ModdingFeedbackButtonPatch
 
             var size = makeModsButton.Size * makeModsButton.Scale;
             const float margin = 32f;
+            float rightShift = size.Y * 0.5f;
 
             duplicate.AnchorLeft = 1f;
             duplicate.AnchorTop = 1f;
@@ -48,9 +49,9 @@ public static class ModdingFeedbackButtonPatch
             duplicate.AnchorBottom = 1f;
             duplicate.GrowHorizontal = Control.GrowDirection.Begin;
             duplicate.GrowVertical = Control.GrowDirection.Begin;
-            duplicate.OffsetLeft = -size.X - margin;
+            duplicate.OffsetLeft = -size.X - margin + rightShift;
             duplicate.OffsetTop = -size.Y - margin;
-            duplicate.OffsetRight = -margin;
+            duplicate.OffsetRight = -margin + rightShift;
             duplicate.OffsetBottom = -margin;
 
             var label = duplicate.GetNodeOrNull<MegaLabel>("Visuals/Label");
