@@ -63,7 +63,7 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_CARD_PAT_CARD.description"] = "选择手牌中的一张使徒牌，本场战斗中该牌每次打出时抽1张牌。",
 				["CULT_LEADER_MOD_CARD_PAT_CARD.selectionScreenPrompt"] = "选择一张使徒牌",
 				["CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.title"] = "使徒出击",
-				["CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.description"] = "造成{Damage:diff()}点伤害，获得{Block:diff()}点格挡。卡组中每有3张使徒牌，伤害和格挡+{BonusPerThree:diff()}。",
+				["CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.description"] = "造成{CalculatedDamage:diff()}点伤害，获得{CalculatedBlock:diff()}点格挡。卡组中每有3张使徒牌，伤害和格挡+1。",
 				["CULT_LEADER_MOD_CARD_PINCH_CHEEK_CARD.title"] = "捏捏脸",
 				["CULT_LEADER_MOD_CARD_PINCH_CHEEK_CARD.description"] = "抽{DrawAmt:diff()}张牌，如果抽到使徒牌，使其费用-1。",
 				["CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.title"] = "敲爆栗",

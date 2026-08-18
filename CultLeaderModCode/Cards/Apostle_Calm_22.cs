@@ -2,6 +2,7 @@ using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -30,15 +31,36 @@ public class Apostle_Calm_22 : ModCardTemplate
         var owner = base.Owner.Creature;
         int triggers = DynamicVars["Triggers"].IntValue;
         decimal damage = DynamicVars.Damage.BaseValue;
-        for (int i = 0; i < triggers; i++)
+
+        AttackContext? attackContext = null;
+        try
         {
-            var enemy = ApostleCardEffectHelpers.RandomEnemy(owner);
-            if (enemy == null)
-                break;
-            bool triggered = await ApostleCardEffectHelpers.TryTriggerCalmStack(choiceContext, owner, this);
-            if (!triggered)
-                break;
-            await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, enemy, damage);
+            for (int i = 0; i < triggers; i++)
+            {
+                var enemy = ApostleCardEffectHelpers.RandomEnemy(owner);
+                if (enemy == null)
+                    break;
+
+                bool triggered = await ApostleCardEffectHelpers.TryTriggerCalmStack(choiceContext, owner, this);
+                if (!triggered)
+                    break;
+
+                attackContext ??= await AttackCommand.CreateContextAsync(base.CombatState!, choiceContext, cardPlay);
+                attackContext.AddHit(await CreatureCmd.Damage(
+                    choiceContext,
+                    enemy,
+                    damage,
+                    DynamicVars.Damage.Props,
+                    owner,
+                    this,
+                    cardPlay
+                ));
+            }
+        }
+        finally
+        {
+            if (attackContext != null)
+                await attackContext.DisposeAsync();
         }
     }
 

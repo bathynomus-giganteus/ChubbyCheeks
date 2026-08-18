@@ -3,6 +3,7 @@ using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -31,39 +32,49 @@ public class Apostle_Melancholy_04 : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ExecuteLowestHpHit(choiceContext, cardPlay);
+        var owner = base.Owner.Creature;
+        if (!ApostleCardEffectHelpers.AliveEnemies(owner).Any())
+            return;
+
+        await using AttackContext attackContext = await AttackCommand.CreateContextAsync(base.CombatState!, choiceContext, cardPlay);
+        await ExecuteLowestHpHit(choiceContext, cardPlay, attackContext);
     }
 
-    private async Task ExecuteLowestHpHit(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    private async Task ExecuteLowestHpHit(PlayerChoiceContext choiceContext, CardPlay cardPlay, AttackContext attackContext)
     {
-        var target = ApostleCardEffectHelpers.AliveEnemies(base.Owner.Creature)
+        var owner = base.Owner.Creature;
+        var target = ApostleCardEffectHelpers.AliveEnemies(owner)
             .OrderBy(enemy => enemy.CurrentHp)
             .FirstOrDefault();
         if (target == null)
             return;
 
-        await ApostleCardEffectHelpers.Attack(
+        attackContext.AddHit(await CreatureCmd.Damage(
             choiceContext,
-            this,
-            cardPlay,
             target,
-            DynamicVars.Damage.BaseValue
-        );
+            DynamicVars.Damage.BaseValue,
+            DynamicVars.Damage.Props,
+            owner,
+            this,
+            cardPlay
+        ));
 
         if (target.IsDead)
         {
-            var next = ApostleCardEffectHelpers.AliveEnemies(base.Owner.Creature)
+            var next = ApostleCardEffectHelpers.AliveEnemies(owner)
                 .OrderBy(enemy => enemy.CurrentHp)
                 .FirstOrDefault();
             if (next != null)
             {
-                await ApostleCardEffectHelpers.Attack(
+                attackContext.AddHit(await CreatureCmd.Damage(
                     choiceContext,
-                    this,
-                    cardPlay,
                     next,
-                    DynamicVars.Damage.BaseValue
-                );
+                    DynamicVars.Damage.BaseValue,
+                    DynamicVars.Damage.Props,
+                    owner,
+                    this,
+                    cardPlay
+                ));
             }
         }
     }

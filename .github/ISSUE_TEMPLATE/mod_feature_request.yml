@@ -25,6 +25,6 @@ body:
     id: version
     attributes:
       label: Mod 版本
-      placeholder: v0.2.01
+      placeholder: v0.2.02
     validations:
       required: false

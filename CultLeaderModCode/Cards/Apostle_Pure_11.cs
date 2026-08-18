@@ -3,6 +3,7 @@ using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -34,11 +35,29 @@ public class Apostle_Pure_11 : ModCardTemplate
         if (target == null)
             return;
 
-        await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars.Damage.BaseValue);
+        await using AttackContext attackContext = await AttackCommand.CreateContextAsync(base.CombatState!, choiceContext, cardPlay);
+        attackContext.AddHit(await CreatureCmd.Damage(
+            choiceContext,
+            target,
+            DynamicVars.Damage.BaseValue,
+            DynamicVars.Damage.Props,
+            owner,
+            this,
+            cardPlay
+        ));
+
         if (ApostleCardEffectHelpers.PureStacks(owner) >= DynamicVars["Threshold"].BaseValue)
         {
             await ApostleCardEffectHelpers.RemovePureStacks(choiceContext, owner, DynamicVars["Threshold"].IntValue, this);
-            await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars["BonusDamage"].BaseValue);
+            attackContext.AddHit(await CreatureCmd.Damage(
+                choiceContext,
+                target,
+                DynamicVars["BonusDamage"].BaseValue,
+                DynamicVars.Damage.Props,
+                owner,
+                this,
+                cardPlay
+            ));
         }
     }
 

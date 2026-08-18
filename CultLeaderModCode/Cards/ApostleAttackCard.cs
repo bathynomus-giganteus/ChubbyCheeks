@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -19,7 +20,13 @@ public class ApostleAttackCard : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags => [];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(7m, ValueProp.Move), new BlockVar(7m, ValueProp.Move), new DynamicVar("BonusPerThree", 1m)];
+        [
+            new CalculationBaseVar(7m),
+            new ExtraDamageVar(1m),
+            new CalculationExtraVar(1m),
+            new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => CountApostleTrios(card)),
+            new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) => CountApostleTrios(card))
+        ];
 
     public override string? CustomPortraitPath => "res://CultLeaderMod/images/card_portraits/apostles_attack.jpg";
 
@@ -32,20 +39,20 @@ public class ApostleAttackCard : ModCardTemplate
         if (target == null)
             return;
 
-        int apostleCount = ApostleCardEffectHelpers.CountDeckCards(
-            base.Owner,
-            ApostlePowerRules.IsApostleCard);
-        int bonus = (apostleCount / 3) * DynamicVars["BonusPerThree"].IntValue;
-        decimal damage = DynamicVars.Damage.BaseValue + bonus;
-        decimal block = DynamicVars.Block.BaseValue + bonus;
+        decimal damage = DynamicVars.CalculatedDamage.Calculate(target);
+        decimal block = DynamicVars.CalculatedBlock.Calculate(target);
 
         await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, damage);
-        await CreatureCmd.GainBlock(base.Owner.Creature, block, ValueProp.Move, cardPlay, true);
+        await CreatureCmd.GainBlock(base.Owner.Creature, block, DynamicVars.CalculatedBlock.Props, cardPlay, true);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.CalculationBase.UpgradeValueBy(3m);
+    }
+
+    private static decimal CountApostleTrios(CardModel card)
+    {
+        return ApostleCardEffectHelpers.CountDeckCards(card.Owner, ApostlePowerRules.IsApostleCard) / 3;
     }
 }

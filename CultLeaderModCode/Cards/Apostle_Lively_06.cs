@@ -34,31 +34,30 @@ public class Apostle_Lively_06 : ModCardTemplate
         var hand = PileType.Hand.GetPile(owner);
         var discarded = hand.Cards.Where(c => c != this).ToList();
 
-        if (discarded.Count > 0)
-            await CardCmd.Discard(choiceContext, discarded);
+        if (discarded.Count == 0)
+            return;
 
-        for (int i = 0; i < discarded.Count; i++)
-        {
-            await ApostleCardPlayHelpers.ApplyLivelyPower(
-                choiceContext,
-                ownerCreature,
-                1m,
-                ownerCreature,
-                this
-            );
+        await CardCmd.Discard(choiceContext, discarded);
 
-            var enemy = ApostleCardEffectHelpers.RandomEnemy(ownerCreature);
-            if (enemy != null)
-            {
-                await ApostleCardEffectHelpers.Attack(
-                    choiceContext,
-                    this,
-                    cardPlay,
-                    enemy,
-                    DynamicVars.Damage.BaseValue
-                );
-            }
-        }
+        await ApostleCardPlayHelpers.ApplyLivelyPower(
+            choiceContext,
+            ownerCreature,
+            discarded.Count,
+            ownerCreature,
+            this
+        );
+
+        var combatState = ownerCreature.CombatState;
+        if (combatState == null)
+            return;
+
+        await DamageCmd
+            .Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(discarded.Count)
+            .FromCard(this, cardPlay)
+            .TargetingRandomOpponents(combatState)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

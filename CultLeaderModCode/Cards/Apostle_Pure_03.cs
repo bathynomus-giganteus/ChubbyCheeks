@@ -37,25 +37,17 @@ public class Apostle_Pure_03 : ModCardTemplate
     private async Task DoHits(PlayerChoiceContext choiceContext, CardPlay cardPlay, Creature target)
     {
         var dmg = DynamicVars.Damage.BaseValue;
+        int hitCount = 3;
+        if (target.CurrentHp < base.Owner.Creature.MaxHp)
+            hitCount += 3;
+
         await DamageCmd
             .Attack(dmg)
             .FromCard(this, cardPlay)
             .Targeting(target)
-            .WithHitCount(3)
+            .WithHitCount(hitCount)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-
-        // If target HP < owner max HP, attack again
-        if (target.CurrentHp < base.Owner.Creature.MaxHp)
-        {
-            await DamageCmd
-                .Attack(dmg)
-                .FromCard(this, cardPlay)
-                .Targeting(target)
-                .WithHitCount(3)
-                .WithHitFx("vfx/vfx_attack_slash")
-                .Execute(choiceContext);
-        }
     }
 
     protected override void OnUpgrade()

@@ -3,6 +3,7 @@ using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -30,22 +31,42 @@ public class Apostle_Frenzy_07 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        for (int i = 0; i < DynamicVars["Triggers"].IntValue; i++)
+        AttackContext? attackContext = null;
+        try
         {
-            switch (Random.Shared.Next(3))
+            for (int i = 0; i < DynamicVars["Triggers"].IntValue; i++)
             {
-                case 0:
-                    var enemy = ApostleCardEffectHelpers.RandomEnemy(owner);
-                    if (enemy != null)
-                        await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, enemy, DynamicVars.Damage.BaseValue);
-                    break;
-                case 1:
-                    await ApostleCardPlayHelpers.ApplyFrenzyPower(choiceContext, owner, DynamicVars["VigorAmt"].BaseValue, owner, this);
-                    break;
-                default:
-                    await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
-                    break;
+                switch (Random.Shared.Next(3))
+                {
+                    case 0:
+                        var enemy = ApostleCardEffectHelpers.RandomEnemy(owner);
+                        if (enemy != null)
+                        {
+                            attackContext ??= await AttackCommand.CreateContextAsync(base.CombatState!, choiceContext, cardPlay);
+                            attackContext.AddHit(await CreatureCmd.Damage(
+                                choiceContext,
+                                enemy,
+                                DynamicVars.Damage.BaseValue,
+                                DynamicVars.Damage.Props,
+                                owner,
+                                this,
+                                cardPlay
+                            ));
+                        }
+                        break;
+                    case 1:
+                        await ApostleCardPlayHelpers.ApplyFrenzyPower(choiceContext, owner, DynamicVars["VigorAmt"].BaseValue, owner, this);
+                        break;
+                    default:
+                        await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
+                        break;
+                }
             }
+        }
+        finally
+        {
+            if (attackContext != null)
+                await attackContext.DisposeAsync();
         }
     }
 

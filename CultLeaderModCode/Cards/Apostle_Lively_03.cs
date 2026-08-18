@@ -37,34 +37,38 @@ public class Apostle_Lively_03 : ModCardTemplate
         if (maxCards <= 0)
             return;
 
-        var selected = await CardSelectCmd.FromCombatPile(
+        var selected = (await CardSelectCmd.FromCombatPile(
             choiceContext,
             drawPile,
             base.Owner,
             new CardSelectorPrefs(base.SelectionScreenPrompt, 0, maxCards)
-        );
+        )).ToList();
+
+        if (selected.Count == 0)
+            return;
 
         foreach (var card in selected)
-        {
             await CardCmd.Exhaust(choiceContext, card);
-            await ApostleCardPlayHelpers.ApplyLivelyPower(
-                choiceContext,
-                owner,
-                DynamicVars["RetainAmt"].BaseValue,
-                owner,
-                this
-            );
 
-            var enemy = ApostleCardEffectHelpers.RandomEnemy(owner);
-            if (enemy != null)
-                await ApostleCardEffectHelpers.Attack(
-                    choiceContext,
-                    this,
-                    cardPlay,
-                    enemy,
-                    DynamicVars.Damage.BaseValue
-                );
-        }
+        await ApostleCardPlayHelpers.ApplyLivelyPower(
+            choiceContext,
+            owner,
+            DynamicVars["RetainAmt"].BaseValue * selected.Count,
+            owner,
+            this
+        );
+
+        var combatState = owner.CombatState;
+        if (combatState == null)
+            return;
+
+        await DamageCmd
+            .Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(selected.Count)
+            .FromCard(this, cardPlay)
+            .TargetingRandomOpponents(combatState)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()

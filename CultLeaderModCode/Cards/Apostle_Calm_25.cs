@@ -30,15 +30,20 @@ public class Apostle_Calm_25 : ModCardTemplate
         var owner = base.Owner.Creature;
         int hits = ApostleCardEffectHelpers.CalmStacks(owner);
         decimal hitDamage = base.ResolveEnergyXValue() + DynamicVars["HitDamage"].BaseValue;
+        if (hits <= 0)
+            return;
 
-        for (int i = 0; i < hits; i++)
-        {
-            var enemy = ApostleCardEffectHelpers.RandomEnemy(owner);
-            if (enemy == null)
-                break;
+        var combatState = owner.CombatState;
+        if (combatState == null)
+            return;
 
-            await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, enemy, hitDamage);
-        }
+        await DamageCmd
+            .Attack(hitDamage)
+            .WithHitCount(hits)
+            .FromCard(this, cardPlay)
+            .TargetingRandomOpponents(combatState)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
