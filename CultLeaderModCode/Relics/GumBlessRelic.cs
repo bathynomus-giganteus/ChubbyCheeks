@@ -133,11 +133,11 @@ public class GumBlessRelic : CultLeaderModRelic
             var runState = player.RunState;
             var cards = new List<CardModel>
             {
-                runState.CreateCard<PersonalitySelectPureCard>(player),
-                runState.CreateCard<PersonalitySelectCalmCard>(player),
-                runState.CreateCard<PersonalitySelectFrenzyCard>(player),
-                runState.CreateCard<PersonalitySelectLivelyCard>(player),
-                runState.CreateCard<PersonalitySelectMelancholyCard>(player),
+                runState.CreateCard<PersonalityChoicePureCard>(player),
+                runState.CreateCard<PersonalityChoiceCalmCard>(player),
+                runState.CreateCard<PersonalityChoiceFrenzyCard>(player),
+                runState.CreateCard<PersonalityChoiceLivelyCard>(player),
+                runState.CreateCard<PersonalityChoiceMelancholyCard>(player),
             };
 
             var prefs = new CardSelectorPrefs(new LocString("gameplay_ui", "CULT_LEADER_PERSONALITY_SELECTION.prompt"), 2)
@@ -179,11 +179,11 @@ public class GumBlessRelic : CultLeaderModRelic
     private static CardTag? GetPersonalityTag(CardModel card)
     {
         var typeName = card.GetType().Name;
-        if (typeName == nameof(PersonalitySelectPureCard)) return CultLeaderCardTags.Pure;
-        if (typeName == nameof(PersonalitySelectCalmCard)) return CultLeaderCardTags.Calm;
-        if (typeName == nameof(PersonalitySelectFrenzyCard)) return CultLeaderCardTags.Frenzy;
-        if (typeName == nameof(PersonalitySelectLivelyCard)) return CultLeaderCardTags.Lively;
-        if (typeName == nameof(PersonalitySelectMelancholyCard)) return CultLeaderCardTags.Melancholy;
+        if (typeName == nameof(PersonalityChoicePureCard)) return CultLeaderCardTags.Pure;
+        if (typeName == nameof(PersonalityChoiceCalmCard)) return CultLeaderCardTags.Calm;
+        if (typeName == nameof(PersonalityChoiceFrenzyCard)) return CultLeaderCardTags.Frenzy;
+        if (typeName == nameof(PersonalityChoiceLivelyCard)) return CultLeaderCardTags.Lively;
+        if (typeName == nameof(PersonalityChoiceMelancholyCard)) return CultLeaderCardTags.Melancholy;
         return null;
     }
 

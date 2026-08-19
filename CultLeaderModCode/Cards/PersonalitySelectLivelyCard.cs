@@ -1,5 +1,7 @@
 using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.Powers;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -10,11 +12,17 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class PersonalitySelectLivelyCard : ModCardTemplate
 {
-    protected override HashSet<CardTag> CanonicalTags => [CultLeaderCardTags.Lively];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/e.png");
-    public PersonalitySelectLivelyCard() : base(0, CardType.Skill, CardRarity.Event, TargetType.Self, false) { }
-    protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay) => Task.CompletedTask;
+    public override bool CanBeGeneratedInCombat => false;
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate];
+    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://CultLeaderMod/images/card_portraits/personality/personality_lively.png");
+    public PersonalitySelectLivelyCard() : base(0, CardType.Power, CardRarity.Event, TargetType.Self) { }
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var owner = base.Owner.Creature;
+        await PowerCmd.Apply<PersonalityCardFetchPower>(choiceContext, owner, 1m, owner, this);
+        owner.GetPower<PersonalityCardFetchPower>()?.Configure(CultLeaderCardTags.Lively, IsUpgraded);
+    }
 }
 
 

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Models.Acts;
 using MegaCrit.Sts2.Core.Nodes.Events;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -88,17 +89,17 @@ public class FortuneTellerCatCushionEvent : CultLeaderModEventBase
         SetEventState(PageDescription("PERSONALITY"), new[]
         {
             new EventOption(this, () => ChoosePersonality<PersonalitySelectPureCard>(), ModOptionKey("PERSONALITY", "PURE")),
+            new EventOption(this, () => ChoosePersonality<PersonalitySelectLivelyCard>(), ModOptionKey("PERSONALITY", "LIVELY")),
             new EventOption(this, () => ChoosePersonality<PersonalitySelectFrenzyCard>(), ModOptionKey("PERSONALITY", "FRENZY")),
             new EventOption(this, () => ChoosePersonality<PersonalitySelectCalmCard>(), ModOptionKey("PERSONALITY", "CALM")),
-            new EventOption(this, () => ChoosePersonality<PersonalitySelectMelancholyCard>(), ModOptionKey("PERSONALITY", "MELANCHOLY")),
-            new EventOption(this, () => ChoosePersonality<PersonalitySelectLivelyCard>(), ModOptionKey("PERSONALITY", "LIVELY"))
+            new EventOption(this, () => ChoosePersonality<PersonalitySelectMelancholyCard>(), ModOptionKey("PERSONALITY", "MELANCHOLY"))
         });
     }
 
     private async Task ChoosePersonality<T>() where T : CardModel
     {
         var card = Owner!.RunState.CreateCard<T>(Owner);
-        await CardPileCmd.Add(card, PileType.Deck);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck), 1.2f, CardPreviewStyle.EventLayout);
         SetEventFinished(L10NLookup(Id.Entry + ".pages.RESULT.description"));
     }
 }
