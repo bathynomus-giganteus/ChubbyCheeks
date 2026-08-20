@@ -32,7 +32,7 @@ public static class LocInjectPatch
 
 		if (tables.TryGetValue("cards", out var cardsTable))
 		{
-			cardsTable.MergeWith(new Dictionary<string, string>
+			var cardLoc = new Dictionary<string, string>
 			{
 				["CULT_LEADER_MOD_CARD_CULT_LEADER_STRIKE.title"] = "打击",
 				["CULT_LEADER_MOD_CARD_CULT_LEADER_STRIKE.description"] = "造成{Damage:diff()}点伤害。",
@@ -378,8 +378,9 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_24.description"] = "随机造成{Damage:diff()}点伤害{Hits:diff()}次。{IfUpgraded:show:\n每次命中施加{WeakAmt:diff()}层虚弱。|}",
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_25.title"] = "啪哦哦！",
 				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_25.description"] = "造成{Damage:diff()}点伤害，获得{PainAmt:diff()}层苦痛施予。",
-
-			});
+			};
+			ColorizeCardDescriptions(cardLoc);
+			cardsTable.MergeWith(cardLoc);
 			Log.Info("[CultLeaderMod] Card localization injected");
 		}
 
@@ -454,6 +455,8 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_POWER_POOL_CANDIDATE_POWER.description"] = "回合结束时获得{Amount}层覆甲；回合开始时获得等同于当前覆甲的格挡。",
 				["CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_POWER.title"] = "性格唤醒",
 				["CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_POWER.description"] = "回合开始时，从卡组随机将一张对应性格使徒牌添加到你的手牌中。升级后改为升级并添加。",
+				["CULT_LEADER_MOD_POWER_PAT_CARD_POWER.title"] = "摸摸头",
+				["CULT_LEADER_MOD_POWER_PAT_CARD_POWER.description"] = "被标记的使徒牌本场战斗中每次打出时抽1张牌。",
 				["CULT_LEADER_MOD_POWER_FLAT_DAMAGE_REDUCTION_POWER.title"] = "雪雾",
 				["CULT_LEADER_MOD_POWER_FLAT_DAMAGE_REDUCTION_POWER.description"] = "持有格挡时，受到的攻击伤害减少{Amount}点。",
 				["CULT_LEADER_MOD_POWER_NEXT_TURN_STRENGTH_LOSS_POWER.title"] = "下回合力量损失",
@@ -477,6 +480,8 @@ public static class LocInjectPatch
 				["CULT_LEADER_MOD_POWER_ADJUST_POWER.description"] = "每当你获得保留时，对随机敌人造成伤害，随后本场战斗中此伤害+3。",
 				["CULT_LEADER_MOD_POWER_BEE_POWER.title"] = "朱bee",
 				["CULT_LEADER_MOD_POWER_BEE_POWER.description"] = "回合结束时，对随机敌人造成等同于层数的伤害，然后减少1层。此状态不叠加。",
+				["CULT_LEADER_MOD_POWER_ROOKIE_CARD_POWER.title"] = "充满魄力的新秀",
+				["CULT_LEADER_MOD_POWER_ROOKIE_CARD_POWER.description"] = "记录本场战斗中打出的活泼使徒牌数量。不同卡牌会根据该计数获得额外效果。",
 
 			});
 		}
@@ -487,16 +492,16 @@ public static class LocInjectPatch
 			{
 				["CULT_LEADER_MOD_KEYWORD_APOSTLE.title"] = "使徒牌",
 				["CULT_LEADER_MOD_KEYWORD_APOSTLE.description"] = "使徒之力凝聚的卡牌。",
-				["CULT_LEADER_MOD_KEYWORD_PURE.title"] = "纯粹",
-				["CULT_LEADER_MOD_KEYWORD_PURE.description"] = "纯粹使徒，与再生相关。",
-				["CULT_LEADER_MOD_KEYWORD_CALM.title"] = "冷静",
-				["CULT_LEADER_MOD_KEYWORD_CALM.description"] = "冷静使徒，与覆甲相关。",
-				["CULT_LEADER_MOD_KEYWORD_FRENZY.title"] = "狂热",
-				["CULT_LEADER_MOD_KEYWORD_FRENZY.description"] = "狂热使徒，与活力相关。",
-				["CULT_LEADER_MOD_KEYWORD_LIVELY.title"] = "活泼",
-				["CULT_LEADER_MOD_KEYWORD_LIVELY.description"] = "活泼使徒，与保留相关。",
-				["CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title"] = "忧郁",
-				["CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description"] = "忧郁使徒，与苦痛施予相关。",
+				["CULT_LEADER_MOD_KEYWORD_PURE.title"] = "使徒性格",
+				["CULT_LEADER_MOD_KEYWORD_PURE.description"] = "纯粹",
+				["CULT_LEADER_MOD_KEYWORD_CALM.title"] = "使徒性格",
+				["CULT_LEADER_MOD_KEYWORD_CALM.description"] = "冷静",
+				["CULT_LEADER_MOD_KEYWORD_FRENZY.title"] = "使徒性格",
+				["CULT_LEADER_MOD_KEYWORD_FRENZY.description"] = "狂热",
+				["CULT_LEADER_MOD_KEYWORD_LIVELY.title"] = "使徒性格",
+				["CULT_LEADER_MOD_KEYWORD_LIVELY.description"] = "活泼",
+				["CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title"] = "使徒性格",
+				["CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description"] = "忧郁",
 				["CULT_LEADER_MOD_KEYWORD_PAT_HEAD.title"] = "抽1张牌",
 				["CULT_LEADER_MOD_KEYWORD_PAT_HEAD.description"] = "本场战斗中，该使徒牌每次打出时抽1张牌。",
 			});
@@ -675,8 +680,39 @@ public static class LocInjectPatch
 				["CULT_LEADER_PERSONALITY_SELECTION.title"] = "选择两种使徒性格",
 				["CULT_LEADER_PERSONALITY_SELECTION.description"] = "咏春的祝福正在回应你。先选择两种性格，再接受涅奥的遗物。",
 				["CULT_LEADER_GOLDEN_CRAYON.prompt"] = "选择一张使徒牌强化",
+				["CULT_LEADER_HOVER_APOSTLE_NAME.title"] = "使徒名称",
 			});
 			Log.Info("[CultLeaderMod] Gameplay UI localization injected");
 		}
+	}
+
+	private static void ColorizeCardDescriptions(Dictionary<string, string> cardLoc)
+	{
+		var keys = cardLoc.Keys
+			.Where(key => key.EndsWith(".description", StringComparison.Ordinal))
+			.ToList();
+
+		foreach (var key in keys)
+		{
+			var text = cardLoc[key];
+			text = ColorizeTerm(text, "苦痛施予");
+			text = ColorizeTerm(text, "计划妥当");
+			text = ColorizeTerm(text, "再生");
+			text = ColorizeTerm(text, "覆甲");
+			text = ColorizeTerm(text, "活力");
+			text = ColorizeTerm(text, "保留");
+			cardLoc[key] = text;
+		}
+	}
+
+	private static string ColorizeTerm(string text, string term)
+	{
+		const string open = "[color=#FFD84A]";
+		const string close = "[/color]";
+
+		if (text.Contains($"{open}{term}{close}", StringComparison.Ordinal))
+			return text;
+
+		return text.Replace(term, $"{open}{term}{close}", StringComparison.Ordinal);
 	}
 }
