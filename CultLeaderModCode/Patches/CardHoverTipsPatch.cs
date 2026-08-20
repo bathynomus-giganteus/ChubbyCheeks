@@ -22,6 +22,8 @@ public static class CardHoverTipsPatch
     private const string KeywordLocTable = "card_keywords";
     private const string ApostleKeywordTitleKey = "CULT_LEADER_MOD_KEYWORD_APOSTLE.title";
     private const string PersonalityKeywordTitleKey = "CULT_LEADER_MOD_KEYWORD_PURE.title";
+    private const string GameplayUiLocTable = "gameplay_ui";
+    private const string RelatedStatusesHoverTitleKey = "CULT_LEADER_HOVER_RELATED_STATUSES.title";
 
     private static readonly Dictionary<Type, Type[]> PowerTipsByCard = new()
     {
@@ -94,6 +96,12 @@ public static class CardHoverTipsPatch
         [typeof(Apostle_Lively_08)] = [typeof(Apostle_Lively_08_1), typeof(Apostle_Lively_08_2), typeof(Apostle_Lively_08_3)],
         [typeof(Apostle_Melancholy_02)] = [typeof(Apostle_Melancholy_02_1), typeof(Apostle_Melancholy_02_2)],
         [typeof(Apostle_Melancholy_02_1)] = [typeof(Apostle_Melancholy_02_2)],
+    };
+
+    private static readonly Dictionary<Type, string> CompactStatusTipsByCard = new()
+    {
+        [typeof(TestRainbowCard)] = "再生  覆甲  活力  保留  苦痛施予",
+        [typeof(Apostle_Lively_08_1)] = "再生  覆甲  活力  苦痛施予",
     };
 
     private static readonly (CardTag Tag, string Name)[] PersonalityTagNames =
@@ -311,9 +319,9 @@ public static class CardHoverTipsPatch
         var tags = card.Tags.ToHashSet();
         if (tags.Contains(CultLeaderCardTags.Apostle) && emitted.Add("keyword:apostle"))
         {
-            var description = "使徒之力凝聚的卡牌。";
-            if (ApostleNamesByCardTypeName.TryGetValue(card.GetType().Name, out var apostleName))
-                description += $"\n使徒名称：{apostleName}";
+            var description = ApostleNamesByCardTypeName.TryGetValue(card.GetType().Name, out var apostleName)
+                ? $"使徒名称：{apostleName}"
+                : "使徒名称：未知";
 
             yield return new HoverTip(new LocString(KeywordLocTable, ApostleKeywordTitleKey), description);
         }
@@ -352,6 +360,13 @@ public static class CardHoverTipsPatch
 
     private static IEnumerable<IHoverTip> BuildDescriptionTermTips(CardModel card, HashSet<string> emitted)
     {
+        if (CompactStatusTipsByCard.TryGetValue(card.GetType(), out var compactDescription)
+            && emitted.Add($"compact-statuses:{card.GetType().FullName}"))
+        {
+            yield return new HoverTip(new LocString(GameplayUiLocTable, RelatedStatusesHoverTitleKey), compactDescription);
+            yield break;
+        }
+
         string description;
         try
         {

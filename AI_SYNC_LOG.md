@@ -85,3 +85,20 @@
   - 移除 `PatCard` 对 `PatCardPower` 的 Power hover 映射，避免摸摸头效果显示无意义/缺失图标。
   - 对 RitsuLib 自动生成的原始自定义 tag hover 做过滤，再追加本 mod 的合并版 hover，避免重复框。
 - 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。
+
+## 2026-08-21 - Codex
+
+- 任务：继续修正卡牌 hover 与百科筛选 UI。
+- 修改文件：
+  - `CultLeaderModCode/Patches/CardHoverTipsPatch.cs`
+  - `CultLeaderModCode/Patches/CardLibraryApostleFilterPatch.cs`
+  - `CultLeaderModCode/Patches/LocInjectPatch.cs`
+- 修复内容：
+  - “使徒牌”悬浮框内移除固定说明“使徒之力凝聚的卡牌”，现在只显示 `使徒名称：xxx`，缺少映射时显示 `使徒名称：未知`。
+  - 对悬浮框过多的重点卡牌做紧凑化处理：
+    - `循环/TestRainbowCard`：将再生、覆甲、活力、保留、苦痛施予合并为一个“相关状态”提示框。
+    - `助手埃皮康/Apostle_Lively_08_1`：将再生、覆甲、活力、苦痛施予合并为一个“相关状态”提示框。
+    - 这不是全局双列 hover 容器补丁，而是针对当前溢出最严重卡牌减少提示框数量，避免 hover UI 从右侧挤到左侧。
+  - 百科/卡牌库的教主筛选按钮改为短标签，按钮宽度缩小；弹出菜单仍使用完整筛选文本，并放大字体、行距与内边距。
+- 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。warning 仍为既有项：3 个 `oldOwner` nullable，1 个 `Apostle_Melancholy_19` async no await。
+- 测试状态：未进游戏实测；建议重点检查百科筛选按钮位置、弹出菜单大小，以及循环/助手埃皮康 hover 是否仍会左右跳位。

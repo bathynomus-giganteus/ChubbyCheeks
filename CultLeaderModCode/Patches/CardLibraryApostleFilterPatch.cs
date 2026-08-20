@@ -20,7 +20,19 @@ public static class CardLibraryApostleFilterPatch
 {
     private const int ModeCount = 8;
 
-    private static readonly string[] Labels =
+    private static readonly string[] ButtonLabels =
+    [
+        "全部",
+        "非使徒",
+        "全性格",
+        "纯粹",
+        "狂热",
+        "冷静",
+        "活泼",
+        "忧郁",
+    ];
+
+    private static readonly string[] MenuLabels =
     [
         "筛选：全部",
         "筛选：非使徒牌",
@@ -63,7 +75,7 @@ public static class CardLibraryApostleFilterPatch
             duplicate.Name = "CultLeaderApostleFilterButton";
             duplicate.Visible = true;
             duplicate.ZIndex = template.ZIndex + 1;
-            duplicate.Size = new Vector2(320f, template.Size.Y);
+            duplicate.Size = new Vector2(200f, template.Size.Y * 0.85f);
             duplicate.Scale = template.Scale;
 
             __instance.AddChild(duplicate);
@@ -76,14 +88,14 @@ public static class CardLibraryApostleFilterPatch
             duplicate.GrowVertical = Control.GrowDirection.Begin;
             duplicate.OffsetLeft = -8f;
             duplicate.OffsetTop = -204f;
-            duplicate.OffsetRight = 312f;
-            duplicate.OffsetBottom = -148f;
+            duplicate.OffsetRight = 192f;
+            duplicate.OffsetBottom = -156f;
 
             var sortIcon = duplicate.FindChild("Image", true, false) as TextureRect;
             if (sortIcon != null)
                 sortIcon.Visible = false;
 
-            duplicate.SetLabel(Labels[0]);
+            duplicate.SetLabel(ButtonLabels[0]);
             duplicate.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(OnFilterButtonPressed));
 
             var menu = new PopupMenu
@@ -92,8 +104,12 @@ public static class CardLibraryApostleFilterPatch
                 Theme = __instance.Theme,
                 HideOnItemSelection = true,
             };
-            for (var i = 0; i < Labels.Length; i++)
-                menu.AddItem(Labels[i], i);
+            menu.AddThemeFontSizeOverride("font_size", 30);
+            menu.AddThemeConstantOverride("v_separation", 12);
+            menu.AddThemeConstantOverride("item_start_padding", 18);
+            menu.AddThemeConstantOverride("item_end_padding", 18);
+            for (var i = 0; i < MenuLabels.Length; i++)
+                menu.AddItem(MenuLabels[i], i);
             duplicate.AddChild(menu);
 
             var state = new FilterState(__instance, duplicate, menu, 0);
@@ -155,7 +171,7 @@ public static class CardLibraryApostleFilterPatch
                 return;
 
             state.Index = index;
-            state.Button.SetLabel(Labels[state.Index]);
+            state.Button.SetLabel(ButtonLabels[state.Index]);
             InvokeUpdateFilter(state.Library);
         }
         catch (Exception ex)
@@ -166,13 +182,13 @@ public static class CardLibraryApostleFilterPatch
 
     private static void ShowFilterMenu(FilterState state)
     {
-        const int menuItemHeight = 40;
-        const int menuWidth = 320;
+        const int menuItemHeight = 56;
+        const int menuWidth = 380;
 
         var buttonPosition = state.Button.GlobalPosition;
         var buttonSize = state.Button.Size;
         var viewportSize = state.Button.GetViewportRect().Size;
-        var menuHeight = Labels.Length * menuItemHeight;
+        var menuHeight = MenuLabels.Length * menuItemHeight;
 
         var x = Mathf.RoundToInt(buttonPosition.X + buttonSize.X + 8f);
         var desiredY = Mathf.RoundToInt(buttonPosition.Y);

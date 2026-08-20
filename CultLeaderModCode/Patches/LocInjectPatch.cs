@@ -491,7 +491,7 @@ public static class LocInjectPatch
 			kwTable.MergeWith(new Dictionary<string, string>
 			{
 				["CULT_LEADER_MOD_KEYWORD_APOSTLE.title"] = "使徒牌",
-				["CULT_LEADER_MOD_KEYWORD_APOSTLE.description"] = "使徒之力凝聚的卡牌。",
+				["CULT_LEADER_MOD_KEYWORD_APOSTLE.description"] = "使徒名称",
 				["CULT_LEADER_MOD_KEYWORD_PURE.title"] = "使徒性格",
 				["CULT_LEADER_MOD_KEYWORD_PURE.description"] = "纯粹",
 				["CULT_LEADER_MOD_KEYWORD_CALM.title"] = "使徒性格",
@@ -681,6 +681,7 @@ public static class LocInjectPatch
 				["CULT_LEADER_PERSONALITY_SELECTION.description"] = "咏春的祝福正在回应你。先选择两种性格，再接受涅奥的遗物。",
 				["CULT_LEADER_GOLDEN_CRAYON.prompt"] = "选择一张使徒牌强化",
 				["CULT_LEADER_HOVER_APOSTLE_NAME.title"] = "使徒名称",
+				["CULT_LEADER_HOVER_RELATED_STATUSES.title"] = "相关状态",
 			});
 			Log.Info("[CultLeaderMod] Gameplay UI localization injected");
 		}
