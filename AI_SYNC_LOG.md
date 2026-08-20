@@ -72,3 +72,16 @@
   - 补充缺失的 `RookieCardPower` 与 `PatCardPower` 本地化，避免悬浮框显示内部代码名。
 - 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。
 - 测试状态：未进游戏实测；建议重点验证 `[color=#FFD84A]` 是否被 STS2 卡牌描述渲染器接受。如果仍显示原色或露 BBCode，需要改走引擎关键词高亮/描述节点补丁。
+
+## 2026-08-20 23:55 - Codex
+
+- 任务：根据第二轮 hover UI 反馈调整显示合并规则。
+- 修改文件：
+  - `CultLeaderModCode/Patches/CardHoverTipsPatch.cs`
+- 修复内容：
+  - 不再把“使徒牌”和“使徒名称”拆成两个框；使徒名改为显示在“使徒牌”框内。
+  - 乌洛斯/循环这类多性格使徒牌不再显示多个性格框；统一为一个“使徒性格”框，内容用空格分隔：`纯粹 冷静 狂热 活泼 忧郁`。
+  - 衍生牌使徒名称手动去掉括号附注：黄油融化显示“黄油”，埃皮康衍生牌显示“埃皮卡”，魔弹衍生牌显示“x锡安x”。
+  - 移除 `PatCard` 对 `PatCardPower` 的 Power hover 映射，避免摸摸头效果显示无意义/缺失图标。
+  - 对 RitsuLib 自动生成的原始自定义 tag hover 做过滤，再追加本 mod 的合并版 hover，避免重复框。
+- 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。

@@ -19,8 +19,9 @@ namespace CultLeaderMod.CultLeaderModCode.Patches;
 public static class CardHoverTipsPatch
 {
     private const string CultLeaderCardNamespace = "CultLeaderMod.CultLeaderModCode.Cards";
-    private const string HoverLocTable = "gameplay_ui";
-    private const string ApostleNameHoverTitleKey = "CULT_LEADER_HOVER_APOSTLE_NAME.title";
+    private const string KeywordLocTable = "card_keywords";
+    private const string ApostleKeywordTitleKey = "CULT_LEADER_MOD_KEYWORD_APOSTLE.title";
+    private const string PersonalityKeywordTitleKey = "CULT_LEADER_MOD_KEYWORD_PURE.title";
 
     private static readonly Dictionary<Type, Type[]> PowerTipsByCard = new()
     {
@@ -78,7 +79,6 @@ public static class CardHoverTipsPatch
         [typeof(ElderFormCard)] = [typeof(ElderFormPower)],
         [typeof(ForElruienCard)] = [typeof(CultLeaderAuthorityPower)],
         [typeof(HundredDaysBlessingCard)] = [typeof(CultLeaderAuthorityPower)],
-        [typeof(PatCard)] = [typeof(PatCardPower)],
         [typeof(PersonalitySelectCalmCard)] = [typeof(PersonalityCardFetchPower)],
         [typeof(PersonalitySelectFrenzyCard)] = [typeof(PersonalityCardFetchPower)],
         [typeof(PersonalitySelectLivelyCard)] = [typeof(PersonalityCardFetchPower)],
@@ -96,23 +96,32 @@ public static class CardHoverTipsPatch
         [typeof(Apostle_Melancholy_02_1)] = [typeof(Apostle_Melancholy_02_2)],
     };
 
-    private static readonly Dictionary<CardTag, CardKeyword> KeywordTipsByTag = new()
-    {
-        [CultLeaderCardTags.Apostle] = CultLeaderCardKeywords.Apostle,
-        [CultLeaderCardTags.Pure] = CultLeaderCardKeywords.Pure,
-        [CultLeaderCardTags.Calm] = CultLeaderCardKeywords.Calm,
-        [CultLeaderCardTags.Frenzy] = CultLeaderCardKeywords.Frenzy,
-        [CultLeaderCardTags.Lively] = CultLeaderCardKeywords.Lively,
-        [CultLeaderCardTags.Melancholy] = CultLeaderCardKeywords.Melancholy,
-    };
+    private static readonly (CardTag Tag, string Name)[] PersonalityTagNames =
+    [
+        (CultLeaderCardTags.Pure, "纯粹"),
+        (CultLeaderCardTags.Calm, "冷静"),
+        (CultLeaderCardTags.Frenzy, "狂热"),
+        (CultLeaderCardTags.Lively, "活泼"),
+        (CultLeaderCardTags.Melancholy, "忧郁"),
+    ];
+
+    private static readonly string[] ReplacedKeywordTipIds =
+    [
+        "CULT_LEADER_MOD_KEYWORD_APOSTLE",
+        "CULT_LEADER_MOD_KEYWORD_PURE",
+        "CULT_LEADER_MOD_KEYWORD_CALM",
+        "CULT_LEADER_MOD_KEYWORD_FRENZY",
+        "CULT_LEADER_MOD_KEYWORD_LIVELY",
+        "CULT_LEADER_MOD_KEYWORD_MELANCHOLY",
+    ];
 
     private static readonly Dictionary<string, string> ApostleNamesByCardTypeName = new()
     {
         [nameof(TestRainbowCard)] = "乌洛斯",
         [nameof(Apostle_Melancholy_01)] = "科米",
         [nameof(Apostle_Melancholy_02)] = "x锡安x",
-        [nameof(Apostle_Melancholy_02_1)] = "x锡安x（衍生卡牌，不在卡池中）",
-        [nameof(Apostle_Melancholy_02_2)] = "x锡安x（衍生卡牌，不在卡池中）",
+        [nameof(Apostle_Melancholy_02_1)] = "x锡安x",
+        [nameof(Apostle_Melancholy_02_2)] = "x锡安x",
         [nameof(Apostle_Melancholy_03)] = "珀榭",
         [nameof(Apostle_Melancholy_04)] = "基迪恩",
         [nameof(Apostle_Melancholy_05)] = "琳",
@@ -141,13 +150,13 @@ public static class CardHoverTipsPatch
         [nameof(Apostle_Lively_03)] = "卢波",
         [nameof(Apostle_Lively_04)] = "康娜",
         [nameof(Apostle_Lively_05)] = "黄油",
-        [nameof(Apostle_Lively_05_1)] = "黄油（衍生卡牌，不在卡池中）",
+        [nameof(Apostle_Lively_05_1)] = "黄油",
         [nameof(Apostle_Lively_06)] = "提格",
         [nameof(Apostle_Lively_07)] = "赛琳娜",
         [nameof(Apostle_Lively_08)] = "埃皮卡",
-        [nameof(Apostle_Lively_08_1)] = "埃皮卡（衍生卡牌）",
-        [nameof(Apostle_Lively_08_2)] = "埃皮卡（衍生卡牌）",
-        [nameof(Apostle_Lively_08_3)] = "埃皮卡（衍生卡牌）",
+        [nameof(Apostle_Lively_08_1)] = "埃皮卡",
+        [nameof(Apostle_Lively_08_2)] = "埃皮卡",
+        [nameof(Apostle_Lively_08_3)] = "埃皮卡",
         [nameof(Apostle_Lively_09)] = "米洛",
         [nameof(Apostle_Lively_10)] = "玛卡莎",
         [nameof(Apostle_Lively_11)] = "阿尔柯",
@@ -251,11 +260,12 @@ public static class CardHoverTipsPatch
         if (__instance.GetType().Namespace != CultLeaderCardNamespace)
             return;
 
+        var baseTips = __result.Where(tip => !IsReplacedCultLeaderKeywordTip(tip)).ToList();
         var extraTips = BuildCultLeaderHoverTips(__instance).ToList();
         if (extraTips.Count == 0)
             return;
 
-        __result = __result.Concat(extraTips);
+        __result = baseTips.Concat(extraTips);
     }
 
     private static IEnumerable<IHoverTip> BuildCultLeaderHoverTips(CardModel card)
@@ -264,10 +274,6 @@ public static class CardHoverTipsPatch
 
         foreach (var tagTip in BuildTagKeywordTips(card, emitted))
             yield return tagTip;
-
-        var apostleNameTip = TryCreateApostleNameTip(card, emitted);
-        if (apostleNameTip != null)
-            yield return apostleNameTip;
 
         foreach (var termTip in BuildDescriptionTermTips(card, emitted))
             yield return termTip;
@@ -303,19 +309,31 @@ public static class CardHoverTipsPatch
     private static IEnumerable<IHoverTip> BuildTagKeywordTips(CardModel card, HashSet<string> emitted)
     {
         var tags = card.Tags.ToHashSet();
-        foreach (var (tag, keyword) in KeywordTipsByTag)
+        if (tags.Contains(CultLeaderCardTags.Apostle) && emitted.Add("keyword:apostle"))
         {
-            if (!tags.Contains(tag))
-                continue;
+            var description = "使徒之力凝聚的卡牌。";
+            if (ApostleNamesByCardTypeName.TryGetValue(card.GetType().Name, out var apostleName))
+                description += $"\n使徒名称：{apostleName}";
 
-            if (card.Keywords.Contains(keyword))
-                continue;
-
-            if (!emitted.Add($"keyword:{keyword}"))
-                continue;
-
-            yield return HoverTipFactory.FromKeyword(keyword);
+            yield return new HoverTip(new LocString(KeywordLocTable, ApostleKeywordTitleKey), description);
         }
+
+        var personalities = PersonalityTagNames
+            .Where(entry => tags.Contains(entry.Tag))
+            .Select(entry => entry.Name)
+            .ToList();
+
+        if (personalities.Count > 0 && emitted.Add("keyword:personality"))
+        {
+            yield return new HoverTip(
+                new LocString(KeywordLocTable, PersonalityKeywordTitleKey),
+                string.Join(" ", personalities));
+        }
+    }
+
+    private static bool IsReplacedCultLeaderKeywordTip(IHoverTip tip)
+    {
+        return ReplacedKeywordTipIds.Any(id => tip.Id.Contains(id, StringComparison.Ordinal));
     }
 
     private static IHoverTip? TryCreatePowerTip(Type powerType)
@@ -330,20 +348,6 @@ public static class CardHoverTipsPatch
             Entry.Logger.Warn($"Failed to create power hover tip for {powerType.FullName}: {ex.Message}");
             return null;
         }
-    }
-
-    private static IHoverTip? TryCreateApostleNameTip(CardModel card, HashSet<string> emitted)
-    {
-        if (!card.Tags.Contains(CultLeaderCardTags.Apostle))
-            return null;
-
-        if (!ApostleNamesByCardTypeName.TryGetValue(card.GetType().Name, out var apostleName))
-            return null;
-
-        if (!emitted.Add($"apostle-name:{card.GetType().Name}"))
-            return null;
-
-        return new HoverTip(new LocString(HoverLocTable, ApostleNameHoverTitleKey), apostleName);
     }
 
     private static IEnumerable<IHoverTip> BuildDescriptionTermTips(CardModel card, HashSet<string> emitted)
