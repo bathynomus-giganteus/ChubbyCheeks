@@ -19,7 +19,7 @@ public class Apostle_Pure_16 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("BlockPerStack", 1m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("BlockPerStack", 2m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/欧珀粉.png");

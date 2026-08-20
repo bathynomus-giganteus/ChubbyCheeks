@@ -18,10 +18,8 @@ public class Apostle_Calm_01 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CalculationBaseVar(11m),
-        new ExtraDamageVar(5m),
-        new CalculatedDamageVar(ValueProp.Move)
-            .WithMultiplier((card, _) => FullBlockCounterPower.GetTotal(card.Owner.Creature))
+        new DamageVar(8m, ValueProp.Move),
+        new DynamicVar("BaseHits", 1m)
     ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
@@ -35,12 +33,17 @@ public class Apostle_Calm_01 : ModCardTemplate
         if (cardPlay.Target == null)
             return;
 
-        decimal damage = base.DynamicVars.CalculatedDamage.Calculate(cardPlay.Target);
-        await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, cardPlay.Target, damage);
+        int hits = DynamicVars["BaseHits"].IntValue + FullBlockCounterPower.GetTotal(base.Owner.Creature);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(hits)
+            .FromCard(this, cardPlay)
+            .Targeting(cardPlay.Target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.ExtraDamage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

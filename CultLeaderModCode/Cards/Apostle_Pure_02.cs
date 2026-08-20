@@ -17,8 +17,8 @@ public class Apostle_Pure_02 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(25m, ValueProp.Move), new DynamicVar("RegenAmt", 4m)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+        [new BlockVar(15m, ValueProp.Move), new DynamicVar("RegenAmt", 4m)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/要来少女的身边吗.png");
 
@@ -41,7 +41,6 @@ public class Apostle_Pure_02 : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(5m);
-        DynamicVars["RegenAmt"].UpgradeValueBy(1m);
     }
 }
 

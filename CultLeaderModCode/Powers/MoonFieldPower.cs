@@ -1,15 +1,15 @@
-using MegaCrit.Sts2.Core.Commands;
+using CultLeaderMod.CultLeaderModCode.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// Moon Field. At the start of the player's turn, grant temporary Strength equal to this power's stacks.
+/// Moon Field. Attacks against debuffed enemies deal bonus damage equal to this power's stacks.
 /// </summary>
 [RegisterPower]
 public class MoonFieldPower : ModPowerTemplate
@@ -20,18 +20,19 @@ public class MoonFieldPower : ModPowerTemplate
     public override string CustomIconPath => "res://CultLeaderMod/images/powers/moon_field.png";
     public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/big/moon_field.png";
 
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override decimal ModifyHpLostBeforeOsty(
+        Creature target,
+        decimal amount,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource)
     {
-        await base.AfterPlayerTurnStart(choiceContext, player);
-        if (player.Creature != base.Owner || base.Amount <= 0)
-            return;
+        decimal result = base.ModifyHpLostBeforeOsty(target, amount, props, dealer, cardSource);
+        if (base.Owner == null || dealer != base.Owner || base.Amount <= 0m || result <= 0m || !props.IsPoweredAttack())
+            return result;
 
-        await PowerCmd.Apply<TempStrengthBuffPower>(
-            choiceContext,
-            base.Owner,
-            base.Amount,
-            base.Owner,
-            null
-        );
+        return ApostleCardEffectHelpers.HasDebuff(target)
+            ? result + base.Amount
+            : result;
     }
 }

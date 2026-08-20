@@ -16,7 +16,7 @@ public class Apostle_Frenzy_01 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("HpPerFrenzy", 2m)];
+        [new DynamicVar("BaseHp", 5m), new DynamicVar("HpPerFrenzy", 2m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/小小塞巴斯蒂安.png");
@@ -28,7 +28,7 @@ public class Apostle_Frenzy_01 : ModCardTemplate
     {
         var owner = base.Owner.Creature;
         var resource = ApostleCardEffectHelpers.GetFrenzyResourceAmount(owner);
-        var hpPool = resource * (int)DynamicVars["HpPerFrenzy"].BaseValue;
+        var hpPool = DynamicVars["BaseHp"].IntValue + resource * DynamicVars["HpPerFrenzy"].IntValue;
         if (hpPool <= 0)
             return;
 

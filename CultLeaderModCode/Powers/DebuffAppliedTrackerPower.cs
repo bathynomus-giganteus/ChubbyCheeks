@@ -76,6 +76,6 @@ public class DebuffAppliedTrackerPower : ModPowerTemplate
 
         var player = base.Owner?.Player;
         if (player != null)
-            Apostle_Melancholy_13.RefreshCostsInHand(player);
+            Apostle_Melancholy_13.RecordDebuffApplied(player);
     }
 }

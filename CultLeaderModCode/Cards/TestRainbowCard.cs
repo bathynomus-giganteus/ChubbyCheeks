@@ -17,7 +17,7 @@ public class TestRainbowCard : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure, CultLeaderCardTags.Calm,
          CultLeaderCardTags.Frenzy, CultLeaderCardTags.Lively, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Damage", 6m)];
+        [new DynamicVar("Damage", 3m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/uros_card.png");
@@ -39,6 +39,6 @@ public class TestRainbowCard : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Damage"].UpgradeValueBy(3m);
+        DynamicVars["Damage"].UpgradeValueBy(1m);
     }
 }

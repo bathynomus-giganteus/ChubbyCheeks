@@ -24,7 +24,7 @@ public class Apostle_Melancholy_13 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(88m, ValueProp.Move)];
+        [new DamageVar(50m, ValueProp.Move), new DynamicVar("DebuffApplied", 0m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/有罪宣言.png");
@@ -35,6 +35,7 @@ public class Apostle_Melancholy_13 : ModCardTemplate
     public override void AfterCreated()
     {
         base.AfterCreated();
+        DynamicVars["DebuffApplied"].BaseValue = 0m;
         Drawn += RefreshCost;
         RefreshCost();
     }
@@ -44,17 +45,15 @@ public class Apostle_Melancholy_13 : ModCardTemplate
         if (base.Owner == null)
             return;
 
-        int total = DebuffAppliedTrackerPower.GetTotal(base.Owner.Creature);
-        if (total <= 0)
-            return;
+        int total = Math.Max(0, DynamicVars["DebuffApplied"].IntValue);
 
         EnergyCost.SetUntilPlayed(
             Math.Max(0, EnergyCost.Canonical - total),
-            reduceOnly: true
+            reduceOnly: false
         );
     }
 
-    public static void RefreshCostsInHand(Player player)
+    public static void RecordDebuffApplied(Player player)
     {
         if (player == null)
             return;
@@ -64,6 +63,7 @@ public class Apostle_Melancholy_13 : ModCardTemplate
         {
             foreach (var card in pileType.GetPile(player).Cards.OfType<Apostle_Melancholy_13>())
             {
+                card.DynamicVars["DebuffApplied"].BaseValue += 1m;
                 card.RefreshCost();
                 if (pileType == PileType.Hand)
                     NCard.FindOnTable(card)?.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
@@ -84,11 +84,14 @@ public class Apostle_Melancholy_13 : ModCardTemplate
             target,
             DynamicVars.Damage.BaseValue
         );
+
+        DynamicVars["DebuffApplied"].BaseValue = 0m;
+        RefreshCost();
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(12m);
+        DynamicVars.Damage.UpgradeValueBy(15m);
     }
 
 }

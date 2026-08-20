@@ -24,7 +24,7 @@ public class Apostle_Calm_20 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/心中的珍珠.png");
 
     public Apostle_Calm_20()
-        : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+        : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

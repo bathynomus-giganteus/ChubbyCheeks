@@ -20,7 +20,7 @@ public class Apostle_Lively_18 : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(30m, ValueProp.Move)];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_18.png");

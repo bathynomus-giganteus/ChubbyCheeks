@@ -19,7 +19,7 @@ public class Apostle_Pure_15 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(50m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(35m, ValueProp.Move)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/快躲开啊啊_噫.png");
@@ -37,6 +37,6 @@ public class Apostle_Pure_15 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(15m);
+        DynamicVars.Damage.UpgradeValueBy(10m);
     }
 }

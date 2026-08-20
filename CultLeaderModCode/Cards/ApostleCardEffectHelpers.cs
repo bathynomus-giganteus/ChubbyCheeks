@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace CultLeaderMod.CultLeaderModCode.Cards;
@@ -382,5 +383,44 @@ internal static class ApostleCardEffectHelpers
         decimal takeBaseBurst = Math.Min(baseBurstAmount, remainingBase);
         if (baseBurst != null && takeBaseBurst > 0m)
             await PowerCmd.ModifyAmount(choiceContext, baseBurst, -takeBaseBurst, owner, cardSource, silent: true);
+    }
+
+    public static int CountDebuffStacks(Creature target)
+    {
+        return target.Powers
+            .Where(power => power.Type == PowerType.Debuff)
+            .Sum(power => Math.Max(0, (int)power.Amount));
+    }
+
+    public static bool HasDebuff(Creature target)
+    {
+        return target.Powers.Any(power => power.Type == PowerType.Debuff && power.Amount > 0m);
+    }
+
+    public static async Task<int> RemoveRandomDebuffStacks(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        int amount)
+    {
+        int removed = 0;
+        for (int i = 0; i < amount; i++)
+        {
+            var debuffs = target.Powers
+                .Where(power => power.Type == PowerType.Debuff && power.Amount > 0m)
+                .ToList();
+
+            if (debuffs.Count == 0)
+                break;
+
+            var power = debuffs[Random.Shared.Next(debuffs.Count)];
+            if (power.Amount <= 1m)
+                await PowerCmd.Remove(power);
+            else
+                await PowerCmd.ModifyAmount(choiceContext, power, -1m, null, null, silent: true);
+
+            removed++;
+        }
+
+        return removed;
     }
 }

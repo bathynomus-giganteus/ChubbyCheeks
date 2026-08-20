@@ -21,7 +21,7 @@ public class Apostle_Lively_17 : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(18m, ValueProp.Move), new DynamicVar("HandThreshold", 9m)];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_17.png");

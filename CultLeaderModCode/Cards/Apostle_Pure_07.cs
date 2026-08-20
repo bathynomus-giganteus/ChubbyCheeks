@@ -18,8 +18,7 @@ public class Apostle_Pure_07 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DynamicVar("RegenAmt", 5m),
-            new BlockVar(10m, ValueProp.Move),
+            new DynamicVar("RegenAmt", 3m),
             new DynamicVar("DrawAmt", 1m),
         ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -39,7 +38,6 @@ public class Apostle_Pure_07 : ModCardTemplate
             owner,
             this
         );
-        await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
         await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmt"].BaseValue, base.Owner);
     }
 

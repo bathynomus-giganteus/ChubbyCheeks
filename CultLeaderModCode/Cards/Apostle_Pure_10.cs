@@ -25,7 +25,7 @@ public class Apostle_Pure_10 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/魔女档案.png");
 
     public Apostle_Pure_10()
-        : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+        : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

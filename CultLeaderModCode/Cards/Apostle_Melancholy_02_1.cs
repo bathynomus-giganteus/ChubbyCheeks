@@ -55,7 +55,7 @@ public class Apostle_Melancholy_02_1 : ModCardTemplate
 
         if (bullet != null && bullet.Amount > 0m)
         {
-            await CardPileCmd.Add(this, PileType.Draw, CardPilePosition.Top, this, false);
+            await CardPileCmd.Add(this, PileType.Draw, CardPilePosition.Random, this, false);
             return;
         }
 
@@ -64,7 +64,7 @@ public class Apostle_Melancholy_02_1 : ModCardTemplate
             return;
 
         var bomb = base.CardScope.CreateCard<Apostle_Melancholy_02_2>(base.Owner);
-        await CardPileCmd.Add(bomb, PileType.Draw, CardPilePosition.Top, this, false);
+        await CardPileCmd.Add(bomb, PileType.Draw, CardPilePosition.Random, this, false);
     }
 
     protected override void OnUpgrade()

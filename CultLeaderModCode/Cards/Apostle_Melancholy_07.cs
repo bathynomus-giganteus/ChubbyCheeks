@@ -4,6 +4,7 @@ using CultLeaderMod.CultLeaderModCode.Character;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -25,7 +26,7 @@ public class Apostle_Melancholy_07 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/芬多精波动.png");
 
     public Apostle_Melancholy_07()
-        : base(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
+        : base(3, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -33,20 +34,13 @@ public class Apostle_Melancholy_07 : ModCardTemplate
         if (target == null)
             return;
 
-        var debuffs = target.Powers
-            .Where(power => power.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff)
-            .ToList();
-        int debuffTypes = debuffs.Select(power => power.GetType()).Distinct().Count();
-
-        foreach (var power in debuffs)
-            await PowerCmd.Remove(power);
-
-        if (debuffTypes > 0)
+        int debuffStacks = ApostleCardEffectHelpers.CountDebuffStacks(target);
+        if (debuffStacks > 0)
         {
             await ApostleCardPlayHelpers.ApplyPurePower(
                 choiceContext,
                 base.Owner.Creature,
-                debuffTypes,
+                debuffStacks,
                 base.Owner.Creature,
                 this
             );

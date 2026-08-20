@@ -17,7 +17,7 @@ public class Apostle_Calm_25 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("HitDamage", 1m)];
+        [new DynamicVar("BonusHits", 0m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/XG_激光.png");
@@ -28,8 +28,8 @@ public class Apostle_Calm_25 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        int hits = ApostleCardEffectHelpers.CalmStacks(owner);
-        decimal hitDamage = base.ResolveEnergyXValue() + DynamicVars["HitDamage"].BaseValue;
+        int hits = (int)base.ResolveEnergyXValue() + DynamicVars["BonusHits"].IntValue;
+        decimal hitDamage = ApostleCardEffectHelpers.CalmStacks(owner);
         if (hits <= 0)
             return;
 
@@ -48,6 +48,6 @@ public class Apostle_Calm_25 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["HitDamage"].UpgradeValueBy(1m);
+        DynamicVars["BonusHits"].UpgradeValueBy(1m);
     }
 }

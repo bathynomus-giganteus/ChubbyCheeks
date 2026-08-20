@@ -18,7 +18,7 @@ public class Apostle_Calm_11 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("PlatingAmt", 6m), new DynamicVar("Triggers", 3m)];
+        [new DynamicVar("PlatingAmt", 6m), new DynamicVar("Triggers", 2m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/界限模糊.png");
@@ -46,7 +46,6 @@ public class Apostle_Calm_11 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["PlatingAmt"].UpgradeValueBy(2m);
         DynamicVars["Triggers"].UpgradeValueBy(1m);
     }
 }

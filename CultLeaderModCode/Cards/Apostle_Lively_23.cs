@@ -16,7 +16,7 @@ public class Apostle_Lively_23 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("RetainAmt", 3m)];
+        [new DynamicVar("RetainAmt", 2m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
