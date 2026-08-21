@@ -150,3 +150,20 @@
 - 测试建议：
   - 游戏语言为中文时检查是否仍显示完整中文。
   - 游戏语言切到英文时检查卡牌、能力、遗物、事件等是否显示英文机翻文本而非中文。
+
+## 2026-08-21 - Codex
+
+- 任务：继续整理日文、韩文本地化机翻版。
+- 修改文件：
+  - `CultLeaderMod/localization/jpn/cards.json`
+  - `CultLeaderMod/localization/jpn/relics.json`
+  - `CultLeaderMod/localization/kor/cards.json`
+  - `CultLeaderMod/localization/kor/relics.json`
+  - 顺手修正 `eng/cards.json`、`eng/relics.json` 中同源的动态分支中文残留。
+- 实现内容：
+  - 修复 `{IfUpgraded:show:...|...}` 动态条件文本中漏出的中文，使英文、日文、韩文不再残留这类简中分支文本。
+  - 修复 `咻咻咻咻手套` 在英/日/韩中的标题机翻占位。
+  - 校验 `eng/jpn/kor` 均为 8 个表、615 条 key，缺失 key 为 0，额外 key 为 0，动态变量 token mismatch 为 0，已知中文残留模式为 0。
+  - 已将 `CultLeaderMod/localization` 同步到 Steam mod 目录。
+- 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。warning 仍为既有项。
+- 注意：日文、韩文仍为机翻草稿，术语和语气尚未人工统一；若后续要做可发布质量，需要按卡牌/能力逐批润色。
