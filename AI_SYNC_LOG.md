@@ -124,6 +124,29 @@
   - 使用机翻生成 `eng/jpn/kor` 三套文本，每套 615 条。
   - 生成时保护 `{...}` 动态变量、`[sine]` 等富文本标签和换行；生成后校验三种语言均为 0 个受保护 token mismatch。
 - 重要注意：
-  - 当前 `LocInjectPatch.cs` 仍然不按 `language` 参数分支，会对所有语言注入中文。
-  - 因此这批 JSON 是“文本准备/覆盖率测试”初稿；若要真正游戏内切换语言，需要下一步重构 `LocInjectPatch`，避免非中文语言被中文运行时注入覆盖。
+- 当前 `LocInjectPatch.cs` 仍然不按 `language` 参数分支，会对所有语言注入中文。
+- 因此这批 JSON 是“文本准备/覆盖率测试”初稿；若要真正游戏内切换语言，需要下一步重构 `LocInjectPatch`，避免非中文语言被中文运行时注入覆盖。
 - 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。warning 仍为既有项。
+
+## 2026-08-21 - Codex
+
+- 任务：重构本地化架构，使英文等 JSON 文件能按语言实际加载。
+- 修改/新增文件：
+  - 重写 `CultLeaderModCode/Patches/LocInjectPatch.cs`
+  - 更新并补全 `CultLeaderMod/localization/zhs/*.json`
+  - 更新 `LOCALIZATION_MACHINE_TRANSLATION_NOTES.md`
+- 实现内容：
+  - 旧版 `LocInjectPatch.cs` 中的大型中文 dictionary 已移除。
+  - 新版 `LocInjectPatch.cs` 只负责按 `language` 读取 `CultLeaderMod/localization/{lang}/{table}.json` 并 `MergeWith` 到游戏本地化表。
+  - 支持语言别名：
+    - `zhs` / `zh` / `zh_cn` 等 → `zhs`
+    - `eng` / `en` 等 → `eng`
+    - `jpn` / `ja` / `jp` 等 → `jpn`
+    - `kor` / `ko` / `kr` 等 → `kor`
+  - 未知语言先尝试同名目录，再回退英文，最后回退中文。
+  - 中文完整文本已从旧 C# 注入表导出为 `zhs` JSON；每种语言均为 8 个表、615 条 key。
+  - 已将 `CultLeaderMod/localization` 同步到 Steam mod 目录 `E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\CultLeaderMod\CultLeaderMod\localization`。
+- 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。warning 仍为既有项。
+- 测试建议：
+  - 游戏语言为中文时检查是否仍显示完整中文。
+  - 游戏语言切到英文时检查卡牌、能力、遗物、事件等是否显示英文机翻文本而非中文。

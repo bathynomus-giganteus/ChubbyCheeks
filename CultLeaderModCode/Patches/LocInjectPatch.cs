@@ -1,3 +1,5 @@
+using System.Text.Json;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Logging;
@@ -7,713 +9,115 @@ namespace CultLeaderMod.CultLeaderModCode.Patches;
 [HarmonyPatch]
 public static class LocInjectPatch
 {
+	private const string LocalizationRoot = "res://CultLeaderMod/localization";
+
+	private static readonly string[] TableNames =
+	[
+		"characters",
+		"cards",
+		"card_keywords",
+		"powers",
+		"relics",
+		"events",
+		"ancients",
+		"gameplay_ui",
+	];
+
 	[HarmonyPatch(typeof(LocManager), "SetLanguageInternal")]
 	[HarmonyPostfix]
 	private static void Postfix(string language, Dictionary<string, LocTable> tables)
 	{
-		if (tables == null) return;
+		if (tables == null)
+			return;
 
-		Log.Info($"[CultLeaderMod] LocInjectPatch firing for language={language}");
+		var normalizedLanguage = NormalizeLanguage(language);
+		Log.Info($"[CultLeaderMod] Loading localization for language={language}, normalized={normalizedLanguage}");
 
-		if (tables.TryGetValue("characters", out var charTable))
+		var loadedTables = 0;
+		foreach (var tableName in TableNames)
 		{
-			charTable.MergeWith(new Dictionary<string, string>
+			if (!tables.TryGetValue(tableName, out var locTable))
+				continue;
+
+			var localizedEntries = LoadLocalizationTable(normalizedLanguage, tableName)
+				?? LoadLocalizationTable("eng", tableName)
+				?? LoadLocalizationTable("zhs", tableName);
+
+			if (localizedEntries == null || localizedEntries.Count == 0)
 			{
-				["CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.title"] = "教主",
-				["CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.titleObject"] = "教主",
-				["CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.possessiveAdjective"] = "教主的",
-				["CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.pronounObject"] = "TA",
-				["CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.pronounPossessive"] = "TA的",
-				["CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.pronounSubject"] = "TA",
-				["CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.description"] = "掌控使徒之力的神秘教主。",
-			});
-			Log.Info("[CultLeaderMod] Character localization injected");
+				Log.Warn($"[CultLeaderMod] Missing localization table: language={normalizedLanguage}, table={tableName}");
+				continue;
+			}
+
+			locTable.MergeWith(localizedEntries);
+			loadedTables++;
+			Log.Info($"[CultLeaderMod] Localization injected: language={normalizedLanguage}, table={tableName}, entries={localizedEntries.Count}");
 		}
 
-		if (tables.TryGetValue("cards", out var cardsTable))
+		Log.Info($"[CultLeaderMod] Localization injection complete: language={normalizedLanguage}, tables={loadedTables}");
+	}
+
+	private static string NormalizeLanguage(string? language)
+	{
+		if (string.IsNullOrWhiteSpace(language))
+			return "eng";
+
+		var normalized = language.Trim().Replace('-', '_').ToLowerInvariant();
+		return normalized switch
 		{
-			var cardLoc = new Dictionary<string, string>
-			{
-				["CULT_LEADER_MOD_CARD_CULT_LEADER_STRIKE.title"] = "打击",
-				["CULT_LEADER_MOD_CARD_CULT_LEADER_STRIKE.description"] = "造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_CULT_LEADER_DEFEND.title"] = "防御",
-				["CULT_LEADER_MOD_CARD_CULT_LEADER_DEFEND.description"] = "获得{Block:diff()}点格挡。",
+			"zhs" or "zh" or "zh_cn" or "zh_hans" or "chs" or "chinese" or "simplified_chinese" => "zhs",
+			"eng" or "en" or "en_us" or "en_gb" or "english" => "eng",
+			"jpn" or "ja" or "jp" or "ja_jp" or "japanese" => "jpn",
+			"kor" or "ko" or "kr" or "ko_kr" or "korean" => "kor",
+			_ => normalized,
+		};
+	}
 
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_PURE_CARD.title"] = "性格卡牌【纯粹】",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_PURE_CARD.description"] = "回合开始时，从卡组随机将一张纯粹性格使徒牌{IfUpgraded:show:升级并添加到你的手牌中|添加到你的手牌中}。",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_CALM_CARD.title"] = "性格卡牌【冷静】",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_CALM_CARD.description"] = "回合开始时，从卡组随机将一张冷静性格使徒牌{IfUpgraded:show:升级并添加到你的手牌中|添加到你的手牌中}。",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_FRENZY_CARD.title"] = "性格卡牌【狂热】",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_FRENZY_CARD.description"] = "回合开始时，从卡组随机将一张狂热性格使徒牌{IfUpgraded:show:升级并添加到你的手牌中|添加到你的手牌中}。",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_LIVELY_CARD.title"] = "性格卡牌【活泼】",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_LIVELY_CARD.description"] = "回合开始时，从卡组随机将一张活泼性格使徒牌{IfUpgraded:show:升级并添加到你的手牌中|添加到你的手牌中}。",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_MELANCHOLY_CARD.title"] = "性格卡牌【忧郁】",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_SELECT_MELANCHOLY_CARD.description"] = "回合开始时，从卡组随机将一张忧郁性格使徒牌{IfUpgraded:show:升级并添加到你的手牌中|添加到你的手牌中}。",
+	private static Dictionary<string, string>? LoadLocalizationTable(string language, string tableName)
+	{
+		var resourcePath = $"{LocalizationRoot}/{language}/{tableName}.json";
+		var json = ReadText(resourcePath);
+		if (string.IsNullOrWhiteSpace(json))
+			return null;
 
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_PURE_CARD.title"] = "纯粹使徒UP",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_PURE_CARD.description"] = "纯粹性格使徒的出现概率提升。",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_CALM_CARD.title"] = "冷静使徒UP",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_CALM_CARD.description"] = "冷静性格使徒的出现概率提升。",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_FRENZY_CARD.title"] = "狂热使徒UP",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_FRENZY_CARD.description"] = "狂热性格使徒的出现概率提升。",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_LIVELY_CARD.title"] = "活泼使徒UP",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_LIVELY_CARD.description"] = "活泼性格使徒的出现概率提升。",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_MELANCHOLY_CARD.title"] = "忧郁使徒UP",
-				["CULT_LEADER_MOD_CARD_PERSONALITY_CHOICE_MELANCHOLY_CARD.description"] = "忧郁性格使徒的出现概率提升。",
-				["CULT_LEADER_MOD_CARD_TEST_RAINBOW_CARD.title"] = "循环",
-				["CULT_LEADER_MOD_CARD_TEST_RAINBOW_CARD.description"] = "每当你获得1层再生、活力、覆甲、保留或苦痛施予时，对全体敌人造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_CULT_LEADER_MANIFESTATION_CARD.title"] = "教主的权现",
-				["CULT_LEADER_MOD_CARD_CULT_LEADER_MANIFESTATION_CARD.description"] = "获得1层教主的权能。",
-				["CULT_LEADER_MOD_CARD_ELDER_FORM_CARD.title"] = "埃尔德形态",
-				["CULT_LEADER_MOD_CARD_ELDER_FORM_CARD.description"] = "进入埃尔德形态，结束你的回合。",
-				["CULT_LEADER_MOD_CARD_SAVIOR_DESCENDS_CARD.title"] = "救世主降临",
-				["CULT_LEADER_MOD_CARD_SAVIOR_DESCENDS_CARD.description"] = "获得{Amount:diff()}层教主的权能。",
-				["CULT_LEADER_MOD_CARD_TEST_ADD_APOSTLE_CARDS.title"] = "随机招募",
-				["CULT_LEADER_MOD_CARD_TEST_ADD_APOSTLE_CARDS.description"] = "从3张随机使徒牌中选择1张加入手牌，本回合其费用变为0。",
-				["CULT_LEADER_MOD_CARD_PAT_CARD.title"] = "摸摸头",
-				["CULT_LEADER_MOD_CARD_PAT_CARD.description"] = "选择手牌中的一张使徒牌，本场战斗中该牌每次打出时抽1张牌。",
-				["CULT_LEADER_MOD_CARD_PAT_CARD.selectionScreenPrompt"] = "选择一张使徒牌",
-				["CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.title"] = "使徒出击",
-				["CULT_LEADER_MOD_CARD_APOSTLE_ATTACK_CARD.description"] = "造成{CalculatedDamage:diff()}点伤害，获得{CalculatedBlock:diff()}点格挡。卡组中每有3张使徒牌，伤害和格挡+1。",
-				["CULT_LEADER_MOD_CARD_PINCH_CHEEK_CARD.title"] = "捏捏脸",
-				["CULT_LEADER_MOD_CARD_PINCH_CHEEK_CARD.description"] = "抽{DrawAmt:diff()}张牌，如果抽到使徒牌，使其费用-1。",
-				["CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.title"] = "敲爆栗",
-				["CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.description"] = "选择手中的一张使徒牌，使其费用+1并获得重放{Replay:diff()}。",
-				["CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.selectionScreenPrompt"] = "选择一张使徒牌",
-				["CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.title"] = "团体跳级",
-				["CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.description"] = "{IfUpgraded:show:升级你的所有使徒牌。|升级你手牌中的所有使徒牌。}",
-				["CULT_LEADER_MOD_CARD_MEMBERSHIP_CARD.title"] = "会员卡",
-				["CULT_LEADER_MOD_CARD_MEMBERSHIP_CARD.description"] = "进入商店时，将此卡从卡组中移除，获得遗物“会员卡”。{IfUpgraded:show:\n此卡被移除时获得30金币。|}",
-				["CULT_LEADER_MOD_CARD_ENERGY_REFILL_CARD.title"] = "能量补充",
-				["CULT_LEADER_MOD_CARD_ENERGY_REFILL_CARD.description"] = "获得{Energy:energyIcons()}。{IfUpgraded:show:\n抽1张牌。|}",
-				["CULT_LEADER_MOD_CARD_STATUS_UP_CARD.title"] = "地位上升",
-				["CULT_LEADER_MOD_CARD_STATUS_UP_CARD.description"] = "选择手中的最多{MaxCards:diff()}张使徒牌，将其变为稀有度更高的随机使徒牌（稀有牌只会变为稀有牌）。",
-				["CULT_LEADER_MOD_CARD_STATUS_UP_CARD.selectionScreenPrompt"] = "选择要变化的使徒牌",
-				["CULT_LEADER_MOD_CARD_SEIDOU_CARD.title"] = "塞兜",
-				["CULT_LEADER_MOD_CARD_SEIDOU_CARD.description"] = "向抽牌堆中随机添加{Cards:diff()}张使徒牌。不受初始遗物影响。",
-
-
-				["CULT_LEADER_MOD_CARD_DUAL_RIVALS_CARD.title"] = "双雄相争",
-				["CULT_LEADER_MOD_CARD_DUAL_RIVALS_CARD.description"] = "造成{Damage:diff()}点伤害，获得1层教主的权能。",
-				["CULT_LEADER_MOD_CARD_HUNDRED_DAYS_BLESSING_CARD.title"] = "一百日的祝福",
-				["CULT_LEADER_MOD_CARD_HUNDRED_DAYS_BLESSING_CARD.description"] = "抽{DrawAmt:diff()}张牌，获得1层教主的权能。",
-				["CULT_LEADER_MOD_CARD_FOR_ELRUIEN_CARD.title"] = "为了艾鲁皮恩",
-				["CULT_LEADER_MOD_CARD_FOR_ELRUIEN_CARD.description"] = "向手牌中随机添加{Cards:diff()}张稀有使徒牌，获得1层教主的权能。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_01.title"] = "魔力乱打",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_01.description"] = "移除所有再生，每移除一层对随机敌人造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_02.title"] = "要来少女的身边吗？",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_02.description"] = "获得{Block:diff()}点格挡和[sine][green]4[/green][/sine]层再生。\n消耗。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_03.title"] = "围猎",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_03.description"] = "造成{Damage:diff()}点伤害3次。如果目标生命值低于你的最大生命值，则再发动一次。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_04.title"] = "休假中潜逃",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_04.description"] = "获得{RegenAmt:diff()}层再生，获得{Block:diff()}点格挡。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_05.title"] = "最强的收集品",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_05.description"] = "造成{Damage:diff()}点伤害。如果再生总层数超过{StackThreshold}，眩晕目标以外的其他敌人。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_06.title"] = "南瓜魔术",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_06.description"] = "获得2层再生和{Block:diff()}点格挡。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_07.title"] = "我来保护你",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_07.description"] = "获得{RegenAmt:diff()}层再生，抽{DrawAmt:diff()}张牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_08.title"] = "调皮的笑容",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_08.description"] = "给予目标2层虚弱。目标每有1层减益状态，获得1层再生。{IfUpgraded:show:|\n本场战斗中此卡费用+1。}",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_09.title"] = "玛戈玛恢复",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_09.description"] = "若再生总量小于{Threshold:diff()}层，获得{RegenAmt:diff()}层再生；否则触发{TriggerAmt:diff()}次再生，并抽{DrawAmt:diff()}张牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_10.title"] = "魔女档案",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_10.description"] = "获得等同于当前卡组中纯粹使徒牌数量的再生。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_11.title"] = "谢绝(Non grata)",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_11.description"] = "造成{Damage:diff()}点伤害。若再生总层数不低于{Threshold:diff()}层，减少{Threshold:diff()}层并再造成{BonusDamage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_12.title"] = "接受水的洗礼吧！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_12.description"] = "立即触发{TriggerAmt:diff()}次再生。每触发一次，对全体敌人造成5点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_13.title"] = "汁液泵机发射！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_13.description"] = "每次恢复生命时，对随机敌人造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_14.title"] = "钻石穿刺",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_14.description"] = "对全体敌人造成{Damage:diff()}点伤害，并额外附加等同于再生总层数的伤害。如果斩杀，则再次释放。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_15.title"] = "快躲开啊啊!!!噫…?",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_15.description"] = "对全体敌人造成{Damage:diff()}点伤害，自身下回合眩晕。结束你的回合。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_16.title"] = "欧珀粉",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_16.description"] = "每有1层再生，获得{BlockPerStack:diff()}点格挡。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_17.title"] = "远程充电",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_17.description"] = "每{Threshold:diff()}次回复生命，获得{Energy:energyIcons()}。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_18.title"] = "突发惊吓",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_18.description"] = "获得1层缓冲。若再生超过5层，消耗5层并额外获得1层缓冲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_19.title"] = "基础黑客攻击",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_19.description"] = "给予一名敌人黑客标记。每次恢复生命时，该敌人受到等同于回复量的伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_20.title"] = "帮帮我，朋友们！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_20.description"] = "每有1层再生获得1点临时力量，之后对全体敌人造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_21.title"] = "清晰的界限",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_21.description"] = "抽{DrawAmt:diff()}张牌，并触发{TriggerAmt:diff()}次再生。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_22.title"] = "看~看看我~",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_22.description"] = "从目标敌人夺取{MaxHpAmt:diff()}临时最大生命值。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_23.title"] = "投降！投降了啦......",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_23.description"] = "自身和所有敌人本回合失去{StrLoss:diff()}点力量。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_24.title"] = "铁锹击",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_24.description"] = "造成自身最大生命值{DamagePct:diff()}%的伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_25.title"] = "黄瓜油",
-				["CULT_LEADER_MOD_CARD_APOSTLE_PURE_25.description"] = "获得{RegenAmt}层再生。{IfUpgraded:show:\n抽{DrawAmt}张牌。|}",
-
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_01.title"] = "雪花蝶舞",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_01.description"] = "造成{Damage:diff()}点伤害{BaseHits:diff()}次。\n本场战斗中每有一次完全格挡敌方攻击，此牌伤害次数+[sine][aqua]1[/aqua][/sine]。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_02.title"] = "百帕斯卡 挥棒!",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_02.description"] = "造成{Damage:diff()}点伤害。我方每有1层增益效果，伤害+{BuffBonus:diff()}。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_03.title"] = "战术无人机 MK-2",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_03.description"] = "被攻击时获得{PlatingAmt:diff()}层覆甲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_04.title"] = "战术卫星助阵",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_04.description"] = "回合外获得覆甲时抽1张牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_05.title"] = "咿 呀 蜜瓜吖~",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_05.description"] = "回复{HealAmt:diff()}生命。若当前覆甲超过15，则再回复{BonusHealAmt:diff()}生命。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_06.title"] = "刺痛的门卫",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_06.description"] = "每当敌人攻击你时，对其造成相当于你当前覆甲层数{Multiplier:diff()}倍的伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_07.title"] = "锗玉电热毯",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_07.description"] = "造成{Damage:diff()}点伤害。\n获得格挡时，本牌费用减少1（打出后恢复）。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_08.title"] = "魔法：圆舞切割",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_08.description"] = "对全体敌人造成{Damage:diff()}点伤害。若覆甲不少于{Threshold:diff()}层，伤害翻倍。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_09.title"] = "泳池候选地",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_09.description"] = "回合结束时获得1层覆甲，回合开始时触发一次覆甲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_10.title"] = "限定贴纸!",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_10.description"] = "获得{PlatingAmt:diff()}层覆甲，将抽牌堆中的最多{Cards:diff()}张牌变化为限定贴纸!。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_10.selectionScreenPrompt"] = "选择要变化的牌",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_11.title"] = "界限模糊",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_11.description"] = "获得[sine][aqua]6[/aqua][/sine]层覆甲，之后触发{Triggers:diff()}次覆甲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_12.title"] = "说闲话的玩偶",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_12.description"] = "每有1层覆甲，对一名随机敌人施加1层虚弱。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_13.title"] = "雪雾",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_13.description"] = "如果你有格挡，你受到的攻击伤害减少{Reduction:diff()}点。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_14.title"] = "新产品试用",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_14.description"] = "获得当前覆甲{Multiplier:diff()}倍的格挡。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_15.title"] = "里科塔 全套餐",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_15.description"] = "移除最多{RemoveAmt}层覆甲，每移除1层回复{HealPerStack:diff()}点生命。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_16.title"] = "粉碎",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_16.description"] = "触发所有覆甲，之后移除所有格挡，造成{Multiplier:diff()}倍于这些格挡的伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_17.title"] = "修剪枝条",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_17.description"] = "消耗{Cards:diff()}张手牌，根据其总费用获得覆甲，之后对一名随机敌人造成相当于当前覆甲层数的伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_18.title"] = "蜂蜜炸弹",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_18.description"] = "移除最多{RemoveAmt:diff()}层覆甲，使目标敌人本回合失去移除数量2倍的力量。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_19.title"] = "墨水洗礼",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_19.description"] = "{IfUpgraded:show:立即获得3层覆甲。\n|}回合结束时，获得与手牌数相等的覆甲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_20.title"] = "心中的珍珠",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_20.description"] = "根据当前拥有的遗物数量抽牌并获得覆甲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_21.title"] = "超天才的演出",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_21.description"] = "目标敌人获得{StrengthAmt:diff()}点力量并减少{MaxHpAmt:diff()}点最大生命，其他所有敌人减少{StrengthAmt:diff()}点力量并获得{MaxHpAmt:diff()}点最大生命。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_22.title"] = "摇曳幽烛",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_22.description"] = "立即触发{Triggers:diff()}次覆甲，每触发一次对随机敌人造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_23.title"] = "脑机连接开始",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_23.description"] = "造成{Damage:diff()}点伤害，丢弃所有手牌，获得等量覆甲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_24.title"] = "给我吃薄荷！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_24.description"] = "获得{PlatingAmt:diff()}层覆甲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_25.title"] = "XG-激光",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_25.description"] = "对随机敌人造成等同于当前覆甲的伤害X{IfUpgraded:show:+1|}次。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_26.title"] = "顶级旋转刀锋",
-				["CULT_LEADER_MOD_CARD_APOSTLE_CALM_26.description"] = "造成{Damage:diff()}点伤害，获得{PlatingAmt:diff()}层覆甲。",
-
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_01.title"] = "小小塞巴斯蒂安",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_01.description"] = "召唤塞巴斯蒂安，生命相当于[sine][red]{BaseHp:diff()}[/red][/sine]+当前活力的{HpPerFrenzy:diff()}倍。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_02.title"] = "真正的治愈",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_02.description"] = "造成{Damage:diff()}点伤害。本场战斗中每消耗过3层活力，伤害+{BonusPerThree:diff()}。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_03.title"] = "杀戮时刻",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_03.description"] = "对全体敌人造成{Damage:diff()}点伤害，获得{VigorAmt:diff()}活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_04.title"] = "世界树启示录",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_04.description"] = "获得{VigorAmt:diff()}活力，之后获得当前活力{BlockMultiplier:diff()}倍的格挡。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_05.title"] = "Money Gun",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_05.description"] = "造成{Damage:diff()}伤害。若因此斩杀目标，获得{GoldAmt:diff()}金币。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_06.title"] = "猩红之雨",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_06.description"] = "对全体敌人造成{Damage:diff()}点伤害{Hits}次。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_07.title"] = "阿卡那",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_07.description"] = "随机发动以下效果之一，共触发{Triggers:diff()}次：对随机敌人造成{Damage:diff()}伤害；获得{VigorAmt:diff()}活力；获得{Block:diff()}格挡。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_08.title"] = "淬火击",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_08.description"] = "造成{Damage:diff()}点伤害，活力对此卡产生{FervorMultiplier:diff()}倍效果。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_09.title"] = "鹿派斩击",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_09.description"] = "消耗弃牌堆中最多{Cards:diff()}张牌，每消耗1张对目标造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_09.selectionScreenPrompt"] = "选择要消耗的牌",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_10.title"] = "偏向性解说",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_10.description"] = "一名敌人本回合减少{StrengthLoss:diff()}力量，自身获得{VigorAmt:diff()}活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_11.title"] = "螺旋钻头充能",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_11.description"] = "获得{VigorAmt:diff()}活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_12.title"] = "被混沌勾引",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_12.description"] = "造成{Damage:diff()}点伤害。若打出时持有至少{RefundThreshold:diff()}层活力，获得{RefundVigor:diff()}层活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_13.title"] = "向妖精王国敬礼",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_13.description"] = "获得{Block:diff()}点格挡，获得{VigorAmt:diff()}活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_14.title"] = "收款的时间到了！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_14.description"] = "每有1名敌人，获得{GoldAmt:diff()}金币和{VigorAmt:diff()}活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_15.title"] = "时间中断",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_15.description"] = "获得{VigorAmt:diff()}活力。目标敌人本回合减少{StrengthLoss:diff()}力量。若处于埃尔德形态，改为眩晕该敌人。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_16.title"] = "喜欢喝彩的演员",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_16.description"] = "抽{DrawAmt:diff()}张牌，获得{VigorAmt:diff()}活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_17.title"] = "潜入采访中！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_17.description"] = "消耗{Cards:diff()}张手牌，根据其合计费用获得等量活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_18.title"] = "纯真☆光束",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_18.description"] = "对所有敌人造成{Damage:diff()}点伤害，活力对此卡产生{FervorMultiplier:diff()}倍效果。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_19.title"] = "向前迈进的决心",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_19.description"] = "每触发{Threshold:diff()}层活力，获得2层活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_20.title"] = "要来见少女吗？",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_20.description"] = "每次回复生命时，获得1层活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_21.title"] = "古老的誓约",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_21.description"] = "获得{PlatingAmt:diff()}覆甲，本回合失去{StrengthLoss:diff()}力量，下回合获得{VigorNextTurn:diff()}活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_22.title"] = "机器人矩阵",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_22.description"] = "获得{Block:diff()}格挡。当前活力不少于{DrawThreshold:diff()}，抽1张牌；不少于{EnergyThreshold:diff()}，获得{Energy:diff()}点能量。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_23.title"] = "那个收藏品是我的",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_23.description"] = "造成{Damage:diff()}点伤害。若持有至少{StunThreshold:diff()}层活力，眩晕目标。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_24.title"] = "篝火",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_24.description"] = "回合结束时获得{VigorAmt:diff()}活力。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_25.title"] = "手里剑要飞了！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_25.description"] = "本回合每消耗3层活力，获得{BlockPerThree:diff()}点格挡。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_26.title"] = "发射！啊biu~",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_26.description"] = "造成{Damage:diff()}伤害。将弃牌堆中最多{Cards:diff()}张牌洗回抽牌堆。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_FRENZY_26.selectionScreenPrompt"] = "选择要洗回抽牌堆的牌",
-
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_01.title"] = "呱呱雨~",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_01.description"] = "回合开始时，获得{RetainAmt:diff()}层保留，回复1点生命，持续[sine][gold]7[/gold][/sine]回合。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_02.title"] = "再来一次!",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_02.description"] = "造成{CalculatedDamage:diff()}点伤害。本场战斗中，每有一张卡牌在回合结束被保留，此牌伤害+{ExtraDamage:diff()}。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_03.title"] = "卢波流 神速斩",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_03.description"] = "选择消耗抽牌堆的最多{MaxCards:diff()}张牌，每消耗1张获得{RetainAmt:diff()}层保留，并对随机敌人造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_03.selectionScreenPrompt"] = "选择要消耗的牌",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_04.title"] = "强力一击",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_04.description"] = "对所有敌人造成{Damage:diff()}点伤害。打出后若手牌不少于8张，伤害翻倍。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_05.title"] = "黄油飞射",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_05.description"] = "造成{Damage:diff()}点伤害。加入卡组后开始计数，累计受到{Progress:diff()}/100次怪物攻击伤害（被格挡也计入）时，移除卡组中的此牌，将一张“黄油融化{IfUpgraded:show:+|}”加入卡组。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_05_1.title"] = "黄油融化",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_05_1.description"] = "造成{Damage:diff()}点伤害",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_06.title"] = "音速斩击",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_06.description"] = "丢弃所有手牌，每丢弃一张获得1层保留并对随机敌人造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_07.title"] = "全心全意",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_07.description"] = "目标敌人获得“爱心能量”，这名敌人每次对你造成伤害时都会失去2点力量。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08.title"] = "戏剧性演出",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08.description"] = "从[sine][pink]3[/pink][/sine]张埃皮康卡牌中选择1张加入手牌。若当前保留与幸福合计不少于10层，则改为将3张全部加入手牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08.selectionScreenPrompt"] = "选择1张埃皮康卡牌",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08_1.title"] = "助手埃皮康",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08_1.description"] = "回合开始时，获得{Amount:diff()}层再生、{Amount:diff()}层苦痛施予、{Amount:diff()}层活力和{Amount:diff()}层覆甲。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08_2.title"] = "埃皮康分身术",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08_2.description"] = "对所有敌人造成{Damage:diff()}点伤害，抽{DrawAmt:diff()}张牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08_3.title"] = "献给友军",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_08_3.description"] = "获得{RetainAmt:diff()}层保留、{StrengthAmt:diff()}点力量和{DexterityAmt:diff()}点敏捷。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_09.title"] = "我想听你讲个故事",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_09.description"] = "获得{Block:diff()}点格挡。\n下次受到攻击时，将攻击造成的全部伤害反弹给攻击者。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_10.title"] = "总有一天会发生的事",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_10.description"] = "2回合后，对敌人造成当前保留{Multiplier:diff()}倍的伤害。",
-								["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_11.title"] = "堂堂正正的舞蹈对决",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_11.description"] = "移除目标所有护盾，造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_12.title"] = "警戒线上的幽灵",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_12.description"] = "对所有敌人造成{Damage:diff()}点伤害，并给予1层存续。敌人每有1层存续，受到攻击伤害时额外受到当前保留层数的伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_13.title"] = "调整",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_13.description"] = "每当你获得保留时，对随机敌人造成3点伤害，然后本场战斗中此伤害+3。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_14.title"] = "干净的话就没活干了！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_14.description"] = "弃掉抽牌堆所有牌，每弃掉3张获得1层保留，然后抽1张牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_15.title"] = "梢杀 松鼠雷电",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_15.description"] = "造成{Damage:diff()}点伤害，获得{RetainAmt:diff()}层保留，向抽牌堆加入一张此牌的复制。{IfUpgraded:show:\n随机消耗弃牌堆中的一张此牌的复制。|}",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_16.title"] = "速邦配送",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_16.description"] = "移除{RemoveAmt:diff()}层保留，抽{DrawAmt:diff()}张牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_17.title"] = "次元裂缝",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_17.description"] = "造成{Damage:diff()}点伤害。若打出后手牌不少于{HandThreshold:diff()}张，眩晕目标。消耗。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_18.title"] = "圣裁宣告",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_18.description"] = "造成{Damage:diff()}点伤害。此牌被保留时，依当前保留层数增加伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_19.title"] = "充满魄力的新秀",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_19.description"] = "所有手牌获得消耗，以及“打出时获得{RetainAmt:diff()}层保留”。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_20.title"] = "魔道学者之路",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_20.description"] = "对所有敌人造成{Damage:diff()}点伤害3次，获得{RetainAmt:diff()}层保留。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_21.title"] = "开核桃大师",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_21.description"] = "获得{Block:diff()}点格挡，获得{RetainAmt:diff()}层保留。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_22.title"] = "幸福的bee",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_22.description"] = "移除{RetainCost:diff()}层保留，召唤{BeeMaxHp:diff()}最大生命值的朱bee。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_23.title"] = "蜂蜜鱼~哈姆!",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_23.description"] = "获得{RetainAmt:diff()}层保留，依当前保留层数恢复生命。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_24.title"] = "炸弹来啦~",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_24.description"] = "对所有敌人造成{Damage:diff()}点伤害，获得{RetainAmt:diff()}层保留。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_25.title"] = "胡萝卜治愈",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_25.description"] = "获得{DexterityAmt:diff()}点敏捷，回复{HealAmt:diff()}点生命。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_26.title"] = "DX-炮弹",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_26.description"] = "造成{Damage:diff()}点伤害，获得{RetainAmt:diff()}层保留。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_27.title"] = "噶哦哦！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_27.description"] = "获得{StrengthAmt:diff()}点力量，造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_01.title"] = "软乎乎Time",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_01.description"] = "获得{Block:diff()}点格挡，回复{HealAmt:diff()}点生命，结束你的回合。\n本回合打出{CardsPlayed:diff()}张其他卡牌后，此牌不能被打出。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_02.title"] = "魔弹装填",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_02.description"] = "获得{MagicBulletAmt:diff()}层魔弹。\n将[sine][purple]{Cards:diff()}[/purple][/sine]张“魔.弹.の.射.手”加入抽牌堆。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_02_1.title"] = "魔.弹.の.射.手",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_02_1.description"] = "造成{Damage:diff()}点伤害{Hits:diff()}次。\n打出后若仍有魔弹，将此牌置于抽牌堆；否则消耗，并将一张“终.末.の.爆.炸”加入抽牌堆。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_02_2.title"] = "终.末.の.爆.炸",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_02_2.description"] = "对敌方全体造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_03.title"] = "土豆番薯!",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_03.description"] = "若你的苦痛施予层数超过{Threshold:diff()}，则移除{Threshold:diff()}层，并眩晕目标敌人。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_04.title"] = "内向人斩切",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_04.description"] = "对生命值最低的敌人造成{Damage:diff()}点伤害；若将其斩杀，则再触发一次此效果。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_05.title"] = "侧斩",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_05.description"] = "造成{Damage:diff()}点伤害，获得{PainAmt:diff()}层苦痛施予。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_06.title"] = "面包流星",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_06.description"] = "移除{RemoveAmt:diff()}层苦痛施予，抽{DrawAmt:diff()}张牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_07.title"] = "芬多精波动",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_07.description"] = "根据目标敌人的减益层数，获得等量再生。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_08.title"] = "通械术",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_08.description"] = "对生命值最高的敌人造成{Damage:diff()}点伤害；若未斩杀，则再触发一次（最多额外触发1次）。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_09.title"] = "魔力喷发",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_09.description"] = "移除最多{MaxPain:diff()}层苦痛施予，每层获得{BlockPerPain:diff()}点格挡。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_10.title"] = "炸猪排市长，洛涅！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_10.description"] = "每向敌人施加{Threshold:diff()}次负面效果，获得1点下回合能量。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_11.title"] = "强制起床装置",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_11.description"] = "获得1层易伤、1层虚弱、1层脆弱、3层中毒、6层灾厄和5层苦痛施予。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_12.title"] = "水大炮炮击！！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_12.description"] = "使全体敌人本回合失去{StrengthLoss:diff()}点力量，并造成{Damage:diff()}点伤害。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_13.title"] = "有罪宣言",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_13.description"] = "造成{Damage:diff()}点伤害。\n每向敌人施加一次负面效果，此牌费用-1（打出后恢复）。\n回合开始时，若此牌在消耗堆，将其移动到抽牌堆。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_14.title"] = "非法豆奶",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_14.description"] = "丢弃所有手牌。每丢弃一张，获得1层苦痛施予并抽1张牌。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_15.title"] = "执行教理",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_15.description"] = "对全体敌人造成{CalculatedDamage:diff()}点伤害；本场战斗中每向敌人施加过一次负面效果，伤害额外+{ExtraDamage:diff()}点。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_16.title"] = "堕落玫瑰",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_16.description"] = "消耗2抽牌堆的最多{Cards:diff()}张牌，根据其费用和获得苦痛施予。{IfUpgraded:show:\n额外获得{PainBonus:diff()}层苦痛施予。|}",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_16.selectionScreenPrompt"] = "选择要消耗的牌",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_17.title"] = "踏光寻月",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_17.description"] = "获得{MoonAmt:diff()}层月之领域。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_18.title"] = "Elen-A 超频",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_18.description"] = "每当受到攻击时，获得{PainAmt:diff()}层苦痛施予。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_19.title"] = "Go! Go! Love Stage!",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_19.description"] = "所有敌人的意图改为攻击1×3。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_20.title"] = "苍穹的支配者",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_20.description"] = "易伤和虚弱对敌人造成的效果加倍。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_21.title"] = "请整理好书籍",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_21.description"] = "获得{Block:diff()}点格挡，获得{PainAmt:diff()}层苦痛施予。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_22.title"] = "极速切割",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_22.description"] = "移除目标敌人随机{RemoveAmt:diff()}层减益状态，对其造成{Damage:diff()}点伤害并抽{DrawAmt:diff()}张牌，最多重复{Repeats:diff()}次。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_23.title"] = "Rock and Peace！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_23.description"] = "对所有敌人造成{Damage:diff()}点伤害，并施加{VulnAmt:diff()}层易伤。",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_24.title"] = "斧头会飞出去的！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_24.description"] = "随机造成{Damage:diff()}点伤害{Hits:diff()}次。{IfUpgraded:show:\n每次命中施加{WeakAmt:diff()}层虚弱。|}",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_25.title"] = "啪哦哦！",
-				["CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_25.description"] = "造成{Damage:diff()}点伤害，获得{PainAmt:diff()}层苦痛施予。",
-			};
-			ColorizeCardDescriptions(cardLoc);
-			cardsTable.MergeWith(cardLoc);
-			Log.Info("[CultLeaderMod] Card localization injected");
+		try
+		{
+			return JsonSerializer.Deserialize<Dictionary<string, string>>(json);
 		}
-
-		if (tables.TryGetValue("powers", out var powersTable))
+		catch (Exception ex)
 		{
-			powersTable.MergeWith(new Dictionary<string, string>
-			{
-				["CULT_LEADER_MOD_POWER_CULT_LEADER_AUTHORITY_POWER.title"] = "教主的权能",
-				["CULT_LEADER_MOD_POWER_CULT_LEADER_AUTHORITY_POWER.description"] = "使徒牌获得的基础buff层数额外+1（每层权能）。层数达到5时，消耗5层进入埃尔德形态。",
-				["CULT_LEADER_MOD_POWER_ELDER_FORM_POWER.title"] = "埃尔德形态",
-				["CULT_LEADER_MOD_POWER_ELDER_FORM_POWER.description"] = "所有基础buff自动转化为升级版buff。",
-				["CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.title"] = "生命本源",
-				["CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.description"] = "每层提供5点最大生命。主动触发时移除1层，并回复5点生命。",
-				["CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.title"] = "固若坚冰",
-				["CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description"] = "每层使从卡牌获得的格挡+1。回合结束时获得等同于层数的格挡。主动触发时移除1层，并根据当前层数获得格挡。",
-				["CULT_LEADER_MOD_POWER_FERVOR_POWER.title"] = "狂热",
-				["CULT_LEADER_MOD_POWER_FERVOR_POWER.description"] = "每有一层，使下一张攻击牌伤害+3，并失去3点生命。每次触发只消耗1层。",
-				["CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.title"] = "苦痛施予",
-				["CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.description"] = "回合结束时，每有一层苦痛施予，对一名随机敌人随机施加1层易伤、1层虚弱、2层中毒或4层灾厄。所有苦痛施予生效后减少1层。",
-				["CULT_LEADER_MOD_POWER_BITTER_PAIN_BURST_POWER.title"] = "苦痛爆发",
-				["CULT_LEADER_MOD_POWER_BITTER_PAIN_BURST_POWER.description"] = "回合结束时，每有一层苦痛爆发，对所有敌人施加1层易伤、1层虚弱、2层中毒和4层灾厄。此状态不会随回合减少。",
-				["CULT_LEADER_MOD_POWER_HAPPINESS_POWER.title"] = "幸福",
-				["CULT_LEADER_MOD_POWER_HAPPINESS_POWER.description"] = "每获得3层幸福时，抽2张牌并获得1点能量；触发不会消耗幸福。",
-				["CULT_LEADER_MOD_POWER_RETAIN_POWER.title"] = "保留",
-				["CULT_LEADER_MOD_POWER_RETAIN_POWER.description"] = "每有1层，回合结束时至多保留1张手牌。",
-				["CULT_LEADER_MOD_POWER_RETAIN_POWER.selectionScreenPrompt"] = "选择要保留的牌（至多{Amount}张）",
-				["CULT_LEADER_MOD_POWER_LOOP_POWER.title"] = "循环",
-				["CULT_LEADER_MOD_POWER_LOOP_POWER.description"] = "每当你获得1层再生、活力、覆甲、保留或苦痛施予时，对全体敌人造成{Amount}点伤害。",
-				["CULT_LEADER_MOD_POWER_TEMP_MAX_HP_POWER.title"] = "临时最大生命",
-				["CULT_LEADER_MOD_POWER_TEMP_MAX_HP_POWER.description"] = "增加最大生命值。战斗结束后失去。",
-				["CULT_LEADER_MOD_POWER_TEMP_MAX_HP_LOSS_POWER.title"] = "临时最大生命损失",
-				["CULT_LEADER_MOD_POWER_TEMP_MAX_HP_LOSS_POWER.description"] = "最大生命值减少。移除或战斗结束后恢复。",
-				["CULT_LEADER_MOD_POWER_HACK_MARK_POWER.title"] = "黑客标记",
-				["CULT_LEADER_MOD_POWER_HACK_MARK_POWER.description"] = "每次恢复生命时，受到等同于回复量×层数的伤害。最大生命值提升带来的回复也计入。",
-				["CULT_LEADER_MOD_POWER_BONFIRE_VIGOR_POWER.title"] = "篝火",
-				["CULT_LEADER_MOD_POWER_BONFIRE_VIGOR_POWER.description"] = "回合结束时获得等同于层数的活力。",
-				["CULT_LEADER_MOD_POWER_TEMP_STRENGTH_LOSS_POWER.title"] = "力竭",
-				["CULT_LEADER_MOD_POWER_TEMP_STRENGTH_LOSS_POWER.description"] = "回合结束时恢复等量力量。",
-				["CULT_LEADER_MOD_POWER_TEMP_STRENGTH_BUFF_POWER.title"] = "临时力量",
-				["CULT_LEADER_MOD_POWER_TEMP_STRENGTH_BUFF_POWER.description"] = "回合结束时失去等量力量。",
-				["CULT_LEADER_MOD_POWER_SAP_LAUNCHER_POWER.title"] = "汁液泵机",
-				["CULT_LEADER_MOD_POWER_SAP_LAUNCHER_POWER.description"] = "每次恢复生命时，对随机敌人造成等同于层数的伤害。",
-				["CULT_LEADER_MOD_POWER_REMOTE_CHARGE_POWER.title"] = "远程充电",
-				["CULT_LEADER_MOD_POWER_REMOTE_CHARGE_POWER.description"] = "每恢复生命达到等同于层数的次数时，获得1点能量。",
-				["CULT_LEADER_MOD_POWER_SELF_STUN_POWER.title"] = "眩晕",
-				["CULT_LEADER_MOD_POWER_SELF_STUN_POWER.description"] = "跳过下一回合。",
-				["CULT_LEADER_MOD_POWER_FORWARD_RESOLVE_POWER.title"] = "向前迈进的决心",
-				["CULT_LEADER_MOD_POWER_FORWARD_RESOLVE_POWER.description"] = "每触发{Amount}层活力，获得2层活力。",
-				["CULT_LEADER_MOD_POWER_SEBASTIAN_POWER.title"] = "小小塞巴斯蒂安",
-				["CULT_LEADER_MOD_POWER_SEBASTIAN_POWER.description"] = "每有5点生命，回合结束时获得1点活力并对随机敌人造成1点伤害。受到未被格挡的伤害时，会优先消耗生命抵挡。",
-				["CULT_LEADER_MOD_POWER_SKY_RULER_POWER.title"] = "苍穹的支配者",
-				["CULT_LEADER_MOD_POWER_SKY_RULER_POWER.description"] = "易伤和虚弱对敌人造成的效果加倍。",
-				["CULT_LEADER_MOD_POWER_MOON_FIELD_POWER.title"] = "月之领域",
-				["CULT_LEADER_MOD_POWER_MOON_FIELD_POWER.description"] = "攻击具有减益效果的敌人时，伤害+{Amount}。",
-				["CULT_LEADER_MOD_POWER_MAGIC_BULLET_POWER.title"] = "魔弹",
-				["CULT_LEADER_MOD_POWER_MAGIC_BULLET_POWER.description"] = "打出【魔.弹.の.射.手】时，对目标施加1层易伤、1层虚弱、2层中毒和4层灾厄。",
-				["CULT_LEADER_MOD_POWER_ON_ATTACKED_GAIN_BITTER_PAIN_POWER.title"] = "Elen-A 超频",
-				["CULT_LEADER_MOD_POWER_ON_ATTACKED_GAIN_BITTER_PAIN_POWER.description"] = "每次受到攻击时，获得{Amount}层苦痛施予。",
-				["CULT_LEADER_MOD_POWER_DEBUFF_APPLY_COUNTER_POWER.title"] = "炸猪排市长",
-				["CULT_LEADER_MOD_POWER_DEBUFF_APPLY_COUNTER_POWER.description"] = "每向敌人施加{Amount}次负面效果，获得1点下回合能量。",
-				["CULT_LEADER_MOD_POWER_FRENZY_ON_HEAL_POWER.title"] = "要来见少女吗？",
-				["CULT_LEADER_MOD_POWER_FRENZY_ON_HEAL_POWER.description"] = "每次恢复生命时，获得1层活力；埃尔德形态下改为获得狂热。",
-				["CULT_LEADER_MOD_POWER_VIGOR_PER_TURN_POWER.title"] = "下回合活力",
-				["CULT_LEADER_MOD_POWER_VIGOR_PER_TURN_POWER.description"] = "下回合开始时获得等同于层数的活力，然后移除。",
-				["CULT_LEADER_MOD_POWER_ON_ATTACKED_GAIN_PLATING_POWER.title"] = "战术无人机 MK-2",
-				["CULT_LEADER_MOD_POWER_ON_ATTACKED_GAIN_PLATING_POWER.description"] = "被攻击时，获得{Amount}层覆甲。",
-				["CULT_LEADER_MOD_POWER_OUT_OF_TURN_PLATING_DRAW_POWER.title"] = "战术卫星助阵",
-				["CULT_LEADER_MOD_POWER_OUT_OF_TURN_PLATING_DRAW_POWER.description"] = "回合外获得覆甲时，抽1张牌。",
-				["CULT_LEADER_MOD_POWER_PLATING_REBOUND_DAMAGE_POWER.title"] = "刺痛的门卫",
-				["CULT_LEADER_MOD_POWER_PLATING_REBOUND_DAMAGE_POWER.description"] = "每当敌人攻击你时，对其造成等同于当前覆甲层数×{Amount}的伤害。",
-				["CULT_LEADER_MOD_POWER_POOL_CANDIDATE_POWER.title"] = "泳池候选地",
-				["CULT_LEADER_MOD_POWER_POOL_CANDIDATE_POWER.description"] = "回合结束时获得{Amount}层覆甲；回合开始时获得等同于当前覆甲的格挡。",
-				["CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_POWER.title"] = "性格唤醒",
-				["CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_POWER.description"] = "回合开始时，从卡组随机将一张对应性格使徒牌添加到你的手牌中。升级后改为升级并添加。",
-				["CULT_LEADER_MOD_POWER_PAT_CARD_POWER.title"] = "摸摸头",
-				["CULT_LEADER_MOD_POWER_PAT_CARD_POWER.description"] = "被标记的使徒牌本场战斗中每次打出时抽1张牌。",
-				["CULT_LEADER_MOD_POWER_FLAT_DAMAGE_REDUCTION_POWER.title"] = "雪雾",
-				["CULT_LEADER_MOD_POWER_FLAT_DAMAGE_REDUCTION_POWER.description"] = "持有格挡时，受到的攻击伤害减少{Amount}点。",
-				["CULT_LEADER_MOD_POWER_NEXT_TURN_STRENGTH_LOSS_POWER.title"] = "下回合力量损失",
-				["CULT_LEADER_MOD_POWER_NEXT_TURN_STRENGTH_LOSS_POWER.description"] = "敌方下个回合开始时，失去{Amount}点力量。",
-				["CULT_LEADER_MOD_POWER_INK_WASH_POWER.title"] = "墨水洗礼",
-				["CULT_LEADER_MOD_POWER_INK_WASH_POWER.description"] = "回合结束时，获得与手牌数相等的覆甲，然后移除此效果。",
-				["CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.title"] = "助手埃皮康",
-				["CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.description"] = "回合开始时，获得{Amount}层再生、{Amount}层苦痛施予、{Amount}层活力和{Amount}层覆甲。",
-				["CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.title"] = "呱呱雨",
-				["CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description"] = "回合开始时，获得保留，回复1点生命。层数表示剩余回合数。",
-				["CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.title"] = "爱心能量",
-				["CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.description"] = "这名敌人每次对你造成伤害时，失去{Amount}点力量。",
-				["CULT_LEADER_MOD_POWER_REFLECT_NEXT_DAMAGE_POWER.title"] = "伤害反弹",
-				["CULT_LEADER_MOD_POWER_REFLECT_NEXT_DAMAGE_POWER.description"] = "下次受到攻击时，将攻击造成的全部伤害反弹给攻击者（包括被格挡的部分）。",
-				["CULT_LEADER_MOD_POWER_FATE_CLOCK_POWER.title"] = "命运时钟",
-				["CULT_LEADER_MOD_POWER_FATE_CLOCK_POWER.description"] = "上角标为剩余回合数，下角标为伤害值。敌方回合开始时层数-1，归零时造成伤害并移除。",
-				["CULT_LEADER_MOD_POWER_FATE_CLOCK_POWER.smartDescription"] = "敌方回合开始时层数-1，归零时造成{Damage}点伤害并移除。",
-				["CULT_LEADER_MOD_POWER_EXTANT_POWER.title"] = "存续",
-				["CULT_LEADER_MOD_POWER_EXTANT_POWER.description"] = "受到攻击伤害时，每层使此次伤害额外增加当前保留层数。",
-				["CULT_LEADER_MOD_POWER_ADJUST_POWER.title"] = "调整",
-				["CULT_LEADER_MOD_POWER_ADJUST_POWER.description"] = "每当你获得保留时，对随机敌人造成伤害，随后本场战斗中此伤害+3。",
-				["CULT_LEADER_MOD_POWER_BEE_POWER.title"] = "朱bee",
-				["CULT_LEADER_MOD_POWER_BEE_POWER.description"] = "回合结束时，对随机敌人造成等同于层数的伤害，然后减少1层。此状态不叠加。",
-				["CULT_LEADER_MOD_POWER_ROOKIE_CARD_POWER.title"] = "充满魄力的新秀",
-				["CULT_LEADER_MOD_POWER_ROOKIE_CARD_POWER.description"] = "记录本场战斗中打出的活泼使徒牌数量。不同卡牌会根据该计数获得额外效果。",
-
-			});
-		}
-
-		if (tables.TryGetValue("card_keywords", out var kwTable))
-		{
-			kwTable.MergeWith(new Dictionary<string, string>
-			{
-				["CULT_LEADER_MOD_KEYWORD_APOSTLE.title"] = "使徒牌",
-				["CULT_LEADER_MOD_KEYWORD_APOSTLE.description"] = "使徒名称",
-				["CULT_LEADER_MOD_KEYWORD_PURE.title"] = "使徒性格",
-				["CULT_LEADER_MOD_KEYWORD_PURE.description"] = "纯粹",
-				["CULT_LEADER_MOD_KEYWORD_CALM.title"] = "使徒性格",
-				["CULT_LEADER_MOD_KEYWORD_CALM.description"] = "冷静",
-				["CULT_LEADER_MOD_KEYWORD_FRENZY.title"] = "使徒性格",
-				["CULT_LEADER_MOD_KEYWORD_FRENZY.description"] = "狂热",
-				["CULT_LEADER_MOD_KEYWORD_LIVELY.title"] = "使徒性格",
-				["CULT_LEADER_MOD_KEYWORD_LIVELY.description"] = "活泼",
-				["CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title"] = "使徒性格",
-				["CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description"] = "忧郁",
-				["CULT_LEADER_MOD_KEYWORD_PAT_HEAD.title"] = "抽1张牌",
-				["CULT_LEADER_MOD_KEYWORD_PAT_HEAD.description"] = "本场战斗中，该使徒牌每次打出时抽1张牌。",
-			});
-			Log.Info("[CultLeaderMod] Keyword localization injected");
-		}
-
-		if (tables.TryGetValue("relics", out var relicsTable))
-		{
-			relicsTable.MergeWith(new Dictionary<string, string>
-			{
-				["CULT_LEADER_MOD_RELIC_GUM_BLESS_RELIC.title"] = "咏春的祝福",
-				["CULT_LEADER_MOD_RELIC_GUM_BLESS_RELIC.description"] = "选择两种使徒性格，使其出现概率提升。",
-				["CULT_LEADER_MOD_RELIC_GUM_BLESS_RELIC.flavor"] = "性格UP卡池已经开启了，教主的晶叶准备好了么",
-				["CULT_LEADER_MOD_RELIC_HAPPINESS_OF_YONGCHUN_RELIC.title"] = "咏春的幸福",
-				["CULT_LEADER_MOD_RELIC_HAPPINESS_OF_YONGCHUN_RELIC.description"] = "拾起时获得2次稀有卡牌奖励。",
-				["CULT_LEADER_MOD_RELIC_HAPPINESS_OF_YONGCHUN_RELIC.flavor"] = "有教主在身边，终于有人能看见咏春了，咏春很幸福",
-				["CULT_LEADER_MOD_RELIC_ELDON_LANTERN_RELIC.title"] = "艾尔登的灯笼",
-				["CULT_LEADER_MOD_RELIC_ELDON_LANTERN_RELIC.description"] = "回复生命时，回复量+1。",
-				["CULT_LEADER_MOD_RELIC_ELDON_LANTERN_RELIC.flavor"] = "一盏用世界树花蕾制成的灯，从花蕾散发出的温暖好像能治愈心灵",
-				["CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.title"] = "天气晴朗卡",
-				["CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.description"] = "第一回合，获得1教主的权能，第四回合开始时，如果有教主的权能，失去1教主的权能。",
-				["CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.flavor"] = "天气晴朗，但闪电袭来，当喜欢算命的佑平拿出这张牌时，就意味着有人准备在背后搞恶作剧",
-				["CULT_LEADER_MOD_RELIC_SHEDI_DIMENSION_SCYTHE_RELIC.title"] = "谢迪的次元锁链镰",
-				["CULT_LEADER_MOD_RELIC_SHEDI_DIMENSION_SCYTHE_RELIC.description"] = "每经过三场非boss战斗，下一次移动可以无视地图路线，该效果会保留至你触发为止。",
-				["CULT_LEADER_MOD_RELIC_SHEDI_DIMENSION_SCYTHE_RELIC.flavor"] = "无论何时何地，都与谢伊迪相伴的镰刀。闪耀流动的次元气息令人印象深刻。",
-				["CULT_LEADER_MOD_RELIC_PASTEL_OUTING_RELIC.title"] = "粉彩色郊游",
-				["CULT_LEADER_MOD_RELIC_PASTEL_OUTING_RELIC.description"] = "使徒牌造成的伤害+3。",
-				["CULT_LEADER_MOD_RELIC_PASTEL_OUTING_RELIC.flavor"] = "因为在一起而更幸福的郊游。如果还有好吃的零食就更开心。",
-				["CULT_LEADER_MOD_RELIC_MEDITATION_TIME_RELIC.title"] = "冥想时间",
-				["CULT_LEADER_MOD_RELIC_MEDITATION_TIME_RELIC.description"] = "在火堆可以多选择一项行动。",
-				["CULT_LEADER_MOD_RELIC_MEDITATION_TIME_RELIC.flavor"] = "为了身心安定冥想一会吧...总感觉身后有人盯着的感觉。",
-				["CULT_LEADER_MOD_RELIC_LIFE_GEM_RELIC.title"] = "生命宝石",
-				["CULT_LEADER_MOD_RELIC_LIFE_GEM_RELIC.description"] = "每经过3个房间，最大生命值+1。",
-				["CULT_LEADER_MOD_RELIC_LIFE_GEM_RELIC.flavor"] = "它是一种红色、坚硬的宝石，带有叶状图案，据说带有类似世界树花纹的珠宝价值极高",
-				["CULT_LEADER_MOD_RELIC_GIANT_POTION_RELIC.title"] = "巨大化药水",
-				["CULT_LEADER_MOD_RELIC_GIANT_POTION_RELIC.description"] = "每场战斗第一张攻击牌的伤害加倍。",
-				["CULT_LEADER_MOD_RELIC_GIANT_POTION_RELIC.flavor"] = "喝下后身体会变得巨大、力量涌现的药水。在狭小空间中饮用这瓶药水可能会引发灾难，因此饮用前最好确保有足够的空间。",
-				["CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.title"] = "黄油的黄牌",
-				["CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.description"] = "拾起时，向卡组中添加一张【黄油飞射】，每次被攻击时，计数额外减少1。",
-				["CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.flavor"] = "每当心中怒火叠加时会拿出来看的黄色卡牌，有手的痕迹",
-				["CULT_LEADER_MOD_RELIC_MAGIC_BATTERY_RELIC.title"] = "魔导工学电池",
-				["CULT_LEADER_MOD_RELIC_MAGIC_BATTERY_RELIC.description"] = "每使用{Energy:energyIcons()}，对所有敌人造成10点伤害。",
-				["CULT_LEADER_MOD_RELIC_MAGIC_BATTERY_RELIC.flavor"] = "这是一款基于埃修尔的魔导工学理论制作的高性能魔力电池。",
-				["CULT_LEADER_MOD_RELIC_SINGLE_APOSTLE_TICKET_RELIC.title"] = "使徒单抽券",
-				["CULT_LEADER_MOD_RELIC_SINGLE_APOSTLE_TICKET_RELIC.description"] = "拾起时随机获得一张使徒牌。",
-				["CULT_LEADER_MOD_RELIC_SINGLE_APOSTLE_TICKET_RELIC.flavor"] = "新教主的福利，试试运气罢",
-				["CULT_LEADER_MOD_RELIC_SINGLE_WEAPON_TICKET_RELIC.title"] = "卡牌单抽券",
-				["CULT_LEADER_MOD_RELIC_SINGLE_WEAPON_TICKET_RELIC.description"] = "拾起时随机获得一个遗物，向卡组中添加一张债务。",
-				["CULT_LEADER_MOD_RELIC_SINGLE_WEAPON_TICKET_RELIC.flavor"] = "辅助卡牌也是战斗中不可或缺的",
-				["CULT_LEADER_MOD_RELIC_GOLDEN_CRAYON_RELIC.title"] = "金蜡笔",
-				["CULT_LEADER_MOD_RELIC_GOLDEN_CRAYON_RELIC.description"] = "每{Threshold:diff()}场战斗后，选择卡组中的1张使徒牌强化。",
-				["CULT_LEADER_MOD_RELIC_GOLDEN_CRAYON_RELIC.flavor"] = "噫！好！我出金蜡笔了！",
-				["CULT_LEADER_MOD_RELIC_ASSASSIN_MANUAL_RELIC.title"] = "暗杀者的秘笈",
-				["CULT_LEADER_MOD_RELIC_ASSASSIN_MANUAL_RELIC.description"] = "每场战斗开始时获得一层缓冲。",
-				["CULT_LEADER_MOD_RELIC_ASSASSIN_MANUAL_RELIC.flavor"] = "在兽人的棋盘游戏盒里找到的，阅读后发现，当你游戏陷入困境时，只要盖住棋盘，你将获得第一名",
-				["CULT_LEADER_MOD_RELIC_ERFEN_STAFF_RELIC.title"] = "埃尔芬的法杖",
-				["CULT_LEADER_MOD_RELIC_ERFEN_STAFF_RELIC.description"] = "每20次获得再生、活力、覆甲、保留和苦痛施予，获得1能量点。",
-				["CULT_LEADER_MOD_RELIC_ERFEN_STAFF_RELIC.flavor"] = "埃尔芬似乎对这根法杖有着强烈的依恋。即使用得不太好，也总是小心翼翼地带在身边，或是珍重地放在房间的衣柜里。",
-				["CULT_LEADER_MOD_RELIC_BELITA_WAND_RELIC.title"] = "贝丽塔的魔杖",
-				["CULT_LEADER_MOD_RELIC_BELITA_WAND_RELIC.description"] = "每打出10张使徒牌，抽一张牌。",
-				["CULT_LEADER_MOD_RELIC_BELITA_WAND_RELIC.flavor"] = "魔女女王用过的魔杖，女王忠诚的部下以应自己保管为由虎视眈眈地盯着，因此在安保方面吃尽了苦头",
-				["CULT_LEADER_MOD_RELIC_DRAGON_LIGHT_SWORD_RELIC.title"] = "龙光剑",
-				["CULT_LEADER_MOD_RELIC_DRAGON_LIGHT_SWORD_RELIC.description"] = "同一场战斗中每打出{Threshold:diff()}张活泼使徒牌，获得2保留，每场战斗后获得保留所需使徒牌数量-1（最低为5）。",
-				["CULT_LEADER_MOD_RELIC_DRAGON_LIGHT_SWORD_RELIC.flavor"] = "这是一把惊人的剑，用的越多就会变得越强",
-				["CULT_LEADER_MOD_RELIC_EMILIAS_EPAD_CLASSIC_RELIC.title"] = "艾米莉娅的E-pad经典款",
-				["CULT_LEADER_MOD_RELIC_EMILIAS_EPAD_CLASSIC_RELIC.description"] = "敌人回合开始时你获得1覆甲，你的卡组里每有10张冷静使徒牌，便可以多获得1点。",
-				["CULT_LEADER_MOD_RELIC_EMILIAS_EPAD_CLASSIC_RELIC.flavor"] = "艾米莉娅总是拿在手上的平板。随时都能获得艾米莉娅需要的信息，并拥有超大的容量空间。",
-				["CULT_LEADER_MOD_RELIC_NAYA_DOLPHIN_WATER_GUN_RELIC.title"] = "奈雅的海豚水枪",
-				["CULT_LEADER_MOD_RELIC_NAYA_DOLPHIN_WATER_GUN_RELIC.description"] = "你每5次获得再生时，可以回复1点生命。",
-				["CULT_LEADER_MOD_RELIC_NAYA_DOLPHIN_WATER_GUN_RELIC.flavor"] = "奈雅和来到湖边的朋友们一起玩耍时使用的水枪。和外表不同，威力相当惊人。",
-				["CULT_LEADER_MOD_RELIC_ZION_BLACK_CLOAK_RELIC.title"] = "锡安的黑色披风",
-				["CULT_LEADER_MOD_RELIC_ZION_BLACK_CLOAK_RELIC.description"] = "每次你施予负面效果时，获得1格挡。",
-				["CULT_LEADER_MOD_RELIC_ZION_BLACK_CLOAK_RELIC.flavor"] = "锡安说有了黑暗才能让光芒更耀眼，所以坚持穿这件黑色披风，虽然不太懂什么意思，但看来她很珍惜这披风。",
-				["CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.title"] = "咻咻咻咻手套",
-				["CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.description"] = "回合开始时获得1活力，如果回合开始时你没有活力，额外获得2活力。",
-				["CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.flavor"] = "戴在拳头上后，仿佛能像骤雨般挥出连环拳的坚固手套。一边喊出手套的名字一边挥拳，或许会感觉自己变强了一点？",
-			});
-			Log.Info("[CultLeaderMod] Relic localization injected");
-		}
-
-		if (tables.TryGetValue("events", out var eventsTable))
-		{
-			eventsTable.MergeWith(new Dictionary<string, string>
-			{
-				["CULT_LEADER_MOD_EVENT_DRAGON_SPARTAN_TRAINING_EVENT.title"] = "龙族的斯巴达训练",
-				["CULT_LEADER_MOD_EVENT_DRAGON_SPARTAN_TRAINING_EVENT.pages.INITIAL.description"] = "你偶然迷路在地下的时候遇到了一位健壮的龙族和一位瘦小的龙族，健壮的龙族邀请你一起锻炼并且请求你帮助督促瘦小的龙族，瘦小的龙族则一脸疲惫和不情愿",
-				["CULT_LEADER_MOD_EVENT_DRAGON_SPARTAN_TRAINING_EVENT.pages.INITIAL.options.REFUSE.title"] = "拒绝",
-				["CULT_LEADER_MOD_EVENT_DRAGON_SPARTAN_TRAINING_EVENT.pages.INITIAL.options.REFUSE.description"] = "回复10生命值",
-				["CULT_LEADER_MOD_EVENT_DRAGON_SPARTAN_TRAINING_EVENT.pages.INITIAL.options.ACCEPT.title"] = "同意",
-				["CULT_LEADER_MOD_EVENT_DRAGON_SPARTAN_TRAINING_EVENT.pages.INITIAL.options.ACCEPT.description"] = "获得咻咻咻咻手套",
-				["CULT_LEADER_MOD_EVENT_DRAGON_SPARTAN_TRAINING_EVENT.pages.REFUSE.description"] = "瘦小龙族非常高兴，请求你赶快把她从这里救走，你勉强说服了健壮龙族让她今天先休息一下。至于明天？明天的事情你就管不了了",
-				["CULT_LEADER_MOD_EVENT_DRAGON_SPARTAN_TRAINING_EVENT.pages.ACCEPT.description"] = "健壮龙族非常高兴，让你和瘦小龙族一起锻炼并且送你了一副拳击手套，你可以打一整天沙袋了。你本来是想逃掉的，但是健壮龙族抓住了你的胳膊，那力量让你无法挣脱。瘦小龙族的眼睛里则完全失去了光。",
-
-				["CULT_LEADER_MOD_EVENT_MYSTERIOUS_CONVENIENCE_CLERK_EVENT.title"] = "神秘的便利店员",
-				["CULT_LEADER_MOD_EVENT_MYSTERIOUS_CONVENIENCE_CLERK_EVENT.pages.INITIAL.description"] = "你在便利店偶遇的打工幽灵突然问你有没有兴趣和她一起探寻隐藏于莫纳提姆黑暗的中秘密",
-				["CULT_LEADER_MOD_EVENT_MYSTERIOUS_CONVENIENCE_CLERK_EVENT.pages.INITIAL.options.REFUSE.title"] = "拒绝",
-				["CULT_LEADER_MOD_EVENT_MYSTERIOUS_CONVENIENCE_CLERK_EVENT.pages.INITIAL.options.REFUSE.description"] = "回复10生命值",
-				["CULT_LEADER_MOD_EVENT_MYSTERIOUS_CONVENIENCE_CLERK_EVENT.pages.INITIAL.options.ACCEPT.title"] = "同意",
-				["CULT_LEADER_MOD_EVENT_MYSTERIOUS_CONVENIENCE_CLERK_EVENT.pages.INITIAL.options.ACCEPT.description"] = "获得锡安的黑色披风",
-				["CULT_LEADER_MOD_EVENT_MYSTERIOUS_CONVENIENCE_CLERK_EVENT.pages.REFUSE.description"] = "这太中二了，这么一把年纪了可不想被掺和进这种事情里，你这么说完，发现幽灵好像眼角有泪光，但是你并不想在乎这些，结过账之后就离开了",
-				["CULT_LEADER_MOD_EVENT_MYSTERIOUS_CONVENIENCE_CLERK_EVENT.pages.ACCEPT.description"] = "你是在拗不过幽灵的盛情邀请，约定今晚10点在FrostNova（霜冻新星）西边的后巷集合，她给了你一件披风，说是接头的时候要穿着它才不引人注目，这对么？",
-
-				["CULT_LEADER_MOD_EVENT_ROLLING_FLOOR_ELEMENTAL_EVENT.title"] = "撒泼打滚的元灵",
-				["CULT_LEADER_MOD_EVENT_ROLLING_FLOOR_ELEMENTAL_EVENT.pages.INITIAL.description"] = "你看到一位元灵躺在地上又吵又闹，说什么谢非尔又不理她了，只不过是不小心把水射到她眼睛里了，现在没人陪她玩了，要你陪着她一起玩",
-				["CULT_LEADER_MOD_EVENT_ROLLING_FLOOR_ELEMENTAL_EVENT.pages.INITIAL.options.REFUSE.title"] = "拒绝",
-				["CULT_LEADER_MOD_EVENT_ROLLING_FLOOR_ELEMENTAL_EVENT.pages.INITIAL.options.REFUSE.description"] = "回复10生命值",
-				["CULT_LEADER_MOD_EVENT_ROLLING_FLOOR_ELEMENTAL_EVENT.pages.INITIAL.options.ACCEPT.title"] = "同意",
-				["CULT_LEADER_MOD_EVENT_ROLLING_FLOOR_ELEMENTAL_EVENT.pages.INITIAL.options.ACCEPT.description"] = "获得奈雅的海豚水枪",
-				["CULT_LEADER_MOD_EVENT_ROLLING_FLOOR_ELEMENTAL_EVENT.pages.REFUSE.description"] = "你可不想被水射进眼睛里，疼得很，你给了她一个爆栗，然后趁着她捂着头哭的时候，赶紧溜走了",
-				["CULT_LEADER_MOD_EVENT_ROLLING_FLOOR_ELEMENTAL_EVENT.pages.ACCEPT.description"] = "你并没有选择，在被她发现的那一刻你的命运就只剩下被她用水枪biu~biu~了，好在她分了你一把水枪一起打水仗玩，不，这真的好么？",
-
-				["CULT_LEADER_MOD_EVENT_FAIRY_SURVEILLANCE_REQUEST_EVENT.title"] = "妖精的监控请求",
-				["CULT_LEADER_MOD_EVENT_FAIRY_SURVEILLANCE_REQUEST_EVENT.pages.INITIAL.description"] = "那个穿着白大褂的一脸疲惫的妖精又来和你请求加装新的监控设备",
-				["CULT_LEADER_MOD_EVENT_FAIRY_SURVEILLANCE_REQUEST_EVENT.pages.INITIAL.options.REFUSE.title"] = "拒绝",
-				["CULT_LEADER_MOD_EVENT_FAIRY_SURVEILLANCE_REQUEST_EVENT.pages.INITIAL.options.REFUSE.description"] = "回复10生命值",
-				["CULT_LEADER_MOD_EVENT_FAIRY_SURVEILLANCE_REQUEST_EVENT.pages.INITIAL.options.ACCEPT.title"] = "同意",
-				["CULT_LEADER_MOD_EVENT_FAIRY_SURVEILLANCE_REQUEST_EVENT.pages.INITIAL.options.ACCEPT.description"] = "获得艾米莉娅的E-pad经典款",
-				["CULT_LEADER_MOD_EVENT_FAIRY_SURVEILLANCE_REQUEST_EVENT.pages.REFUSE.description"] = "你受不了生活的每个角落都被监控，更何况这次居然要在你的卫生间里也装上监控，你狠狠的拒绝了她",
-				["CULT_LEADER_MOD_EVENT_FAIRY_SURVEILLANCE_REQUEST_EVENT.pages.ACCEPT.description"] = "算了，随她去吧，反正就算你拒绝了她也会想办法把监控装上的，至少你还能用她给的平板电脑查看这些监控",
-
-				["CULT_LEADER_MOD_EVENT_FOX_WEAPON_TEST_EVENT.title"] = "狐狸兽人的新武器测试",
-				["CULT_LEADER_MOD_EVENT_FOX_WEAPON_TEST_EVENT.pages.INITIAL.description"] = "你遇到了一位自信满满的狐狸兽人，他想要你帮她测试她刚刚拿到的武器，是否让她变得更快了",
-				["CULT_LEADER_MOD_EVENT_FOX_WEAPON_TEST_EVENT.pages.INITIAL.options.REFUSE.title"] = "拒绝",
-				["CULT_LEADER_MOD_EVENT_FOX_WEAPON_TEST_EVENT.pages.INITIAL.options.REFUSE.description"] = "回复10生命值",
-				["CULT_LEADER_MOD_EVENT_FOX_WEAPON_TEST_EVENT.pages.INITIAL.options.ACCEPT.title"] = "同意",
-				["CULT_LEADER_MOD_EVENT_FOX_WEAPON_TEST_EVENT.pages.INITIAL.options.ACCEPT.description"] = "获得龙光剑",
-				["CULT_LEADER_MOD_EVENT_FOX_WEAPON_TEST_EVENT.pages.REFUSE.description"] = "你说你还有事，今天不能陪她玩了，狐狸兽人用空洞的眼神盯着你，你赶紧溜走了",
-				["CULT_LEADER_MOD_EVENT_FOX_WEAPON_TEST_EVENT.pages.ACCEPT.description"] = "你追着狐狸兽人跑了很久，但是完全追不上，她很开心，把新拿到的匕首送给你一把",
-
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.title"] = "坐在猫墩上的占卜师",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.INITIAL.description"] = "你遇到了一位神秘的一位占卜师，你只要付费她就可以为你进行性格占卜",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.INITIAL.options.REFUSE.title"] = "拒绝",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.INITIAL.options.REFUSE.description"] = "事件结束",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.INITIAL.options.ACCEPT.title"] = "同意，失去50金币",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.INITIAL.options.ACCEPT.description"] = "你走到了河边，想要过河，但是河上的桥却被人弄断了，这时候你会……",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.INITIAL.options.ACCEPT_POOR.title"] = "同意，失去50金币",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.INITIAL.options.ACCEPT_POOR.description"] = "“占卜的钱都拿不出来么，真是个贫穷教主呢，不能用教团的资金想想办法么，零花钱程度的还是能拿到的吧”",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.REFUSE.description"] = "你转身离开了占卜师的猫墩。",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.description"] = "你走到了河边，想要过河，但是河上的桥却被人弄断了，这时候你会……",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.PURE.title"] = "天真的想着直接游过去（天真）",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.PURE.description"] = "",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.FRENZY.title"] = "愤怒的去寻找弄断桥的人（愤怒）",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.FRENZY.description"] = "",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.CALM.title"] = "沉着的分析有什么过河的替代方案（沉着）",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.CALM.description"] = "",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.MELANCHOLY.title"] = "忧愁的叹息自己过不了河了（忧愁）",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.MELANCHOLY.description"] = "",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.LIVELY.title"] = "乐观的表示桥断了重建就好了（乐观）",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.PERSONALITY.options.LIVELY.description"] = "",
-				["CULT_LEADER_MOD_EVENT_FORTUNE_TELLER_CAT_CUSHION_EVENT.pages.RESULT.description"] = "嗯嗯，这就是你的选择么。你的占卜结果是…",
-			});
-			Log.Info("[CultLeaderMod] Event localization injected");
-		}
-
-		if (tables.TryGetValue("ancients", out var ancientsTable))
-		{
-			ancientsTable.MergeWith(new Dictionary<string, string>
-			{
-				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-0.char"] = "你就是这次次元边境最后的boss了么？",
-				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-0.next"] = "继续",
-				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-1.ancient"] = "你不应该在这里",
-				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-1.next"] = "继续",
-				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-2.char"] = "世界树，缺损了。我需要这座塔的一部分",
-				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-2.next"] = "继续",
-				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-3.ancient"] = "你的世界存亡与我何干",
-				["THE_ARCHITECT.talk.CULT_LEADER_MOD.0-endattack"] = "Both",
-			});
-			Log.Info("[CultLeaderMod] Architect dialogue localization injected");
-		}
-
-		if (tables.TryGetValue("gameplay_ui", out var guiTable))
-		{
-			guiTable.MergeWith(new Dictionary<string, string>
-			{
-				["CULT_LEADER_PERSONALITY_SELECTION.prompt"] = "选择两种使徒性格",
-				["CULT_LEADER_PERSONALITY_SELECTION.title"] = "选择两种使徒性格",
-				["CULT_LEADER_PERSONALITY_SELECTION.description"] = "咏春的祝福正在回应你。先选择两种性格，再接受涅奥的遗物。",
-				["CULT_LEADER_GOLDEN_CRAYON.prompt"] = "选择一张使徒牌强化",
-				["CULT_LEADER_HOVER_APOSTLE_NAME.title"] = "使徒名称",
-				["CULT_LEADER_HOVER_RELATED_STATUSES.title"] = "相关状态",
-			});
-			Log.Info("[CultLeaderMod] Gameplay UI localization injected");
+			Log.Warn($"[CultLeaderMod] Failed to parse localization table {resourcePath}: {ex.Message}");
+			return null;
 		}
 	}
 
-	private static void ColorizeCardDescriptions(Dictionary<string, string> cardLoc)
+	private static string? ReadText(string resourcePath)
 	{
-		var keys = cardLoc.Keys
-			.Where(key => key.EndsWith(".description", StringComparison.Ordinal))
-			.ToList();
-
-		foreach (var key in keys)
+		try
 		{
-			var text = cardLoc[key];
-			text = ColorizeTerm(text, "苦痛施予");
-			text = ColorizeTerm(text, "计划妥当");
-			text = ColorizeTerm(text, "再生");
-			text = ColorizeTerm(text, "覆甲");
-			text = ColorizeTerm(text, "活力");
-			text = ColorizeTerm(text, "保留");
-			cardLoc[key] = text;
+			if (Godot.FileAccess.FileExists(resourcePath))
+			{
+				using var file = Godot.FileAccess.Open(resourcePath, Godot.FileAccess.ModeFlags.Read);
+				return file?.GetAsText();
+			}
 		}
-	}
+		catch (Exception ex)
+		{
+			Log.Warn($"[CultLeaderMod] Failed to read localization resource {resourcePath}: {ex.Message}");
+		}
 
-	private static string ColorizeTerm(string text, string term)
-	{
-		const string open = "[color=#FFD84A]";
-		const string close = "[/color]";
-
-		if (text.Contains($"{open}{term}{close}", StringComparison.Ordinal))
-			return text;
-
-		return text.Replace(term, $"{open}{term}{close}", StringComparison.Ordinal);
+		var relativePath = resourcePath.Replace("res://", string.Empty, StringComparison.Ordinal);
+		var fileSystemPath = Path.Combine(AppContext.BaseDirectory, relativePath.Replace('/', Path.DirectorySeparatorChar));
+		try
+		{
+			return File.Exists(fileSystemPath)
+				? File.ReadAllText(fileSystemPath)
+				: null;
+		}
+		catch (Exception ex)
+		{
+			Log.Warn($"[CultLeaderMod] Failed to read localization file {fileSystemPath}: {ex.Message}");
+			return null;
+		}
 	}
 }

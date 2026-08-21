@@ -1,0 +1,16 @@
+{
+  "CULT_LEADER_MOD_KEYWORD_APOSTLE.title": "使徒牌",
+  "CULT_LEADER_MOD_KEYWORD_APOSTLE.description": "使徒名称",
+  "CULT_LEADER_MOD_KEYWORD_PURE.title": "使徒性格",
+  "CULT_LEADER_MOD_KEYWORD_PURE.description": "纯粹",
+  "CULT_LEADER_MOD_KEYWORD_CALM.title": "使徒性格",
+  "CULT_LEADER_MOD_KEYWORD_CALM.description": "冷静",
+  "CULT_LEADER_MOD_KEYWORD_FRENZY.title": "使徒性格",
+  "CULT_LEADER_MOD_KEYWORD_FRENZY.description": "狂热",
+  "CULT_LEADER_MOD_KEYWORD_LIVELY.title": "使徒性格",
+  "CULT_LEADER_MOD_KEYWORD_LIVELY.description": "活泼",
+  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title": "使徒性格",
+  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description": "忧郁",
+  "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.title": "抽1张牌",
+  "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.description": "本场战斗中，该使徒牌每次打出时抽1张牌。"
+}
