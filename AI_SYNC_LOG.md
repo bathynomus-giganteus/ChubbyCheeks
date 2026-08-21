@@ -167,3 +167,16 @@
   - 已将 `CultLeaderMod/localization` 同步到 Steam mod 目录。
 - 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。warning 仍为既有项。
 - 注意：日文、韩文仍为机翻草稿，术语和语气尚未人工统一；若后续要做可发布质量，需要按卡牌/能力逐批润色。
+
+## 2026-08-21 - Codex
+
+- 任务：补充当前工坊简介的英 / 日 / 韩版本。
+- 修改文件：
+  - 新增 `WORKSHOP_LOCALIZED_DESCRIPTIONS.md`
+  - 更新未跟踪工坊配置 `release/workshop/CultLeaderModWorkspace/workshop.json`
+- 实现内容：
+  - 保留中文简介原文不动。
+  - 根据当前工坊简介补充 English / 日本語 / 한국어 三套机翻草稿。
+  - 工坊 JSON 中新增 `description_localizations.eng/jpn/kor`，供后续上传脚本或人工复制使用。
+  - 未向 `CultLeaderMod.json` 游戏 manifest 添加未知多语言字段，避免潜在加载兼容风险。
+- 注意：`release/` 目录当前整体仍为未跟踪目录；若要把工坊配置纳入 Git，需要另行决定提交策略。
