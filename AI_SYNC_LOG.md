@@ -199,3 +199,18 @@
 - 测试建议：
   - 重启游戏后检查日志是否出现 `Localization injected from Entry.Init` 或 `Localization injected from SetLanguageInternal/LocaleChange`。
   - 若仍显示代码，优先检查日志中 `Failed to read localization resource/file` 或 `Missing localization table`。
+
+## 2026-08-21 - Codex
+
+- 任务：继续修复本地化仍显示代码的问题。
+- 新发现：
+  - 最新日志显示 `LocInjectPatch` 已经执行，但 `cards` 只注入 6 条、`characters` 只注入 7 条，其他表缺失。
+  - 这说明注入器优先从 `res://CultLeaderMod/localization/...` 读到了 PCK 内旧版残留 JSON，而不是 loose 文件中的完整 615-key JSON。
+- 修复：
+  - `LocInjectPatch.ReadText` 改为优先读取文件系统 loose JSON（`mods/CultLeaderMod/CultLeaderMod/localization/...`），只有找不到 loose 文件时才回退 `res://`。
+  - 修正 `CultLeaderMod.csproj` 中 build 复制本地化文件的目标路径，确保复制到 `$(ModsPath)CultLeaderMod/CultLeaderMod/localization/%(RecursiveDir)...`。
+- 验证：
+  - `dotnet build` 通过，0 errors / 4 known warnings。
+  - 游戏 mod 目录正确位置下 `eng/jpn/kor/zhs` 均为 8 个 JSON、615 条 key。
+- 注意：
+  - 之前错误复制出的 `mods/CultLeaderMod/eng|jpn|kor|zhs` 和旧的 `localization/localization` 重复目录只会制造 manifest 扫描噪音，不是当前显示代码的根因；如需清理可后续手动删。

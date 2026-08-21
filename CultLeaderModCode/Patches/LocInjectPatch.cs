@@ -155,11 +155,36 @@ public static class LocInjectPatch
 
 	private static string? ReadText(string resourcePath)
 	{
+		var relativePath = resourcePath.Replace("res://", string.Empty, StringComparison.Ordinal);
+		var relativeFileSystemPath = relativePath.Replace('/', Path.DirectorySeparatorChar);
+		var fileSystemCandidates = new[]
+		{
+			Path.Combine(AppContext.BaseDirectory, relativeFileSystemPath),
+			Path.Combine(AppContext.BaseDirectory, "CultLeaderMod", "localization", relativeFileSystemPath.Replace($"CultLeaderMod{Path.DirectorySeparatorChar}localization{Path.DirectorySeparatorChar}", string.Empty, StringComparison.Ordinal)),
+		};
+
+		foreach (var fileSystemPath in fileSystemCandidates.Distinct())
+		{
+			try
+			{
+				if (File.Exists(fileSystemPath))
+				{
+					Log.Info($"[CultLeaderMod] Reading localization file {fileSystemPath}");
+					return File.ReadAllText(fileSystemPath);
+				}
+			}
+			catch (Exception ex)
+			{
+				Log.Warn($"[CultLeaderMod] Failed to read localization file {fileSystemPath}: {ex.Message}");
+			}
+		}
+
 		try
 		{
 			if (Godot.FileAccess.FileExists(resourcePath))
 			{
 				using var file = Godot.FileAccess.Open(resourcePath, Godot.FileAccess.ModeFlags.Read);
+				Log.Info($"[CultLeaderMod] Reading localization resource {resourcePath}");
 				return file?.GetAsText();
 			}
 		}
@@ -168,18 +193,6 @@ public static class LocInjectPatch
 			Log.Warn($"[CultLeaderMod] Failed to read localization resource {resourcePath}: {ex.Message}");
 		}
 
-		var relativePath = resourcePath.Replace("res://", string.Empty, StringComparison.Ordinal);
-		var fileSystemPath = Path.Combine(AppContext.BaseDirectory, relativePath.Replace('/', Path.DirectorySeparatorChar));
-		try
-		{
-			return File.Exists(fileSystemPath)
-				? File.ReadAllText(fileSystemPath)
-				: null;
-		}
-		catch (Exception ex)
-		{
-			Log.Warn($"[CultLeaderMod] Failed to read localization file {fileSystemPath}: {ex.Message}");
-			return null;
-		}
+		return null;
 	}
 }

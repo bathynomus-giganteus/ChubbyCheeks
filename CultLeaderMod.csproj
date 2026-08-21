@@ -43,7 +43,7 @@
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)CultLeaderMod/" />
         <Copy SourceFiles="CultLeaderMod.json" DestinationFolder="$(ModsPath)CultLeaderMod/" />
         <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsPath)CultLeaderMod/" />
-        <Copy SourceFiles="@(CultLeaderModLocalizationFiles)" DestinationFiles="@(CultLeaderModLocalizationFiles->'$(ModsPath)CultLeaderMod/%(RecursiveDir)%(Filename)%(Extension)')" />
+        <Copy SourceFiles="@(CultLeaderModLocalizationFiles)" DestinationFiles="@(CultLeaderModLocalizationFiles->'$(ModsPath)CultLeaderMod/CultLeaderMod/localization/%(RecursiveDir)%(Filename)%(Extension)')" />
     </Target>
 
 
