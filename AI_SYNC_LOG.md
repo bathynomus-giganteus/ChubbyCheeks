@@ -102,3 +102,28 @@
   - 百科/卡牌库的教主筛选按钮改为短标签，按钮宽度缩小；弹出菜单仍使用完整筛选文本，并放大字体、行距与内边距。
 - 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。warning 仍为既有项：3 个 `oldOwner` nullable，1 个 `Apostle_Melancholy_19` async no await。
 - 测试状态：未进游戏实测；建议重点检查百科筛选按钮位置、弹出菜单大小，以及循环/助手埃皮康 hover 是否仍会左右跳位。
+
+## 2026-08-21 - Codex
+
+- 任务：为英文、日文、韩文本地化先生成机翻文本初稿。
+- 修改/新增文件：
+  - 更新 `CultLeaderMod/localization/eng/cards.json`
+  - 更新 `CultLeaderMod/localization/eng/characters.json`
+  - 更新 `CultLeaderMod/localization/eng/powers.json`
+  - 更新 `CultLeaderMod/localization/eng/relics.json`
+  - 新增 `CultLeaderMod/localization/eng/ancients.json`
+  - 新增 `CultLeaderMod/localization/eng/card_keywords.json`
+  - 新增 `CultLeaderMod/localization/eng/events.json`
+  - 新增 `CultLeaderMod/localization/eng/gameplay_ui.json`
+  - 新增 `CultLeaderMod/localization/jpn/*.json`
+  - 新增 `CultLeaderMod/localization/kor/*.json`
+  - 新增 `LOCALIZATION_MACHINE_TRANSLATION_NOTES.md`
+- 生成方式：
+  - 从 `CultLeaderModCode/Patches/LocInjectPatch.cs` 当前中文注入表抽取 key。
+  - 同时合并旧 `zhs/eng` JSON 中仅存在于文件的 key。
+  - 使用机翻生成 `eng/jpn/kor` 三套文本，每套 615 条。
+  - 生成时保护 `{...}` 动态变量、`[sine]` 等富文本标签和换行；生成后校验三种语言均为 0 个受保护 token mismatch。
+- 重要注意：
+  - 当前 `LocInjectPatch.cs` 仍然不按 `language` 参数分支，会对所有语言注入中文。
+  - 因此这批 JSON 是“文本准备/覆盖率测试”初稿；若要真正游戏内切换语言，需要下一步重构 `LocInjectPatch`，避免非中文语言被中文运行时注入覆盖。
+- 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。warning 仍为既有项。

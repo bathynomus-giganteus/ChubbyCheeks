@@ -1,0 +1,16 @@
+{
+  "CULT_LEADER_MOD_KEYWORD_APOSTLE.title": "アポストルカード",
+  "CULT_LEADER_MOD_KEYWORD_APOSTLE.description": "使徒名",
+  "CULT_LEADER_MOD_KEYWORD_PURE.title": "使徒キャラクター",
+  "CULT_LEADER_MOD_KEYWORD_PURE.description": "ピュア",
+  "CULT_LEADER_MOD_KEYWORD_CALM.title": "使徒キャラクター",
+  "CULT_LEADER_MOD_KEYWORD_CALM.description": "落ち着け",
+  "CULT_LEADER_MOD_KEYWORD_FRENZY.title": "使徒キャラクター",
+  "CULT_LEADER_MOD_KEYWORD_FRENZY.description": "狂信者",
+  "CULT_LEADER_MOD_KEYWORD_LIVELY.title": "使徒キャラクター",
+  "CULT_LEADER_MOD_KEYWORD_LIVELY.description": "賑やか",
+  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title": "使徒キャラクター",
+  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description": "メランコリー",
+  "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.title": "カードを1枚引く",
+  "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.description": "このバトルでは使徒カードをプレイする度にカードを1枚ドローします。"
+}

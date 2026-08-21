@@ -1,0 +1,16 @@
+{
+  "CULT_LEADER_MOD_KEYWORD_APOSTLE.title": "Apostle Card",
+  "CULT_LEADER_MOD_KEYWORD_APOSTLE.description": "Apostle’s name",
+  "CULT_LEADER_MOD_KEYWORD_PURE.title": "Apostle Personality",
+  "CULT_LEADER_MOD_KEYWORD_PURE.description": "Pure",
+  "CULT_LEADER_MOD_KEYWORD_CALM.title": "Apostle Personality",
+  "CULT_LEADER_MOD_KEYWORD_CALM.description": "Calm down",
+  "CULT_LEADER_MOD_KEYWORD_FRENZY.title": "Apostle Personality",
+  "CULT_LEADER_MOD_KEYWORD_FRENZY.description": "Fanatical",
+  "CULT_LEADER_MOD_KEYWORD_LIVELY.title": "Apostle Personality",
+  "CULT_LEADER_MOD_KEYWORD_LIVELY.description": "Lively",
+  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title": "Apostle Personality",
+  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description": "Melancholy",
+  "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.title": "Draw 1 card",
+  "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.description": "In this battle, draw 1 card each time the apostle card is played."
+}

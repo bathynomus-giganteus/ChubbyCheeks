@@ -1,9 +1,23 @@
-﻿{
-  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.title": "Cult Leader",
-  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.titleObject": "Cult Leader",
-  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.possessiveAdjective": "Cult Leader's",
-  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.pronounObject": "them",
-  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.pronounPossessive": "their",
-  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.pronounSubject": "they",
-  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.description": "A mysterious Cult Leader who commands apostles."
+{
+  "CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.title": "Leader",
+  "CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.titleObject": "Leader",
+  "CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.possessiveAdjective": "The leader’s",
+  "CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.pronounObject": "TA",
+  "CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.pronounPossessive": "TA’s",
+  "CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.pronounSubject": "TA",
+  "CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.description": "The mysterious leader who controls the power of the apostle.",
+  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.title": "Leader",
+  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.titleObject": "Leader",
+  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.possessiveAdjective": "The leader’s",
+  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.pronounObject": "TA",
+  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.pronounPossessive": "TA’s",
+  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.pronounSubject": "TA",
+  "CULTLEADERMOD_CHARACTER_CULTLEADERMOD.description": "The mysterious leader who controls the power of the apostle.",
+  "CULT_LEADER_MOD_CHARACTER.title": "Leader",
+  "CULT_LEADER_MOD_CHARACTER.titleObject": "Leader",
+  "CULT_LEADER_MOD_CHARACTER.possessiveAdjective": "The leader’s",
+  "CULT_LEADER_MOD_CHARACTER.pronounObject": "TA",
+  "CULT_LEADER_MOD_CHARACTER.pronounPossessive": "TA’s",
+  "CULT_LEADER_MOD_CHARACTER.pronounSubject": "TA",
+  "CULT_LEADER_MOD_CHARACTER.description": "The mysterious leader who controls the power of the apostle."
 }
