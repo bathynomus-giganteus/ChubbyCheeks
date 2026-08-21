@@ -10,6 +10,7 @@ namespace CultLeaderMod.CultLeaderModCode.Patches;
 public static class LocInjectPatch
 {
 	private const string LocalizationRoot = "res://CultLeaderMod/localization";
+	private static bool _subscribedToLocaleChange;
 
 	private static readonly string[] TableNames =
 	[
@@ -23,15 +24,76 @@ public static class LocInjectPatch
 		"gameplay_ui",
 	];
 
-	[HarmonyPatch(typeof(LocManager), "SetLanguageInternal")]
+	[HarmonyPatch(typeof(LocManager), "SetLanguageInternal", [
+		typeof(string),
+		typeof(Dictionary<string, LocTable>),
+		typeof(bool),
+		typeof(List<LocValidationError>),
+	])]
 	[HarmonyPostfix]
 	private static void Postfix(string language, Dictionary<string, LocTable> tables)
+	{
+		InjectIntoTables(language, tables, "SetLanguageInternal");
+	}
+
+	public static void Install()
+	{
+		InjectCurrentLanguage("Entry.Init");
+
+		try
+		{
+			if (_subscribedToLocaleChange)
+				return;
+
+			LocManager.Instance.SubscribeToLocaleChange(OnLocaleChanged);
+			_subscribedToLocaleChange = true;
+			Log.Info("[CultLeaderMod] Localization locale-change callback registered");
+		}
+		catch (Exception ex)
+		{
+			Log.Warn($"[CultLeaderMod] Failed to register localization locale-change callback: {ex.Message}");
+		}
+	}
+
+	private static void OnLocaleChanged()
+	{
+		InjectCurrentLanguage("LocaleChange");
+	}
+
+	private static void InjectCurrentLanguage(string source)
+	{
+		try
+		{
+			var locManager = LocManager.Instance;
+			var language = locManager.Language;
+			var tables = new Dictionary<string, LocTable>();
+			foreach (var tableName in TableNames)
+			{
+				try
+				{
+					tables[tableName] = locManager.GetTable(tableName);
+				}
+				catch (Exception ex)
+				{
+					Log.Warn($"[CultLeaderMod] Failed to get localization table '{tableName}' during {source}: {ex.Message}");
+				}
+			}
+
+			InjectIntoTables(language, tables, source);
+		}
+		catch (Exception ex)
+		{
+			Log.Warn($"[CultLeaderMod] Failed to inject current localization during {source}: {ex.Message}");
+		}
+	}
+
+	private static void InjectIntoTables(string language, Dictionary<string, LocTable> tables, string source)
 	{
 		if (tables == null)
 			return;
 
 		var normalizedLanguage = NormalizeLanguage(language);
-		Log.Info($"[CultLeaderMod] Loading localization for language={language}, normalized={normalizedLanguage}");
+		Log.Info($"[CultLeaderMod] Loading localization from {source} for language={language}, normalized={normalizedLanguage}");
 
 		var loadedTables = 0;
 		foreach (var tableName in TableNames)
@@ -51,10 +113,10 @@ public static class LocInjectPatch
 
 			locTable.MergeWith(localizedEntries);
 			loadedTables++;
-			Log.Info($"[CultLeaderMod] Localization injected: language={normalizedLanguage}, table={tableName}, entries={localizedEntries.Count}");
+			Log.Info($"[CultLeaderMod] Localization injected from {source}: language={normalizedLanguage}, table={tableName}, entries={localizedEntries.Count}");
 		}
 
-		Log.Info($"[CultLeaderMod] Localization injection complete: language={normalizedLanguage}, tables={loadedTables}");
+		Log.Info($"[CultLeaderMod] Localization injection complete from {source}: language={normalizedLanguage}, tables={loadedTables}");
 	}
 
 	private static string NormalizeLanguage(string? language)

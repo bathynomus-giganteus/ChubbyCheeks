@@ -18,6 +18,7 @@
         <PackageReference Include="STS2.RitsuLib" Version="0.5.13" PrivateAssets="All"/>
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0" PrivateAssets="All"/>
         <AdditionalFiles Include="CultLeaderMod/localization/**/*.json"/>
+        <CultLeaderModLocalizationFiles Include="CultLeaderMod/localization/**/*.json"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Remove=".godot/**" />
@@ -42,6 +43,7 @@
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)CultLeaderMod/" />
         <Copy SourceFiles="CultLeaderMod.json" DestinationFolder="$(ModsPath)CultLeaderMod/" />
         <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsPath)CultLeaderMod/" />
+        <Copy SourceFiles="@(CultLeaderModLocalizationFiles)" DestinationFiles="@(CultLeaderModLocalizationFiles->'$(ModsPath)CultLeaderMod/%(RecursiveDir)%(Filename)%(Extension)')" />
     </Target>
 
 

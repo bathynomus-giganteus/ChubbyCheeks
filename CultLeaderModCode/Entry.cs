@@ -6,6 +6,7 @@ using STS2RitsuLib;
 using STS2RitsuLib.Interop;
 using STS2RitsuLib.Scaffolding.Content;
 using CultLeaderMod.CultLeaderModCode.CardTags;
+using CultLeaderMod.CultLeaderModCode.Patches;
 
 namespace CultLeaderMod.CultLeaderModCode;
 
@@ -29,6 +30,7 @@ public class Entry
             var harmony = new Harmony(ModId);
             harmony.PatchAll(assembly);
             Logger.Info("Harmony patches applied");
+            LocInjectPatch.Install();
         }
         catch (Exception ex)
         {

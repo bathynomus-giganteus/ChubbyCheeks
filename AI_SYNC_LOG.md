@@ -180,3 +180,22 @@
   - 工坊 JSON 中新增 `description_localizations.eng/jpn/kor`，供后续上传脚本或人工复制使用。
   - 未向 `CultLeaderMod.json` 游戏 manifest 添加未知多语言字段，避免潜在加载兼容风险。
 - 注意：`release/` 目录当前整体仍为未跟踪目录；若要把工坊配置纳入 Git，需要另行决定提交策略。
+
+## 2026-08-21 - Codex
+
+- 任务：修复英 / 日 / 韩游戏内显示 localization key / 代码名，而不是实际文本的问题。
+- 现象：
+  - 用户测试发现三种语言都显示代码，没有实际文字。
+  - 最新游戏日志 `C:\Users\888\AppData\Roaming\SlayTheSpire2\logs\godot.log` 中大量出现 `GetRawText: Key 'CULT_LEADER_MOD_CARD_...' not found in table 'cards'`。
+  - 日志中没有出现 `LocInjectPatch` 的加载日志，说明 JSON 文件本身存在，但本地化注入没有执行。
+- 原因判断：
+  - `LocManager.SetLanguageInternal` 当前实际签名为 `(string language, Dictionary<string, LocTable> tables, bool overridesActive, List<LocValidationError> validationErrors)`。
+  - 旧 patch 没有明确匹配 4 参数签名，且只依赖语言切换时机，导致注入不稳定 / 未触发。
+- 修复：
+  - `LocInjectPatch` 改为精确 patch `SetLanguageInternal` 的 4 参数签名。
+  - 新增 `LocInjectPatch.Install()`：在 `Entry.Init()` 中主动注入当前语言，并注册 `SubscribeToLocaleChange` 回调，语言切换时再次注入。
+  - `dotnet build` 现在会自动复制 `CultLeaderMod/localization/**/*.json` 到游戏 mod 目录，避免只复制 DLL 而遗漏 loose JSON。
+- 构建结果：`dotnet build` 通过，0 errors / 4 known warnings。
+- 测试建议：
+  - 重启游戏后检查日志是否出现 `Localization injected from Entry.Init` 或 `Localization injected from SetLanguageInternal/LocaleChange`。
+  - 若仍显示代码，优先检查日志中 `Failed to read localization resource/file` 或 `Missing localization table`。
