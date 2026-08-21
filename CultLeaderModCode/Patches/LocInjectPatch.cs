@@ -157,10 +157,23 @@ public static class LocInjectPatch
 	{
 		var relativePath = resourcePath.Replace("res://", string.Empty, StringComparison.Ordinal);
 		var relativeFileSystemPath = relativePath.Replace('/', Path.DirectorySeparatorChar);
+		var localizationPrefix = $"CultLeaderMod{Path.DirectorySeparatorChar}localization{Path.DirectorySeparatorChar}";
+		var tableRelativePath = relativeFileSystemPath.StartsWith(localizationPrefix, StringComparison.Ordinal)
+			? relativeFileSystemPath[localizationPrefix.Length..]
+			: relativeFileSystemPath;
+		var assemblyDirectory = Path.GetDirectoryName(typeof(LocInjectPatch).Assembly.Location) ?? AppContext.BaseDirectory;
+		var currentDirectory = System.Environment.CurrentDirectory;
 		var fileSystemCandidates = new[]
 		{
+			Path.Combine(assemblyDirectory, "CultLeaderMod", "localization", tableRelativePath),
+			Path.Combine(assemblyDirectory, relativeFileSystemPath),
+			Path.Combine(AppContext.BaseDirectory, "mods", "CultLeaderMod", "CultLeaderMod", "localization", tableRelativePath),
+			Path.Combine(AppContext.BaseDirectory, "mods", "CultLeaderMod", relativeFileSystemPath),
+			Path.Combine(AppContext.BaseDirectory, "CultLeaderMod", "localization", tableRelativePath),
 			Path.Combine(AppContext.BaseDirectory, relativeFileSystemPath),
-			Path.Combine(AppContext.BaseDirectory, "CultLeaderMod", "localization", relativeFileSystemPath.Replace($"CultLeaderMod{Path.DirectorySeparatorChar}localization{Path.DirectorySeparatorChar}", string.Empty, StringComparison.Ordinal)),
+			Path.Combine(currentDirectory, "mods", "CultLeaderMod", "CultLeaderMod", "localization", tableRelativePath),
+			Path.Combine(currentDirectory, "mods", "CultLeaderMod", relativeFileSystemPath),
+			Path.Combine(currentDirectory, "CultLeaderMod", "localization", tableRelativePath),
 		};
 
 		foreach (var fileSystemPath in fileSystemCandidates.Distinct())
