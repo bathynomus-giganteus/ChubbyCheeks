@@ -86,9 +86,9 @@ public static class CardLibraryApostleFilterPatch
             duplicate.AnchorBottom = 1f;
             duplicate.GrowHorizontal = Control.GrowDirection.End;
             duplicate.GrowVertical = Control.GrowDirection.Begin;
-            duplicate.OffsetLeft = -8f;
+            duplicate.OffsetLeft = 32f;
             duplicate.OffsetTop = -204f;
-            duplicate.OffsetRight = 192f;
+            duplicate.OffsetRight = 232f;
             duplicate.OffsetBottom = -156f;
 
             var sortIcon = duplicate.FindChild("Image", true, false) as TextureRect;
@@ -104,7 +104,7 @@ public static class CardLibraryApostleFilterPatch
                 Theme = __instance.Theme,
                 HideOnItemSelection = true,
             };
-            menu.AddThemeFontSizeOverride("font_size", 30);
+            menu.AddThemeFontSizeOverride("font_size", 24);
             menu.AddThemeConstantOverride("v_separation", 12);
             menu.AddThemeConstantOverride("item_start_padding", 18);
             menu.AddThemeConstantOverride("item_end_padding", 18);

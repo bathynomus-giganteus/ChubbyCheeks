@@ -65,7 +65,8 @@ public static class CardHoverTipsPatch
         [typeof(Apostle_Melancholy_23)] = [typeof(VulnerablePower)],
         [typeof(Apostle_Melancholy_24)] = [typeof(WeakPower)],
 
-        [typeof(Apostle_Pure_01)] = [typeof(RegenPower), typeof(LifeEssencePower)],
+        [typeof(Apostle_Pure_01)] = [typeof(HealingPower), typeof(LifeEssencePower)],
+        [typeof(Apostle_Pure_26)] = [typeof(PirateMarkPower)],
         [typeof(Apostle_Pure_08)] = [typeof(WeakPower)],
         [typeof(Apostle_Pure_13)] = [typeof(SapLauncherPower)],
         [typeof(Apostle_Pure_15)] = [typeof(SelfStunPower)],
@@ -100,8 +101,8 @@ public static class CardHoverTipsPatch
 
     private static readonly Dictionary<Type, string> CompactStatusTipsByCard = new()
     {
-        [typeof(TestRainbowCard)] = "再生  覆甲  活力  保留  苦痛施予",
-        [typeof(Apostle_Lively_08_1)] = "再生  覆甲  活力  苦痛施予",
+        [typeof(TestRainbowCard)] = "治愈  覆甲  活力  保留  苦痛施予",
+        [typeof(Apostle_Lively_08_1)] = "治愈  覆甲  活力  苦痛施予",
     };
 
     private static readonly (CardTag Tag, string Name)[] PersonalityTagNames =
@@ -261,6 +262,7 @@ public static class CardHoverTipsPatch
         [nameof(Apostle_Pure_23)] = "洛涅",
         [nameof(Apostle_Pure_24)] = "阿莱特",
         [nameof(Apostle_Pure_25)] = "乔伊",
+        [nameof(Apostle_Pure_26)] = "斯帕洛特",
     };
 
     private static void Postfix(CardModel __instance, ref IEnumerable<IHoverTip> __result)
@@ -390,8 +392,11 @@ public static class CardHoverTipsPatch
 
     private static IEnumerable<Type> GetPowerTermsFromDescription(string description)
     {
-        if (description.Contains("再生", StringComparison.Ordinal))
-            yield return typeof(RegenPower);
+        if (description.Contains("治愈", StringComparison.Ordinal))
+            yield return typeof(HealingPower);
+
+        if (description.Contains("海盗印记", StringComparison.Ordinal))
+            yield return typeof(PirateMarkPower);
 
         if (description.Contains("覆甲", StringComparison.Ordinal))
             yield return typeof(PlatingPower);

@@ -15,7 +15,7 @@ public class Apostle_Pure_22 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("MaxHpAmt", 10m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("MaxHpAmt", 7m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/看_看看我.png");
@@ -30,12 +30,12 @@ public class Apostle_Pure_22 : ModCardTemplate
             return;
 
         var amount = DynamicVars["MaxHpAmt"].BaseValue;
-        await PowerCmd.Apply<TempMaxHpLossPower>(choiceContext, target, amount, base.Owner.Creature, this);
-        await PowerCmd.Apply<TempMaxHpPower>(choiceContext, base.Owner.Creature, amount, base.Owner.Creature, this);
+        await CreatureCmd.LoseMaxHp(choiceContext, target, amount, true);
+        await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, base.Owner.Creature, amount, base.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["MaxHpAmt"].UpgradeValueBy(5m);
+        DynamicVars["MaxHpAmt"].UpgradeValueBy(3m);
     }
 }

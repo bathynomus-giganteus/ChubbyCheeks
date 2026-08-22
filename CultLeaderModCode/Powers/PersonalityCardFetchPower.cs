@@ -1,4 +1,5 @@
 using CultLeaderMod.CultLeaderModCode.Cards;
+using CultLeaderMod.CultLeaderModCode.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -17,13 +18,14 @@ public class PersonalityCardFetchPower : ModPowerTemplate
     {
         public CardTag Tag;
         public bool UpgradeFetchedCard;
+        public string IconPath = "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png";
     }
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomIconPath => "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png";
-    public override string CustomBigIconPath => "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png";
+    public override string CustomIconPath => GetInternalData<Data>().IconPath;
+    public override string CustomBigIconPath => GetInternalData<Data>().IconPath;
 
     protected override object InitInternalData()
     {
@@ -32,8 +34,15 @@ public class PersonalityCardFetchPower : ModPowerTemplate
 
     public void Configure(CardTag tag, bool upgradeFetchedCard)
     {
-        GetInternalData<Data>().Tag = tag;
-        GetInternalData<Data>().UpgradeFetchedCard = upgradeFetchedCard;
+        var data = GetInternalData<Data>();
+        data.Tag = tag;
+        data.UpgradeFetchedCard = upgradeFetchedCard;
+        data.IconPath = tag == CultLeaderCardTags.Pure ? "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png"
+            : tag == CultLeaderCardTags.Calm ? "res://CultLeaderMod/images/card_portraits/personality/personality_calm.png"
+            : tag == CultLeaderCardTags.Frenzy ? "res://CultLeaderMod/images/card_portraits/personality/personality_frenzy.png"
+            : tag == CultLeaderCardTags.Lively ? "res://CultLeaderMod/images/card_portraits/personality/personality_lively.png"
+            : tag == CultLeaderCardTags.Melancholy ? "res://CultLeaderMod/images/card_portraits/personality/personality_melancholy.png"
+            : "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png";
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
@@ -45,22 +54,17 @@ public class PersonalityCardFetchPower : ModPowerTemplate
 
         var data = GetInternalData<Data>();
         var tag = data.Tag;
-        var deck = PileType.Deck.GetPile(player).Cards
+        var drawPile = PileType.Draw.GetPile(player).Cards
             .Where(card => ApostlePowerRules.IsApostleCard(card) && card.Tags.Contains(tag))
             .ToList();
 
-        if (deck.Count == 0)
+        if (drawPile.Count == 0)
             return;
 
-        var selected = deck[Random.Shared.Next(deck.Count)];
+        var selected = drawPile[Random.Shared.Next(drawPile.Count)];
         if (data.UpgradeFetchedCard && selected.IsUpgradable)
             CardCmd.Upgrade(new[] { selected }, CardPreviewStyle.None);
 
-        var combatState = player.Creature.CombatState;
-        if (combatState == null)
-            return;
-
-        var combatCopy = combatState.CloneCard(selected);
-        await CardPileCmd.Add(combatCopy, PileType.Hand, CardPilePosition.Top, this, false);
+        await CardPileCmd.Add(selected, PileType.Hand, CardPilePosition.Top, this, false);
     }
 }

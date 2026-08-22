@@ -28,7 +28,7 @@ public class Apostle_Melancholy_15 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/执行教理.png");
 
     public Apostle_Melancholy_15()
-        : base(2, CardType.Skill, CardRarity.Rare, TargetType.AllEnemies) { }
+        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

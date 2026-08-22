@@ -38,7 +38,7 @@ public class LifeGemRelic : CultLeaderModRelic
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
         RoomsEntered++;
-        if (RoomsEntered < 3)
+        if (RoomsEntered < 2)
             return;
 
         RoomsEntered = 0;

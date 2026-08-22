@@ -12,7 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// Loop. Whenever the owner gains Regen, Vigor, Plating, Retain, or Bitter Pain,
+/// Loop. Whenever the owner gains Healing, Vigor, Plating, Retain, or Bitter Pain,
 /// deal this power's stacks as damage to all enemies.
 /// </summary>
 [RegisterPower]
@@ -59,7 +59,7 @@ public class LoopPower : ModPowerTemplate
 
     private static bool IsTrackedPower(PowerModel power)
     {
-        return power is RegenPower
+        return power is HealingPower
             or LifeEssencePower
             or VigorPower
             or FervorPower

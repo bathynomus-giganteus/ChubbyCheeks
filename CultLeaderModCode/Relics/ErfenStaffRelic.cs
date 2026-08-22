@@ -25,7 +25,7 @@ public class ErfenStaffRelic : CultLeaderModRelic
 
     public override bool ShowCounter => true;
 
-    public override int DisplayAmount => _powerGains % 20;
+    public override int DisplayAmount => _powerGains % 10;
 
     [SavedProperty]
     public int PowerGains
@@ -51,7 +51,7 @@ public class ErfenStaffRelic : CultLeaderModRelic
             return;
 
         PowerGains++;
-        if (PowerGains % 20 == 0)
+        if (PowerGains % 10 == 0)
         {
             Flash();
             await PlayerCmd.GainEnergy(1m, base.Owner);
@@ -60,7 +60,7 @@ public class ErfenStaffRelic : CultLeaderModRelic
 
     private static bool IsTrackedPower(PowerModel power)
     {
-        return power is RegenPower
+        return power is HealingPower
             or LifeEssencePower
             or VigorPower
             or FervorPower

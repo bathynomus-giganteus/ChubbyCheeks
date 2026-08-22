@@ -3,7 +3,7 @@
   "name": "教主",
   "author": "Bathynomus Giganteus",
   "description": "新增可玩角色——教主。",
-  "version": "v0.2.04",
+  "version": "v0.3.00",
   "min_game_version": "0.110.1",
   "has_pck": true,
   "has_dll": true,

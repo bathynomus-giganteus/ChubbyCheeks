@@ -15,7 +15,7 @@ internal static class ApostlePowerRules
 
     private static readonly HashSet<Type> AuthorityScaledPowerTypes =
     [
-        typeof(RegenPower),
+        typeof(HealingPower),
         typeof(PlatingPower),
         typeof(VigorPower),
         typeof(RetainPower),
@@ -25,7 +25,7 @@ internal static class ApostlePowerRules
         typeof(FervorPower),
         typeof(BitterPainBurstPower),
         typeof(HappinessPower),
-        typeof(RegenPerTurnPower),
+        typeof(HealingPerTurnPower),
         typeof(PlatingPerTurnPower),
         typeof(VigorPerTurnPower),
         typeof(BitterPainPerTurnPower),
@@ -34,7 +34,7 @@ internal static class ApostlePowerRules
 
     private static readonly Dictionary<Type, Type> ElderUpgrades = new()
     {
-        [typeof(RegenPower)] = typeof(LifeEssencePower),
+        [typeof(HealingPower)] = typeof(LifeEssencePower),
         [typeof(PlatingPower)] = typeof(SolidIcePower),
         [typeof(VigorPower)] = typeof(FervorPower),
         [typeof(BitterPainPower)] = typeof(BitterPainBurstPower),

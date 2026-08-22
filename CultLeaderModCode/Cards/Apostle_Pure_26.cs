@@ -6,49 +6,45 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace CultLeaderMod.CultLeaderModCode.Cards;
 
 [RegisterCard(typeof(CultLeaderModCardPool))]
-public class Apostle_Calm_01 : ModCardTemplate
+public class Apostle_Pure_26 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
-        [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
+        [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new DamageVar(8m, ValueProp.Move),
-        ModCardVars.Computed("Hits", 1m, card =>
-        {
-            var creature = card?.Owner?.Creature;
-            return creature == null ? 1m : 1m + FullBlockCounterPower.GetTotal(creature);
-        })
-    ];
+        [new DamageVar(5m, ValueProp.Move), new DynamicVar("Hits", 2m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
-        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/雪花蝶舞.png");
+        new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/今天的目标就是那家伙！.png");
 
-    public Apostle_Calm_01()
-        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
+    public Apostle_Pure_26()
+        : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Target == null)
+        var target = cardPlay.Target;
+        if (target == null)
             return;
 
-        int hits = 1 + FullBlockCounterPower.GetTotal(base.Owner.Creature);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(hits)
+        await DamageCmd
+            .Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target)
+            .Targeting(target)
+            .WithHitCount(DynamicVars["Hits"].IntValue)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+
+        if (!target.IsDead)
+            await PowerCmd.Apply<PirateMarkPower>(choiceContext, target, 1m, base.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["Hits"].UpgradeValueBy(1m);
     }
 }

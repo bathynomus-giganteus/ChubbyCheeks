@@ -37,7 +37,7 @@ public class ChestnutBurstCard : ModCardTemplate
         if (selected == null)
             return;
 
-        selected.EnergyCost.AddUntilPlayed(1);
+        selected.EnergyCost.AddThisCombat(1);
         selected.BaseReplayCount += DynamicVars["Replay"].IntValue;
         CardCmd.Preview(selected);
     }

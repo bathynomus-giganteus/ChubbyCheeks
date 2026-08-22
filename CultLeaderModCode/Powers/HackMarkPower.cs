@@ -10,7 +10,7 @@ namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
 /// Basic Hacking Attack debuff. Whenever the player heals, the owner of this
-/// debuff takes damage equal to the healed amount multiplied by its stacks.
+/// debuff takes damage equal to the player's current Healing stacks multiplied by its stacks.
 /// </summary>
 [RegisterPower]
 public class HackMarkPower : ModPowerTemplate
@@ -28,7 +28,11 @@ public class HackMarkPower : ModPowerTemplate
         if (delta <= 0m || !creature.IsPlayer || Owner == null || Owner.IsDead || Amount <= 0)
             return;
 
-        var damage = delta * Amount;
+        var healingStacks = creature.GetPower<HealingPower>()?.Amount ?? 0m;
+        if (healingStacks <= 0m)
+            return;
+
+        var damage = healingStacks * Amount;
         await CreatureCmd.Damage(
             new ThrowingPlayerChoiceContext(),
             Owner,

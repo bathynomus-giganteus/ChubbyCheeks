@@ -25,7 +25,7 @@ public class NayaDolphinWaterGunRelic : CultLeaderModRelic
 
     public override bool ShowCounter => true;
 
-    public override int DisplayAmount => _regenGains % 5;
+    public override int DisplayAmount => _regenGains % 8;
 
     [SavedProperty]
     public int RegenGains
@@ -49,14 +49,15 @@ public class NayaDolphinWaterGunRelic : CultLeaderModRelic
     {
         if (amount <= 0m || power.Owner != base.Owner.Creature)
             return;
-        if (power is not RegenPower and not LifeEssencePower)
+        if (power is not HealingPower and not LifeEssencePower)
             return;
 
         RegenGains++;
-        if (RegenGains % 5 == 0)
+        if (RegenGains % 8 == 0)
         {
             Flash();
             await CreatureCmd.Heal(base.Owner.Creature, 1m);
+            await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
         }
     }
 }

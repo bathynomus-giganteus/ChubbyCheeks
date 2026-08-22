@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -18,7 +19,22 @@ public class Apostle_Calm_02 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(12m, ValueProp.Move), new DynamicVar("BuffBonus", 2m)];
+    [
+        new DamageVar(12m, ValueProp.Move),
+        new DynamicVar("BuffBonus", 8m),
+        ModCardVars.Computed("TotalDamage", 12m, card =>
+        {
+            var owner = card?.Owner?.Creature;
+            var buffTypes = owner?.Powers
+                ?.Where(p => p.Type == PowerType.Buff && p.IsVisible && p.Amount > 0m)
+                .Select(p => p.GetType())
+                .Distinct()
+                .Count() ?? 0;
+            var baseDamage = card?.DynamicVars["Damage"].BaseValue ?? 12m;
+            var buffBonus = card?.DynamicVars["BuffBonus"].BaseValue ?? 2m;
+            return baseDamage + buffTypes * buffBonus;
+        })
+    ];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/百帕斯卡_挥棒.png");
@@ -30,10 +46,12 @@ public class Apostle_Calm_02 : ModCardTemplate
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
         var owner = base.Owner.Creature;
-        int buffStacks = owner.Powers
-            ?.Where(p => p.Type == PowerType.Buff && p.IsVisible)
-            .Sum(p => (int)Math.Max(0m, p.Amount)) ?? 0;
-        decimal damage = DynamicVars.Damage.BaseValue + buffStacks * DynamicVars["BuffBonus"].BaseValue;
+        int buffTypes = owner.Powers
+            ?.Where(p => p.Type == PowerType.Buff && p.IsVisible && p.Amount > 0m)
+            .Select(p => p.GetType())
+            .Distinct()
+            .Count() ?? 0;
+        decimal damage = DynamicVars.Damage.BaseValue + buffTypes * DynamicVars["BuffBonus"].BaseValue;
         await DamageCmd.Attack(damage)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
@@ -43,7 +61,6 @@ public class Apostle_Calm_02 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["BuffBonus"].UpgradeValueBy(1m);
+        DynamicVars["BuffBonus"].UpgradeValueBy(4m);
     }
 }

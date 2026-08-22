@@ -26,7 +26,7 @@ public class Apostle_Melancholy_07 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/芬多精波动.png");
 
     public Apostle_Melancholy_07()
-        : base(3, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
+        : base(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -34,13 +34,13 @@ public class Apostle_Melancholy_07 : ModCardTemplate
         if (target == null)
             return;
 
-        int debuffStacks = ApostleCardEffectHelpers.CountDebuffStacks(target);
-        if (debuffStacks > 0)
+        int debuffTypes = ApostleCardEffectHelpers.CountDebuffTypes(target);
+        if (debuffTypes > 0)
         {
             await ApostleCardPlayHelpers.ApplyPurePower(
                 choiceContext,
                 base.Owner.Creature,
-                debuffStacks,
+                debuffTypes,
                 base.Owner.Creature,
                 this
             );

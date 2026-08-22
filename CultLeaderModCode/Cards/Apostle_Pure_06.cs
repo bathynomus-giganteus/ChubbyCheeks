@@ -16,7 +16,7 @@ public class Apostle_Pure_06 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(5m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("HealAmt", 2m), new BlockVar(5m, ValueProp.Move)];
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
@@ -28,13 +28,14 @@ public class Apostle_Pure_06 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, owner, 2m, owner, this);
+        await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, owner, DynamicVars["HealAmt"].BaseValue, owner, this);
         await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
     }
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        DynamicVars["HealAmt"].UpgradeValueBy(1m);
+        DynamicVars.Block.UpgradeValueBy(3m);
     }
 }
 

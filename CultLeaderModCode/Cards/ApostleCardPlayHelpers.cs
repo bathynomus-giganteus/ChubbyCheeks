@@ -18,7 +18,7 @@ internal static class ApostleCardPlayHelpers
         bool silent = false
     )
     {
-        return ApostlePowerRules.ApplyApostlePower<RegenPower, LifeEssencePower>(
+        return ApostlePowerRules.ApplyApostlePower<HealingPower, LifeEssencePower>(
             choiceContext,
             target,
             amount,

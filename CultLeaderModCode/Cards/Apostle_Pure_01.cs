@@ -34,18 +34,18 @@ public class Apostle_Pure_01 : ModCardTemplate
         var owner = base.Owner.Creature;
         var dmg = DynamicVars.Damage.BaseValue;
 
-        // Count and remove Regen
-        var regenPower = owner.GetPower<RegenPower>();
-        int regenStacks = regenPower?.Amount ?? 0;
-        if (regenPower != null)
-            await PowerCmd.Remove<RegenPower>(owner);
+        // Count and remove Healing
+        var healingPower = owner.GetPower<HealingPower>();
+        int healingStacks = healingPower?.Amount ?? 0;
+        if (healingPower != null)
+            await PowerCmd.Remove<HealingPower>(owner);
 
         var lifePower = owner.GetPower<LifeEssencePower>();
         int lifeStacks = lifePower?.Amount ?? 0;
         if (lifePower != null)
             await PowerCmd.Remove<LifeEssencePower>(owner);
 
-        int totalStacks = regenStacks + lifeStacks;
+        int totalStacks = healingStacks + lifeStacks;
         if (totalStacks <= 0)
             return;
 
@@ -68,4 +68,3 @@ public class Apostle_Pure_01 : ModCardTemplate
         DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }
-

@@ -20,7 +20,7 @@ public class Apostle_Pure_11 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, ValueProp.Move), new DynamicVar("BonusDamage", 8m), new DynamicVar("Threshold", 1m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, ValueProp.Move), new DynamicVar("BonusDamage", 8m), new DynamicVar("Threshold", 3m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/谢绝_Non_grata.png");
@@ -48,7 +48,7 @@ public class Apostle_Pure_11 : ModCardTemplate
 
         if (ApostleCardEffectHelpers.PureStacks(owner) >= DynamicVars["Threshold"].BaseValue)
         {
-            await ApostleCardEffectHelpers.RemovePureStacks(choiceContext, owner, DynamicVars["Threshold"].IntValue, this);
+            await ApostleCardEffectHelpers.RemovePureStacks(choiceContext, owner, 1, this);
             attackContext.AddHit(await CreatureCmd.Damage(
                 choiceContext,
                 target,

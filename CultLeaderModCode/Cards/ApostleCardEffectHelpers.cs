@@ -18,7 +18,7 @@ internal static class ApostleCardEffectHelpers
     public static int PureStacks(Creature owner)
     {
         return (int)(
-            (owner.GetPower<RegenPower>()?.Amount ?? 0m)
+            (owner.GetPower<HealingPower>()?.Amount ?? 0m)
             + (owner.GetPower<LifeEssencePower>()?.Amount ?? 0m)
         );
     }
@@ -133,11 +133,10 @@ internal static class ApostleCardEffectHelpers
                 continue;
             }
 
-            var regen = owner.GetPower<RegenPower>();
-            if (regen != null && regen.Amount > 0)
+            var healing = owner.GetPower<HealingPower>();
+            if (healing != null && healing.Amount > 0)
             {
-                await CreatureCmd.Heal(owner, regen.Amount, true);
-                await PowerCmd.ModifyAmount(choiceContext, regen, -1m, owner, cardSource, silent: true);
+                await healing.TriggerActive(choiceContext, owner, cardSource);
             }
         }
     }
@@ -158,10 +157,10 @@ internal static class ApostleCardEffectHelpers
                 continue;
             }
 
-            var regen = owner.GetPower<RegenPower>();
-            if (regen != null && regen.Amount > 0)
+            var healing = owner.GetPower<HealingPower>();
+            if (healing != null && healing.Amount > 0)
             {
-                await PowerCmd.ModifyAmount(choiceContext, regen, -1m, owner, cardSource, silent: true);
+                await PowerCmd.ModifyAmount(choiceContext, healing, -1m, owner, cardSource, silent: true);
             }
         }
     }
@@ -186,11 +185,11 @@ internal static class ApostleCardEffectHelpers
         if (remaining <= 0m)
             return;
 
-        var regen = owner.GetPower<RegenPower>();
-        decimal regenAmount = regen?.Amount ?? 0m;
-        decimal takeRegen = Math.Min(regenAmount, remaining);
-        if (regen != null && takeRegen > 0m)
-            await PowerCmd.ModifyAmount(choiceContext, regen, -takeRegen, owner, cardSource, silent: true);
+        var healing = owner.GetPower<HealingPower>();
+        decimal healingAmount = healing?.Amount ?? 0m;
+        decimal takeHealing = Math.Min(healingAmount, remaining);
+        if (healing != null && takeHealing > 0m)
+            await PowerCmd.ModifyAmount(choiceContext, healing, -takeHealing, owner, cardSource, silent: true);
     }
 
 
@@ -390,6 +389,12 @@ internal static class ApostleCardEffectHelpers
         return target.Powers
             .Where(power => power.Type == PowerType.Debuff)
             .Sum(power => Math.Max(0, (int)power.Amount));
+    }
+
+    public static int CountDebuffTypes(Creature target)
+    {
+        return target.Powers
+            .Count(power => power.Type == PowerType.Debuff && power.Amount > 0m);
     }
 
     public static bool HasDebuff(Creature target)
