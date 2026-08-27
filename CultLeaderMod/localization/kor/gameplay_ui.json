@@ -1,8 +1,8 @@
 {
-  "CULT_LEADER_PERSONALITY_SELECTION.prompt": "두 사도의 인격을 선택하세요",
-  "CULT_LEADER_PERSONALITY_SELECTION.title": "두 명의 사도 인격을 선택하세요",
-  "CULT_LEADER_PERSONALITY_SELECTION.description": "영춘권의 축복이 당신에게 응답하고 있습니다. 먼저 두 인격을 선택한 후 네오의 유물을 수락하세요.",
-  "CULT_LEADER_GOLDEN_CRAYON.prompt": "강화할 사도 카드를 선택하세요",
+  "CULT_LEADER_PERSONALITY_SELECTION.prompt": "사도 성격 두 가지를 선택하세요",
+  "CULT_LEADER_PERSONALITY_SELECTION.title": "사도 성격 두 가지 선택",
+  "CULT_LEADER_PERSONALITY_SELECTION.description": "영춘의 축복이 당신에게 응답합니다. 먼저 사도 성격 두 가지를 선택한 후 니오우의 유물을 받으세요.",
+  "CULT_LEADER_GOLDEN_CRAYON.prompt": "강화할 사도 카드를 한 장 선택하세요",
   "CULT_LEADER_HOVER_APOSTLE_NAME.title": "사도 이름",
-  "CULT_LEADER_HOVER_RELATED_STATUSES.title": "관련현황"
+  "CULT_LEADER_HOVER_RELATED_STATUSES.title": "관련 상태"
 }

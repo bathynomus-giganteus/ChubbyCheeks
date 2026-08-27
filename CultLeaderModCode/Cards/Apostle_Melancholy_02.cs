@@ -51,7 +51,6 @@ public class Apostle_Melancholy_02 : ModCardTemplate
     protected override void OnUpgrade()
     {
         base.EnergyCost.UpgradeBy(-1);
-        DynamicVars["MagicBulletAmt"].UpgradeValueBy(3m);
     }
 
 }

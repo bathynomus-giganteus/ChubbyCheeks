@@ -21,7 +21,7 @@ public class Apostle_Frenzy_20 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/要来见少女吗.png");
 
     public Apostle_Frenzy_20()
-        : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+        : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

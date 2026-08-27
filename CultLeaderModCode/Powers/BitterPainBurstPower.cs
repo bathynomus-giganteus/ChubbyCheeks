@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// 苦痛爆发 — 回合结束时每有一层，所有敌人获得1易伤、1虚弱、2中毒、4灾厄。
+/// 苦痛爆发 — 回合结束时每有一层，所有敌人获得1易伤、1虚弱、3中毒、6灾厄。
 /// </summary>
 [RegisterPower]
 public class BitterPainBurstPower : ModPowerTemplate
@@ -44,8 +44,8 @@ public class BitterPainBurstPower : ModPowerTemplate
             {
                 await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, 1m, base.Owner, null);
                 await PowerCmd.Apply<WeakPower>(choiceContext, enemy, 1m, base.Owner, null);
-                await PowerCmd.Apply<PoisonPower>(choiceContext, enemy, 2m, base.Owner, null);
-                await PowerCmd.Apply<DoomPower>(choiceContext, enemy, 4m, base.Owner, null);
+                await PowerCmd.Apply<PoisonPower>(choiceContext, enemy, 3m, base.Owner, null);
+                await PowerCmd.Apply<DoomPower>(choiceContext, enemy, 6m, base.Owner, null);
             }
         }
     }

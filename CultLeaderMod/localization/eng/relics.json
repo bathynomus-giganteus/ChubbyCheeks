@@ -58,5 +58,11 @@
   "CULT_LEADER_MOD_RELIC_ZION_BLACK_CLOAK_RELIC.flavor": "Zion said that only with darkness can the light shine brighter, so she insisted on wearing this black cloak. Although she didn’t quite understand what it meant, it seemed that she cherished this cloak.",
   "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.title": "Swoosh Gloves",
   "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.description": "Gain 1 Vigor at the beginning of the round. If you have no Vigor at the beginning of the round, you will gain an additional 2 Vigor.",
-  "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.flavor": "When worn on the fist, it seems like a strong glove that can unleash a series of punches like a shower. Maybe you feel a little stronger by shouting the name of the glove while pumping your fist?"
+  "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.flavor": "When worn on the fist, it seems like a strong glove that can unleash a series of punches like a shower. Maybe you feel a little stronger by shouting the name of the glove while pumping your fist?",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.title": "Clear weather card",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.description": "In the first round, you gain 1 leader’s power. At the beginning of the fourth round, if you have the leader’s power, you lose 1 leader’s power.",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.flavor": "The weather is sunny, but lightning strikes. When Yuhei, who likes fortune telling, takes out this card, it means that someone is preparing to play a prank behind his back.",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.title": "Butter’s yellow card",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.description": "When picked up, add a “Butter Shot” to the deck. Each time it is attacked, the count will be reduced by an additional 1.",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.flavor": "The yellow card that will be taken out and looked at whenever the anger in the heart is superimposed has traces of hands."
 }

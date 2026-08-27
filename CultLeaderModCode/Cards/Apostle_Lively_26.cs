@@ -18,7 +18,7 @@ public class Apostle_Lively_26 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(8m, ValueProp.Move), new DynamicVar("RetainAmt", 1m)];
+        [new DamageVar(8m, ValueProp.Move), new DynamicVar("RetainAmt", 3m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -48,10 +48,13 @@ public class Apostle_Lively_26 : ModCardTemplate
             owner,
             this
         );
+
+        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
     }
 
     protected override void OnUpgrade()
     {
+        DynamicVars.Damage.UpgradeValueBy(3m);
         DynamicVars["RetainAmt"].UpgradeValueBy(1m);
     }
 }

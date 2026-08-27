@@ -21,33 +21,42 @@ public class Apostle_Melancholy_03 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Threshold", 8m)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+        [new DynamicVar("PainAmt", 6m), new DynamicVar("Threshold", 20m)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/土豆番薯.png");
 
     public Apostle_Melancholy_03()
-        : base(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
+        : base(2, CardType.Skill, CardRarity.Rare, TargetType.AllEnemies) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var target = cardPlay.Target;
-        if (target == null)
-            return;
-
         var owner = base.Owner.Creature;
+        await ApostleCardPlayHelpers.ApplyMelancholyPower(
+            choiceContext,
+            owner,
+            DynamicVars["PainAmt"].BaseValue,
+            owner,
+            this
+        );
+
         int stacks = ApostleCardEffectHelpers.MelancholyStacks(owner);
         int threshold = DynamicVars["Threshold"].IntValue;
-        if (stacks <= threshold)
+        if (stacks < threshold)
             return;
 
         await ApostleCardEffectHelpers.RemoveMelancholyStacks(choiceContext, owner, threshold, this);
-        await CreatureCmd.Stun(target);
+        foreach (var enemy in ApostleCardEffectHelpers.AliveEnemies(owner))
+        {
+            await CreatureCmd.Stun(enemy);
+        }
+        await CardCmd.Exhaust(choiceContext, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Threshold"].UpgradeValueBy(-2m);
+        DynamicVars["PainAmt"].UpgradeValueBy(2m);
+        DynamicVars["Threshold"].UpgradeValueBy(-4m);
     }
 
 }

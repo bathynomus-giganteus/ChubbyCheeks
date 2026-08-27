@@ -22,8 +22,8 @@ public class Apostle_Melancholy_22 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(5m, ValueProp.Move), new DynamicVar("RemoveAmt", 5m), new DynamicVar("Repeats", 3m), new DynamicVar("DrawAmt", 1m)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+        [new DamageVar(5m, ValueProp.Move), new DynamicVar("DrawAmt", 1m)];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/rapid_cut.png");
 
@@ -36,25 +36,14 @@ public class Apostle_Melancholy_22 : ModCardTemplate
         if (target == null)
             return;
 
-        for (int i = 0; i < DynamicVars["Repeats"].IntValue; i++)
+        int debuffTypes = ApostleCardEffectHelpers.CountDebuffTypes(target);
+        for (int i = 0; i < debuffTypes; i++)
         {
-            int removed = await ApostleCardEffectHelpers.RemoveRandomDebuffStacks(
-                choiceContext,
-                target,
-                DynamicVars["RemoveAmt"].IntValue
-            );
-            if (removed <= 0)
-                break;
-
             await ApostleCardEffectHelpers.Attack(choiceContext, this, cardPlay, target, DynamicVars.Damage.BaseValue);
             await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmt"].BaseValue, base.Owner);
         }
     }
 
-    protected override void OnUpgrade()
-    {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["Repeats"].UpgradeValueBy(2m);
-    }
+    protected override void OnUpgrade() { }
 
 }

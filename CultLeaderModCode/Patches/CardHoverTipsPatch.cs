@@ -38,6 +38,7 @@ public static class CardHoverTipsPatch
         [typeof(Apostle_Calm_21)] = [typeof(StrengthPower), typeof(TempMaxHpLossPower), typeof(TempMaxHpPower)],
 
         [typeof(Apostle_Frenzy_01)] = [typeof(SebastianPower)],
+        [typeof(Apostle_Frenzy_06)] = [typeof(VigorPower), typeof(DimensionPositionPower)],
         [typeof(Apostle_Frenzy_19)] = [typeof(ForwardResolvePower)],
         [typeof(Apostle_Frenzy_20)] = [typeof(FrenzyOnHealPower)],
         [typeof(Apostle_Frenzy_21)] = [typeof(PlatingPower), typeof(VigorPerTurnPower)],
@@ -52,9 +53,9 @@ public static class CardHoverTipsPatch
         [typeof(Apostle_Lively_12)] = [typeof(ExtantPower)],
         [typeof(Apostle_Lively_13)] = [typeof(AdjustPower)],
         [typeof(Apostle_Lively_19)] = [typeof(RookieCardPower)],
+        [typeof(Apostle_Lively_21)] = [typeof(WalnutMasterPower)],
         [typeof(Apostle_Lively_22)] = [typeof(BeePower)],
-        [typeof(Apostle_Lively_25)] = [typeof(DexterityPower)],
-        [typeof(Apostle_Lively_27)] = [typeof(StrengthPower)],
+        [typeof(Apostle_Lively_24)] = [typeof(BombComingPower)],
 
         [typeof(Apostle_Melancholy_02)] = [typeof(MagicBulletPower)],
         [typeof(Apostle_Melancholy_10)] = [typeof(DebuffApplyCounterPower)],
@@ -66,6 +67,7 @@ public static class CardHoverTipsPatch
         [typeof(Apostle_Melancholy_24)] = [typeof(WeakPower)],
 
         [typeof(Apostle_Pure_01)] = [typeof(HealingPower), typeof(LifeEssencePower)],
+        [typeof(Apostle_Pure_03)] = [typeof(AbilityDamageTakenBonusPower)],
         [typeof(Apostle_Pure_26)] = [typeof(PirateMarkPower)],
         [typeof(Apostle_Pure_08)] = [typeof(WeakPower)],
         [typeof(Apostle_Pure_13)] = [typeof(SapLauncherPower)],
@@ -73,7 +75,6 @@ public static class CardHoverTipsPatch
         [typeof(Apostle_Pure_17)] = [typeof(RemoteChargePower)],
         [typeof(Apostle_Pure_18)] = [typeof(BufferPower)],
         [typeof(Apostle_Pure_19)] = [typeof(HackMarkPower)],
-        [typeof(Apostle_Pure_20)] = [typeof(TempStrengthBuffPower)],
         [typeof(Apostle_Pure_22)] = [typeof(TempMaxHpLossPower), typeof(TempMaxHpPower)],
         [typeof(Apostle_Pure_23)] = [typeof(TempStrengthLossPower)],
 
@@ -82,11 +83,11 @@ public static class CardHoverTipsPatch
         [typeof(ElderFormCard)] = [typeof(ElderFormPower)],
         [typeof(ForElruienCard)] = [typeof(CultLeaderAuthorityPower)],
         [typeof(HundredDaysBlessingCard)] = [typeof(CultLeaderAuthorityPower)],
-        [typeof(PersonalitySelectCalmCard)] = [typeof(PersonalityCardFetchPower)],
-        [typeof(PersonalitySelectFrenzyCard)] = [typeof(PersonalityCardFetchPower)],
-        [typeof(PersonalitySelectLivelyCard)] = [typeof(PersonalityCardFetchPower)],
-        [typeof(PersonalitySelectMelancholyCard)] = [typeof(PersonalityCardFetchPower)],
-        [typeof(PersonalitySelectPureCard)] = [typeof(PersonalityCardFetchPower)],
+        [typeof(PersonalitySelectCalmCard)] = [typeof(PersonalityCardFetchCalmPower)],
+        [typeof(PersonalitySelectFrenzyCard)] = [typeof(PersonalityCardFetchFrenzyPower)],
+        [typeof(PersonalitySelectLivelyCard)] = [typeof(PersonalityCardFetchLivelyPower)],
+        [typeof(PersonalitySelectMelancholyCard)] = [typeof(PersonalityCardFetchMelancholyPower)],
+        [typeof(PersonalitySelectPureCard)] = [typeof(PersonalityCardFetchPurePower)],
         [typeof(SaviorDescendsCard)] = [typeof(CultLeaderAuthorityPower)],
         [typeof(TestRainbowCard)] = [typeof(CultLeaderMod.CultLeaderModCode.Powers.LoopPower)],
     };

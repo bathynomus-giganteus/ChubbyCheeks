@@ -20,8 +20,8 @@ public class PersonalitySelectLivelyCard : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        await PowerCmd.Apply<PersonalityCardFetchPower>(choiceContext, owner, 1m, owner, this);
-        owner.GetPower<PersonalityCardFetchPower>()?.Configure(CultLeaderCardTags.Lively, IsUpgraded);
+        var power = await PowerCmd.Apply<PersonalityCardFetchLivelyPower>(choiceContext, owner, 1m, owner, this);
+        power?.Configure(IsUpgraded);
     }
 }
 

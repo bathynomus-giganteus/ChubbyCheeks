@@ -19,7 +19,7 @@ public class Apostle_Pure_25 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("RegenAmt", 2m), new DynamicVar("DrawAmt", 0m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("RegenAmt", 3m), new DynamicVar("DrawAmt", 0m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/黄瓜油.png");

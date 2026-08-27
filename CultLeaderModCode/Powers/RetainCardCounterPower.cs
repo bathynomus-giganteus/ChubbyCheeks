@@ -72,13 +72,9 @@ public class RetainCardCounterPower : ModPowerTemplate
 
         GetInternalData<Data>().Total += retainedCards.Count;
 
-        decimal retainStacks =
-            (base.Owner.GetPower<RetainPower>()?.Amount ?? 0m)
-            + (base.Owner.GetPower<HappinessPower>()?.Amount ?? 0m);
-
         foreach (var retainedCard in retainedCards.OfType<Apostle_Lively_18>())
         {
-            retainedCard.DynamicVars["Damage"].BaseValue += retainStacks;
+            retainedCard.DynamicVars["Damage"].BaseValue += retainedCards.Count;
         }
     }
 }

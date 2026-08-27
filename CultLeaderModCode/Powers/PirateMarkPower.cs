@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -31,7 +32,13 @@ public class PirateMarkPower : ModPowerTemplate
     {
         await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
 
-        if (target != base.Owner || base.Amount <= 0 || result.UnblockedDamage <= 0 || dealer == null || !dealer.IsPlayer)
+        if (target != base.Owner
+            || base.Amount <= 0
+            || result.UnblockedDamage <= 0
+            || dealer == null
+            || !dealer.IsPlayer
+            || cardSource?.Type != CardType.Attack
+            || !props.IsPoweredAttack())
             return;
 
         decimal reward = base.Amount;

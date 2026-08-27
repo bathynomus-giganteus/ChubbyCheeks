@@ -34,7 +34,7 @@ public class Apostle_Pure_10 : ModCardTemplate
             card => ApostlePowerRules.IsApostleCard(card) && card.Tags.Contains(CultLeaderCardTags.Pure)
         );
         if (count > 0)
-            await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, base.Owner.Creature, count, base.Owner.Creature, this);
+            await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, base.Owner.Creature, count * 3, base.Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

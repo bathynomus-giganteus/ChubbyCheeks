@@ -24,7 +24,7 @@ public class Apostle_Melancholy_02_2 : ModCardTemplate
     public override bool CanBeGeneratedInCombat => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(40m, ValueProp.Move)];
+        [new DamageVar(55m, ValueProp.Move)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/final_explosion.png");
@@ -46,7 +46,7 @@ public class Apostle_Melancholy_02_2 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(15m);
+        DynamicVars.Damage.UpgradeValueBy(5m);
     }
 
 }

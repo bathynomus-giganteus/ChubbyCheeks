@@ -20,8 +20,8 @@ public class PersonalitySelectPureCard : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        await PowerCmd.Apply<PersonalityCardFetchPower>(choiceContext, owner, 1m, owner, this);
-        owner.GetPower<PersonalityCardFetchPower>()?.Configure(CultLeaderCardTags.Pure, IsUpgraded);
+        var power = await PowerCmd.Apply<PersonalityCardFetchPurePower>(choiceContext, owner, 1m, owner, this);
+        power?.Configure(IsUpgraded);
     }
 }
 

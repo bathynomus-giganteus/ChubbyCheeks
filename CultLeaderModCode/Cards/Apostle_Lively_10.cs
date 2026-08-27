@@ -16,7 +16,8 @@ public class Apostle_Lively_10 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Multiplier", 5m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DynamicVar("Multiplier", 2m), new DynamicVar("RetainAmt", 5m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(
@@ -31,6 +32,14 @@ public class Apostle_Lively_10 : ModCardTemplate
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
         var owner = base.Owner.Creature;
+        await ApostleCardPlayHelpers.ApplyLivelyPower(
+            choiceContext,
+            owner,
+            DynamicVars["RetainAmt"].BaseValue,
+            owner,
+            this
+        );
+
         decimal retainStacks =
             (owner.GetPower<RetainPower>()?.Amount ?? 0m)
             + (owner.GetPower<HappinessPower>()?.Amount ?? 0m);
@@ -51,7 +60,7 @@ public class Apostle_Lively_10 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Multiplier"].UpgradeValueBy(3m);
+        DynamicVars["Multiplier"].UpgradeValueBy(1m);
+        DynamicVars["RetainAmt"].UpgradeValueBy(3m);
     }
 }
-

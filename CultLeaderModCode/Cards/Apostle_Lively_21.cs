@@ -1,5 +1,6 @@
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,7 @@ public class Apostle_Lively_21 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(6m, ValueProp.Move), new DynamicVar("RetainAmt", 3m)];
+        [new BlockVar(6m, ValueProp.Move)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -33,18 +34,11 @@ public class Apostle_Lively_21 : ModCardTemplate
         var owner = base.Owner.Creature;
 
         await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
-        await ApostleCardPlayHelpers.ApplyLivelyPower(
-            choiceContext,
-            owner,
-            DynamicVars["RetainAmt"].BaseValue,
-            owner,
-            this
-        );
+        await PowerCmd.Apply<WalnutMasterPower>(choiceContext, owner, 1m, owner, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2m);
-        DynamicVars["RetainAmt"].UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(5m);
     }
 }

@@ -15,7 +15,7 @@ public static class ArchaicToothTranscendencePatch
     [HarmonyPostfix]
     private static void Postfix(ref Dictionary<ModelId, CardModel> __result)
     {
-        var starter = ModelDb.Card<CultLeaderManifestationCard>();
+        var starter = ModelDb.Card<TestAddApostleCards>();
         var ancient = ModelDb.Card<SaviorDescendsCard>();
         if (starter != null && ancient != null)
         {

@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// 要来见少女吗？ — 每次恢复生命时，获得1层活力；埃尔德形态下获得狂热。
+/// 要来见少女吗？ — 每次恢复1点生命或获得1层治愈时，获得1层活力；埃尔德形态下获得狂热。
 /// </summary>
 [RegisterPower]
 public class FrenzyOnHealPower : ModPowerTemplate
@@ -28,10 +28,33 @@ public class FrenzyOnHealPower : ModPowerTemplate
         if (delta <= 0m || Owner == null || creature != Owner || !creature.IsPlayer || Amount <= 0m)
             return;
 
+        await GainVigor(choiceContext: new ThrowingPlayerChoiceContext(), delta);
+    }
+
+    public override async Task AfterPowerAmountChanged(
+        PlayerChoiceContext choiceContext,
+        PowerModel power,
+        decimal amount,
+        Creature? applier,
+        CardModel? cardSource)
+    {
+        await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
+
+        if (Owner == null || power.Owner != Owner || power is not HealingPower || amount <= 0m || Amount <= 0m)
+            return;
+
+        await GainVigor(choiceContext, amount);
+    }
+
+    private async Task GainVigor(PlayerChoiceContext choiceContext, decimal triggerAmount)
+    {
+        if (Owner == null || triggerAmount <= 0m || Amount <= 0m)
+            return;
+
         await ApostlePowerRules.ApplyApostlePower<VigorPower, FervorPower>(
-            new ThrowingPlayerChoiceContext(),
+            choiceContext,
             Owner,
-            Amount,
+            triggerAmount * Amount,
             Owner,
             null
         );

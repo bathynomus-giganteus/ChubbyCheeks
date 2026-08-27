@@ -1,5 +1,6 @@
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,7 +19,11 @@ public class Apostle_Lively_24 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(6m, ValueProp.Move), new DynamicVar("RetainAmt", 1m)];
+        [
+            new DamageVar(15m, ValueProp.Move),
+            new DynamicVar("Delay", 3m),
+            new DynamicVar("RetainAmt", 2m)
+        ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -26,31 +31,25 @@ public class Apostle_Lively_24 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_24.png");
 
     public Apostle_Lively_24()
-        : base(1, CardType.Attack, CardRarity.Common, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
 
-        await ApostleCardEffectHelpers.AttackAll(
-            choiceContext,
-            this,
-            cardPlay,
-            owner,
-            DynamicVars.Damage.BaseValue
-        );
-
-        await ApostleCardPlayHelpers.ApplyLivelyPower(
+        var power = await PowerCmd.Apply<BombComingPower>(
             choiceContext,
             owner,
-            DynamicVars["RetainAmt"].BaseValue,
+            DynamicVars["Delay"].BaseValue,
             owner,
             this
         );
+        power?.Configure(DynamicVars.Damage.BaseValue, DynamicVars["RetainAmt"].BaseValue);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(5m);
+        DynamicVars["RetainAmt"].UpgradeValueBy(1m);
     }
 }

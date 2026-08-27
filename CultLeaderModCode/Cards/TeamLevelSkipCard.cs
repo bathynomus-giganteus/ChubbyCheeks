@@ -20,7 +20,7 @@ public class TeamLevelSkipCard : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/team_level_skip.png");
 
     public TeamLevelSkipCard()
-        : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+        : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -43,6 +43,6 @@ public class TeamLevelSkipCard : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(2);
+        base.EnergyCost.UpgradeBy(1);
     }
 }

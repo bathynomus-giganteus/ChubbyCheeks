@@ -18,7 +18,7 @@ public class Apostle_Calm_23 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(3m, ValueProp.Move)];
+        [new DamageVar(5m, ValueProp.Move)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/脑机连接开始.png");
@@ -38,20 +38,15 @@ public class Apostle_Calm_23 : ModCardTemplate
             DynamicVars.Damage.BaseValue
         );
         var hand = PileType.Hand.GetPile(owner);
-        var discarded = hand.Cards.Where(c => c != this).ToList();
-        if (discarded.Count > 0)
-            await CardCmd.Discard(choiceContext, discarded);
+        int handCount = hand.Cards.Count(c => c != this);
         await ApostleCardPlayHelpers.ApplyCalmPower(
             choiceContext,
             owner.Creature,
-            discarded.Count,
+            handCount,
             owner.Creature,
             this
         );
     }
 
-    protected override void OnUpgrade()
-    {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-    }
+    protected override void OnUpgrade() { }
 }

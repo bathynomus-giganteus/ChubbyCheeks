@@ -305,3 +305,137 @@
   - 升级版仍允许在移入手牌前对选中卡执行 `CardCmd.Upgrade(..., CardPreviewStyle.None)`。
 - 文本同步：
   - zhs/eng/jpn/kor 的五张性格卡牌描述与 `PersonalityCardFetchPower` 描述都要写成“抽牌堆 / draw pile”与“移入 / move”。
+
+### 2026-08-24 本地化表归属范式：遗物文本必须在 relics.json
+
+- 遗物的 `CULT_LEADER_MOD_RELIC_*.title / description / flavor` 必须放在各语言 `relics.json`，不能放在 `cards.json`。
+- 已修复案例：
+  - `CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.*`（天气晴朗卡 / 太阳卡）
+  - `CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.*`（黄油的黄牌 / 黄油卡片）
+- 症状：如果遗物文本误放入 `cards.json`，游戏遗物界面会显示 raw key / 代码。
+- 检查命令范式：
+  - `cards.json` 中不应出现 `_RELIC_` key。
+  - `relics.json` 中应包含所有 `CULT_LEADER_MOD_RELIC_*` key。
+- 特别注意：
+  - 中文环境还可能被 `C:\Users\888\AppData\Roaming\SlayTheSpire2\localization_override\zhs\relics.json` 的旧表覆盖；若修复后仍显示 key，检查 override 是否缺 key。
+
+### 2026-08-24 黄油飞射变换范式
+
+- 【黄油飞射】计数到 100 后应变为【黄油融化】。
+- 受击时即时变换之外，还需要战斗结束兜底：
+  - `AfterCombatVictory`：胜利结算时若永久卡组中的【黄油飞射】已经 `DamageTaken >= 100`，执行变换。
+  - `BeforeRoomEntered`：再次检查，防止胜利结算时机被游戏流程跳过。
+- 兜底检查必须限制 `base.Pile?.Type == PileType.Deck`，只转换永久卡组里的真实卡牌，避免误处理战斗中临时对象或预览对象。
+
+### 2026-08-26 韩文本地化校正规则
+
+- 用户提供的韩语校对稿目录：`C:\Users\888\Desktop\New_folder\korean loc`。
+- 该目录中的 `.txt` 文件实际为 JSON 表，可用于校正项目 `CultLeaderMod/localization/kor/*.json`。
+- 应用规则：
+  - 只覆盖当前项目中已存在且 key 完全匹配的条目。
+  - 不要把源文件中的旧式/额外 key 直接加入项目。
+  - 即使源 `cards.txt` 含有 `CULT_LEADER_MOD_RELIC_*`，遗物 key 仍必须放入 `kor/relics.json`，不能回流到 `kor/cards.json`。
+  - 修改后检查：`kor/cards.json` 中 `_RELIC_` key 数应为 0，`kor/relics.json` 应包含 66 个遗物字段。
+- 当前备份点：`.codex_backups\kor_loc_before_20260826-115322`。
+
+### 2026-08-26 卡牌调整与保留机制范式
+
+- 【帮帮我朋友们】当前效果：触发最多 3/5 层治愈，获得 8 格挡，对所有敌人造成 8/11 点伤害；本场战斗中每触发 1 层治愈，当前牌伤害 +1；不再获得临时力量。
+- 【今天的目标就是那家伙】/ `PirateMarkPower`：只允许攻击牌造成的 powered attack 伤害触发，必须检查 `cardSource?.Type == CardType.Attack`。
+- 【要来见少女吗】/ `FrenzyOnHealPower`：费用 1；每恢复 1 HP 或获得 1 层治愈，获得 1 活力；埃尔德形态下通过 `ApostlePowerRules.ApplyApostlePower<VigorPower, FervorPower>` 转为狂热。
+- 【雪雾】/ `FlatDamageReductionPower`：必须在格挡结算前减少“怪物将要造成的攻击伤害”，不要用实际 HP 损失做减免。当前实现使用 `ModifyDamageAdditive`，并要求玩家当前有格挡。
+- 【保留】/ `RetainPower` 当前范式：回合结束时选择至多等于当前保留层数的手牌保留；只消耗实际选择张数的保留层数，选 0 不消耗。描述固定为“每消耗一层可以在回合结束时保留一张卡牌”。
+- 本轮其他数值：
+  - 【里科塔全套餐】升级后每层回复 3。
+  - 【蜜瓜吖】覆甲满足条件后额外回复 5/8。
+  - 【胡萝卜治愈】获得 4/6 保留，回复 4/6 生命，消耗。
+  - 【松鼠雷电】获得 3 保留。
+  - 【蜂蜜鱼】获得 3/5 保留；若保留不少于 15/12，回复 5 生命，消耗。
+  - 【有罪宣言】带保留关键词。
+  - 【魔.弹.の.射.手】魔弹耗尽时消耗所有手牌/抽牌堆/弃牌堆里的同名衍生牌，再加入【终.末.の.爆.炸】。
+  - 【终.末.の.爆.炸】伤害 55/60。
+- 中文本地化 override 注意：
+  - `C:\Users\888\AppData\Roaming\SlayTheSpire2\localization_override\zhs` 会覆盖项目和 Steam loose JSON；每次更新 zhs 文本后若游戏进程中仍显示旧文本/raw key，应优先检查并同步该目录。
+  - 2026-08-26 本轮已备份旧 override 到 `.codex_backups\zhs_override_before_20260826_batch_*` 并覆盖为当前 zhs 表。
+
+### 2026-08-26 存续机制范式
+
+- 【警戒线上的幽灵】当前数值：1 费攻击牌，对所有敌人造成 8/10 点伤害，并给予 1 层【存续】。
+- 【存续】/ `ExtantPower` 当前效果：
+  - 回合结束保留结算后读取 `AfterFlush(... retainedCards)`。
+  - 玩家本次每保留 1 张手牌，拥有【存续】的敌人每层受到 3 点伤害。
+  - 公式：`3 × retainedCards.Count × ExtantPower.Amount`。
+  - 不再在敌人受到攻击伤害时追加伤害；不要恢复旧的 `ModifyHpLostBeforeOsty` 逻辑。
+- 【休假中潜逃】当前效果：
+  - 获得 4/6 治愈和 4/6 格挡。
+  - 本回合保留你的手牌，实现方式为 `PowerCmd.Apply<RetainHandPower>(..., amount: 1)`。
+  - 该效果应被【存续】读取到，因为【存续】统计的是原生回合末 `retainedCards`。
+
+### 2026-08-26 次元定位 / 恢复攻击牌消耗 buff 的实现范式
+
+- 不要为了“恢复攻击牌消耗的 buff”去全局拦截所有 `PowerCmd.ModifyAmount` 或卡牌移动流程；之前 TEST/洗牌问题说明这类全局改动很容易污染原生流程。
+- 当前固定方案：`DimensionPositionPower` 在下一张攻击牌进入 `ModifyDamageAdditive` 时快照玩家核心正面状态，在 `AfterAttack` 后把低于快照值的层数补回，并消耗 1 层自身。
+- 当前恢复白名单：
+  - 教主五系基础/升级状态：治愈、生命本源、覆甲、固若坚冰、活力、狂热、保留、幸福、苦痛施予、苦痛爆发。
+  - 常见基础正面状态：力量、敏捷、人工制品、缓冲。
+- 这个方案恢复的是“攻击结算后相比攻击前减少的层数”，而不是精确累计所有中间负向 delta；如果未来出现“同一张攻击牌同时消耗并新增同种 buff”的设计，再考虑更细粒度的 delta tracker。
+
+### 2026-08-26 围猎标记范式
+
+- 【围猎】使用 `AbilityDamageTakenBonusPower` 实现“能力对目标造成的伤害增加 X%”。
+- `Amount` 直接表示百分比（50/75），允许叠加。
+- 当前触发条件：目标是该 Power 的拥有者、伤害来源为玩家、`cardSource?.Type == CardType.Power`。
+- 这意味着只有通过能力牌本身造成的伤害会吃加成；如果以后要让“PowerModel 后续自动伤害”也吃加成，需要额外定义来源识别方式。
+
+### 2026-08-27 活泼/忧郁/狂热批量调整范式
+
+- 【噶哦哦】这类“从抽牌堆找牌到手牌”的效果按用户偏好应优先移动现有战斗牌对象，不复制；实现方式参考 `CardPileCmd.Add(selected, PileType.Hand, CardPilePosition.Top, source, false)`。
+- 【圣裁宣告】的“被保留加伤害”由隐藏 `RetainCardCounterPower.AfterFlush` 读取本次 `retainedCards.Count`；不要改回读取保留层数。
+- 【开核桃大师】使用 `WalnutMasterPower.AfterSideTurnEnd` 在覆甲等 `BeforeSideTurnEnd` 之后读取最终格挡，按 `floor(Block / 2)` 获得保留。
+- 【炸弹来啦】使用 `BombComingPower.AfterPlayerTurnStart` 做倒计时；`Amount > 1` 时获得保留并递减，`Amount == 1` 时造成全体伤害并移除自身。
+- 【朱bee】/ `BeePower` 现在是敌方 debuff，不是玩家召唤物；敌方回合开始时按层数施加虚弱和伤害，然后递减。
+- 【月之领域】现在只增强玩家攻击牌对敌人的攻击伤害：加成为 `月之领域层数 × 目标负面状态种类数`。不要改回“只要有负面就 +Amount”的旧逻辑。
+- 【向前迈进的决心】的触发收益从 `ForwardResolvePower` 常量改为由卡牌动态变量 `VigorGain` 配置，升级后应为 3。
+
+### 2026-08-27 性格卡与次元定位修正范式
+
+- 五张开局性格 Choice 卡应使用明确命名图片：
+  - 纯粹 `personality_pure.png`
+  - 冷静 `personality_calm.png`
+  - 狂热 `personality_frenzy.png`
+  - 活泼 `personality_lively.png`
+  - 忧郁 `personality_melancholy.png`
+- 五张战斗用性格卡应用 `PowerCmd.Apply<PersonalityCardFetchPower>` 的返回值并立即 `Configure(...)`，不要用 `owner.GetPower<PersonalityCardFetchPower>()` 配置，否则多实例时可能配置到旧 Power。
+- `PersonalityCardFetchPower` 必须允许 `PowerInstanceType.Instanced`，否则多个性格抓牌效果会互相覆盖，表现为图标/抓取性格像同一个。
+- 【次元定位】不能只依赖 `ModifyDamageAdditive` 时的快照；部分攻击牌（如【魔力乱打】）会在真正造成伤害前先触发/消耗 buff。当前范式是：
+  - 继续在伤害修正阶段拍快照；
+  - 同时在 `AfterPowerAmountChanged` 中记录由攻击牌导致的核心 buff 负向变化；
+  - `AfterAttack` 时按快照缺口与记录损失的较大值恢复，避免重复恢复。
+
+### 2026-08-27 卡牌信息表同步规则
+
+- 用户要求后续也同步/交接 `卡牌信息.xlsx`。
+- 当前已知路径：`C:\Users\888\Desktop\New_folder\卡牌信息.xlsx`。
+- 在整理 DeepSeek/Codex 交接 prompt、核对卡牌实现、生成测试清单或推送大版本前，应提醒检查该表是否有新版本，并尽量保持代码、本地化、日志与表内设计一致。
+
+### 2026-08-27 土豆番薯条件消耗规则
+
+- 【土豆番薯】不是固定消耗牌。
+- 当前规则：先获得 6/8 层苦痛施予；若此后苦痛施予达到 20/16，则移除 20/16 层苦痛施予，眩晕所有敌人，并通过 `CardCmd.Exhaust(choiceContext, this)` 消耗此牌。
+- 未达标时不移除苦痛施予，也不消耗此牌。
+
+### 2026-08-27 五张战斗性格卡 Power 拆分类规则
+
+- 不要再让 `PersonalitySelectPure/Calm/Frenzy/Lively/MelancholyCard` 共用同一种注册 Power，否则运行时图标/合并/缓存容易表现为同一个 buff。
+- 重要边界：`PersonalitySelect*Card` 是战斗用性格卡；`PersonalityChoice*Card` 是开局五选二 Choice 卡。修战斗性格卡时不要改动开局 Choice 卡图或逻辑。
+- 当前范式：
+  - `PersonalityCardFetchPower` 作为未注册共享基类，包含通用抽牌堆移动逻辑。
+  - 五个注册子类分别固定 `FetchTag` 与 `PersonalityIconPath`：
+    - `PersonalityCardFetchPurePower`
+    - `PersonalityCardFetchCalmPower`
+    - `PersonalityCardFetchFrenzyPower`
+    - `PersonalityCardFetchLivelyPower`
+    - `PersonalityCardFetchMelancholyPower`
+  - 五张性格卡分别 `PowerCmd.Apply<对应子类Power>`。
+  - `CardHoverTipsPatch` 也应映射到对应子类 Power。
+- 如果之后仍同图标，优先检查 Godot 导入/PCK/资源缓存，而不是再回到单 Power + Configure 的写法。

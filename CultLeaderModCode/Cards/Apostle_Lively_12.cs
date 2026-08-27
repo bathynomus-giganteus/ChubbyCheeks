@@ -19,7 +19,7 @@ public class Apostle_Lively_12 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(14m, ValueProp.Move)];
+        [new DamageVar(8m, ValueProp.Move)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -27,7 +27,7 @@ public class Apostle_Lively_12 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_12.png");
 
     public Apostle_Lively_12()
-        : base(2, CardType.Attack, CardRarity.Rare, TargetType.Self) { }
+        : base(1, CardType.Attack, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -55,6 +55,6 @@ public class Apostle_Lively_12 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

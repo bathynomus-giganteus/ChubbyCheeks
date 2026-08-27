@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
@@ -101,7 +102,25 @@ public class Apostle_Lively_05 : ModCardTemplate
         RefreshProgressVisual();
 
         if (DamageTaken >= TransformThreshold)
-            await TransformToMeltedButter(choiceContext);
+            await TransformToMeltedButter();
+    }
+
+    public override async Task BeforeRoomEntered(AbstractRoom room)
+    {
+        await base.BeforeRoomEntered(room);
+        await TransformToMeltedButterIfReady();
+    }
+
+    public override async Task AfterCombatVictory(CombatRoom room)
+    {
+        await base.AfterCombatVictory(room);
+        await TransformToMeltedButterIfReady();
+    }
+
+    public override async Task AfterCombatEnd(CombatRoom room)
+    {
+        await base.AfterCombatEnd(room);
+        await TransformToMeltedButterIfReady();
     }
 
     private void RefreshProgressVisual()
@@ -116,7 +135,23 @@ public class Apostle_Lively_05 : ModCardTemplate
         NCard.FindOnTable(this)?.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
     }
 
-    private async Task TransformToMeltedButter(PlayerChoiceContext choiceContext)
+    private async Task TransformToMeltedButterIfReady()
+    {
+        if (DamageTaken < TransformThreshold)
+            return;
+
+        // The transformation is meant for the persistent deck copy.  If the
+        // combat-ending damage reaches 100 while combat cleanup is already in
+        // progress, the immediate Transform can be skipped by the game flow.
+        // This room-entry fallback preserves the reached progress and converts
+        // the real deck card before the player continues.
+        if (base.Pile?.Type != PileType.Deck)
+            return;
+
+        await TransformToMeltedButter();
+    }
+
+    private async Task TransformToMeltedButter()
     {
         var scope = base.CardScope;
         if (scope == null)

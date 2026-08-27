@@ -59,7 +59,7 @@ public class Apostle_Melancholy_02_1 : ModCardTemplate
             return;
         }
 
-        await CardCmd.Exhaust(choiceContext, this);
+        await ExhaustAllMagicBulletShooters(choiceContext);
         if (base.CardScope == null)
             return;
 
@@ -71,6 +71,24 @@ public class Apostle_Melancholy_02_1 : ModCardTemplate
     {
         DynamicVars.Damage.UpgradeValueBy(1m);
         DynamicVars["Hits"].UpgradeValueBy(1m);
+    }
+
+    private async Task ExhaustAllMagicBulletShooters(PlayerChoiceContext choiceContext)
+    {
+        var player = base.Owner;
+        var pileTypes = new[] { PileType.Hand, PileType.Draw, PileType.Discard };
+        foreach (var pileType in pileTypes)
+        {
+            var shooters = pileType.GetPile(player).Cards
+                .OfType<Apostle_Melancholy_02_1>()
+                .ToList();
+
+            foreach (var shooter in shooters)
+                await CardCmd.Exhaust(choiceContext, shooter);
+        }
+
+        if (base.Pile?.Type is not (PileType.Hand or PileType.Draw or PileType.Discard))
+            await CardCmd.Exhaust(choiceContext, this);
     }
 
 }

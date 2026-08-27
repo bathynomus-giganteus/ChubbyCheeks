@@ -38,6 +38,6 @@ public class Apostle_Calm_15 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["HealPerStack"].UpgradeValueBy(2m);
+        DynamicVars["HealPerStack"].UpgradeValueBy(1m);
     }
 }

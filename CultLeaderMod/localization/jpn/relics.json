@@ -58,5 +58,11 @@
   "CULT_LEADER_MOD_RELIC_ZION_BLACK_CLOAK_RELIC.flavor": "シオンは、暗闇があってこそ光はより明るく輝けると言い、この黒いマントを着ることを主張しました。意味はよく分からなかったが、どうやらこのマントを大切にしているようだった。",
   "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.title": "シュッシュッ手袋",
   "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.description": "ラウンド開始時に活力を 1 得る。ラウンドの開始時に活力がない場合は、さらに 2 活力を獲得します。",
-  "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.flavor": "拳に装着するとシャワーのようにパンチを連打できる強力なグローブのようです。拳を突き上げながらグラブの名前を叫べば、少し強くなれるかも？"
+  "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.flavor": "拳に装着するとシャワーのようにパンチを連打できる強力なグローブのようです。拳を突き上げながらグラブの名前を叫べば、少し強くなれるかも？",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.title": "晴天カード",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.description": "最初のラウンドでは、リーダーのパワーを 1 つ獲得します。 4ラウンド開始時にリーダーパワーを持っている場合、リーダーパワーを1つ失います。",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.flavor": "天気は晴れですが、雷が落ちました。占い好きの雄平がこのカードを出すと、誰かが裏でイタズラの準備をしていることを意味する。",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.title": "バターのイエローカード",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.description": "拾った場合、「バターショット」をデッキに加える。攻撃を受けるたびにカウントがさらに1減ります。",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.flavor": "心の怒りが重なるたびに取り出して見られるイエローカードには手の跡が付いている。"
 }

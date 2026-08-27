@@ -19,7 +19,8 @@ public class Apostle_Pure_20 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DamageVar(8m, ValueProp.Move), new BlockVar(8m, ValueProp.Move), new DynamicVar("TriggerAmt", 3m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/帮帮我朋友们.png");
@@ -31,15 +32,19 @@ public class Apostle_Pure_20 : ModCardTemplate
     {
         var owner = base.Owner.Creature;
         var stacks = ApostleCardEffectHelpers.PureStacks(owner);
-        if (stacks > 0)
+        int triggerAmt = (int)Math.Min(stacks, DynamicVars["TriggerAmt"].BaseValue);
+        if (triggerAmt > 0)
         {
-            await PowerCmd.Apply<TempStrengthBuffPower>(choiceContext, owner, stacks, owner, this);
+            await ApostleCardEffectHelpers.TriggerPureStacks(choiceContext, owner, triggerAmt, this);
+            DynamicVars.Damage.BaseValue += triggerAmt;
         }
+        await CreatureCmd.GainBlock(owner, DynamicVars.Block, cardPlay);
         await ApostleCardEffectHelpers.AttackAll(choiceContext, this, cardPlay, owner, DynamicVars.Damage.BaseValue);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["TriggerAmt"].UpgradeValueBy(2m);
     }
 }

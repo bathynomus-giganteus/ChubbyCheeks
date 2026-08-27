@@ -17,15 +17,28 @@ namespace CultLeaderMod.CultLeaderModCode.Powers;
 [RegisterPower]
 public class RetainPower : ModPowerTemplate
 {
+    private sealed class Data
+    {
+        public int SelectedCardsThisTurn;
+    }
+
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override string CustomIconPath => "res://CultLeaderMod/images/powers/tain.png";
     public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/big/tain.png";
 
+    protected override object InitInternalData()
+    {
+        return new Data();
+    }
+
     public override async Task BeforeFlush(PlayerChoiceContext choiceContext, Player player)
     {
         await base.BeforeFlush(choiceContext, player);
+        var data = GetInternalData<Data>();
+        data.SelectedCardsThisTurn = 0;
+
         if (player != base.Owner.Player || base.Amount <= 0)
             return;
 
@@ -37,14 +50,22 @@ public class RetainPower : ModPowerTemplate
             this
         );
 
-        foreach (var card in cards)
+        var selectedCards = cards.ToList();
+        data.SelectedCardsThisTurn = selectedCards.Count;
+        foreach (var card in selectedCards)
             CardCmd.ApplySingleTurnRetain(card);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         await base.AfterSideTurnEnd(choiceContext, side, participants);
-        if (participants.Contains(base.Owner) && base.Amount > 0)
-            await PowerCmd.Decrement(this);
+        var data = GetInternalData<Data>();
+        if (participants.Contains(base.Owner) && base.Amount > 0 && data.SelectedCardsThisTurn > 0)
+        {
+            decimal consume = Math.Min(base.Amount, data.SelectedCardsThisTurn);
+            await PowerCmd.ModifyAmount(choiceContext, this, -consume, base.Owner, null, silent: true);
+        }
+
+        data.SelectedCardsThisTurn = 0;
     }
 }

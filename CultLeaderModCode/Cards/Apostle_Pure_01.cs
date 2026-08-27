@@ -34,20 +34,11 @@ public class Apostle_Pure_01 : ModCardTemplate
         var owner = base.Owner.Creature;
         var dmg = DynamicVars.Damage.BaseValue;
 
-        // Count and remove Healing
-        var healingPower = owner.GetPower<HealingPower>();
-        int healingStacks = healingPower?.Amount ?? 0;
-        if (healingPower != null)
-            await PowerCmd.Remove<HealingPower>(owner);
-
-        var lifePower = owner.GetPower<LifeEssencePower>();
-        int lifeStacks = lifePower?.Amount ?? 0;
-        if (lifePower != null)
-            await PowerCmd.Remove<LifeEssencePower>(owner);
-
-        int totalStacks = healingStacks + lifeStacks;
+        int totalStacks = ApostleCardEffectHelpers.PureStacks(owner);
         if (totalStacks <= 0)
             return;
+
+        await ApostleCardEffectHelpers.TriggerPureStacks(choiceContext, owner, totalStacks, this);
 
         // Get combat state; TargetingRandomOpponents picks a fresh target per hit.
         var combatState = owner.CombatState;

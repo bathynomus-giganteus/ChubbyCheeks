@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -17,7 +16,7 @@ public class Apostle_Lively_25 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("DexterityAmt", 1m), new DynamicVar("HealAmt", 4m)];
+        [new DynamicVar("RetainAmt", 4m), new DynamicVar("HealAmt", 4m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
@@ -31,10 +30,10 @@ public class Apostle_Lively_25 : ModCardTemplate
     {
         var owner = base.Owner.Creature;
 
-        await PowerCmd.Apply<DexterityPower>(
+        await ApostleCardPlayHelpers.ApplyLivelyPower(
             choiceContext,
             owner,
-            DynamicVars["DexterityAmt"].BaseValue,
+            DynamicVars["RetainAmt"].BaseValue,
             owner,
             this
         );
@@ -44,6 +43,7 @@ public class Apostle_Lively_25 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
+        DynamicVars["RetainAmt"].UpgradeValueBy(2m);
         DynamicVars["HealAmt"].UpgradeValueBy(2m);
     }
 }

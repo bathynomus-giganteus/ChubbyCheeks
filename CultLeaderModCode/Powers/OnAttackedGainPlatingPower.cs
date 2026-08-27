@@ -29,17 +29,17 @@ public class OnAttackedGainPlatingPower : ModPowerTemplate
         if (base.Amount <= 0 || command.Attacker == null || !command.Attacker.IsMonster)
             return;
 
-        bool hitOwner = command.Results
+        int hitsOnOwner = command.Results
             .SelectMany(hits => hits)
-            .Any(result => result.Receiver == base.Owner);
+            .Count(result => result.Receiver == base.Owner);
 
-        if (!hitOwner)
+        if (hitsOnOwner <= 0)
             return;
 
         await ApostlePowerRules.ApplyApostlePower<PlatingPower, SolidIcePower>(
             choiceContext,
             base.Owner,
-            base.Amount,
+            base.Amount * hitsOnOwner,
             command.Attacker,
             null
         );

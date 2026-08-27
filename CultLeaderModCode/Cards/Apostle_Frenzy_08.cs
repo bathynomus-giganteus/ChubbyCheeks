@@ -19,7 +19,7 @@ public class Apostle_Frenzy_08 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(16m, ValueProp.Move), new DynamicVar("FervorMultiplier", 3m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(16m, ValueProp.Move), new DynamicVar("FervorMultiplier", 2m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/淬火击.png");
@@ -43,6 +43,6 @@ public class Apostle_Frenzy_08 : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
-        DynamicVars["FervorMultiplier"].UpgradeValueBy(2m);
+        DynamicVars["FervorMultiplier"].UpgradeValueBy(1m);
     }
 }

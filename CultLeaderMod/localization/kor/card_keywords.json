@@ -1,16 +1,16 @@
 {
-  "CULT_LEADER_MOD_KEYWORD_APOSTLE.title": "사도카드",
-  "CULT_LEADER_MOD_KEYWORD_APOSTLE.description": "사도 이름",
-  "CULT_LEADER_MOD_KEYWORD_PURE.title": "사도 캐릭터",
+  "CULT_LEADER_MOD_KEYWORD_APOSTLE.title": "사도 카드",
+  "CULT_LEADER_MOD_KEYWORD_APOSTLE.description": "사도의 이름",
+  "CULT_LEADER_MOD_KEYWORD_PURE.title": "사도의 성격",
   "CULT_LEADER_MOD_KEYWORD_PURE.description": "순수",
-  "CULT_LEADER_MOD_KEYWORD_CALM.title": "사도 캐릭터",
-  "CULT_LEADER_MOD_KEYWORD_CALM.description": "진정하세요",
-  "CULT_LEADER_MOD_KEYWORD_FRENZY.title": "사도 캐릭터",
-  "CULT_LEADER_MOD_KEYWORD_FRENZY.description": "광팬",
-  "CULT_LEADER_MOD_KEYWORD_LIVELY.title": "사도 캐릭터",
-  "CULT_LEADER_MOD_KEYWORD_LIVELY.description": "생기발랄",
-  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title": "사도 캐릭터",
-  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description": "우울하다",
+  "CULT_LEADER_MOD_KEYWORD_CALM.title": "사도의 성격",
+  "CULT_LEADER_MOD_KEYWORD_CALM.description": "냉정",
+  "CULT_LEADER_MOD_KEYWORD_FRENZY.title": "사도의 성격",
+  "CULT_LEADER_MOD_KEYWORD_FRENZY.description": "광기",
+  "CULT_LEADER_MOD_KEYWORD_LIVELY.title": "사도의 성격",
+  "CULT_LEADER_MOD_KEYWORD_LIVELY.description": "활발",
+  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.title": "사도의 성격",
+  "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description": "우울",
   "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.title": "카드 1장 뽑기",
-  "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.description": "이번 전투에서는 사도 카드를 낼 때마다 카드를 1장 뽑습니다."
+  "CULT_LEADER_MOD_KEYWORD_PAT_HEAD.description": "이번 전투에서 사도 카드를 사용할 때마다 카드를 1장 뽑습니다."
 }

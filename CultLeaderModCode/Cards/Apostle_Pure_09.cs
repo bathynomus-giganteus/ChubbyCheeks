@@ -19,7 +19,7 @@ public class Apostle_Pure_09 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("RegenAmt", 2m), new DynamicVar("TriggerAmt", 3m), new DynamicVar("Threshold", 5m), new DynamicVar("DrawAmt", 2m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("RegenAmt", 5m), new DynamicVar("TriggerAmt", 3m), new DynamicVar("Threshold", 5m), new DynamicVar("DrawAmt", 2m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>

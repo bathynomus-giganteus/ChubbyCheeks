@@ -17,7 +17,7 @@ public class Apostle_Lively_22 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("RetainCost", 3m), new DynamicVar("BeeMaxHp", 5m)];
+        [new DynamicVar("RetainCost", 9m), new DynamicVar("Repeats", 3m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -32,16 +32,21 @@ public class Apostle_Lively_22 : ModCardTemplate
         var owner = base.Owner.Creature;
         int required = DynamicVars["RetainCost"].IntValue;
         int available = ApostleCardEffectHelpers.LivelyStacks(owner);
-        int remove = Math.Min(required, available);
+        if (available < required)
+            return;
 
-        await ApostleCardEffectHelpers.RemoveLivelyStacks(choiceContext, owner, remove, this);
+        await ApostleCardEffectHelpers.RemoveLivelyStacks(choiceContext, owner, required, this);
 
-        if (remove >= required)
+        for (int i = 0; i < DynamicVars["Repeats"].IntValue; i++)
         {
+            var target = ApostleCardEffectHelpers.RandomEnemy(owner);
+            if (target == null)
+                break;
+
             await PowerCmd.Apply<BeePower>(
                 choiceContext,
-                owner,
-                DynamicVars["BeeMaxHp"].BaseValue,
+                target,
+                1m,
                 owner,
                 this
             );
@@ -50,7 +55,6 @@ public class Apostle_Lively_22 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["RetainCost"].UpgradeValueBy(-1m);
-        DynamicVars["BeeMaxHp"].UpgradeValueBy(1m);
+        DynamicVars["RetainCost"].UpgradeValueBy(-3m);
     }
 }

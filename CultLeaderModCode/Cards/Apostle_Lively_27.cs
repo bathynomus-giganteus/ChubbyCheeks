@@ -4,9 +4,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -19,7 +16,7 @@ public class Apostle_Lively_27 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(5m, ValueProp.Move), new DynamicVar("StrengthAmt", 1m)];
+        [new DynamicVar("RetainAmt", 3m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -27,32 +24,35 @@ public class Apostle_Lively_27 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_27.png");
 
     public Apostle_Lively_27()
-        : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-        var owner = base.Owner.Creature;
-
-        await PowerCmd.Apply<StrengthPower>(
+        var owner = base.Owner;
+        await ApostleCardPlayHelpers.ApplyLivelyPower(
             choiceContext,
-            owner,
-            DynamicVars["StrengthAmt"].BaseValue,
-            owner,
+            owner.Creature,
+            DynamicVars["RetainAmt"].BaseValue,
+            owner.Creature,
             this
         );
 
-        await ApostleCardEffectHelpers.Attack(
-            choiceContext,
-            this,
-            cardPlay,
-            cardPlay.Target,
-            DynamicVars.Damage.BaseValue
-        );
+        var combatState = owner.Creature.CombatState;
+        if (combatState == null)
+            return;
+
+        var candidates = PileType.Draw.GetPile(owner).Cards
+            .Where(card => card.Type == CardType.Attack)
+            .ToList();
+        if (candidates.Count == 0)
+            return;
+
+        var selected = candidates[Random.Shared.Next(candidates.Count)];
+        await CardPileCmd.Add(selected, PileType.Hand, CardPilePosition.Top, this, false);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["RetainAmt"].UpgradeValueBy(3m);
     }
 }

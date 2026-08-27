@@ -18,7 +18,7 @@ public class Apostle_Lively_18 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(30m, ValueProp.Move)];
+        [new DamageVar(20m, ValueProp.Move)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 

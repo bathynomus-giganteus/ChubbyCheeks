@@ -48,7 +48,7 @@ public class Apostle_Pure_11 : ModCardTemplate
 
         if (ApostleCardEffectHelpers.PureStacks(owner) >= DynamicVars["Threshold"].BaseValue)
         {
-            await ApostleCardEffectHelpers.RemovePureStacks(choiceContext, owner, 1, this);
+            await ApostleCardEffectHelpers.TriggerPureStacks(choiceContext, owner, 1, this);
             attackContext.AddHit(await CreatureCmd.Damage(
                 choiceContext,
                 target,

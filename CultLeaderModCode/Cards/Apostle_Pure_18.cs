@@ -34,7 +34,7 @@ public class Apostle_Pure_18 : ModCardTemplate
 
         if (ApostleCardEffectHelpers.PureStacks(owner) > DynamicVars["Threshold"].BaseValue)
         {
-            await ApostleCardEffectHelpers.RemovePureStacksBulk(choiceContext, owner, DynamicVars["Threshold"].IntValue, this);
+            await ApostleCardEffectHelpers.TriggerPureStacks(choiceContext, owner, DynamicVars["Threshold"].IntValue, this);
             await PowerCmd.Apply<BufferPower>(choiceContext, owner, DynamicVars["BufferAmt"].BaseValue, owner, this);
         }
     }

@@ -22,9 +22,8 @@ public class ForwardResolvePower : ModPowerTemplate
         public int Consumed;
         public int Triggers;
         public int Threshold;
+        public int VigorGainPerTrigger = 2;
     }
-
-    private const int VigorGainPerTrigger = 2;
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -54,6 +53,11 @@ public class ForwardResolvePower : ModPowerTemplate
         GetInternalData<Data>().Threshold = (int)Amount;
         InvokeDisplayAmountChanged();
         await base.AfterApplied(applier, cardSource);
+    }
+
+    public void ConfigureVigorGain(int amount)
+    {
+        GetInternalData<Data>().VigorGainPerTrigger = Math.Max(0, amount);
     }
 
     public override async Task AfterPowerAmountChanged(
@@ -87,7 +91,7 @@ public class ForwardResolvePower : ModPowerTemplate
             await ApostleCardPlayHelpers.ApplyFrenzyPower(
                 choiceContext,
                 Owner,
-                triggerDelta * VigorGainPerTrigger,
+                triggerDelta * data.VigorGainPerTrigger,
                 Owner,
                 cardSource
             );

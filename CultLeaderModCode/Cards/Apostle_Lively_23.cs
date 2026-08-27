@@ -16,7 +16,7 @@ public class Apostle_Lively_23 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("RetainAmt", 2m)];
+        [new DynamicVar("RetainAmt", 3m), new DynamicVar("Threshold", 15m), new DynamicVar("HealAmt", 5m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
@@ -39,12 +39,13 @@ public class Apostle_Lively_23 : ModCardTemplate
         );
 
         int retain = ApostleCardEffectHelpers.LivelyStacks(owner);
-        if (retain > 0)
-            await CreatureCmd.Heal(owner, retain);
+        if (retain >= DynamicVars["Threshold"].BaseValue)
+            await CreatureCmd.Heal(owner, DynamicVars["HealAmt"].BaseValue);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["RetainAmt"].UpgradeValueBy(2m);
+        DynamicVars["Threshold"].UpgradeValueBy(-3m);
     }
 }

@@ -58,5 +58,11 @@
   "CULT_LEADER_MOD_RELIC_ZION_BLACK_CLOAK_RELIC.flavor": "锡安说有了黑暗才能让光芒更耀眼，所以坚持穿这件黑色披风，虽然不太懂什么意思，但看来她很珍惜这披风。",
   "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.title": "咻咻咻咻手套",
   "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.description": "回合开始时获得1活力，如果回合开始时你没有活力，额外获得2活力。",
-  "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.flavor": "戴在拳头上后，仿佛能像骤雨般挥出连环拳的坚固手套。一边喊出手套的名字一边挥拳，或许会感觉自己变强了一点？"
+  "CULT_LEADER_MOD_RELIC_SWOOSH_GLOVES_RELIC.flavor": "戴在拳头上后，仿佛能像骤雨般挥出连环拳的坚固手套。一边喊出手套的名字一边挥拳，或许会感觉自己变强了一点？",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.title": "天气晴朗卡",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.description": "第一回合，获得1教主的权能，第四回合开始时，如果有教主的权能，失去1教主的权能。",
+  "CULT_LEADER_MOD_RELIC_CLEAR_WEATHER_CARD_RELIC.flavor": "天气晴朗，但闪电袭来，当喜欢算命的佑平拿出这张牌时，就意味着有人准备在背后搞恶作剧",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.title": "黄油的黄牌",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.description": "拾起时，向卡组中添加一张【黄油飞射】，每次被攻击时，计数额外减少1。",
+  "CULT_LEADER_MOD_RELIC_BUTTER_YELLOW_CARD_RELIC.flavor": "每当心中怒火叠加时会拿出来看的黄色卡牌，有手的痕迹"
 }

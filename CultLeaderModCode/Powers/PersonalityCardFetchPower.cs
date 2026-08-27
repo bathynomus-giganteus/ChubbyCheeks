@@ -2,47 +2,49 @@ using CultLeaderMod.CultLeaderModCode.Cards;
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
-[RegisterPower]
 public class PersonalityCardFetchPower : ModPowerTemplate
 {
     private sealed class Data
     {
-        public CardTag Tag;
         public bool UpgradeFetchedCard;
-        public string IconPath = "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png";
     }
+
+    protected virtual CardTag FetchTag => CultLeaderCardTags.Pure;
+    protected virtual string PersonalityIconPath => "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png";
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    public override string CustomIconPath => GetInternalData<Data>().IconPath;
-    public override string CustomBigIconPath => GetInternalData<Data>().IconPath;
+    public override string CustomIconPath => PersonalityIconPath;
+    public override string CustomBigIconPath => PersonalityIconPath;
 
     protected override object InitInternalData()
     {
         return new Data();
     }
 
-    public void Configure(CardTag tag, bool upgradeFetchedCard)
+    public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
-        var data = GetInternalData<Data>();
-        data.Tag = tag;
-        data.UpgradeFetchedCard = upgradeFetchedCard;
-        data.IconPath = tag == CultLeaderCardTags.Pure ? "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png"
-            : tag == CultLeaderCardTags.Calm ? "res://CultLeaderMod/images/card_portraits/personality/personality_calm.png"
-            : tag == CultLeaderCardTags.Frenzy ? "res://CultLeaderMod/images/card_portraits/personality/personality_frenzy.png"
-            : tag == CultLeaderCardTags.Lively ? "res://CultLeaderMod/images/card_portraits/personality/personality_lively.png"
-            : tag == CultLeaderCardTags.Melancholy ? "res://CultLeaderMod/images/card_portraits/personality/personality_melancholy.png"
-            : "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png";
+        Configure(cardSource?.IsUpgraded == true);
+        await base.AfterApplied(applier, cardSource);
+    }
+
+    public void Configure(bool upgradeFetchedCard)
+    {
+        GetInternalData<Data>().UpgradeFetchedCard = upgradeFetchedCard;
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
@@ -53,9 +55,8 @@ public class PersonalityCardFetchPower : ModPowerTemplate
             return;
 
         var data = GetInternalData<Data>();
-        var tag = data.Tag;
         var drawPile = PileType.Draw.GetPile(player).Cards
-            .Where(card => ApostlePowerRules.IsApostleCard(card) && card.Tags.Contains(tag))
+            .Where(card => ApostlePowerRules.IsApostleCard(card) && card.Tags.Contains(FetchTag))
             .ToList();
 
         if (drawPile.Count == 0)
@@ -67,4 +68,39 @@ public class PersonalityCardFetchPower : ModPowerTemplate
 
         await CardPileCmd.Add(selected, PileType.Hand, CardPilePosition.Top, this, false);
     }
+}
+
+[RegisterPower]
+public class PersonalityCardFetchPurePower : PersonalityCardFetchPower
+{
+    protected override CardTag FetchTag => CultLeaderCardTags.Pure;
+    protected override string PersonalityIconPath => "res://CultLeaderMod/images/card_portraits/personality/personality_pure.png";
+}
+
+[RegisterPower]
+public class PersonalityCardFetchCalmPower : PersonalityCardFetchPower
+{
+    protected override CardTag FetchTag => CultLeaderCardTags.Calm;
+    protected override string PersonalityIconPath => "res://CultLeaderMod/images/card_portraits/personality/personality_calm.png";
+}
+
+[RegisterPower]
+public class PersonalityCardFetchFrenzyPower : PersonalityCardFetchPower
+{
+    protected override CardTag FetchTag => CultLeaderCardTags.Frenzy;
+    protected override string PersonalityIconPath => "res://CultLeaderMod/images/card_portraits/personality/personality_frenzy.png";
+}
+
+[RegisterPower]
+public class PersonalityCardFetchLivelyPower : PersonalityCardFetchPower
+{
+    protected override CardTag FetchTag => CultLeaderCardTags.Lively;
+    protected override string PersonalityIconPath => "res://CultLeaderMod/images/card_portraits/personality/personality_lively.png";
+}
+
+[RegisterPower]
+public class PersonalityCardFetchMelancholyPower : PersonalityCardFetchPower
+{
+    protected override CardTag FetchTag => CultLeaderCardTags.Melancholy;
+    protected override string PersonalityIconPath => "res://CultLeaderMod/images/card_portraits/personality/personality_melancholy.png";
 }

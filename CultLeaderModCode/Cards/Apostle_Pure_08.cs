@@ -36,7 +36,7 @@ public class Apostle_Pure_08 : ModCardTemplate
         await PowerCmd.Apply<WeakPower>(choiceContext, target, DynamicVars["WeakAmt"].BaseValue, base.Owner.Creature, this);
         var debuffTypes = ApostleCardEffectHelpers.CountDebuffTypes(target);
         if (debuffTypes > 0)
-            await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, base.Owner.Creature, debuffTypes, base.Owner.Creature, this);
+            await ApostleCardPlayHelpers.ApplyPurePower(choiceContext, base.Owner.Creature, debuffTypes * 3, base.Owner.Creature, this);
         if (!IsUpgraded)
             base.EnergyCost.AddThisCombat(1);
     }

@@ -16,7 +16,7 @@ public class Apostle_Lively_01 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("RetainAmt", 2m), new DynamicVar("Duration", 7m)];
+        [new DynamicVar("RetainAmt", 3m), new DynamicVar("Duration", 7m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_01.png");
@@ -42,4 +42,3 @@ public class Apostle_Lively_01 : ModCardTemplate
         DynamicVars["RetainAmt"].UpgradeValueBy(1m);
     }
 }
-

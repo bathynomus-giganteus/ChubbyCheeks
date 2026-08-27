@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -15,60 +16,25 @@ namespace CultLeaderMod.CultLeaderModCode.Powers;
 [RegisterPower]
 public class FlatDamageReductionPower : ModPowerTemplate
 {
-    private sealed class Data
-    {
-        public bool HadBlock;
-    }
-
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override string CustomIconPath => "res://CultLeaderMod/images/badges/portraits/冷静_13.png";
     public override string CustomBigIconPath => "res://CultLeaderMod/images/badges/portraits/冷静_13.png";
 
-    protected override object InitInternalData()
-    {
-        return new Data();
-    }
-
-    public override async Task BeforeDamageReceived(
-        PlayerChoiceContext choiceContext,
-        Creature target,
+    public override decimal ModifyDamageAdditive(
+        Creature? target,
         decimal amount,
         ValueProp props,
         Creature? dealer,
-        CardModel? cardSource)
-    {
-        await base.BeforeDamageReceived(choiceContext, target, amount, props, dealer, cardSource);
-
-        if (target == base.Owner && props.IsPoweredAttack())
-            GetInternalData<Data>().HadBlock = target.Block > 0;
-    }
-
-    public override decimal ModifyHpLostBeforeOsty(
-        Creature target,
-        decimal amount,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource)
+        CardModel? cardSource,
+        CardPlay? cardPlay)
     {
         if (target != base.Owner || base.Amount <= 0 || amount <= 0m || !props.IsPoweredAttack())
-            return amount;
-        if (!GetInternalData<Data>().HadBlock)
-            return amount;
+            return base.ModifyDamageAdditive(target, amount, props, dealer, cardSource, cardPlay);
+        if (base.Owner == null || base.Owner.Block <= 0m)
+            return base.ModifyDamageAdditive(target, amount, props, dealer, cardSource, cardPlay);
 
-        return Math.Max(0m, amount - base.Amount);
-    }
-
-    public override async Task AfterDamageReceived(
-        PlayerChoiceContext choiceContext,
-        Creature target,
-        DamageResult result,
-        ValueProp props,
-        Creature? dealer,
-        CardModel? cardSource)
-    {
-        await base.AfterDamageReceived(choiceContext, target, result, props, dealer, cardSource);
-        GetInternalData<Data>().HadBlock = false;
+        return -Math.Min(amount, base.Amount);
     }
 }

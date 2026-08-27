@@ -21,7 +21,7 @@ public class Apostle_Melancholy_23 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(9m, ValueProp.Move), new DynamicVar("VulnAmt", 2m)];
+        [new DamageVar(10m, ValueProp.Move), new DynamicVar("VulnAmt", 2m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/Rock_and_Peace.png");

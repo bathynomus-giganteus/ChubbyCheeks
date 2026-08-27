@@ -12,7 +12,7 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 [RegisterCard(typeof(CultLeaderModCardPool))]
 public class SaviorDescendsCard : ModCardTemplate
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 2m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 3m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
@@ -31,6 +31,8 @@ public class SaviorDescendsCard : ModCardTemplate
             base.Owner.Creature,
             this
         );
+
+        await ApostleRecruitmentHelper.OfferRandomApostleToHandForFreeThisTurn(choiceContext, base.Owner, this);
     }
 
     protected override void OnUpgrade()
