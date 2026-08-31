@@ -22,6 +22,12 @@ public class BitterPainPerTurnPower : ModPowerTemplate
     {
         await base.BeforeSideTurnEnd(choiceContext, side, participants);
         if (!participants.Contains(base.Owner) || base.Amount <= 0) return;
-        await PowerCmd.Apply<BitterPainPower>(choiceContext, base.Owner, base.Amount, base.Owner, null);
+        await ApostlePowerRules.ApplyApostlePower<BitterPainPower, BitterPainBurstPower>(
+            choiceContext,
+            base.Owner,
+            base.Amount,
+            base.Owner,
+            null
+        );
     }
 }

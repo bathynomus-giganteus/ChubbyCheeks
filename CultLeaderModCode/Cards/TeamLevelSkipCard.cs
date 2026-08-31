@@ -44,5 +44,6 @@ public class TeamLevelSkipCard : ModCardTemplate
     protected override void OnUpgrade()
     {
         base.EnergyCost.UpgradeBy(1);
+        CardCmd.ApplyKeyword(this, CardKeyword.Exhaust);
     }
 }

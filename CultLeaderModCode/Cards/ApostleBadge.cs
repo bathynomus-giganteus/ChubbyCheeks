@@ -114,6 +114,7 @@ public static class ApostleBadgePatch
         ["Apostle_Melancholy_21"] = "忧郁_21", ["Apostle_Melancholy_22"] = "忧郁_22",
         ["Apostle_Melancholy_23"] = "忧郁_23", ["Apostle_Melancholy_24"] = "忧郁_24",
         ["Apostle_Melancholy_25"] = "忧郁_25",
+        ["Apostle_Melancholy_26"] = "忧郁_欧若拉",
     };
 
     [HarmonyPostfix]

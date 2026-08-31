@@ -25,6 +25,14 @@ Thumbs.db
 # Temp / decompiled
 .tmpmods/
 tmp/
+tmp_*.py
+tmp_build_mods/
+diagnostics/
+.codex_backups/
+mod-uploader.log
+
+# Runtime-generated external VFX import metadata; keep PNG frames and manifest.
+external_vfx/**/*.import
 
 # Editor
 editor/

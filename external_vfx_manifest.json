@@ -1,0 +1,1890 @@
+[
+  {
+    "key": "calm_01",
+    "attack_count": 46,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿雅",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿雅\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿雅\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_01"
+    ],
+    "cards": [
+      "雪花蝶舞"
+    ]
+  },
+  {
+    "key": "calm_02",
+    "attack_count": 46,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\希拉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\希拉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\希拉\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_02"
+    ],
+    "cards": [
+      "百帕斯卡 挥棒!"
+    ]
+  },
+  {
+    "key": "calm_03",
+    "attack_count": 65,
+    "preview_count": 9,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\埃蕾娜",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\埃蕾娜\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\埃蕾娜\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_03"
+    ],
+    "cards": [
+      "战术无人机 MK-2"
+    ]
+  },
+  {
+    "key": "calm_04",
+    "attack_count": 60,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿梅利亚",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿梅利亚\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿梅利亚\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_04"
+    ],
+    "cards": [
+      "战术卫星助阵"
+    ]
+  },
+  {
+    "key": "calm_05",
+    "attack_count": 68,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\梅露娜",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\梅露娜\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\梅露娜\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_05"
+    ],
+    "cards": [
+      "咿 呀 蜜瓜吖~"
+    ]
+  },
+  {
+    "key": "calm_06",
+    "attack_count": 76,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\芙莉克尔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\芙莉克尔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\芙莉克尔\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_06"
+    ],
+    "cards": [
+      "刺痛的门卫"
+    ]
+  },
+  {
+    "key": "calm_07",
+    "attack_count": 91,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\杰德",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\杰德\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\杰德\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_07"
+    ],
+    "cards": [
+      "锗玉电热毯"
+    ]
+  },
+  {
+    "key": "calm_08",
+    "attack_count": 124,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\薇尔薇特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\薇尔薇特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\薇尔薇特\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_08"
+    ],
+    "cards": [
+      "魔法：圆舞切割"
+    ]
+  },
+  {
+    "key": "calm_09",
+    "attack_count": 93,
+    "preview_count": 13,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\柯米(泳装)",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\柯米(泳装)\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\柯米(泳装)\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_09"
+    ],
+    "cards": [
+      "泳池候选地"
+    ]
+  },
+  {
+    "key": "calm_10",
+    "attack_count": 67,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\皮可拉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\皮可拉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\皮可拉\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_10"
+    ],
+    "cards": [
+      "限定贴纸!"
+    ]
+  },
+  {
+    "key": "calm_11",
+    "attack_count": 109,
+    "preview_count": 129,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\伊德",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\伊德\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\伊德\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_11"
+    ],
+    "cards": [
+      "界限模糊"
+    ]
+  },
+  {
+    "key": "calm_12",
+    "attack_count": 91,
+    "preview_count": 17,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\巴隆",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\巴隆\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\巴隆\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_12"
+    ],
+    "cards": [
+      "说闲话的玩偶"
+    ]
+  },
+  {
+    "key": "calm_13",
+    "attack_count": 101,
+    "preview_count": 37,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\格温",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\格温\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\格温\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_13"
+    ],
+    "cards": [
+      "雪雾"
+    ]
+  },
+  {
+    "key": "calm_14",
+    "attack_count": 104,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\艾西亚",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\艾西亚\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\艾西亚\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_14"
+    ],
+    "cards": [
+      "新产品试用"
+    ]
+  },
+  {
+    "key": "calm_15",
+    "attack_count": 181,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\里科塔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\里科塔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\里科塔\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_15"
+    ],
+    "cards": [
+      "里科塔 全套餐"
+    ]
+  },
+  {
+    "key": "calm_16",
+    "attack_count": 137,
+    "preview_count": 49,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\黛安娜（往昔）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\黛安娜（往昔）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\黛安娜（往昔）\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_16"
+    ],
+    "cards": [
+      "粉碎"
+    ]
+  },
+  {
+    "key": "calm_17",
+    "attack_count": 108,
+    "preview_count": 161,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\凯撒",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\凯撒\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\凯撒\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_17"
+    ],
+    "cards": [
+      "修剪枝条"
+    ]
+  },
+  {
+    "key": "calm_18",
+    "attack_count": 113,
+    "preview_count": 29,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\班尼（班尼）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\班尼（班尼）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\班尼（班尼）\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_18"
+    ],
+    "cards": [
+      "蜂蜜炸弹"
+    ]
+  },
+  {
+    "key": "calm_19",
+    "attack_count": 102,
+    "preview_count": 145,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\茵刻尔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\茵刻尔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\茵刻尔\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_19"
+    ],
+    "cards": [
+      "墨水洗礼"
+    ]
+  },
+  {
+    "key": "calm_20",
+    "attack_count": 99,
+    "preview_count": 151,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿拉戈尼娅",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿拉戈尼娅\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\阿拉戈尼娅\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_20"
+    ],
+    "cards": [
+      "心中的珍珠"
+    ]
+  },
+  {
+    "key": "calm_21",
+    "attack_count": 41,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\妮可",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\妮可\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\妮可\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_21"
+    ],
+    "cards": [
+      "超天才的演出"
+    ]
+  },
+  {
+    "key": "calm_22",
+    "attack_count": 36,
+    "preview_count": 49,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\埃斯皮",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\埃斯皮\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\埃斯皮\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_22"
+    ],
+    "cards": [
+      "摇曳幽烛"
+    ]
+  },
+  {
+    "key": "calm_23",
+    "attack_count": 81,
+    "preview_count": 96,
+    "source": "E:\\work\\Cult_leader_mod\\坨坨\\冷静\\蕾特",
+    "attack_source": "E:\\work\\Cult_leader_mod\\坨坨\\冷静\\蕾特\\动画.gif",
+    "preview_source": "E:\\work\\Cult_leader_mod\\坨坨\\冷静\\蕾特\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_23"
+    ],
+    "cards": [
+      "脑机连接开始"
+    ]
+  },
+  {
+    "key": "calm_24",
+    "attack_count": 60,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\帕特拉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\帕特拉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\帕特拉\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_24"
+    ],
+    "cards": [
+      "给我吃薄荷！"
+    ]
+  },
+  {
+    "key": "calm_25",
+    "attack_count": 45,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\雷吉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\雷吉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\雷吉\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_25"
+    ],
+    "cards": [
+      "XG-激光"
+    ]
+  },
+  {
+    "key": "calm_26",
+    "attack_count": 81,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\康塔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\康塔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\冷静\\康塔\\立绘.gif",
+    "classes": [
+      "Apostle_Calm_26"
+    ],
+    "cards": [
+      "顶级旋转刀锋"
+    ]
+  },
+  {
+    "key": "dual_rivals",
+    "attack_count": 191,
+    "preview_count": 0,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\其他卡牌\\双雄相争",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\其他卡牌\\双雄相争\\动画1.gif",
+    "preview_source": null,
+    "classes": [
+      "DualRivalsCard"
+    ],
+    "cards": [
+      "双雄相争"
+    ]
+  },
+  {
+    "key": "for_elruien",
+    "attack_count": 94,
+    "preview_count": 0,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\其他卡牌\\为了艾鲁皮恩",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\其他卡牌\\为了艾鲁皮恩\\动画1.gif",
+    "preview_source": null,
+    "classes": [
+      "ForElruienCard"
+    ],
+    "cards": [
+      "为了艾鲁皮恩"
+    ]
+  },
+  {
+    "key": "frenzy_01",
+    "attack_count": 60,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\克萝伊",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\克萝伊\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\克萝伊\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_01"
+    ],
+    "cards": [
+      "小小塞巴斯蒂安"
+    ]
+  },
+  {
+    "key": "frenzy_02",
+    "attack_count": 120,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\黛安娜",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\黛安娜\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\黛安娜\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_02"
+    ],
+    "cards": [
+      "真正的治愈"
+    ]
+  },
+  {
+    "key": "frenzy_03",
+    "attack_count": 60,
+    "preview_count": 97,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\谢迪",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\谢迪\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\谢迪\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_03"
+    ],
+    "cards": [
+      "杀戮时刻"
+    ]
+  },
+  {
+    "key": "frenzy_04",
+    "attack_count": 101,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\尼尔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\尼尔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\尼尔\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_04"
+    ],
+    "cards": [
+      "世界树启示录"
+    ]
+  },
+  {
+    "key": "frenzy_05",
+    "attack_count": 71,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\西斯特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\西斯特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\西斯特\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_05"
+    ],
+    "cards": [
+      "Money Gun"
+    ]
+  },
+  {
+    "key": "frenzy_06",
+    "attack_count": 81,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\贝丽塔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\贝丽塔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\贝丽塔\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_06"
+    ],
+    "cards": [
+      "猩红之雨"
+    ]
+  },
+  {
+    "key": "frenzy_07",
+    "attack_count": 56,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\爱丽丝",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\爱丽丝\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\爱丽丝\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_07"
+    ],
+    "cards": [
+      "阿卡那"
+    ]
+  },
+  {
+    "key": "frenzy_08",
+    "attack_count": 177,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\丽兹",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\丽兹\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\丽兹\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_08"
+    ],
+    "cards": [
+      "淬火击"
+    ]
+  },
+  {
+    "key": "frenzy_09",
+    "attack_count": 85,
+    "preview_count": 49,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\提格（英雄）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\提格（英雄）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\提格（英雄）\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_09"
+    ],
+    "cards": [
+      "鹿派斩击"
+    ]
+  },
+  {
+    "key": "frenzy_10",
+    "attack_count": 98,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\阿妮特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\阿妮特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\阿妮特\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_10"
+    ],
+    "cards": [
+      "偏向性解说"
+    ]
+  },
+  {
+    "key": "frenzy_11",
+    "attack_count": 96,
+    "preview_count": 17,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\涅缇",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\涅缇\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\涅缇\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_11"
+    ],
+    "cards": [
+      "螺旋钻头充能"
+    ]
+  },
+  {
+    "key": "frenzy_12",
+    "attack_count": 71,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\琳（混沌）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\琳（混沌）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\琳（混沌）\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_12"
+    ],
+    "cards": [
+      "被混沌勾引"
+    ]
+  },
+  {
+    "key": "frenzy_13",
+    "attack_count": 123,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\破朗",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\破朗\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\破朗\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_13"
+    ],
+    "cards": [
+      "向妖精王国敬礼"
+    ]
+  },
+  {
+    "key": "frenzy_14",
+    "attack_count": 84,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\皮拉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\皮拉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\皮拉\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_14"
+    ],
+    "cards": [
+      "收款的时间到了！"
+    ]
+  },
+  {
+    "key": "frenzy_15",
+    "attack_count": 150,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\莉纽瓦",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\莉纽瓦\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\莉纽瓦\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_15"
+    ],
+    "cards": [
+      "时间中断"
+    ]
+  },
+  {
+    "key": "frenzy_16",
+    "attack_count": 94,
+    "preview_count": 65,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\罗莱特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\罗莱特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\罗莱特\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_16"
+    ],
+    "cards": [
+      "喜欢喝彩的演员"
+    ]
+  },
+  {
+    "key": "frenzy_17",
+    "attack_count": 71,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\海蒂",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\海蒂\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\海蒂\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_17"
+    ],
+    "cards": [
+      "潜入采访中！"
+    ]
+  },
+  {
+    "key": "frenzy_18",
+    "attack_count": 85,
+    "preview_count": 49,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\达雅（纯真闪耀）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\达雅（纯真闪耀）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\达雅（纯真闪耀）\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_18"
+    ],
+    "cards": [
+      "纯真☆光束"
+    ]
+  },
+  {
+    "key": "frenzy_19",
+    "attack_count": 171,
+    "preview_count": 97,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\海莉（清醒）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\海莉（清醒）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\海莉（清醒）\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_19"
+    ],
+    "cards": [
+      "向前迈进的决心"
+    ]
+  },
+  {
+    "key": "frenzy_20",
+    "attack_count": 74,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\西尔维娅",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\西尔维娅\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\西尔维娅\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_20"
+    ],
+    "cards": [
+      "要来见少女吗？"
+    ]
+  },
+  {
+    "key": "frenzy_21",
+    "attack_count": 85,
+    "preview_count": 97,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\斯琪娅",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\斯琪娅\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\斯琪娅\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_21"
+    ],
+    "cards": [
+      "古老的誓约"
+    ]
+  },
+  {
+    "key": "frenzy_22",
+    "attack_count": 79,
+    "preview_count": 11,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\大师2号",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\大师2号\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\大师2号\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_22"
+    ],
+    "cards": [
+      "机器人矩阵"
+    ]
+  },
+  {
+    "key": "frenzy_23",
+    "attack_count": 45,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\玛约",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\玛约\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\玛约\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_23"
+    ],
+    "cards": [
+      "那个收藏品是我的"
+    ]
+  },
+  {
+    "key": "frenzy_24",
+    "attack_count": 167,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\伊芙利特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\伊芙利特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\伊芙利特\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_24"
+    ],
+    "cards": [
+      "篝火"
+    ]
+  },
+  {
+    "key": "frenzy_25",
+    "attack_count": 33,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\梅森",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\梅森\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\梅森\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_25"
+    ],
+    "cards": [
+      "手里剑要飞了！"
+    ]
+  },
+  {
+    "key": "frenzy_26",
+    "attack_count": 50,
+    "preview_count": 13,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\刘美美",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\刘美美\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\狂热\\刘美美\\立绘.gif",
+    "classes": [
+      "Apostle_Frenzy_26"
+    ],
+    "cards": [
+      "发射！啊biu~"
+    ]
+  },
+  {
+    "key": "lively_01",
+    "attack_count": 128,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\雨伊",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\雨伊\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\雨伊\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_01"
+    ],
+    "cards": [
+      "呱呱雨~"
+    ]
+  },
+  {
+    "key": "lively_02",
+    "attack_count": 51,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\鲁德",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\鲁德\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\鲁德\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_02"
+    ],
+    "cards": [
+      "再来一次!"
+    ]
+  },
+  {
+    "key": "lively_03",
+    "attack_count": 42,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\卢波",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\卢波\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\卢波\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_03"
+    ],
+    "cards": [
+      "卢波流 神速斩"
+    ]
+  },
+  {
+    "key": "lively_04",
+    "attack_count": 60,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\康娜",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\康娜\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\康娜\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_04"
+    ],
+    "cards": [
+      "强力一击"
+    ]
+  },
+  {
+    "key": "lively_05",
+    "attack_count": 46,
+    "preview_count": 21,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\黄油",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\黄油\\动画1.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\黄油\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_05",
+      "Apostle_Lively_05_1"
+    ],
+    "cards": [
+      "黄油飞射",
+      "黄油融化"
+    ]
+  },
+  {
+    "key": "lively_06",
+    "attack_count": 75,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\提格",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\提格\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\提格\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_06"
+    ],
+    "cards": [
+      "音速斩击"
+    ]
+  },
+  {
+    "key": "lively_07",
+    "attack_count": 80,
+    "preview_count": 97,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\赛琳娜",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\赛琳娜\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\赛琳娜\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_07"
+    ],
+    "cards": [
+      "全心全意"
+    ]
+  },
+  {
+    "key": "lively_08",
+    "attack_count": 60,
+    "preview_count": 29,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\埃皮卡",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\埃皮卡\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\埃皮卡\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_08",
+      "Apostle_Lively_08_1",
+      "Apostle_Lively_08_2",
+      "Apostle_Lively_08_3"
+    ],
+    "cards": [
+      "戏剧性演出",
+      "助手埃皮康",
+      "埃皮康分身术",
+      "献给友军"
+    ]
+  },
+  {
+    "key": "lively_09",
+    "attack_count": 107,
+    "preview_count": 97,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\米洛",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\米洛\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\米洛\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_09"
+    ],
+    "cards": [
+      "我想听你讲个故事"
+    ]
+  },
+  {
+    "key": "lively_10",
+    "attack_count": 91,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\玛卡莎",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\玛卡莎\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\玛卡莎\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_10"
+    ],
+    "cards": [
+      "总有一天会发生的事"
+    ]
+  },
+  {
+    "key": "lively_11",
+    "attack_count": 60,
+    "preview_count": 37,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\阿尔柯",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\阿尔柯\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\阿尔柯\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_11"
+    ],
+    "cards": [
+      "堂堂正正的舞蹈对决"
+    ]
+  },
+  {
+    "key": "lively_12",
+    "attack_count": 79,
+    "preview_count": 193,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\贝拉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\贝拉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\贝拉\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_12"
+    ],
+    "cards": [
+      "警戒线上的幽灵"
+    ]
+  },
+  {
+    "key": "lively_13",
+    "attack_count": 96,
+    "preview_count": 41,
+    "source": "E:\\work\\Cult_leader_mod\\坨坨\\活泼\\修罗",
+    "attack_source": "E:\\work\\Cult_leader_mod\\坨坨\\活泼\\修罗\\动画.gif",
+    "preview_source": "E:\\work\\Cult_leader_mod\\坨坨\\活泼\\修罗\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_13"
+    ],
+    "cards": [
+      "调整"
+    ]
+  },
+  {
+    "key": "lively_14",
+    "attack_count": 69,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\斯碧琪（女仆）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\斯碧琪（女仆）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\斯碧琪（女仆）\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_14"
+    ],
+    "cards": [
+      "干净的话就没活干了！"
+    ]
+  },
+  {
+    "key": "lively_15",
+    "attack_count": 25,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\莫莫",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\莫莫\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\莫莫\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_15"
+    ],
+    "cards": [
+      "梢杀 松鼠雷电"
+    ]
+  },
+  {
+    "key": "lively_16",
+    "attack_count": 77,
+    "preview_count": 17,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\舒胖",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\舒胖\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\舒胖\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_16"
+    ],
+    "cards": [
+      "速邦配送"
+    ]
+  },
+  {
+    "key": "lively_17",
+    "attack_count": 68,
+    "preview_count": 134,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\谢迪（逆转）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\谢迪（逆转）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\谢迪（逆转）\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_17"
+    ],
+    "cards": [
+      "次元裂缝"
+    ]
+  },
+  {
+    "key": "lively_18",
+    "attack_count": 83,
+    "preview_count": 49,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\涅尔（愤怒）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\涅尔（愤怒）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\涅尔（愤怒）\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_18"
+    ],
+    "cards": [
+      "圣裁宣告"
+    ]
+  },
+  {
+    "key": "lively_19",
+    "attack_count": 101,
+    "preview_count": 49,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\莱薇（毕业）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\莱薇（毕业）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\莱薇（毕业）\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_19"
+    ],
+    "cards": [
+      "充满魄力的新秀"
+    ]
+  },
+  {
+    "key": "lively_20",
+    "attack_count": 81,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\艾舒尔（魔道）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\艾舒尔（魔道）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\艾舒尔（魔道）\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_20"
+    ],
+    "cards": [
+      "魔道学者之路"
+    ]
+  },
+  {
+    "key": "lively_21",
+    "attack_count": 107,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\芭娜",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\芭娜\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\芭娜\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_21"
+    ],
+    "cards": [
+      "开核桃大师"
+    ]
+  },
+  {
+    "key": "lively_22",
+    "attack_count": 46,
+    "preview_count": 49,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\茱比",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\茱比\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\茱比\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_22"
+    ],
+    "cards": [
+      "幸福的bee"
+    ]
+  },
+  {
+    "key": "lively_23",
+    "attack_count": 60,
+    "preview_count": 29,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\班尼",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\班尼\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\班尼\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_23"
+    ],
+    "cards": [
+      "“蜂蜜鱼~哈姆!”"
+    ]
+  },
+  {
+    "key": "lively_24",
+    "attack_count": 43,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\玛丽",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\玛丽\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\玛丽\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_24"
+    ],
+    "cards": [
+      "炸弹来啦~"
+    ]
+  },
+  {
+    "key": "lively_25",
+    "attack_count": 38,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\卡伦",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\卡伦\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\卡伦\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_25"
+    ],
+    "cards": [
+      "胡萝卜治愈"
+    ]
+  },
+  {
+    "key": "lively_26",
+    "attack_count": 45,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\泰达",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\泰达\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\泰达\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_26"
+    ],
+    "cards": [
+      "DX-炮弹"
+    ]
+  },
+  {
+    "key": "lively_27",
+    "attack_count": 30,
+    "preview_count": 9,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\米雪",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\米雪\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\活泼\\米雪\\立绘.gif",
+    "classes": [
+      "Apostle_Lively_27"
+    ],
+    "cards": [
+      "噶哦哦！"
+    ]
+  },
+  {
+    "key": "melancholy_01",
+    "attack_count": 186,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\科米",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\科米\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\科米\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_01"
+    ],
+    "cards": [
+      "软乎乎Time"
+    ]
+  },
+  {
+    "key": "melancholy_02",
+    "attack_count": 107,
+    "preview_count": 21,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\x锡安x",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\x锡安x\\动画1.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\x锡安x\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_02",
+      "Apostle_Melancholy_02_1",
+      "Apostle_Melancholy_02_2"
+    ],
+    "cards": [
+      "魔弹装填",
+      "魔.弹.の.射.手",
+      "终.末.の.爆.炸"
+    ]
+  },
+  {
+    "key": "melancholy_03",
+    "attack_count": 101,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\珀榭",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\珀榭\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\珀榭\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_03"
+    ],
+    "cards": [
+      "土豆番薯!"
+    ]
+  },
+  {
+    "key": "melancholy_04",
+    "attack_count": 46,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\基迪恩",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\基迪恩\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\基迪恩\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_04"
+    ],
+    "cards": [
+      "内向人斩切"
+    ]
+  },
+  {
+    "key": "melancholy_05",
+    "attack_count": 58,
+    "preview_count": 9,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\琳",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\琳\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\琳\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_05"
+    ],
+    "cards": [
+      "侧斩"
+    ]
+  },
+  {
+    "key": "melancholy_06",
+    "attack_count": 75,
+    "preview_count": 37,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\艾舒尔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\艾舒尔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\艾舒尔\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_06"
+    ],
+    "cards": [
+      "面包流星"
+    ]
+  },
+  {
+    "key": "melancholy_07",
+    "attack_count": 59,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\希尔德",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\希尔德\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\希尔德\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_07"
+    ],
+    "cards": [
+      "芬多精波动"
+    ]
+  },
+  {
+    "key": "melancholy_08",
+    "attack_count": 77,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莉斯缇",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莉斯缇\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莉斯缇\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_08"
+    ],
+    "cards": [
+      "通械术"
+    ]
+  },
+  {
+    "key": "melancholy_09",
+    "attack_count": 71,
+    "preview_count": 49,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\阿萨娜",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\阿萨娜\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\阿萨娜\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_09"
+    ],
+    "cards": [
+      "魔力喷发"
+    ]
+  },
+  {
+    "key": "melancholy_10",
+    "attack_count": 56,
+    "preview_count": 41,
+    "source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\洛涅（市长）",
+    "attack_source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\洛涅（市长）\\动画.gif",
+    "preview_source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\洛涅（市长）\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_10"
+    ],
+    "cards": [
+      "炸猪排市长，洛涅！"
+    ]
+  },
+  {
+    "key": "melancholy_11",
+    "attack_count": 88,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\欧尔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\欧尔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\欧尔\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_11"
+    ],
+    "cards": [
+      "强制起床装置"
+    ]
+  },
+  {
+    "key": "melancholy_12",
+    "attack_count": 161,
+    "preview_count": 21,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莎莎",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莎莎\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莎莎\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_12"
+    ],
+    "cards": [
+      "水大炮炮击！！"
+    ]
+  },
+  {
+    "key": "melancholy_13",
+    "attack_count": 86,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\里昂",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\里昂\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\里昂\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_13"
+    ],
+    "cards": [
+      "有罪宣言"
+    ]
+  },
+  {
+    "key": "melancholy_14",
+    "attack_count": 89,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\斯诺基",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\斯诺基\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\斯诺基\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_14"
+    ],
+    "cards": [
+      "非法豆奶"
+    ]
+  },
+  {
+    "key": "melancholy_15",
+    "attack_count": 151,
+    "preview_count": 17,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\琼安",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\琼安\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\琼安\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_15"
+    ],
+    "cards": [
+      "执行教理"
+    ]
+  },
+  {
+    "key": "melancholy_16",
+    "attack_count": 82,
+    "preview_count": 65,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\布蓝琪",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\布蓝琪\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\布蓝琪\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_16"
+    ],
+    "cards": [
+      "堕落玫瑰"
+    ]
+  },
+  {
+    "key": "melancholy_17",
+    "attack_count": 101,
+    "preview_count": 53,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\优米",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\优米\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\优米\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_17"
+    ],
+    "cards": [
+      "踏光寻月"
+    ]
+  },
+  {
+    "key": "melancholy_18",
+    "attack_count": 98,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\阿梅利亚（R41）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\阿梅利亚（R41）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\阿梅利亚（R41）\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_18"
+    ],
+    "cards": [
+      "Elen-A 超频"
+    ]
+  },
+  {
+    "key": "melancholy_19",
+    "attack_count": 462,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\绮莎",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\绮莎\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\绮莎\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_19"
+    ],
+    "cards": [
+      "Go! Go! Love Stage!"
+    ]
+  },
+  {
+    "key": "melancholy_20",
+    "attack_count": 68,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\希菲尔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\希菲尔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\希菲尔\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_20"
+    ],
+    "cards": [
+      "苍穹的支配者"
+    ]
+  },
+  {
+    "key": "melancholy_21",
+    "attack_count": 122,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\巴丽叶",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\巴丽叶\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\巴丽叶\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_21"
+    ],
+    "cards": [
+      "请整理好书籍"
+    ]
+  },
+  {
+    "key": "melancholy_22",
+    "attack_count": 41,
+    "preview_count": 5,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莱薇",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莱薇\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\莱薇\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_22"
+    ],
+    "cards": [
+      "极速切割"
+    ]
+  },
+  {
+    "key": "melancholy_23",
+    "attack_count": 66,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\菲斯塔",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\菲斯塔\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\菲斯塔\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_23"
+    ],
+    "cards": [
+      "Rock and Peace！"
+    ]
+  },
+  {
+    "key": "melancholy_24",
+    "attack_count": 54,
+    "preview_count": 17,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\贝鲁",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\贝鲁\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\忧郁\\贝鲁\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_24"
+    ],
+    "cards": [
+      "斧头会飞出去的！"
+    ]
+  },
+  {
+    "key": "melancholy_25",
+    "attack_count": 30,
+    "preview_count": 21,
+    "source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\乔菲",
+    "attack_source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\乔菲\\动画.gif",
+    "preview_source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\乔菲\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_25"
+    ],
+    "cards": [
+      "啪哦哦！"
+    ]
+  },
+  {
+    "key": "melancholy_26",
+    "attack_count": 85,
+    "preview_count": 49,
+    "source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\欧若拉",
+    "attack_source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\欧若拉\\动画.gif",
+    "preview_source": "E:\\work\\Cult_leader_mod\\坨坨\\忧郁\\欧若拉\\立绘.gif",
+    "classes": [
+      "Apostle_Melancholy_26"
+    ],
+    "cards": [
+      "静谧的光群"
+    ]
+  },
+  {
+    "key": "pure_01",
+    "attack_count": 138,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\埃尔芬",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\埃尔芬\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\埃尔芬\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_01"
+    ],
+    "cards": [
+      "魔力乱打"
+    ]
+  },
+  {
+    "key": "pure_02",
+    "attack_count": 45,
+    "preview_count": 42,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\薇薇安娜·阿尔根图姆",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\薇薇安娜·阿尔根图姆\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\薇薇安娜·阿尔根图姆\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_02"
+    ],
+    "cards": [
+      "要来少女的身边吗？"
+    ]
+  },
+  {
+    "key": "pure_03",
+    "attack_count": 66,
+    "preview_count": 97,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\岚",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\岚\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\岚\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_03"
+    ],
+    "cards": [
+      "围猎"
+    ]
+  },
+  {
+    "key": "pure_04",
+    "attack_count": 431,
+    "preview_count": 97,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\阿伊拉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\阿伊拉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\阿伊拉\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_04"
+    ],
+    "cards": [
+      "休假中潜逃"
+    ]
+  },
+  {
+    "key": "pure_05",
+    "attack_count": 91,
+    "preview_count": 17,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\玛约(超帅)",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\玛约(超帅)\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\玛约(超帅)\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_05"
+    ],
+    "cards": [
+      "最强的收集品"
+    ]
+  },
+  {
+    "key": "pure_06",
+    "attack_count": 122,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\斯皮奇",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\斯皮奇\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\斯皮奇\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_06"
+    ],
+    "cards": [
+      "南瓜魔术"
+    ]
+  },
+  {
+    "key": "pure_07",
+    "attack_count": 45,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\加维亚",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\加维亚\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\加维亚\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_07"
+    ],
+    "cards": [
+      "我来保护你"
+    ]
+  },
+  {
+    "key": "pure_08",
+    "attack_count": 39,
+    "preview_count": 17,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\莎莉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\莎莉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\莎莉\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_08"
+    ],
+    "cards": [
+      "调皮的笑容"
+    ]
+  },
+  {
+    "key": "pure_09",
+    "attack_count": 91,
+    "preview_count": 34,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\玛戈",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\玛戈\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\玛戈\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_09"
+    ],
+    "cards": [
+      "玛戈玛恢复"
+    ]
+  },
+  {
+    "key": "pure_10",
+    "attack_count": 201,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\谢伦",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\谢伦\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\谢伦\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_10"
+    ],
+    "cards": [
+      "魔女档案"
+    ]
+  },
+  {
+    "key": "pure_11",
+    "attack_count": 93,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\海莉",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\海莉\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\海莉\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_11"
+    ],
+    "cards": [
+      "谢绝"
+    ]
+  },
+  {
+    "key": "pure_12",
+    "attack_count": 11,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\奈亚",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\奈亚\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\奈亚\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_12"
+    ],
+    "cards": [
+      "接受水的洗礼吧！"
+    ]
+  },
+  {
+    "key": "pure_13",
+    "attack_count": 171,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\卡罗特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\卡罗特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\卡罗特\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_13"
+    ],
+    "cards": [
+      "汁液泵机发射！"
+    ]
+  },
+  {
+    "key": "pure_14",
+    "attack_count": 81,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\达雅",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\达雅\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\达雅\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_14"
+    ],
+    "cards": [
+      "钻石穿刺"
+    ]
+  },
+  {
+    "key": "pure_15",
+    "attack_count": 138,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\埃尔芬",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\埃尔芬\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\埃尔芬\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_15"
+    ],
+    "cards": [
+      "快躲开啊啊!!!噫…?"
+    ]
+  },
+  {
+    "key": "pure_16",
+    "attack_count": 75,
+    "preview_count": 33,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\欧珀",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\欧珀\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\欧珀\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_16"
+    ],
+    "cards": [
+      "欧珀粉"
+    ]
+  },
+  {
+    "key": "pure_17",
+    "attack_count": 60,
+    "preview_count": 73,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\莱卡",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\莱卡\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\莱卡\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_17"
+    ],
+    "cards": [
+      "远程充电"
+    ]
+  },
+  {
+    "key": "pure_18",
+    "attack_count": 91,
+    "preview_count": 25,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\凯茜",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\凯茜\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\凯茜\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_18"
+    ],
+    "cards": [
+      "突发惊吓"
+    ]
+  },
+  {
+    "key": "pure_19",
+    "attack_count": 66,
+    "preview_count": 97,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\缪特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\缪特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\缪特\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_19"
+    ],
+    "cards": [
+      "基础黑客攻击"
+    ]
+  },
+  {
+    "key": "pure_20",
+    "attack_count": 101,
+    "preview_count": 21,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\黛莉娅",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\黛莉娅\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\黛莉娅\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_20"
+    ],
+    "cards": [
+      "帮帮我，朋友们！"
+    ]
+  },
+  {
+    "key": "pure_21",
+    "attack_count": 83,
+    "preview_count": 130,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\伊德（康复）",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\伊德（康复）\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\伊德（康复）\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_21"
+    ],
+    "cards": [
+      "清晰的界限"
+    ]
+  },
+  {
+    "key": "pure_22",
+    "attack_count": 60,
+    "preview_count": 30,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\大木头",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\大木头\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\大木头\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_22"
+    ],
+    "cards": [
+      "看~看看我~"
+    ]
+  },
+  {
+    "key": "pure_23",
+    "attack_count": 129,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\洛涅",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\洛涅\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\洛涅\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_23"
+    ],
+    "cards": [
+      "投降！投降了啦......"
+    ]
+  },
+  {
+    "key": "pure_24",
+    "attack_count": 46,
+    "preview_count": 81,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\阿莱特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\阿莱特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\阿莱特\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_24"
+    ],
+    "cards": [
+      "铁锹击"
+    ]
+  },
+  {
+    "key": "pure_25",
+    "attack_count": 38,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\乔伊",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\乔伊\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\乔伊\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_25"
+    ],
+    "cards": [
+      "黄瓜油"
+    ]
+  },
+  {
+    "key": "pure_26",
+    "attack_count": 83,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\斯帕洛特",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\斯帕洛特\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\纯粹\\斯帕洛特\\立绘.gif",
+    "classes": [
+      "Apostle_Pure_26"
+    ],
+    "cards": [
+      "今天的目标就是那家伙！"
+    ]
+  },
+  {
+    "key": "rainbow_uros",
+    "attack_count": 60,
+    "preview_count": 41,
+    "source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\全属性\\乌洛斯",
+    "attack_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\全属性\\乌洛斯\\动画.gif",
+    "preview_source": "C:\\Users\\888\\Desktop\\New_folder\\坨坨\\全属性\\乌洛斯\\立绘.gif",
+    "classes": [
+      "TestRainbowCard"
+    ],
+    "cards": [
+      "循环"
+    ]
+  }
+]

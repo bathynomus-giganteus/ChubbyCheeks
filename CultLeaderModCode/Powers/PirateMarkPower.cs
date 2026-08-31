@@ -43,6 +43,12 @@ public class PirateMarkPower : ModPowerTemplate
 
         decimal reward = base.Amount;
         await PlayerCmd.GainGold(reward, dealer.Player!, false);
-        await PowerCmd.Apply<HealingPower>(choiceContext, dealer, reward, base.Owner, cardSource);
+        await ApostlePowerRules.ApplyApostlePower<HealingPower, LifeEssencePower>(
+            choiceContext,
+            dealer,
+            reward,
+            base.Owner,
+            cardSource
+        );
     }
 }

@@ -170,11 +170,11 @@
         教主（攻击）：世界树，缺损了。我需要这座塔的一部分
         建筑师（攻击）：你的世界存亡与我何干
     - 复现步骤：
-    - 实际表现：当前教主没有建筑师专属对话。
+    - 实际表现：已修复：原先文本写在 `THE_ARCHITECT.talk.CULT_LEADER_MOD.*` 下，但真实角色 entry 是 `CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER`，导致 RitsuLib 判定缺失并走空对话 fallback。
     - 期望表现：教主角色触发该对话，并正确标注教主/建筑师发言和攻击动作。
     - 严重度：低
     - 记录日期：2026-08-18
-    - 备注：需要为 CultLeader 角色增加 TheArchitect.DefineDialogues 的 CharacterDialogues 条目，并补本地化文本与攻击动作标记。
+    - 备注：已在 zhs/eng/jpn/kor `ancients.json` 追加 `THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.*` 键；`0-endattack` 必须使用枚举英文值 `Both`，不可本地化为“両方/둘 다”。
 
 ### 战斗 / 状态效果
 

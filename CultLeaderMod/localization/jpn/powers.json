@@ -6,7 +6,7 @@
   "CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.title": "生命の起源",
   "CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.description": "各レベルは最大ライフ 5 ポイントを提供します。アクティブにトリガーされると、レイヤーを 1 つ除去し、ライフを 5 ポイント回復します。",
   "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.title": "氷のように固い",
-  "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description": "1層ごとにカードから得られるブロックが+1されます。ターン終了時にスタック数に等しいブロックを獲得します。アクティブにトリガーされると、1 つのレイヤーが削除され、現在のレイヤー数に基づいてブロックが取得されます。",
+  "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description": "1層ごとにカードから得られるブロックが+1されます。ターン終了時に現在のスタック数に等しいブロックを獲得します。アクティブにトリガーされると、現在のスタック数に基づいてブロックを獲得します。",
   "CULT_LEADER_MOD_POWER_FERVOR_POWER.title": "狂信者",
   "CULT_LEADER_MOD_POWER_FERVOR_POWER.description": "レベルが上がるごとに、次の攻撃カードのダメージが +3 増加し、ライフ ポイントが 3 減少します。各トリガーは 1 つのレイヤーのみを消費します。",
   "CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.title": "痛みを与える",
@@ -112,5 +112,7 @@
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_LIVELY_POWER.title": "活発覚醒",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_LIVELY_POWER.description": "ターン開始時、ドローパイルから活発性格の使徒牌をランダムに1枚手札に移す。アップグレード後はアップグレードしてから移す。",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.title": "憂鬱覚醒",
-  "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "ターン開始時、ドローパイルから憂鬱性格の使徒牌をランダムに1枚手札に移す。アップグレード後はアップグレードしてから移す。"
+  "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "ターン開始時、ドローパイルから憂鬱性格の使徒牌をランダムに1枚手札に移す。アップグレード後はアップグレードしてから移す。",
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.title": "静寂な光群",
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "敵にデバフを与えたとき、付与した層数の2倍のダメージを与えます。"
 }

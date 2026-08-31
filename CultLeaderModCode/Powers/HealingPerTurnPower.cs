@@ -22,6 +22,12 @@ public class HealingPerTurnPower : ModPowerTemplate
     {
         await base.BeforeSideTurnEnd(choiceContext, side, participants);
         if (!participants.Contains(base.Owner) || base.Amount <= 0) return;
-        await PowerCmd.Apply<HealingPower>(choiceContext, base.Owner, base.Amount, base.Owner, null);
+        await ApostlePowerRules.ApplyApostlePower<HealingPower, LifeEssencePower>(
+            choiceContext,
+            base.Owner,
+            base.Amount,
+            base.Owner,
+            null
+        );
     }
 }

@@ -6,7 +6,7 @@
   "CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.title": "生命本源",
   "CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.description": "每层提供5点最大生命。主动触发时移除1层，并回复5点生命。",
   "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.title": "固若坚冰",
-  "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description": "每层使从卡牌获得的格挡+1。回合结束时获得等同于层数的格挡。主动触发时移除1层，并根据当前层数获得格挡。",
+  "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description": "每层使从卡牌获得的格挡+1。回合结束时获得等同于层数的格挡。主动触发时，根据当前层数获得格挡。",
   "CULT_LEADER_MOD_POWER_FERVOR_POWER.title": "狂热",
   "CULT_LEADER_MOD_POWER_FERVOR_POWER.description": "每有一层，使下一张攻击牌伤害+3，并失去3点生命。每次触发只消耗1层。",
   "CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.title": "苦痛施予",
@@ -112,5 +112,7 @@
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_LIVELY_POWER.title": "活泼唤醒",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_LIVELY_POWER.description": "回合开始时，从抽牌堆随机将一张活泼性格使徒牌移入手牌。升级后改为升级并移入手牌。",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.title": "忧郁唤醒",
-  "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "回合开始时，从抽牌堆随机将一张忧郁性格使徒牌移入手牌。升级后改为升级并移入手牌。"
+  "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "回合开始时，从抽牌堆随机将一张忧郁性格使徒牌移入手牌。升级后改为升级并移入手牌。",
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.title": "静谧的光群",
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "对敌人施予负面效果时，同时造成施予层数2倍的伤害。"
 }

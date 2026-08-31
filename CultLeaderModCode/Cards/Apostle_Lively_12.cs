@@ -32,7 +32,6 @@ public class Apostle_Lively_12 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-
         await ApostleCardEffectHelpers.AttackAll(
             choiceContext,
             this,

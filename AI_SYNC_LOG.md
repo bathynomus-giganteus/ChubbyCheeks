@@ -656,3 +656,382 @@
 - 注意：
   - 后续修五张战斗性格卡 `PersonalitySelect*Card` 时，不要再触碰开局 `PersonalityChoice*Card`。
 
+
+## 2026-08-28 - 建筑师通关对话 key 修复
+
+- 修复教主与建筑师通关对话未生效：日志显示真实角色 entry 为 `CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER`，旧本地化误写为 `CULT_LEADER_MOD`。
+- 在 zhs/eng/jpn/kor `ancients.json` 中追加正确 `THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.*` 键，保留旧键兼容。
+- 将 Architect attacker 标记统一为可解析枚举值 `Both`，避免日/韩本地化把枚举写成自然语言后解析失败。
+- 四个 `ancients.json` 已通过 JSON 语法校验，并已手动同步到 Steam loose localization；zhs override 也已同步。
+- 代码编译阶段通过；正常 build 仍因 `SlayTheSpire2.exe` 锁定 Steam 目录 DLL 而无法覆盖 DLL，但本次对话修复本身主要依赖 loose localization。
+
+## 2026-08-28 - 本地同步完成
+
+- 用户关闭游戏后重新执行 dotnet build，构建与复制均成功，Steam mod 目录 CultLeaderMod.dll 已更新。
+- 当前已同步改动包括：埃尔德形态下低级性格 buff 漏转换修复、【团体跳级】升级后消耗、建筑师通关对话正确 key。
+- 静态复查：未再发现直接 PowerCmd.Apply<HealingPower/PlatingPower/VigorPower/RetainPower/BitterPainPower> 的漏点。
+- zhs/eng/jpn/kor `ancients.json` 均通过 JSON 语法校验。
+
+## 2026-08-28 - 固若坚冰触发不再消耗层数
+
+- 用户确认【固若坚冰】无论主动触发还是被动触发，都不应消耗层数。
+- 修改 `SolidIcePower.TriggerActive()`：主动触发仍根据当前层数获得格挡，但不再 `ModifyAmount(-1)` 扣除固若坚冰。
+- 被动回合结束获得格挡原本就不消耗层数，本次保留该逻辑。
+- 同步 zhs/eng/jpn/kor `powers.json` 描述，移除“主动触发移除1层”的说法。
+- 已同步 zhs `localization_override` 的 `powers.json`。
+- 验证：`dotnet build` 通过并完成 `Copying mod...`；仍只有 4 个既有 warning，无新增错误。
+
+## 2026-08-29 - 魔力乱打单卡攻击动画原型
+
+- 用户提供 `C:\Users\888\Downloads\ErpinRoyale_composition.gif` 和 Trickcal Studio 项目 JSON，要求先给【魔力乱打】加入“角色主立绘不动、角色旁边原位播放使徒攻击动画”的测试效果。
+- 当前未接 Spine；先采用更稳的 GIF 拆帧方案验证打牌动画管线：
+  - 将 GIF 拆成 85 张 420x420 透明 PNG 帧，输出到 `CultLeaderMod/images/vfx/magic_strike/frame_000.png` 至 `frame_084.png`。
+  - 新增 `CultLeaderModCode/Vfx/ApostleVfxPlayer.cs`，运行时创建临时 `CanvasLayer + TextureRect`，按 24fps 播放帧图，播放完自动 `QueueFree()`。
+  - 在 `Apostle_Pure_01`【魔力乱打】实际有效触发时调用 `ApostleVfxPlayer.PlayMagicStrikeBesidePlayer()`；若没有可触发的治愈/生命本源层数导致卡牌无效果，则不播放动画。
+- 验证：
+  - `dotnet build` 通过并完成 `Copying mod...`，仍只有 4 个既有 warning。
+  - `dotnet build /t:ExportPck` 成功，Godot 扫描、导入并打包 85 帧动画资源。
+- 后续若测试位置/大小/时长不合适，优先调整 `ApostleVfxPlayer` 中的 `Position`、`Scale`、`MagicStrikeFrameSeconds`，不必改卡牌逻辑。
+
+## 2026-08-29 - 魔力乱打卡牌查看页 idle 立绘原型
+
+- 用户提供 `C:\Users\888\Downloads\ErpinRoyale_Idle_2.gif`，要求尝试在卡牌查看页面显示该角色立绘。
+- 当前仍先采用 GIF 拆帧方案验证 UI 挂载入口：
+  - 将 idle GIF 拆成 41 张 360x360 透明 PNG 帧，输出到 `CultLeaderMod/images/vfx/magic_strike_preview/frame_000.png` 至 `frame_040.png`。
+  - 新增 `CultLeaderModCode/Patches/CardInspectApostlePreviewPatch.cs`。
+  - Patch `NInspectCardScreen.UpdateCardDisplay()`：当当前大卡为 `Apostle_Pure_01`【魔力乱打】时，在查看屏左侧添加循环播放的 `TextureRect`；切换到其他卡或关闭查看屏时移除。
+- 验证：
+  - `dotnet build` 通过并完成 `Copying mod...`；仍只有 4 个既有 warning。
+  - `dotnet build /t:ExportPck` 成功，Godot 扫描、导入并打包 41 帧 idle 预览资源。
+- 注意：
+  - 该功能目前只针对【魔力乱打】。
+  - 编译能验证类型和资源打包，但 `NInspectCardScreen` 是否覆盖百科/卡组查看的所有入口仍需进游戏实测。
+  - 后续位置/大小可优先调 `CardInspectApostlePreviewPatch.PositionPreview()` 和 `PreviewSize`。
+
+## 2026-08-29 - 魔力乱打攻击动画镜像修正
+
+- 用户测试指出【魔力乱打】打出时，使徒攻击动画方向反了。
+- 已水平镜像 `CultLeaderMod/images/vfx/magic_strike/frame_000.png` 至 `frame_084.png`。
+- 本次只调整打出卡牌时播放的攻击动画；卡牌查看页的 `magic_strike_preview` idle 立绘未修改。
+- 验证：`dotnet build /t:ExportPck` 成功，Godot 打包 0 warning / 0 error；Steam mod 目录 `CultLeaderMod.pck` 已更新。
+
+## 2026-08-29 - 魔力乱打卡牌查看页立绘位置调整
+
+- 用户测试指出【魔力乱打】卡牌查看页左侧 idle 立绘位置会遮挡左方向键。
+- 调整 `CardInspectApostlePreviewPatch.PositionPreview()`：
+  - 横向锚点从屏幕宽度 `0.22` 改为 `0.16`。
+  - 纵向锚点从屏幕高度 `0.50` 改为 `0.38`。
+  - 预览尺寸仍保持 360x360。
+- 当前方案仍为 GIF 拆帧 `TextureRect` 循环播放，未接入 Spine。
+- 验证：游戏关闭后重新执行 `dotnet build` 与 `dotnet build /t:ExportPck`，均 0 warning / 0 error；Steam mod 目录 `CultLeaderMod.dll` 与 `CultLeaderMod.pck` 均已更新。
+- 后续方向：
+  - 若继续使用 GIF/PNG 帧，可以快速批量扩展到更多卡牌。
+  - 若改为 Spine，需要先确认 STS2/Godot 工程可用的 Spine runtime 或可导入格式，再封装为可复用的 `ApostlePreview`/`ApostleVfx` 节点。
+  - 互动功能建议等 Spine/节点挂载稳定后再做，可通过 `Control.GuiInput`、透明点击区域、idle/touch/attack 动画状态机实现。
+
+## 2026-08-29 - 贝拉立绘与打牌动画原型
+
+- 用户要求实装“贝拉”的立绘和动画，并提醒攻击动画需要镜像。
+- 资源定位：
+  - 项目内 `CardHoverTipsPatch` 显示“贝拉”对应 `Apostle_Lively_12`。
+  - 网页 `character-names.json` 确认中文“贝拉”对应资源名 `Vela`，不是 `Belita`（贝丽塔）。
+  - 已从 Journey Studio 公开资源下载 `Vela` 原始 Spine 素材到 `C:\Users\888\Desktop\New_folder\坨坨\活泼\贝拉`：`Vela.skel.bytes`、`Vela.atlas.txt`、`Vela.png`，供后续正式 Spine 化使用。
+- 当前仍采用已验证的 GIF/PNG 帧方案作为可测原型：
+  - 新增 `CultLeaderMod/images/vfx/vela_preview/frame_000.png` 至 `frame_040.png`，用于卡牌查看页左侧循环立绘。
+  - 新增 `CultLeaderMod/images/vfx/vela_attack/frame_000.png` 至 `frame_023.png`，用于打出卡牌时的短促攻击动画；生成后已水平镜像。
+  - `ApostleVfxPlayer` 重构为通用 `PlayFrameVfxAsync()`，保留【魔力乱打】调用，并新增 `PlayVelaGhostBesidePlayer()`。
+  - `Apostle_Lively_12`【警戒线上的幽灵】打出时调用贝拉攻击动画。
+  - `CardInspectApostlePreviewPatch` 重构为小型 profile 注册表，当前支持【魔力乱打】和【警戒线上的幽灵】两张卡的查看页立绘。
+- 验证：
+  - `dotnet build` 通过；仍只有 4 个既有 warning。
+  - `dotnet build /t:ExportPck` 成功，Godot 导入并打包新增 65 帧资源，0 warning / 0 error。
+  - Steam mod 目录 `CultLeaderMod.dll` 与 `CultLeaderMod.pck` 已更新。
+- 注意：
+  - 这次不是正式 Spine 运行时接入，而是用网页公开素材生成的临时帧动画。
+  - 贝拉预览图目前来自网页角色卡片/头像风格，带少量 UI 元素；后续接原始 Spine 后可替换为更干净的动态立绘。
+
+## 2026-08-29 - 使徒攻击动画随机位置与图层叠放规则
+
+- 用户要求使徒攻击动画随机出现在教主身边的小范围内，中心大致为教主立绘中心偏下；动画图层在教主图层上方；若多个动画同时播放，新动画应叠在旧动画上方。
+- 修改 `ApostleVfxPlayer`：
+  - 新增统一锚点 `PlayerLowerCenterAnchor = (0.30, 0.42)`，作为当前屏幕比例近似的教主立绘偏下位置。
+  - 新增随机偏移范围 `PlayerBesideJitterRange = (90, 55)`，每次播放都会在该范围内随机落点。
+  - 新增全局 `_vfxSequence`，每个动画创建独立 `CanvasLayer`，层级为 `BaseVfxLayer + sequence % VfxLayerCycle`。
+  - 动画节点名称追加 sequence，避免同时播放时节点重名。
+- 当前该规则覆盖所有通过 `ApostleVfxPlayer.PlayFrameVfxAsync()` 播放的使徒动画，包括【魔力乱打】与【警戒线上的幽灵】。
+- 验证：`dotnet build` 通过；仍只有 4 个既有 warning。`dotnet build /t:ExportPck` 成功，Godot 打包 0 warning / 0 error；Steam mod 目录 DLL/PCK 已更新。
+- 后续如能稳定获取玩家/教主立绘节点坐标，可将当前屏幕比例锚点替换为真实角色节点世界坐标。
+
+## 2026-08-29 - 使徒动画素材命名规则与贝拉素材替换
+
+- 用户纠正贝拉素材用反：`动画.gif` 才是打牌/战斗动画，`立绘.gif` 才是卡牌查看页立绘。
+- 已将贝拉旧的网页临时帧替换为用户整理目录中的正式 GIF：
+  - 源目录：`C:\Users\888\Desktop\New_folder\坨坨\活泼\贝拉`
+  - `动画.gif` -> `CultLeaderMod/images/vfx/vela_attack/frame_000.png` 至 `frame_078.png`，共 79 帧，420x420，已水平镜像，用于【警戒线上的幽灵】打出动画。
+  - `立绘.gif` -> `CultLeaderMod/images/vfx/vela_preview/frame_000.png` 至 `frame_192.png`，共 193 帧，360x360，不镜像，用于卡牌查看页立绘。
+- 代码同步：
+  - `ApostleVfxPlayer.PlayVelaGhostBesidePlayer()` 的帧数改为 79，播放速度改为约 30fps。
+  - `CardInspectApostlePreviewPatch` 中【警戒线上的幽灵】预览 profile 改为 193 帧，播放速度约 30fps。
+- 以后所有使徒卡牌动画默认遵守该规则：
+  - `C:\Users\888\Desktop\New_folder\坨坨\<性格>\<使徒>\动画.gif` = 打出卡牌/战斗中出现的攻击动画，默认镜像。
+  - `C:\Users\888\Desktop\New_folder\坨坨\<性格>\<使徒>\立绘.gif` = 卡牌查看/百科/卡组详情页面左侧立绘，默认不镜像。
+  - 如果某张卡没有这两个固定文件，再考虑使用同目录其他 GIF/Spine/PNG 资源临时代替。
+- 验证：`dotnet build` 通过；仍只有 4 个既有 warning。`dotnet build /t:ExportPck` 成功，Steam mod 目录 DLL/PCK 已更新。
+
+## 2026-08-29 - 冷静使徒动画第一批接入
+
+- 用户确认按“小重构 + 先接几张卡测试”的方案实装冷静使徒动画。
+- 新增 `CultLeaderModCode/Vfx/ApostleAnimationProfiles.cs`：
+  - 集中维护卡牌类型到战斗动画/查看页立绘 profile 的映射。
+  - `ApostleVfxPlayer` 改为通过 `ApostleAnimationProfiles.TryGetBattleProfile()` 播放；旧的 `PlayMagicStrikeBesidePlayer()`、`PlayVelaGhostBesidePlayer()` 保留为兼容包装。
+  - `CardInspectApostlePreviewPatch` 改为通过 `ApostleAnimationProfiles.TryGetPreviewProfile()` 查找查看页立绘。
+- 第一批接入 5 张冷静使徒卡：
+  - `Apostle_Calm_01`：`calm_01_attack` 46 帧；`calm_01_preview` 41 帧。
+  - `Apostle_Calm_03`：`calm_03_attack` 65 帧；`calm_03_preview` 9 帧。
+  - `Apostle_Calm_05`：`calm_05_attack` 68 帧；`calm_05_preview` 41 帧。
+  - `Apostle_Calm_13`：`calm_13_attack` 101 帧；`calm_13_preview` 37 帧。
+  - `Apostle_Calm_25`：`calm_25_attack` 45 帧；`calm_25_preview` 81 帧。
+- 源素材遵守固定规则：
+  - `C:\Users\888\Desktop\New_folder\坨坨\冷静\<使徒>\动画.gif` -> 战斗动画，420x420，水平镜像。
+  - `C:\Users\888\Desktop\New_folder\坨坨\冷静\<使徒>\立绘.gif` -> 卡牌查看页立绘，360x360，不镜像。
+- 本批只给这 5 张卡的 `OnPlay` 开头增加动画播放调用，不修改卡牌实际效果数值与机制。
+- 验证：
+  - `dotnet build` 通过；仍只有 4 个既有 warning。
+  - `dotnet build /t:ExportPck` 通过，Godot 0 warning / 0 error。
+  - Steam mod 目录已同步：`CultLeaderMod.dll` 时间为 2026-08-29 16:52:40，`CultLeaderMod.pck` 时间为 2026-08-29 16:52:43。
+- 注意：
+  - 本次只接 5 张卡，PCK 已增至约 117MB；后续若全量接入 26 张冷静使徒，建议先考虑降帧/降分辨率/改 Spine 或运行时读取策略，否则包体会明显膨胀。
+
+## 2026-08-29 - 外部运行时读取动画实验：Apostle_Calm_01
+
+- 用户要求先试验“运行时读取”动画帧，避免大量使徒动画全部进入 PCK 导致包体膨胀。
+- 新增 `CultLeaderModCode/Vfx/ExternalVfxTextureLoader.cs`：
+  - 支持从普通磁盘路径读取 `frame_000.png` 等帧图。
+  - 读取方式为 Godot `Image.Load(...)` + `ImageTexture.CreateFromImage(...)`。
+  - 帧贴图会按外部文件绝对路径缓存，避免同一帧反复从磁盘解码。
+  - 候选目录包括 DLL 所在目录、`AppContext.BaseDirectory/mods/CultLeaderMod`、当前目录下的 `mods/CultLeaderMod` 等。
+- 修改 `BattleVfxProfile` 与 `PreviewProfile`：
+  - 新增 `ExternalFrameDirectory` 可选字段。
+  - `ApostleVfxPlayer` 与 `CardInspectApostlePreviewPatch` 均改为外部目录优先，找不到才回退到 `res://`。
+- 本次只对 `Apostle_Calm_01` 做运行时读取实验：
+  - 外部战斗动画目录：`E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\CultLeaderMod\external_vfx\calm_01_attack`，46 帧。
+  - 外部查看页立绘目录：`E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\CultLeaderMod\external_vfx\calm_01_preview`，41 帧。
+  - 为验证确实走外部读取，`Apostle_Calm_01` 的 PCK 兜底路径临时指向 `res://CultLeaderMod/images/vfx/_external_runtime_probe_missing/...`。如果游戏里阿雅动画正常播放，即证明外部读取成功。
+- 验证：
+  - `dotnet build` 通过，仍只有 4 个既有 warning。
+  - `dotnet build /t:ExportPck` 通过，Godot 0 warning / 0 error。
+  - Steam mod 目录已同步：`CultLeaderMod.dll` 时间为 2026-08-29 17:02:59，`CultLeaderMod.pck` 时间为 2026-08-29 17:03:03。
+- 注意：
+  - 当前只是本地实验；若后续确认可行，需要把 `external_vfx` 纳入 Workshop 打包/上传流程，否则工坊版本可能缺少外部帧文件。
+  - 工程内旧 `calm_01_*` 帧目录暂未删除；本次通过临时不存在的兜底路径验证外部优先读取，避免被 PCK 残留资源误判。
+
+## 2026-08-29 - 使徒动画全量外部资源接入
+
+- 用户确认外部运行时读取路线可行，并要求把目前素材目录中可找到的其他动画都接入。
+- 本次将使徒动画从 PCK 内部帧资源改为 `external_vfx` 外部目录优先读取：
+  - 工程目录：`C:\Users\888\OneDrive\codex\sts2-mods\CultLeaderMod\external_vfx`
+  - 本地测试目录：`E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\CultLeaderMod\external_vfx`
+  - 工坊工作目录：`C:\Users\888\OneDrive\codex\sts2-mods\CultLeaderMod\release\workshop\CultLeaderModWorkspace\content\external_vfx`
+- 生成结果：
+  - 当前共 30 组唯一使徒素材 profile。
+  - 共 4440 张 PNG 帧，约 370.25 MB。
+  - `external_vfx/.gdignore` 已加入，避免 Godot 把这些外部运行时资源导入并塞进 PCK。
+  - 已确认项目目录、本地 mod 目录、工坊 content 目录均没有 `.import` 文件。
+- 代码结构：
+  - `CultLeaderModCode/Vfx/ApostleAnimationProfiles.cs` 统一维护卡牌到动画 profile 的映射。
+  - `CultLeaderModCode/Patches/ApostleAnimationPlayPatch.cs` 在 `CardModel.OnPlayWrapper` 前缀中自动触发卡牌对应的使徒战斗动画。
+  - 旧的单卡 `OnPlay` 手动动画调用已移除，避免同一张卡播放两次动画。
+  - `CultLeaderMod.csproj` 已把 `external_vfx/**/*` 纳入 build 后复制流程，`dotnet build` 会同步到本地 Steam mod 目录。
+- 当前接入范围：
+  - 纯粹：仅 `Apostle_Pure_01` 使用 `埃尔芬（王道）` 素材；普通 `Apostle_Pure_15` 暂不自动复用王道素材。
+  - 冷静：`Apostle_Calm_01` 至 `Apostle_Calm_26`，其中 `艾米莉娅` 对应用户素材目录 `阿梅利亚`。
+  - 活泼：`Apostle_Lively_08`、`Apostle_Lively_08_1`、`Apostle_Lively_08_2`、`Apostle_Lively_08_3`、`Apostle_Lively_11`、`Apostle_Lively_12`。
+  - 狂热/忧郁：当前源素材目录未发现可用 GIF，暂未接入。
+- 重要范式：
+  - `C:\Users\888\Desktop\New_folder\坨坨\<性格>\<使徒>\动画.gif` = 战斗/打牌动画，默认水平镜像。
+  - `C:\Users\888\Desktop\New_folder\坨坨\<性格>\<使徒>\立绘.gif` = 卡牌查看/百科/卡组详情页立绘，默认不镜像。
+  - 不要试图用统一自动裁剪/统一缩放解决所有角色大小问题；用户会在测试后指出具体哪张卡需要单独调 scale/offset/canvas。
+  - Steam 创意工坊可以上传 DLL/PCK 之外的额外资源目录，因此 `external_vfx` 应随 workshop content 一起发布。
+- 验证：
+  - `dotnet build` 成功，0 warning / 0 error。
+  - `dotnet build /t:ExportPck` 成功，0 warning / 0 error。
+  - 本地测试目录与工坊工作目录均已同步最新 `CultLeaderMod.dll`、`CultLeaderMod.pck` 和 `external_vfx`。
+
+## 2026-08-29 - 修复外部动画帧文件名不兼容
+
+- 用户测试反馈：冷静大部分卡牌看不到卡牌查看页立绘，卡牌动画也不显示；纯粹/活泼部分卡也有类似问题。
+- 原因确认：
+  - `external_vfx` 中实际生成的帧文件名为 `frame_0.png`、`frame_1.png` 等不补零格式。
+  - `ExternalVfxTextureLoader` 原本只寻找 `frame_000.png`、`frame_001.png` 等三位补零格式。
+  - 因此外部目录存在、帧文件也存在，但运行时大部分查找失败。
+- 修复：
+  - `ExternalVfxTextureLoader.ResolveExternalFramePath()` 现在同时尝试 `frame_{0:000}.png` 与 `frame_{0}.png` 两种命名格式。
+  - 这是全局加载器修复；虽然用户要求先看冷静，但也会顺带修复纯粹/活泼已有外部 profile 的同类问题。
+- 验证：
+  - `dotnet build` 成功，仍只有 4 个既有 warning。
+  - `dotnet build /t:ExportPck` 成功，0 warning / 0 error。
+  - 本地 Steam mod 目录已更新：`CultLeaderMod.dll` 时间 17:39:46，`CultLeaderMod.pck` 时间 17:39:48。
+  - `external_vfx` 仍为 4441 个文件 / 4440 张 PNG / 0 个 `.import`。
+
+## 2026-08-29 - 修复卡牌查看页使徒立绘残留
+
+- 用户测试反馈：大部分冷静立绘已能显示，但很多立绘第一次显示后不会消失，再查看其他卡牌时会残留在屏幕上。
+- 修复：
+  - `CardInspectApostlePreviewPatch` 中的预览节点新增统一 group：`CultLeaderInspectApostlePreviews`。
+  - 创建预览时写入 alive meta；移除时先标记 dead、隐藏、清空 Texture、移出 group，再 `QueueFree()`。
+  - 动画循环会检查 alive meta，避免节点已经等待释放时继续换帧“诈尸”。
+  - 新增全局清理：切换/更新卡牌显示时，不只清理当前 `NInspectCardScreen` 下的节点，也会递归扫描场景树中所有同名预览节点，移除不属于当前查看界面的旧节点；这可以清理旧版本未加入 group 的残留节点。
+- 同时保留上一次修复：
+  - 外部帧文件名兼容 `frame_000.png` 和 `frame_0.png`。
+  - profile 查找兼容运行时派生/包装类型。
+- 验证：
+  - `dotnet build` 成功，仍只有 4 个既有 warning。
+  - `dotnet build /t:ExportPck` 成功，0 warning / 0 error。
+  - 本地 Steam mod 目录已更新：`CultLeaderMod.dll` 时间 2026-08-29 21:58:11，`CultLeaderMod.pck` 时间 2026-08-29 21:58:14。
+
+## 2026-08-29 - 全卡使徒动画改为 manifest 驱动接入
+
+- 用户确认卡牌查看页立绘不会再残留，并要求把其他卡牌相关动画都按同样方法实装。
+- 本次将动画映射从手写 profile 列表改为 `external_vfx_manifest.json` 驱动：
+  - `CultLeaderModCode/Vfx/ApostleAnimationProfiles.cs` 启动时读取 manifest。
+  - manifest 中的 `classes` 会解析为 `CultLeaderMod.CultLeaderModCode.Cards.<ClassName>`，并统一注册战斗动画与卡牌查看页立绘。
+  - profile 查找仍保留派生/包装类型兼容逻辑。
+- 素材来源：
+  - `C:\Users\888\Desktop\New_folder\坨坨\<性格>\<使徒>\动画.gif`：战斗/打牌动画，生成时默认水平镜像。
+  - `C:\Users\888\Desktop\New_folder\坨坨\<性格>\<使徒>\立绘.gif`：卡牌查看/百科/卡组详情页立绘，不镜像。
+  - 若没有 `动画.gif`，本次临时使用 `动画1.gif` 作为战斗动画来源，例如 `黄油`、`x锡安x`、`双雄相争`、`为了艾鲁皮恩`；后续用户可指定是否改用 `动画2.gif` / `动画3.gif`。
+- 生成结果：
+  - manifest 共 134 个唯一动画 profile。
+  - 134 个 profile 均有战斗动画。
+  - 132 个 profile 有卡牌查看页立绘。
+  - `DualRivalsCard` / `ForElruienCard` 目前只有战斗动画，因为素材目录中没有 `立绘.gif`。
+  - `external_vfx` 当前约 266 个目录、18881 张 PNG、1644.32 MB。
+- 重要范式：
+  - 不做全局透明裁切/自动缩放；用户已经确认各攻击动画的角色大小、特效范围差异很大，后续按具体卡牌反馈单独调 scale/offset/canvas。
+  - PCK 只打入 `external_vfx_manifest.json`，不打入 `external_vfx` 大帧目录；`external_vfx/.gdignore` 必须保留。
+  - Workshop content 需要带上 `external_vfx` loose files，否则工坊版本没有动画帧。
+- 验证：
+  - `dotnet build /v:minimal` 成功，仍只有 4 个既有 warning。
+  - `dotnet build /t:ExportPck /v:minimal` 成功，Godot 0 warning / 0 error。
+  - 本地测试目录已更新：`E:\SteamLibrary\steamapps\common\Slay the Spire 2\mods\CultLeaderMod\CultLeaderMod.pck` 约 40.75 MB。
+  - 工坊 staging 已同步：`release\workshop\CultLeaderModWorkspace\content` 下包含最新 DLL/PDB/PCK、manifest 与 `external_vfx`。
+
+## 2026-08-29 - 卡牌动画三档设置开关
+
+- 用户担心全量 PNG 帧资源过大，并要求在设置里加入卡牌动画开关，同时先继续测试 PNG 版本。
+- 本次新增三档动画模式：
+  - `完全关闭`：不播放使徒牌战斗动画，也不显示卡牌查看页/百科使徒立绘动画。
+  - `仅保留稀有卡`：只对 `Rare` 与 `Ancient` 卡保留战斗动画和查看页立绘。
+  - `完全保留`：全量启用。默认值暂定为 `完全保留`，方便当前测试 PNG 全量可用性。
+- 新增文件：
+  - `CultLeaderModCode/Vfx/CultLeaderAnimationSettings.cs`
+    - 保存/读取用户设置到 `%APPDATA%\CultLeaderMod\settings.json`。
+    - 提供 `Allows(CardModel card)` 统一判断动画是否允许。
+  - `CultLeaderModCode/Vfx/CultLeaderSettingsPage.cs`
+    - 使用 RitsuLib `RegisterModSettings` 注册“教主 Mod 设置”页面。
+    - 在“视觉效果”section 中加入“卡牌动画”下拉选项。
+- 已接入：
+  - `ApostleAnimationPlayPatch`：打牌时先检查设置，再播放战斗动画。
+  - `CardInspectApostlePreviewPatch`：查看卡牌时先检查设置，再显示立绘动画；不允许时会清理旧预览节点。
+- Spine 迁移调查：
+  - 游戏根目录存在 `E:\SteamLibrary\steamapps\common\Slay the Spire 2\libspine_godot.windows.template_release.x86_64.dll`，说明 STS2/Godot 环境有 Spine 运行时相关支持。
+  - 后续应先做单卡 Spine 原型，确认 `.skel.bytes` / `.atlas.txt` / `.png` 的加载方式、节点类型、动画状态机和图层控制，再替换当前 PNG 帧管线。
+- 验证：
+  - 正常 `dotnet build` 的 C# 编译阶段通过，但正式复制到 Steam mod 目录失败，因为用户正在运行游戏，`SlayTheSpire2.exe` 锁定 `CultLeaderMod.dll`。
+  - 使用临时 `ModsPath` 的完整 build 成功，0 warning / 0 error。
+  - 因游戏未关闭，本次设置开关尚未同步到正式本地测试目录；等用户关闭游戏后需要重新 `dotnet build` + `ExportPck` 并同步 workshop staging。
+
+## 2026-08-29 - 精简【强制起床装置】百科悬浮框
+
+- 用户反馈【强制起床装置】相关词条过多，百科页面额外窗口过多，要求参考【循环】处理。
+- 修改 `CardHoverTipsPatch`：
+  - 从 `PowerTipsByCard` 中移除 `Apostle_Melancholy_11` 对易伤、虚弱、脆弱、中毒、灾厄的逐个 PowerTip 展示。
+  - 在 `CompactStatusTipsByCard` 中新增 `Apostle_Melancholy_11` 合并提示：`易伤  虚弱  脆弱  中毒  灾厄  苦痛施予`。
+  - 效果与【循环】一致：只显示一个“相关状态”框，避免百科/查看页生成过多悬浮窗口。
+- 验证：
+  - 使用临时 `ModsPath` 执行 `dotnet build /v:minimal` 成功。
+  - 仍只有 4 个既有 warning，0 error。
+  - 因用户正在测试/游戏可能仍在运行，本次未覆盖正式 Steam mod 目录；待用户关闭游戏后同步。
+
+## 2026-08-30 - Journey Spine 资源下载脚本
+- 新增脚本 `Scripts/Download-JourneySpineAssets.ps1`，用于从 `https://journey.927927927.xyz/spine-manifest.json` 读取资源清单，并从 `https://assets.927927927.xyz/spine/` 下载 Spine runtime 三件套到 `E:\work\Cult_leader_mod\SPINE`。
+- 脚本支持扫描 `E:\work\Cult_leader_mod\坨坨` 下的 `动画.json` / `立绘.json`，也支持 `-ResourceCode ErpinRoyale` 手动指定资源；支持 `-DryRun` 只列计划不下载，避免误耗流量。
+- 默认只下载 `.skel.bytes` / `.atlas.txt` / 贴图文件；如需 Unity `.asset/.meta` 等附加文件，可使用 `-IncludeDataFiles`。
+
+## 2026-08-30 - Spine 第一批资源下载
+- 已通过 `Scripts/Download-JourneySpineAssets.ps1` 下载第一批 Journey Spine runtime 资源到 `E:\work\Cult_leader_mod\SPINE`。
+- 第一批 ResourceCode：`Allet`, `Erpin`, `ErpinRoyale`, `Daya`, `BigWood`, `Delia`, `Arco`, `Epica`, `Vela`, `Amelia`, `Ashur`, `AshurMagi`。
+- 下载结果：命中 25 套完整资源，SPINE 目录当前约 57.55 MB；只下载 `.skel.bytes` / `.atlas.txt` / `.png`，未下载 Unity `.asset/.meta` 附加文件。
+- 已生成 `E:\work\Cult_leader_mod\SPINE\name-match-report.csv`，用于记录本地使徒中文文件夹名与 Journey ResourceCode 的自动匹配情况；仍有若干中文名需要人工确认。
+
+## 2026-08-30 - 埃尔芬（王道）Spine 原型接入
+- 新增 `CultLeaderModCode/Vfx/ApostleSpinePrototype.cs`，仅针对 `Apostle_Pure_01` / 埃尔芬（王道）做 Spine runtime 原型。
+- 原型使用 `E:\work\Cult_leader_mod\SPINE\战斗模型\erpinroyale` 的 `ErpinRoyale.skel.bytes` / `ErpinRoyale.atlas.txt` / `ErpinRoyale.png` 播放战斗动画 `Skill1_1_End`，并使用 `E:\work\Cult_leader_mod\SPINE\正常使徒\erpinroyale` 播放卡牌查看立绘 `Idle_1`。
+- 为避免误判，`Apostle_Pure_01` 命中 Spine 原型后不再 fallback 到 PNG 帧动画；失败时只写 `[SPINE_PROTO]` 日志，不播放旧 PNG。
+- `ApostleVfxPlayer.PlayForCard` 已在普通 PNG 帧播放前优先调用 Spine 原型；`CardInspectApostlePreviewPatch` 对该卡优先挂载 Spine preview 节点。
+- `dotnet build /v:minimal` 通过，保留项目既有 4 个 warning。
+
+## 2026-08-30 - 修复 Spine 原型未触发
+- 首次测试中日志没有出现 `[SPINE_PROTO]`，说明不是 Spine 资源加载失败，而是播放入口未触发。
+- 原因：`Apostle_Pure_01` 等大量使徒牌继承 `ModCardTemplate`，不是 `CultLeaderModCard`；旧入口 `if (__instance is CultLeaderModCard)` 会跳过这些卡。
+- 已将 `ApostleAnimationPlayPatch` 改为对 `CardModel` 使用 `CultLeaderAnimationSettings.Allows(__instance)` 后直接按 `__instance.GetType()` 播放。
+- 已将 `CardInspectApostlePreviewPatch` 改为按命名空间 `CultLeaderMod.CultLeaderModCode.Cards` 识别本 mod 卡牌，不再要求 `CultLeaderModCard` 基类。
+- `dotnet build /v:minimal` 通过，保留既有 4 个 warning。
+
+## 2026-08-30 - ErpinRoyale Spine 不显示原因确认
+- 测试后日志出现 `[SPINE_PROTO]`，说明动画入口已触发。
+- 失败根因：Journey 下载的 `ErpinRoyale.skel.bytes` 为 Spine `4.1.08`，但 STS2 当前 `libspine_godot.windows.template_release.x86_64.dll` runtime 为 Spine `4.2`，日志明确报错 `Skeleton version 4.1.08 does not match runtime version 4.2`。
+- 已给 `ApostleSpinePrototype` 增加 skeleton 版本预检；版本不兼容时跳过 Spine 原型并回退当前 PNG-frame VFX，避免【魔力乱打】动画被实验代码挡掉。
+- 后续若要正式 Spine 化，需要获取/导出 Spine 4.2 兼容的 `.skel.bytes` / `.atlas.txt` / `.png`，或确认可用的 4.1 runtime 接入方式；不建议替换 STS2 自带 native Spine runtime。
+
+## 2026-08-31 - 个别异常 Spine 资源回退到 GIF 帧
+
+- 用户确认 `ChopiManualUvFixA/B`、`ChopiManualUvDimA`、`ChopiAllRotateUvA` 等 atlas/UV 修复尝试仍不能把乔菲立绘修到可接受状态，因此停止继续硬修这批异常 Spine 资源。
+- 当前决策：只有个别问题角色回退到 GIF/PNG 帧，其余角色继续使用 Spine。
+- 已强制从 Spine prototype 排除并改走 `external_vfx_manifest.json` 帧动画的卡牌：
+  - `Apostle_Calm_23` / 蕾特
+  - `Apostle_Lively_13` / 修罗
+  - `Apostle_Melancholy_10` / 洛涅（市长）
+  - `Apostle_Melancholy_25` / 乔菲
+  - `Apostle_Melancholy_26` / 欧若拉
+- 新增脚本 `Scripts/Build-SelectedGifFallbackVfx.py`：
+  - 从 `E:\work\Cult_leader_mod\坨坨` 读取上述角色的 `动画.gif` 与 `立绘.gif`。
+  - 战斗动画默认镜像，导出到 `external_vfx/<key>_attack/frame_000.png...`。
+  - 百科/查看页立绘不镜像，导出到 `external_vfx/<key>_preview/frame_000.png...`。
+  - 同步 `external_vfx_manifest.json` 和选中帧目录到本地 mod、Steam Workshop 订阅目录、Workshop staging。
+- 本次生成帧数量：
+  - `calm_23_attack` 81 张，`calm_23_preview` 96 张
+  - `lively_13_attack` 96 张，`lively_13_preview` 41 张
+  - `melancholy_10_attack` 56 张，`melancholy_10_preview` 41 张
+  - `melancholy_25_attack` 30 张，`melancholy_25_preview` 21 张
+  - `melancholy_26_attack` 85 张，`melancholy_26_preview` 49 张
+- 验证：
+  - `dotnet build /v:minimal` 成功，0 error，仍只有 4 个既有 warning。
+  - 本地 mod、Workshop 订阅目录、Workshop staging 三处 DLL 哈希一致：`AC5FFAE9FFD5F554146C7CF02796F145BF648624F6D8E709D5353E6A2FCC3074`。
+  - 三处均存在上述 10 个 `external_vfx` 帧目录。
+
+## 2026-08-31 - GIF 帧动画显示微调
+
+- 针对用户反馈的 GIF 立绘偏大、Spine 卡切换到 GIF 卡时旧 Spine 立绘残留、欧若拉战斗 GIF 偏大/帧率低/无淡出，做了以下处理：
+  - `CardInspectApostlePreviewPatch`：GIF/PNG 帧立绘尺寸从 `360x360` 缩小到 `300x300`。
+  - `CardInspectApostlePreviewPatch`：在显示 GIF/PNG 帧 preview 前先调用 `ApostleSpinePrototype.RemoveAllPreviews()`，修复从 Spine preview 切到 GIF preview 时旧 Spine 节点不消失的问题。
+  - `ApostleVfxPlayer`：战斗帧动画改为播放前加载到 `BattleFrameCache`，避免首次逐帧从 loose PNG 读取造成卡顿感。
+  - `ApostleVfxPlayer`：战斗帧动画最后 `0.5s` 开始边播放边淡出，播放结束后直接移除节点。
+  - `ApostleAnimationProfiles`：欧若拉 `melancholy_26` 战斗动画单独缩放为 `0.95`，帧间隔调整为 `1/40s`。
+- 验证：
+  - `dotnet build /v:minimal` 成功，0 error，仍只有 4 个既有 warning。
+  - 本地 mod、Workshop 订阅目录、Workshop staging 三处 DLL 哈希一致：`1C3F0C495056E55EA26EF44CB98750CC98F2508766B0241EB20DAA012B1B190C`。
+
+## 2026-08-31 - GIF 立绘逐角色位置与尺寸微调
+
+- 用户反馈修罗 GIF 立绘位置合适但可略微放大，其他四个 GIF 回退角色需要往左上移动并略微缩小。
+- 修改 `ApostleAnimationProfiles.PreviewProfile`：新增 `FrameSize` 与 `PositionOffset`，让 GIF/PNG 帧立绘支持逐角色调参。
+- 当前参数：
+  - 修罗 / `lively_13`：`315x315`，位置不偏移。
+  - 蕾特 / `calm_23`：`280x280`，位置偏移 `(-28, -24)`。
+  - 洛涅（市长） / `melancholy_10`：`280x280`，位置偏移 `(-28, -24)`。
+  - 乔菲 / `melancholy_25`：`280x280`，位置偏移 `(-28, -24)`。
+  - 欧若拉 / `melancholy_26`：`280x280`，位置偏移 `(-28, -24)`。
+- 验证：
+  - `dotnet build /v:minimal` 成功，0 error，仍只有 4 个既有 warning。
+  - 本地 mod、Workshop 订阅目录、Workshop staging 三处 DLL 哈希一致：`231BBABF1D5FD65AB04CFB27F6A80759FE02D837028592FAEFF053F12793D954`。

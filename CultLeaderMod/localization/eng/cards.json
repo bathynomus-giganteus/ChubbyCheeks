@@ -44,7 +44,7 @@
   "CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.description": "Choose an Apostle card in your hand. Its cost is increased by 1 for this combat and it gains replay {Replay:diff()}.",
   "CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.selectionScreenPrompt": "Choose an apostle card",
   "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.title": "Group skipping",
-  "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.description": "{IfUpgraded:show:Upgrade all your apostle cards.|Upgrade all apostle cards in your hand.}",
+  "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.description": "{IfUpgraded:show:Upgrade all your apostle cards. Exhaust.|Upgrade all apostle cards in your hand.}",
   "CULT_LEADER_MOD_CARD_MEMBERSHIP_CARD.title": "Membership Card",
   "CULT_LEADER_MOD_CARD_MEMBERSHIP_CARD.description": "When entering the store, remove this card from the deck and obtain the relic \"Membership Card\".{IfUpgraded:show:\nGain 30 gold when this card is removed.|}",
   "CULT_LEADER_MOD_CARD_ENERGY_REFILL_CARD.title": "Energy supplement",
@@ -351,5 +351,7 @@
   "CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_26.description": "Deal {Damage:diff()} damage, gain {RetainAmt:diff()} Retain, and draw 1 card.",
   "CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_27.description": "Gain {RetainAmt:diff()} Retain. Move a random Attack card from your draw pile to your hand.",
   "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_22.description": "For each type of debuff on the target, deal {Damage:diff()} damage to it and draw {DrawAmt:diff()} card.",
-  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_03.description": "Gain {PainAmt:diff()} Bitter Pain. If your Bitter Pain reaches {Threshold:diff()}, remove {Threshold:diff()} Bitter Pain, Stun all enemies, and exhaust this card."
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_03.description": "Gain {PainAmt:diff()} Bitter Pain. If your Bitter Pain reaches {Threshold:diff()}, remove {Threshold:diff()} Bitter Pain, Stun all enemies, and exhaust this card.",
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_26.title": "Quiet Light Swarm",
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_26.description": "Whenever you apply a debuff to an enemy, deal damage equal to twice the stacks applied."
 }

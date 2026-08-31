@@ -6,7 +6,7 @@
   "CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.title": "Origin of life",
   "CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.description": "Each level provides 5 points of maximum life. When actively triggered, remove 1 layer and restore 5 points of life.",
   "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.title": "Solid as ice",
-  "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description": "Each layer increases the block obtained from the card by +1. At the end of the turn, gain blocks equal to the number of stacks. When actively triggered, 1 layer is removed, and block is obtained based on the current number of layers.",
+  "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description": "Each stack increases Block gained from cards by +1. At the end of the turn, gain Block equal to the current stacks. When actively triggered, gain Block based on the current stacks.",
   "CULT_LEADER_MOD_POWER_FERVOR_POWER.title": "Fanatical",
   "CULT_LEADER_MOD_POWER_FERVOR_POWER.description": "Each level increases the damage of the next attack card by +3 and loses 3 life points. Each trigger only consumes 1 layer.",
   "CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.title": "Giving out pain",
@@ -112,5 +112,7 @@
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_LIVELY_POWER.title": "Lively Awakening",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_LIVELY_POWER.description": "At the start of your turn, move a random Lively apostle card from your draw pile to your hand. Upgraded: upgrade it before moving it.",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.title": "Melancholy Awakening",
-  "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "At the start of your turn, move a random Melancholy apostle card from your draw pile to your hand. Upgraded: upgrade it before moving it."
+  "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "At the start of your turn, move a random Melancholy apostle card from your draw pile to your hand. Upgraded: upgrade it before moving it.",
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.title": "Quiet Light Swarm",
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "Whenever you apply a debuff to an enemy, deal damage equal to twice the stacks applied."
 }

@@ -30,7 +30,7 @@ public class Apostle_Frenzy_21 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
-        await PowerCmd.Apply<PlatingPower>(choiceContext, owner, DynamicVars["PlatingAmt"].BaseValue, owner, this);
+        await ApostleCardPlayHelpers.ApplyCalmPower(choiceContext, owner, DynamicVars["PlatingAmt"].BaseValue, owner, this);
         await ApostleCardEffectHelpers.ApplyTemporaryStrengthLoss(choiceContext, owner, DynamicVars["StrengthLoss"].BaseValue, owner, this);
         await PowerCmd.Apply<VigorPerTurnPower>(choiceContext, owner, DynamicVars["VigorNextTurn"].BaseValue, owner, this);
     }

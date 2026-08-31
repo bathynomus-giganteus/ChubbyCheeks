@@ -22,6 +22,12 @@ public class PlatingPerTurnPower : ModPowerTemplate
     {
         await base.BeforeSideTurnEnd(choiceContext, side, participants);
         if (!participants.Contains(base.Owner) || base.Amount <= 0) return;
-        await PowerCmd.Apply<PlatingPower>(choiceContext, base.Owner, base.Amount, base.Owner, null);
+        await ApostlePowerRules.ApplyApostlePower<PlatingPower, SolidIcePower>(
+            choiceContext,
+            base.Owner,
+            base.Amount,
+            base.Owner,
+            null
+        );
     }
 }

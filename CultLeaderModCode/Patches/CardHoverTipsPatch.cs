@@ -59,7 +59,6 @@ public static class CardHoverTipsPatch
 
         [typeof(Apostle_Melancholy_02)] = [typeof(MagicBulletPower)],
         [typeof(Apostle_Melancholy_10)] = [typeof(DebuffApplyCounterPower)],
-        [typeof(Apostle_Melancholy_11)] = [typeof(VulnerablePower), typeof(WeakPower), typeof(PoisonPower), typeof(DoomPower), typeof(FrailPower)],
         [typeof(Apostle_Melancholy_17)] = [typeof(MoonFieldPower)],
         [typeof(Apostle_Melancholy_18)] = [typeof(OnAttackedGainBitterPainPower)],
         [typeof(Apostle_Melancholy_20)] = [typeof(SkyRulerPower), typeof(DebilitatePower)],
@@ -69,6 +68,7 @@ public static class CardHoverTipsPatch
         [typeof(Apostle_Pure_01)] = [typeof(HealingPower), typeof(LifeEssencePower)],
         [typeof(Apostle_Pure_03)] = [typeof(AbilityDamageTakenBonusPower)],
         [typeof(Apostle_Pure_26)] = [typeof(PirateMarkPower)],
+        [typeof(Apostle_Melancholy_26)] = [typeof(PrecisionLightSwarmPower)],
         [typeof(Apostle_Pure_08)] = [typeof(WeakPower)],
         [typeof(Apostle_Pure_13)] = [typeof(SapLauncherPower)],
         [typeof(Apostle_Pure_15)] = [typeof(SelfStunPower)],
@@ -104,6 +104,7 @@ public static class CardHoverTipsPatch
     {
         [typeof(TestRainbowCard)] = "治愈  覆甲  活力  保留  苦痛施予",
         [typeof(Apostle_Lively_08_1)] = "治愈  覆甲  活力  苦痛施予",
+        [typeof(Apostle_Melancholy_11)] = "易伤  虚弱  脆弱  中毒  灾厄  苦痛施予",
     };
 
     private static readonly (CardTag Tag, string Name)[] PersonalityTagNames =
@@ -155,6 +156,7 @@ public static class CardHoverTipsPatch
         [nameof(Apostle_Melancholy_23)] = "菲斯塔",
         [nameof(Apostle_Melancholy_24)] = "贝鲁",
         [nameof(Apostle_Melancholy_25)] = "乔菲",
+        [nameof(Apostle_Melancholy_26)] = "欧若拉",
         [nameof(Apostle_Lively_01)] = "雨伊",
         [nameof(Apostle_Lively_02)] = "鲁德",
         [nameof(Apostle_Lively_03)] = "卢波",
@@ -398,6 +400,9 @@ public static class CardHoverTipsPatch
 
         if (description.Contains("海盗印记", StringComparison.Ordinal))
             yield return typeof(PirateMarkPower);
+
+        if (description.Contains("精密的光群", StringComparison.Ordinal))
+            yield return typeof(PrecisionLightSwarmPower);
 
         if (description.Contains("覆甲", StringComparison.Ordinal))
             yield return typeof(PlatingPower);

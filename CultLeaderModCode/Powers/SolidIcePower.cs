@@ -53,7 +53,6 @@ public class SolidIcePower : ModPowerTemplate
             return;
 
         var blockToGain = base.Amount;
-        await PowerCmd.ModifyAmount(choiceContext, this, -1m, applier, cardSource, silent: true);
         await CreatureCmd.GainBlock(base.Owner, blockToGain, ValueProp.Move, null, true);
     }
 }

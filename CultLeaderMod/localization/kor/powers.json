@@ -6,7 +6,7 @@
   "CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.title": "생명의 근원",
   "CULT_LEADER_MOD_POWER_LIFE_ESSENCE_POWER.description": "1중첩당 최대 HP가 5 증가합니다. 직접 발동하면 1중첩을 제거하고 HP를 5 회복합니다.",
   "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.title": "견고한 얼음",
-  "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description": "1중첩당 카드로 얻는 방어도가 1 증가합니다. 턴 종료 시 현재 중첩만큼 방어도를 얻습니다. 직접 발동하면 1중첩을 제거하고 현재 중첩에 따라 방어도를 얻습니다.",
+  "CULT_LEADER_MOD_POWER_SOLID_ICE_POWER.description": "1중첩당 카드로 얻는 방어도가 1 증가합니다. 턴 종료 시 현재 중첩만큼 방어도를 얻습니다. 직접 발동하면 현재 중첩에 따라 방어도를 얻습니다.",
   "CULT_LEADER_MOD_POWER_FERVOR_POWER.title": "열광",
   "CULT_LEADER_MOD_POWER_FERVOR_POWER.description": "1중첩당 다음 공격 카드가 주는 피해가 3 증가하고 HP를 3 잃습니다. 발동할 때마다 1중첩만 소모합니다.",
   "CULT_LEADER_MOD_POWER_BITTER_PAIN_POWER.title": "고통 부여",
@@ -112,5 +112,7 @@
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_LIVELY_POWER.title": "활발 각성",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_LIVELY_POWER.description": "턴 시작 시 뽑을 카드 더미에서 활발 성격 사도 카드 1장을 무작위로 손패로 옮깁니다. 강화된 경우 그 카드를 강화한 뒤 옮깁니다.",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.title": "우울 각성",
-  "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "턴 시작 시 뽑을 카드 더미에서 우울 성격 사도 카드 1장을 무작위로 손패로 옮깁니다. 강화된 경우 그 카드를 강화한 뒤 옮깁니다."
+  "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "턴 시작 시 뽑을 카드 더미에서 우울 성격 사도 카드 1장을 무작위로 손패로 옮깁니다. 강화된 경우 그 카드를 강화한 뒤 옮깁니다.",
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.title": "고요한 빛무리",
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "적에게 디버프를 부여할 때마다 부여한 중첩의 2배 피해를 줍니다."
 }

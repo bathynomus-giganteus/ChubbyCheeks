@@ -44,7 +44,7 @@
   "CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.description": "自分の手札の使徒カードを１枚選び、その戦闘中コストを１上げ、リプレイ{Replay:diff()}を得る。",
   "CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.selectionScreenPrompt": "使徒カードを選択してください",
   "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.title": "グループスキップ",
-  "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.description": "{IfUpgraded:show:すべての使徒牌をアップグレードする。|手札のすべての使徒牌をアップグレードする。}",
+  "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.description": "{IfUpgraded:show:すべての使徒牌をアップグレードする。 廃棄。|手札のすべての使徒牌をアップグレードする。}",
   "CULT_LEADER_MOD_CARD_MEMBERSHIP_CARD.title": "会員カード",
   "CULT_LEADER_MOD_CARD_MEMBERSHIP_CARD.description": "ショップに入る時、このカードをデッキから取り除き、レリック「会員カード」を得る。{IfUpgraded:show:\nこのカードが取り除かれた時、30ゴールドを得る。|}",
   "CULT_LEADER_MOD_CARD_ENERGY_REFILL_CARD.title": "エネルギー補給",
@@ -351,5 +351,7 @@
   "CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_26.description": "{Damage:diff()}ダメージを与え、保留を{RetainAmt:diff()}得て、カードを1枚引く。",
   "CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_27.description": "保留を{RetainAmt:diff()}得る。山札からランダムなアタック1枚を手札に移す。",
   "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_22.description": "対象のデバフの種類ごとに、{Damage:diff()}ダメージを与え、カードを{DrawAmt:diff()}枚引く。",
-  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_03.description": "苦痛施予を{PainAmt:diff()}得る。苦痛施予が{Threshold:diff()}に達したなら、苦痛施予を{Threshold:diff()}取り除き、敵全体をスタンさせ、このカードを廃棄する。"
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_03.description": "苦痛施予を{PainAmt:diff()}得る。苦痛施予が{Threshold:diff()}に達したなら、苦痛施予を{Threshold:diff()}取り除き、敵全体をスタンさせ、このカードを廃棄する。",
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_26.title": "静寂な光群",
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_26.description": "敵にデバフを与えたとき、付与した層数の2倍のダメージを与えます。"
 }

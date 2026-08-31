@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// 篝火 — 回合结束时获得X层活力。不受教主权能和埃尔德形态影响。
+/// 篝火 — 回合结束时获得X层活力。埃尔德形态下改为获得等量狂热。
 /// </summary>
 [RegisterPower]
 public class BonfireVigorPower : ModPowerTemplate
@@ -25,6 +25,12 @@ public class BonfireVigorPower : ModPowerTemplate
     {
         await base.BeforeSideTurnEnd(choiceContext, side, participants);
         if (!participants.Contains(Owner) || Amount <= 0) return;
-        await PowerCmd.Apply<VigorPower>(choiceContext, Owner, Amount, Owner, null);
+        await ApostlePowerRules.ApplyApostlePower<VigorPower, FervorPower>(
+            choiceContext,
+            Owner,
+            Amount,
+            Owner,
+            null
+        );
     }
 }

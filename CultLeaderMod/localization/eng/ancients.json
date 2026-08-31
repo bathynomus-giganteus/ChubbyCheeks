@@ -6,5 +6,13 @@
   "THE_ARCHITECT.talk.CULT_LEADER_MOD.0-2.char": "The World Tree is missing. I need part of this tower",
   "THE_ARCHITECT.talk.CULT_LEADER_MOD.0-2.next": "Continue",
   "THE_ARCHITECT.talk.CULT_LEADER_MOD.0-3.ancient": "What does the survival of your world have to do with me?",
-  "THE_ARCHITECT.talk.CULT_LEADER_MOD.0-endattack": "Both"
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD.0-endattack": "Both",
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.0-0.char": "Are you the final boss of this dimensional border?",
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.0-0.next": "Continue",
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.0-1.ancient": "You should not be here.",
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.0-1.next": "Continue",
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.0-2.char": "The World Tree is damaged. I need a piece of this tower.",
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.0-2.next": "Continue",
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.0-3.ancient": "What concern is the fate of your world to me?",
+  "THE_ARCHITECT.talk.CULT_LEADER_MOD_CHARACTER_CULT_LEADER_MOD_CHARACTER.0-endattack": "Both"
 }

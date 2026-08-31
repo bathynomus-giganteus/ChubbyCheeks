@@ -44,7 +44,7 @@
   "CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.description": "选择手中的一张使徒牌，使其本场战斗费用+1并获得重放{Replay:diff()}。",
   "CULT_LEADER_MOD_CARD_CHESTNUT_BURST_CARD.selectionScreenPrompt": "选择一张使徒牌",
   "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.title": "团体跳级",
-  "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.description": "{IfUpgraded:show:升级你的所有使徒牌。|升级你手牌中的所有使徒牌。}",
+  "CULT_LEADER_MOD_CARD_TEAM_LEVEL_SKIP_CARD.description": "{IfUpgraded:show:升级你的所有使徒牌。 消耗。|升级你手牌中的所有使徒牌。}",
   "CULT_LEADER_MOD_CARD_MEMBERSHIP_CARD.title": "会员卡",
   "CULT_LEADER_MOD_CARD_MEMBERSHIP_CARD.description": "进入商店时，将此卡从卡组中移除，获得遗物“会员卡”。{IfUpgraded:show:\n此卡被移除时获得30金币。|}",
   "CULT_LEADER_MOD_CARD_ENERGY_REFILL_CARD.title": "能量补充",
@@ -351,5 +351,7 @@
   "CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_26.description": "造成{Damage:diff()}点伤害，获得{RetainAmt:diff()}层[color=#FFD84A]保留[/color]，抽1张牌。",
   "CULT_LEADER_MOD_CARD_APOSTLE_LIVELY_27.description": "获得{RetainAmt:diff()}层[color=#FFD84A]保留[/color]。从抽牌堆随机将一张攻击牌移入手牌。",
   "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_22.description": "目标每有一种负面效果，对其造成{Damage:diff()}点伤害并抽{DrawAmt:diff()}张牌。",
-  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_03.description": "获得{PainAmt:diff()}层[color=#FFD84A]苦痛施予[/color]。若[color=#FFD84A]苦痛施予[/color]达到{Threshold:diff()}层，则移除{Threshold:diff()}层[color=#FFD84A]苦痛施予[/color]，眩晕所有敌人并消耗此牌。"
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_03.description": "获得{PainAmt:diff()}层[color=#FFD84A]苦痛施予[/color]。若[color=#FFD84A]苦痛施予[/color]达到{Threshold:diff()}层，则移除{Threshold:diff()}层[color=#FFD84A]苦痛施予[/color]，眩晕所有敌人并消耗此牌。",
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_26.title": "静谧的光群",
+  "CULT_LEADER_MOD_CARD_APOSTLE_MELANCHOLY_26.description": "对敌人施予负面效果时，同时造成施予层数2倍的伤害。"
 }
