@@ -46,6 +46,11 @@
         <Copy SourceFiles="@(CultLeaderModLocalizationFiles)" DestinationFiles="@(CultLeaderModLocalizationFiles->'$(ModsPath)CultLeaderMod/CultLeaderMod/localization/%(RecursiveDir)%(Filename)%(Extension)')" />
     </Target>
 
+    <Target Name="SyncSpinePublishAssets" AfterTargets="CopyToModsFolderOnBuild" Condition="Exists('E:\work\Cult_leader_mod\SPINE_4_2_TEST')">
+        <Message Text="Syncing bundled Spine assets for local mod and Workshop staging..." Importance="high" />
+        <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\Scripts\Sync-SpinePublishAssets.ps1&quot; -ProjectRoot &quot;$(MSBuildProjectDirectory)&quot; -SourceRoot &quot;E:\work\Cult_leader_mod\SPINE_4_2_TEST&quot; -LocalModDir &quot;$(ModsPath)CultLeaderMod&quot; -WorkshopSubscriptionDir &quot;E:\SteamLibrary\steamapps\workshop\content\2868840\3784977251&quot; -WorkshopContentDir &quot;$(MSBuildProjectDirectory)\release\workshop\CultLeaderModWorkspace\content&quot;" />
+    </Target>
+
 
     <Target Name="ExportPck">
         <Message Text="Exporting PCK to mods folder..." Importance="high" />

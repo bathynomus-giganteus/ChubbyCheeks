@@ -1035,3 +1035,16 @@
 - 验证：
   - `dotnet build /v:minimal` 成功，0 error，仍只有 4 个既有 warning。
   - 本地 mod、Workshop 订阅目录、Workshop staging 三处 DLL 哈希一致：`231BBABF1D5FD65AB04CFB27F6A80759FE02D837028592FAEFF053F12793D954`。
+
+## 2026-09-07 - 玩法种子随机与升级遗物存档修复
+
+- 剩余 11 处玩法随机调用改用原版战斗选牌、生成卡牌、目标和 Niche 随机流；视觉抖动保持独立随机。
+- 随机招募的筛选和抽取统一使用 CombatCardGeneration，相关全局候选池抽样前按模型 ID 排序。
+- 咏春的幸福新增 PersonalityMask 存档字段；RelicCmd.Replace 前继承旧遗物选择，读取选择同时支持初始和升级遗物。
+- 升级遗物描述按性格组合区分，不再覆盖全局默认描述；开局选择要求持有初始遗物，完成或失败后清理 Pending。
+- 保留现有 85% 剔除逻辑与队伍级事件资格；未提交 Git，未上传工坊。
+- 构建完成：0 错误、4 个既有警告；816 个 Spine 资源文件同步完成。
+- 本地 mod、工坊订阅目录、staging 三处 DLL 校验一致：`2D1254F8A312448E48273C2224DBDFEFDCA8B3A92B1BBAFBB527C4083C32326C`。
+- 原版 RNG 保存恢复检查通过：先抽取 13 次再保存，恢复后连续 100 次有界抽样一致。静态检查仅剩 VFX 非种子随机。
+- 尚未完成游戏内双客户端及完整 SL 实测；步骤见 `diagnostics/SEEDED_RANDOM_AND_YONGCHUN_FIX_20260907.md`。
+- 已经丢失且未存入旧存档的性格选择无法自动推断。重启游戏加载新 DLL，无需重新导出 PCK。

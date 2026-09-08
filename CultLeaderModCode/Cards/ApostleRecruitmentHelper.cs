@@ -27,13 +27,15 @@ internal static class ApostleRecruitmentHelper
         var allApostleCards = ModelDb.AllCards
             .Where(card => card.Tags.Contains(CultLeaderCardTags.Apostle))
             .Where(card => card.CanBeGeneratedInCombat)
+            .OrderBy(card => card.Id.ToString(), StringComparer.Ordinal)
             .ToList();
 
         // Honor the starting relic's personality weighting before sampling.
-        var weightedPool = GumBlessRelic.FilterUnselectedCards(allApostleCards);
+        var rng = player.RunState.Rng.CombatCardGeneration;
+        var weightedPool = GumBlessRelic.FilterUnselectedCards(allApostleCards, player, rng);
 
         var apostleCards = weightedPool
-            .OrderBy(_ => Random.Shared.Next())
+            .OrderBy(_ => rng.NextInt())
             .Take(3)
             .ToList();
 

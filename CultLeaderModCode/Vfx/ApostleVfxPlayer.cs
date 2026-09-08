@@ -39,7 +39,7 @@ public static class ApostleVfxPlayer
 
     public static void PlayForCard(Type cardType, Creature? target)
     {
-        if (ApostleSpinePrototype.IsPrototypeCard(cardType))
+        if (ApostleSpinePrototype.CanUseSpineBattle(cardType))
         {
             ApostleSpinePrototype.TryPlayBattle(cardType, target);
             return;

@@ -40,7 +40,8 @@ public class ForElruienCard : ModCardTemplate
             .Where(card => card.Tags.Contains(CultLeaderCardTags.Apostle))
             .Where(card => card.CanBeGeneratedInCombat)
             .Where(card => card.Rarity == CardRarity.Rare)
-            .OrderBy(_ => Random.Shared.Next())
+            .OrderBy(card => card.Id.ToString(), StringComparer.Ordinal)
+            .OrderBy(_ => Owner.RunState.Rng.CombatCardGeneration.NextInt())
             .Take(count)
             .ToList();
 

@@ -31,7 +31,7 @@ public static class CardInspectApostlePreviewPatch
                 && IsCultLeaderCardType(model.GetType())
                 && CultLeaderAnimationSettings.Allows(model))
             {
-                if (ApostleSpinePrototype.IsPrototypeCard(model.GetType()))
+                if (ApostleSpinePrototype.CanUseSpinePreview(model.GetType()))
                 {
                     RemoveFramePreviewsOnly();
                     ApostleSpinePrototype.TryEnsurePreview(__instance, model.GetType());

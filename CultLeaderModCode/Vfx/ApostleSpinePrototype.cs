@@ -13,7 +13,8 @@ namespace CultLeaderMod.CultLeaderModCode.Vfx;
 /// </summary>
 public static class ApostleSpinePrototype
 {
-    private const string SpineRoot = @"E:\work\Cult_leader_mod\SPINE_4_2_TEST";
+    private const string BundledSpineRootRelativePath = @"CultLeaderMod\spine_assets";
+    private const string DevSpineRoot = @"E:\work\Cult_leader_mod\SPINE_4_2_TEST";
     private const int BaseVfxLayer = 180;
     private const int VfxLayerCycle = 1000;
     private const string PreviewNodeName = "CultLeaderInspectApostleSpinePreview";
@@ -28,7 +29,13 @@ public static class ApostleSpinePrototype
     private static readonly Dictionary<string, float?> AnimationDurationCache = [];
     private static int _vfxSequence;
     private static bool _warnedIncompatibleSkeleton;
-    private static readonly HashSet<string> FrameFallbackCardTypeNames =
+    private static bool _warnedMissingSpineRoot;
+    private static readonly string? BundledSpineRoot = FindBundledSpineRoot();
+    private static readonly HashSet<string> BattleFrameFallbackCardTypeNames =
+    [
+        nameof(Apostle_Melancholy_26), // 欧若拉：battle animation has persistent atlas/mesh scrambling, keep GIF fallback.
+    ];
+    private static readonly HashSet<string> PreviewFrameFallbackCardTypeNames =
     [
         nameof(Apostle_Calm_23),       // 蕾特：converted Spine preview has persistent atlas/mesh scrambling.
         nameof(Apostle_Lively_13),     // 修罗：converted Spine preview has persistent atlas/mesh scrambling.
@@ -180,8 +187,11 @@ public static class ApostleSpinePrototype
         [nameof(ForElruienCard)] = new(nameof(ForElruienCard), "NerRage", "Normal", "Pray_1", ["Skill1_1"], [], 3.35f, "为了艾鲁皮恩", SecondaryBattleProfiles: [new("ErpinRoyale", "战斗模型", "Normal", ["Spawn"], [], 2.52f, 0.00f, new Vector2(130f, 0f), 0.34f)], BattlePositionOffset: new Vector2(-130f, 0f), PreviewEnabled: false),
     };
 
-    public static bool IsPrototypeCard(Type cardType) =>
-        Profiles.ContainsKey(cardType.Name) && !FrameFallbackCardTypeNames.Contains(cardType.Name);
+    public static bool CanUseSpineBattle(Type cardType) =>
+        Profiles.ContainsKey(cardType.Name) && !BattleFrameFallbackCardTypeNames.Contains(cardType.Name);
+
+    public static bool CanUseSpinePreview(Type cardType) =>
+        Profiles.ContainsKey(cardType.Name) && !PreviewFrameFallbackCardTypeNames.Contains(cardType.Name);
 
     public static bool TryPlayBattle(Type cardType)
     {
@@ -190,7 +200,7 @@ public static class ApostleSpinePrototype
 
     public static bool TryPlayBattle(Type cardType, Creature? target)
     {
-        if (FrameFallbackCardTypeNames.Contains(cardType.Name))
+        if (BattleFrameFallbackCardTypeNames.Contains(cardType.Name))
             return false;
 
         if (!Profiles.TryGetValue(cardType.Name, out var profile))
@@ -205,7 +215,7 @@ public static class ApostleSpinePrototype
 
     public static bool TryEnsurePreview(Node screen, Type cardType)
     {
-        if (FrameFallbackCardTypeNames.Contains(cardType.Name))
+        if (PreviewFrameFallbackCardTypeNames.Contains(cardType.Name))
             return false;
 
         if (!Profiles.TryGetValue(cardType.Name, out var profile))
@@ -505,6 +515,9 @@ public static class ApostleSpinePrototype
     private static bool NamedSkinHasAttachments(string skeletonPath, string skinName)
     {
         var metadataPath = GetSkeletonMetadataPath(skeletonPath);
+        if (!metadataPath.EndsWith(".spine-json", StringComparison.OrdinalIgnoreCase))
+            return true;
+
         try
         {
             using var document = JsonDocument.Parse(File.ReadAllBytes(metadataPath));
@@ -634,14 +647,74 @@ public static class ApostleSpinePrototype
 
     private static SpineAssetSet GetAssetSet(string resourceCode, string category, bool preferBinarySkeleton = false)
     {
-        var directory = Path.Combine(SpineRoot, category, resourceCode.ToLowerInvariant());
+        var root = GetSpineRoot();
+        if (root == null)
+        {
+            root = Path.Combine(AppContext.BaseDirectory, BundledSpineRootRelativePath);
+            if (!_warnedMissingSpineRoot)
+            {
+                _warnedMissingSpineRoot = true;
+                Entry.Logger.Warn($"[SPINE_PROTO] No bundled or dev Spine root found. Expected bundled root near the mod DLL, or dev root: {DevSpineRoot}");
+            }
+        }
+
+        var normalizedCategory = category
+            .Replace('\\', Path.DirectorySeparatorChar)
+            .Replace('/', Path.DirectorySeparatorChar);
+        var directory = Path.Combine(root, normalizedCategory, resourceCode.ToLowerInvariant());
         var jsonSkeletonPath = Path.Combine(directory, $"{resourceCode}.spine-json");
         var binarySkeletonPath = Path.Combine(directory, $"{resourceCode}.skel");
+        var useBinarySkeleton = File.Exists(binarySkeletonPath);
         return new SpineAssetSet(
-            preferBinarySkeleton && File.Exists(binarySkeletonPath) ? binarySkeletonPath : jsonSkeletonPath,
+            useBinarySkeleton ? binarySkeletonPath : jsonSkeletonPath,
             Path.Combine(directory, $"{resourceCode}.atlas"),
             Path.Combine(directory, $"{resourceCode}.png")
         );
+    }
+
+    private static string? GetSpineRoot()
+    {
+        if (!string.IsNullOrWhiteSpace(BundledSpineRoot))
+            return BundledSpineRoot;
+
+        if (Directory.Exists(DevSpineRoot))
+            return DevSpineRoot;
+
+        return null;
+    }
+
+    private static string? FindBundledSpineRoot()
+    {
+        foreach (var candidate in EnumerateBundledSpineRootCandidates())
+        {
+            try
+            {
+                var fullPath = Path.GetFullPath(candidate);
+                if (Directory.Exists(fullPath))
+                    return fullPath;
+            }
+            catch
+            {
+                // Ignore malformed probing paths from unusual host layouts.
+            }
+        }
+
+        return null;
+    }
+
+    private static IEnumerable<string> EnumerateBundledSpineRootCandidates()
+    {
+        var assemblyDirectory = Path.GetDirectoryName(typeof(ApostleSpinePrototype).Assembly.Location);
+        if (!string.IsNullOrWhiteSpace(assemblyDirectory))
+        {
+            yield return Path.Combine(assemblyDirectory, BundledSpineRootRelativePath);
+            yield return Path.Combine(assemblyDirectory, "spine_assets");
+        }
+
+        yield return Path.Combine(AppContext.BaseDirectory, BundledSpineRootRelativePath);
+        yield return Path.Combine(AppContext.BaseDirectory, "spine_assets");
+        yield return Path.Combine(System.Environment.CurrentDirectory, BundledSpineRootRelativePath);
+        yield return Path.Combine(System.Environment.CurrentDirectory, "spine_assets");
     }
 
     private static string GetSkeletonMetadataPath(string skeletonPath)
@@ -689,6 +762,14 @@ public static class ApostleSpinePrototype
         if (animationNames.Count == 0)
             return Math.Max(MinimumBattleAnimationSeconds, fallbackSeconds);
 
+        if (animationNames.Count == 1 && (animationDurations.Count == 0 || animationDurations[0] <= 0f))
+        {
+            var duration = TryGetAnimationDuration(assetSet.SkeletonPath, animationNames[0]);
+            return duration.HasValue
+                ? Math.Max(MinimumBattleAnimationSeconds, duration.Value)
+                : Math.Max(MinimumBattleAnimationSeconds, fallbackSeconds);
+        }
+
         var total = 0f;
         for (var i = 0; i < animationNames.Count; i++)
             total += GetSequenceSegmentSeconds(assetSet, animationNames, animationDurations, i);
@@ -716,6 +797,9 @@ public static class ApostleSpinePrototype
     private static float? TryGetAnimationDuration(string skeletonPath, string animationName)
     {
         var metadataPath = GetSkeletonMetadataPath(skeletonPath);
+        if (!metadataPath.EndsWith(".spine-json", StringComparison.OrdinalIgnoreCase))
+            return null;
+
         var cacheKey = $"{metadataPath}|{animationName}";
         if (AnimationDurationCache.TryGetValue(cacheKey, out var cached))
             return cached;

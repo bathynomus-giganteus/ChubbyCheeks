@@ -49,7 +49,7 @@ internal static class ApostleCardEffectHelpers
     public static Creature? RandomEnemy(Creature owner)
     {
         var enemies = AliveEnemies(owner);
-        return enemies.Count == 0 ? null : enemies[Random.Shared.Next(enemies.Count)];
+        return enemies.Count == 0 ? null : enemies[owner.CombatState!.RunState.Rng.CombatTargets.NextInt(enemies.Count)];
     }
 
     public static Task Attack(
@@ -417,7 +417,7 @@ internal static class ApostleCardEffectHelpers
             if (debuffs.Count == 0)
                 break;
 
-            var power = debuffs[Random.Shared.Next(debuffs.Count)];
+            var power = debuffs[target.CombatState!.RunState.Rng.Niche.NextInt(debuffs.Count)];
             if (power.Amount <= 1m)
                 await PowerCmd.Remove(power);
             else

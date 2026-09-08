@@ -36,11 +36,14 @@ public class BitterPainPower : ModPowerTemplate
         if (enemies == null || enemies.Count == 0)
             return;
 
-        var rng = new Random();
+        var rng = Owner.CombatState!.RunState.Rng;
         for (int i = 0; i < base.Amount; i++)
         {
-            var enemy = enemies[rng.Next(enemies.Count)];
-            switch (rng.Next(4))
+            enemies.RemoveAll(enemy => enemy.IsDead);
+            if (enemies.Count == 0)
+                break;
+            var enemy = enemies[rng.CombatTargets.NextInt(enemies.Count)];
+            switch (rng.Niche.NextInt(4))
             {
                 case 0:
                     await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, 1m, base.Owner, null);

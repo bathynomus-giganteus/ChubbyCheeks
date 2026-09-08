@@ -11,6 +11,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves.Runs;
+using System.Runtime.CompilerServices;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -29,18 +31,30 @@ public class GumBlessRelic : CultLeaderModRelic
         CultLeaderCardTags.Melancholy
     ];
 
-    private static readonly Random _rng = new();
+    private sealed class SelectionState
+    {
+        public HashSet<CardTag>? Selected;
+        public Task<bool>? Pending;
+    }
+    private static ConditionalWeakTable<Player, SelectionState> States = new();
 
-    public static HashSet<CardTag>? SelectedTags { get; internal set; }
-    public static HashSet<CardTag>? UnselectedTags { get; internal set; }
-    public static bool SelectionMade => SelectedTags != null;
-    public static bool SelectionInProgress { get; set; }
+    [SavedProperty]
+    public int PersonalityMask { get; set; }
+
+    public static HashSet<CardTag>? GetSelectedTags(Player player)
+    {
+        var mask = player.Relics.OfType<GumBlessRelic>().FirstOrDefault()?.PersonalityMask ?? 0;
+        if (mask == 0)
+            mask = player.Relics.OfType<HappinessOfYongchunRelic>().FirstOrDefault()?.PersonalityMask ?? 0;
+        if (mask != 0)
+            return PersonalityTags.Where((_, i) => (mask & (1 << i)) != 0).ToHashSet();
+        return States.GetValue(player, _ => new SelectionState()).Selected;
+    }
+    public static bool HasSelection(Player player) => GetSelectedTags(player)?.Count == 2;
 
     public override RelicRarity Rarity => RelicRarity.Starter;
     public override bool IsStackable => true;
     public override bool ShowCounter => false;
-
-    private const string DefaultDescription = "选择两种使徒性格，使其出现概率提升。";
 
     public override string? CustomBigIconPath => "res://CultLeaderMod/images/relics/gum_bless.png";
     public override string? CustomIconPath => "res://CultLeaderMod/images/relics/gum_bless.png";
@@ -48,45 +62,32 @@ public class GumBlessRelic : CultLeaderModRelic
 
     public override Task AfterObtained()
     {
-        ResetSelection();
         Entry.Logger.Info("[GumBlessRelic] Opening personality selection queued until Neow event UI is ready.");
         return Task.CompletedTask;
     }
 
     public static void ResetSelection()
     {
-        SelectedTags = null;
-        UnselectedTags = null;
-        SelectionInProgress = false;
-        RestoreDefaultRelicDescription();
+        States = new();
     }
 
 
-    private static void RestoreDefaultRelicDescription()
+    public static void SetSelection(Player player, HashSet<CardTag> selected)
     {
-        try
-        {
-            LocManager.Instance.GetTable("relics").MergeWith(new Dictionary<string, string>
-            {
-                ["CULT_LEADER_MOD_RELIC_GUM_BLESS_RELIC.description"] = DefaultDescription
-            });
-            Entry.Logger.Info("[GumBlessRelic] Restored default relic description.");
-        }
-        catch (Exception ex)
-        {
-            Entry.Logger.Warn($"[GumBlessRelic] Failed to restore relic description: {ex.Message}");
-        }
-    }    public static void SetSelection(HashSet<CardTag> selected, HashSet<CardTag> unselected)
-    {
-        SelectedTags = selected;
-        UnselectedTags = unselected;
-        SelectionInProgress = false;
-        UpdateRelicDescription();
+        States.GetValue(player, _ => new SelectionState()).Selected = selected;
+        foreach (var relic in player.Relics.OfType<GumBlessRelic>())
+            relic.PersonalityMask = PersonalityTags.Select((tag, i) => selected.Contains(tag) ? 1 << i : 0).Sum();
+        foreach (var relic in player.Relics.OfType<HappinessOfYongchunRelic>())
+            relic.PersonalityMask = EncodeSelection(selected);
     }
 
-    public static bool IsUnselectedPersonalityCard(CardModel card)
+    public static int EncodeSelection(HashSet<CardTag> selected) =>
+        PersonalityTags.Select((tag, i) => selected.Contains(tag) ? 1 << i : 0).Sum();
+
+    public static bool IsUnselectedPersonalityCard(CardModel card, Player player)
     {
-        if (!SelectionMade || UnselectedTags == null) return false;
+        var selected = GetSelectedTags(player);
+        if (selected == null) return false;
         var tags = card.Tags;
 
         if (tags.Contains(CultLeaderCardTags.Pure) &&
@@ -96,7 +97,7 @@ public class GumBlessRelic : CultLeaderModRelic
             tags.Contains(CultLeaderCardTags.Melancholy))
             return false;
 
-        foreach (var tag in UnselectedTags)
+        foreach (var tag in PersonalityTags.Except(selected))
         {
             if (tags.Contains(tag)) return true;
         }
@@ -105,30 +106,36 @@ public class GumBlessRelic : CultLeaderModRelic
 
     public static bool ShouldOfferOpeningSelection(Player player)
     {
-        return player.Character is CultLeaderModCharacter && !SelectionMade && !SelectionInProgress;
+        return player.Character is CultLeaderModCharacter
+            && player.Relics.OfType<GumBlessRelic>().Any() && !HasSelection(player);
     }
 
     public static async Task<bool> TriggerOpeningSelection(Player player)
     {
-        if (SelectionMade || SelectionInProgress)
-        {
-            return SelectionMade;
-        }
-
-        if (player.Character is not CultLeaderModCharacter)
-        {
+        if (HasSelection(player)) return true;
+        if (!ShouldOfferOpeningSelection(player))
             return false;
-        }
-
-        SelectionInProgress = true;
-
+        var state = States.GetValue(player, _ => new SelectionState());
+        var pending = state.Pending is { IsCompleted: false } existing
+            ? existing : state.Pending = SelectForPlayer(player);
         try
         {
-            if (!LocalContext.IsMe(player))
-            {
-                Entry.Logger.Warn($"[GumBlessRelic] LocalContext was not bound to starter relic owner. Binding NetId={player.NetId} before opening selection.");
-                LocalContext.NetId = player.NetId;
-            }
+            return await pending;
+        }
+        finally
+        {
+            if (ReferenceEquals(state.Pending, pending))
+                state.Pending = null;
+        }
+    }
+
+    private static async Task<bool> SelectForPlayer(Player player)
+    {
+        try
+        {
+            // Every peer reserves the same choice ID. The native command shows UI
+            // only to the owner; all other peers wait for its network result.
+            Entry.Logger.Info($"[GumBlessRelic] Opening selection owner={player.NetId}, local={LocalContext.IsMe(player)}; remote peers wait for synchronized choice.");
 
             var runState = player.RunState;
             var cards = new List<CardModel>
@@ -155,7 +162,7 @@ public class GumBlessRelic : CultLeaderModRelic
 
             if (selectedCards.Count != 2)
             {
-                Entry.Logger.Warn($"[GumBlessRelic] Expected 2 selected cards, got {selectedCards.Count}.");
+                throw new InvalidOperationException($"Expected 2 selected cards, got {selectedCards.Count}.");
             }
 
             var selectedTags = selectedCards
@@ -164,13 +171,14 @@ public class GumBlessRelic : CultLeaderModRelic
                 .Select(tag => tag!.Value)
                 .ToHashSet();
 
-            SetSelection(selectedTags, PersonalityTags.Except(selectedTags).ToHashSet());
+            if (selectedTags.Count != 2)
+                throw new InvalidOperationException("Expected two distinct personality tags.");
+            SetSelection(player, selectedTags);
             Entry.Logger.Info($"[GumBlessRelic] Opening selection complete: {string.Join(", ", selectedTags)}");
             return true;
         }
         catch (Exception ex)
         {
-            SelectionInProgress = false;
             Entry.Logger.Error($"[GumBlessRelic] Opening selection failed: {ex}");
             return false;
         }
@@ -197,26 +205,22 @@ public class GumBlessRelic : CultLeaderModRelic
         return "???";
     }
 
-    private static void UpdateRelicDescription()
+    public LocString? SelectedPersonalityDescription => GetSelectionDescription(this);
+
+    internal static LocString? GetSelectionDescription(RelicModel relic)
     {
-        if (SelectedTags == null || SelectedTags.Count != 2) return;
-
-        var names = SelectedTags.Select(GetPersonalityName).ToList();
-        var description = $"{names[0]}和{names[1]}使徒的出现概率提升。";
-
-        try
-        {
-            var relicsTable = LocManager.Instance.GetTable("relics");
-            relicsTable.MergeWith(new System.Collections.Generic.Dictionary<string, string>
+            if (!relic.IsMutable || relic.Owner == null || GetSelectedTags(relic.Owner) is not { Count: 2 } selected)
+                return null;
+            var upgraded = relic is HappinessOfYongchunRelic;
+            var names = PersonalityTags.Where(selected.Contains).Select(GetPersonalityName).ToList();
+            var key = $"CULT_LEADER_PERSONALITY_SELECTION_{(upgraded ? "UPGRADED_" : "")}{EncodeSelection(selected)}.description";
+            LocManager.Instance.GetTable("relics").MergeWith(new Dictionary<string, string>
             {
-                ["CULT_LEADER_MOD_RELIC_GUM_BLESS_RELIC.description"] = description
+                [key] = upgraded
+                    ? $"{names[0]}和{names[1]}使徒的出现概率提升，拾起时获得2次稀有卡牌奖励。"
+                    : $"{names[0]}和{names[1]}使徒的出现概率提升。"
             });
-            Entry.Logger.Info($"[GumBlessRelic] Updated relic description: {description}");
-        }
-        catch (Exception ex)
-        {
-            Entry.Logger.Error($"[GumBlessRelic] Failed to update relic description: {ex}");
-        }
+            return new LocString("relics", key);
     }
 
     
@@ -224,19 +228,20 @@ public class GumBlessRelic : CultLeaderModRelic
     /// Filter a list of cards, removing unselected personality cards (85% rejection rate).
     /// Returns a new list; if no cards were filtered, returns the original list.
     /// </summary>
-    public static List<CardModel> FilterUnselectedCards(List<CardModel> cards)
+    public static List<CardModel> FilterUnselectedCards(List<CardModel> cards, Player player, MegaCrit.Sts2.Core.Random.Rng? rng = null)
     {
-        if (!SelectionMade || UnselectedTags == null) return cards;
+        if (!HasSelection(player)) return cards;
+        rng ??= player.PlayerRng.Rewards;
 
         var filtered = new List<CardModel>(cards.Count);
         bool changed = false;
 
         foreach (var card in cards)
         {
-            if (IsUnselectedPersonalityCard(card))
+            if (IsUnselectedPersonalityCard(card, player))
             {
                 // 85% chance to reject unselected personality cards
-                if (_rng.NextDouble() >= 0.85)
+                if (rng.NextDouble() >= 0.85)
                 {
                     filtered.Add(card);
                 }
@@ -257,14 +262,13 @@ public override CardCreationOptions ModifyCardRewardCreationOptions(Player playe
     {
         try
         {
-            if (!SelectionMade)
+            if (player != Owner || !HasSelection(player))
             {
                 Entry.Logger.Info("[GumBlessRelic] ModifyCardRewardCreationOptions: selection not made, returning original");
                 return options;
             }
 
             var existingFilter = options.CardPoolFilter;
-            Entry.Logger.Info($"[GumBlessRelic] ModifyCardRewardCreationOptions: applying filter, UnselectedTags={UnselectedTags?.Count ?? 0}");
 
             return options.WithFilter(card =>
             {
@@ -272,9 +276,9 @@ public override CardCreationOptions ModifyCardRewardCreationOptions(Player playe
                 {
                     if (existingFilter != null && !existingFilter(card)) return false;
 
-                    if (IsUnselectedPersonalityCard(card))
+                    if (IsUnselectedPersonalityCard(card, player))
                     {
-                        return _rng.NextDouble() >= 0.85;
+                        return player.PlayerRng.Rewards.NextDouble() >= 0.85;
                     }
                     return true;
                 }

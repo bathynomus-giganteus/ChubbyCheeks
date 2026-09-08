@@ -16,7 +16,12 @@ public class Apostle_Lively_16 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("RemoveAmt", 3m), new DynamicVar("DrawAmt", 2m)];
+        [
+            new DynamicVar("BaseDrawAmt", 1m),
+            new DynamicVar("Threshold", 5m),
+            new DynamicVar("RemoveAmt", 3m),
+            new DynamicVar("BonusDrawAmt", 2m)
+        ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -24,20 +29,21 @@ public class Apostle_Lively_16 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_16.png");
 
     public Apostle_Lively_16()
-        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
+        await CardPileCmd.Draw(choiceContext, DynamicVars["BaseDrawAmt"].BaseValue, base.Owner);
+
         int available = ApostleCardEffectHelpers.LivelyStacks(owner);
+        if (available < DynamicVars["Threshold"].IntValue)
+            return;
+
         int remove = Math.Min(DynamicVars["RemoveAmt"].IntValue, available);
-
         await ApostleCardEffectHelpers.RemoveLivelyStacks(choiceContext, owner, remove, this);
-        await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmt"].BaseValue, base.Owner);
+        await CardPileCmd.Draw(choiceContext, DynamicVars["BonusDrawAmt"].BaseValue, base.Owner);
     }
 
-    protected override void OnUpgrade()
-    {
-        DynamicVars["DrawAmt"].UpgradeValueBy(1m);
-    }
+    protected override void OnUpgrade() { }
 }

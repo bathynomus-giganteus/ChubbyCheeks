@@ -47,7 +47,7 @@ public class Apostle_Lively_27 : ModCardTemplate
         if (candidates.Count == 0)
             return;
 
-        var selected = candidates[Random.Shared.Next(candidates.Count)];
+        var selected = candidates[owner.RunState.Rng.CombatCardSelection.NextInt(candidates.Count)];
         await CardPileCmd.Add(selected, PileType.Hand, CardPilePosition.Top, this, false);
     }
 

@@ -36,7 +36,7 @@ public class Apostle_Frenzy_07 : ModCardTemplate
         {
             for (int i = 0; i < DynamicVars["Triggers"].IntValue; i++)
             {
-                switch (Random.Shared.Next(3))
+                switch (Owner.RunState.Rng.Niche.NextInt(3))
                 {
                     case 0:
                         var enemy = ApostleCardEffectHelpers.RandomEnemy(owner);

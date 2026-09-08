@@ -62,7 +62,7 @@ public class PersonalityCardFetchPower : ModPowerTemplate
         if (drawPile.Count == 0)
             return;
 
-        var selected = drawPile[Random.Shared.Next(drawPile.Count)];
+        var selected = drawPile[player.RunState.Rng.CombatCardSelection.NextInt(drawPile.Count)];
         if (data.UpgradeFetchedCard && selected.IsUpgradable)
             CardCmd.Upgrade(new[] { selected }, CardPreviewStyle.None);
 

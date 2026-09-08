@@ -14,11 +14,11 @@ public static class PersonalityFilterPatch
 {
     [HarmonyPatch(typeof(CardFactory), "GetDistinctForCombat")]
     [HarmonyPrefix]
-    private static void Prefix(ref IEnumerable<CardModel> cards)
+    private static void Prefix(Player player, MegaCrit.Sts2.Core.Random.Rng rng, ref IEnumerable<CardModel> cards)
     {
         try
         {
-            if (!GumBlessRelic.SelectionMade) return;
+            if (!GumBlessRelic.HasSelection(player)) return;
 
             Entry.Logger.Info($"[PersonalityFilter] GetDistinctForCombat called, SelectionMade=true");
 
@@ -26,9 +26,9 @@ public static class PersonalityFilterPatch
             {
                 try
                 {
-                    if (GumBlessRelic.IsUnselectedPersonalityCard(card))
+                    if (GumBlessRelic.IsUnselectedPersonalityCard(card, player))
                     {
-                        return Random.Shared.NextDouble() >= 0.85;
+                        return rng.NextDouble() >= 0.85;
                     }
                     return true;
                 }
@@ -57,14 +57,14 @@ public static class PersonalityFilterPatch
 
     [HarmonyPatch(typeof(Hook), "ModifyMerchantCardPool")]
     [HarmonyPostfix]
-    private static void Postfix(ref IEnumerable<CardModel> __result)
+    private static void Postfix(Player player, ref IEnumerable<CardModel> __result)
     {
         try
         {
-            if (!GumBlessRelic.SelectionMade) return;
+            if (!GumBlessRelic.HasSelection(player)) return;
 
             var list = __result?.ToList() ?? new List<CardModel>();
-            __result = GumBlessRelic.FilterUnselectedCards(list);
+            __result = GumBlessRelic.FilterUnselectedCards(list, player, player.PlayerRng.Shops);
         }
         catch (Exception ex)
         {

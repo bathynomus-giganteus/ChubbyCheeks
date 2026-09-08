@@ -34,7 +34,8 @@ public class SeidouCard : ModCardTemplate
         var apostleCards = ModelDb.AllCards
             .Where(card => card.Tags.Contains(CultLeaderCardTags.Apostle))
             .Where(card => card.CanBeGeneratedInCombat)
-            .OrderBy(_ => Random.Shared.Next())
+            .OrderBy(card => card.Id.ToString(), StringComparer.Ordinal)
+            .OrderBy(_ => Owner.RunState.Rng.CombatCardGeneration.NextInt())
             .Take(DynamicVars["Cards"].IntValue)
             .ToList();
 

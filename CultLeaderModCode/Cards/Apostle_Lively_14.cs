@@ -16,7 +16,8 @@ public class Apostle_Lively_14 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DynamicVar("RetainPerCard", 2m), new DynamicVar("DrawPerCard", 1m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
@@ -29,13 +30,17 @@ public class Apostle_Lively_14 : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var owner = base.Owner.Creature;
+        var hand = PileType.Hand.GetPile(base.Owner);
         var drawPile = PileType.Draw.GetPile(base.Owner);
-        var discarded = drawPile.Cards.ToList();
+        var discarded = hand.Cards
+            .Where(card => card != this)
+            .Concat(drawPile.Cards)
+            .ToList();
 
         if (discarded.Count > 0)
             await CardCmd.Discard(choiceContext, discarded);
 
-        int retain = discarded.Count / 3;
+        int retain = discarded.Count * DynamicVars["RetainPerCard"].IntValue;
         if (retain > 0)
         {
             await ApostleCardPlayHelpers.ApplyLivelyPower(
@@ -47,11 +52,10 @@ public class Apostle_Lively_14 : ModCardTemplate
             );
         }
 
-        await CardPileCmd.Draw(choiceContext, 1m, base.Owner);
+        int draw = discarded.Count * DynamicVars["DrawPerCard"].IntValue;
+        if (draw > 0)
+            await CardPileCmd.Draw(choiceContext, draw, base.Owner);
     }
 
-    protected override void OnUpgrade()
-    {
-        base.EnergyCost.UpgradeBy(-1);
-    }
+    protected override void OnUpgrade() { }
 }

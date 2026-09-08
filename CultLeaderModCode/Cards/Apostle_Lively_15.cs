@@ -72,7 +72,7 @@ public class Apostle_Lively_15 : ModCardTemplate
 
         if (discardCopies.Count > 0)
         {
-            var randomCopy = discardCopies[Random.Shared.Next(discardCopies.Count)];
+            var randomCopy = discardCopies[Owner.RunState.Rng.CombatCardSelection.NextInt(discardCopies.Count)];
             await CardCmd.Exhaust(choiceContext, randomCopy);
         }
     }

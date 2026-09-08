@@ -19,7 +19,7 @@ public class Apostle_Frenzy_04 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("VigorAmt", 2m), new DynamicVar("BlockMultiplier", 2m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("VigorAmt", 4m), new DynamicVar("BlockMultiplier", 1m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/世界树启示录.png");
@@ -38,6 +38,7 @@ public class Apostle_Frenzy_04 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
+        DynamicVars["VigorAmt"].UpgradeValueBy(2m);
         DynamicVars["BlockMultiplier"].UpgradeValueBy(1m);
     }
 }

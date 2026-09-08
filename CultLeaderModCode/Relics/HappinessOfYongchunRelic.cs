@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,7 +16,8 @@ namespace CultLeaderMod.CultLeaderModCode.Relics;
 [RegisterRelic(typeof(CultLeaderModRelicPool))]
 public class HappinessOfYongchunRelic : CultLeaderModRelic
 {
-    private static readonly Random _rng = new();
+    [SavedProperty]
+    public int PersonalityMask { get; set; }
 
     public override RelicRarity Rarity => RelicRarity.Starter;
     public override bool IsStackable => true;
@@ -27,13 +29,14 @@ public class HappinessOfYongchunRelic : CultLeaderModRelic
 
     public override async Task AfterObtained()
     {
-        UpdateRelicDescription();
+        if (PersonalityMask == 0 && GumBlessRelic.GetSelectedTags(Owner) is { Count: 2 } selected)
+            PersonalityMask = GumBlessRelic.EncodeSelection(selected);
         await OfferRareCardRewards();
     }
 
     public override CardCreationOptions ModifyCardRewardCreationOptions(Player player, CardCreationOptions options)
     {
-        if (!GumBlessRelic.SelectionMade || GumBlessRelic.UnselectedTags == null)
+        if (player != Owner || !GumBlessRelic.HasSelection(player))
             return options;
 
         var existingFilter = options.CardPoolFilter;
@@ -41,8 +44,8 @@ public class HappinessOfYongchunRelic : CultLeaderModRelic
         {
             if (existingFilter != null && !existingFilter(card))
                 return false;
-            if (GumBlessRelic.IsUnselectedPersonalityCard(card))
-                return _rng.NextDouble() >= 0.85;
+            if (GumBlessRelic.IsUnselectedPersonalityCard(card, player))
+                return player.PlayerRng.Rewards.NextDouble() >= 0.85;
             return true;
         });
     }
@@ -62,36 +65,4 @@ public class HappinessOfYongchunRelic : CultLeaderModRelic
         await RewardsCmd.OfferCustom(base.Owner, rewards);
     }
 
-    private void UpdateRelicDescription()
-    {
-        string description = "拾起时获得2次稀有卡牌奖励。";
-        if (GumBlessRelic.SelectedTags is { Count: 2 })
-        {
-            var names = GumBlessRelic.SelectedTags.Select(GetPersonalityName).ToList();
-            description = $"{names[0]}和{names[1]}使徒的出现概率提升，拾起时获得2次稀有卡牌奖励。";
-        }
-
-        try
-        {
-            var relicsTable = LocManager.Instance.GetTable("relics");
-            relicsTable.MergeWith(new Dictionary<string, string>
-            {
-                ["CULT_LEADER_MOD_RELIC_HAPPINESS_OF_YONGCHUN_RELIC.description"] = description
-            });
-        }
-        catch (Exception ex)
-        {
-            Entry.Logger.Error($"[HappinessOfYongchunRelic] Failed to update relic description: {ex}");
-        }
-    }
-
-    private static string GetPersonalityName(CardTag tag)
-    {
-        if (tag == CultLeaderCardTags.Pure) return "纯粹";
-        if (tag == CultLeaderCardTags.Calm) return "冷静";
-        if (tag == CultLeaderCardTags.Frenzy) return "狂热";
-        if (tag == CultLeaderCardTags.Lively) return "活泼";
-        if (tag == CultLeaderCardTags.Melancholy) return "忧郁";
-        return "???";
-    }
 }

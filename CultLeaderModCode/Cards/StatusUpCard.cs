@@ -73,12 +73,13 @@ public class StatusUpCard : ModCardTemplate
             .Where(card => card.Tags.Contains(CultLeaderCardTags.Apostle))
             .Where(card => card.CanBeGeneratedInCombat)
             .Where(card => IsTransformableRarity(card.Rarity) && card.Rarity > original.Rarity)
+            .OrderBy(card => card.Id.ToString(), StringComparer.Ordinal)
             .ToList();
 
         if (candidates.Count == 0)
             return null;
 
-        var candidate = candidates[Random.Shared.Next(candidates.Count)];
+        var candidate = candidates[Owner.RunState.Rng.CombatCardGeneration.NextInt(candidates.Count)];
         return scope.CreateCard(candidate, base.Owner);
     }
 

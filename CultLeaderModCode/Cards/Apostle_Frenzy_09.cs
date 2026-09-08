@@ -18,7 +18,7 @@ public class Apostle_Frenzy_09 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(3m, ValueProp.Move), new DynamicVar("Hits", 4m)];
+        [new DamageVar(3m, ValueProp.Move), new DynamicVar("Hits", 3m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -26,7 +26,7 @@ public class Apostle_Frenzy_09 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/鹿派斩击.png");
 
     public Apostle_Frenzy_09()
-        : base(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
+        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -34,7 +34,7 @@ public class Apostle_Frenzy_09 : ModCardTemplate
         if (target == null)
             return;
 
-        var attack = await DamageCmd
+        await DamageCmd
             .Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars["Hits"].IntValue)
             .FromCard(this, cardPlay)
@@ -42,22 +42,12 @@ public class Apostle_Frenzy_09 : ModCardTemplate
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        var totalDamage = attack.Results
-            .SelectMany(hit => hit)
-            .Where(result => result.Receiver == target)
-            .Sum(result => Math.Max(0m, result.TotalDamage));
-
-        if (totalDamage > 0m)
-            await ApostleCardPlayHelpers.ApplyFrenzyPower(
-                choiceContext,
-                base.Owner.Creature,
-                totalDamage,
-                base.Owner.Creature,
-                this
-            );
-
         await CardPileCmd.Add(this, PileType.Draw, CardPilePosition.Random, this, false);
+        DynamicVars["Hits"].BaseValue += 1m;
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        DynamicVars["Hits"].UpgradeValueBy(1m);
+    }
 }

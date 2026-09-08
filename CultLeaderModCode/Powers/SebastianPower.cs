@@ -61,7 +61,7 @@ public class SebastianPower : ModPowerTemplate
 
         if (enemies != null && enemies.Count > 0)
         {
-            var target = enemies[Random.Shared.Next(enemies.Count)];
+            var target = enemies[Owner.CombatState!.RunState.Rng.CombatTargets.NextInt(enemies.Count)];
             await CreatureCmd.Damage(
                 choiceContext,
                 target,
