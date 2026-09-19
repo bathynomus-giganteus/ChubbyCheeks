@@ -4,10 +4,10 @@
   "CULT_LEADER_PERSONALITY_SELECTION.description": "Wing Chun’s blessings are responding to you. Choose two personalities first, and then accept Neo's relics.",
   "CULT_LEADER_FATE_PREDETERMINED.title": "Choose a Predetermined Fate",
   "CULT_LEADER_FATE_PREDETERMINED.description": "Choose two apostle personalities yourself. Apostle cards of those personalities appear more often.",
-  "CULT_LEADER_FATE_RANDOM.title": "Choose a Chaotic Fate",
+  "CULT_LEADER_FATE_RANDOM.title": "Choose a Random Fate",
   "CULT_LEADER_FATE_RANDOM.description": "Fate randomly chooses two apostle personalities. Apostle cards of those personalities appear more often.",
-  "CULT_LEADER_FATE_CHAOS_RARITY.title": "[jitter][red]Choose a Chaotic Fate[/red][/jitter]",
-  "CULT_LEADER_FATE_CHAOS_RARITY.description": "Favor no apostle personality. All personalities appear at equal rates, while Uncommon and Rare cards appear 20% more often.",
+  "CULT_LEADER_FATE_CHAOS_RARITY.title": "Choose a Chaotic Fate",
+  "CULT_LEADER_FATE_CHAOS_RARITY.description": "Favor no apostle personality. Apostle cards of all personalities appear at equal rates.",
   "CULT_LEADER_GOLDEN_CRAYON.prompt": "Choose an apostle card to strengthen",
   "CULT_LEADER_HOVER_APOSTLE_NAME.title": "Apostle’s name",
   "CULT_LEADER_HOVER_RELATED_STATUSES.title": "Related status"

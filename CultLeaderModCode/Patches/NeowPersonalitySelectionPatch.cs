@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Events;
+using MegaCrit.Sts2.Core.Nodes.Events;
+using MegaCrit.Sts2.addons.mega_text;
 
 namespace CultLeaderMod.CultLeaderModCode.Patches;
 
@@ -13,6 +15,21 @@ public static class NeowPersonalitySelectionPatch
     private const string PredeterminedOptionKey = "CULT_LEADER_FATE_PREDETERMINED";
     private const string RandomOptionKey = "CULT_LEADER_FATE_RANDOM";
     private const string ChaosRarityOptionKey = "CULT_LEADER_FATE_CHAOS_RARITY";
+
+    [HarmonyPatch(typeof(NEventOptionButton), nameof(NEventOptionButton._Ready))]
+    [HarmonyPostfix]
+    private static void StyleChaosRarityOption(NEventOptionButton __instance)
+    {
+        if (__instance.Option?.TextKey != ChaosRarityOptionKey)
+        {
+            return;
+        }
+
+        var label = __instance.GetNode<MegaRichTextLabel>("%Text");
+        var title = __instance.Option.Title.GetFormattedText();
+        var description = __instance.Option.Description.GetFormattedText();
+        label.Text = $"[red][b][jitter]{title}[/jitter][/b][/red]\n{description}";
+    }
 
     [HarmonyPatch(typeof(Neow), "GenerateInitialOptions")]
     [HarmonyPostfix]

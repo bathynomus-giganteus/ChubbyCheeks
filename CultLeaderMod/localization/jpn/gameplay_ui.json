@@ -4,10 +4,10 @@
   "CULT_LEADER_PERSONALITY_SELECTION.description": "詠春拳の祝福があなたに応えています。最初に 2 つの人格を選択し、次にネオの遺物を受け取ります。",
   "CULT_LEADER_FATE_PREDETERMINED.title": "定められた運命を選ぶ",
   "CULT_LEADER_FATE_PREDETERMINED.description": "自分で使徒の性格を2つ選びます。選んだ性格の使徒カードが出現しやすくなります。",
-  "CULT_LEADER_FATE_RANDOM.title": "混沌の運命を選ぶ",
+  "CULT_LEADER_FATE_RANDOM.title": "ランダムな運命を選ぶ",
   "CULT_LEADER_FATE_RANDOM.description": "運命が使徒の性格をランダムに2つ選びます。選ばれた性格の使徒カードが出現しやすくなります。",
-  "CULT_LEADER_FATE_CHAOS_RARITY.title": "[jitter][red]混沌の運命を選ぶ[/red][/jitter]",
-  "CULT_LEADER_FATE_CHAOS_RARITY.description": "特定の使徒性格を優遇しません。すべての性格の使徒カードが同じ確率で出現し、アンコモンとレアカードの出現率が20%上昇します。",
+  "CULT_LEADER_FATE_CHAOS_RARITY.title": "混沌の運命を選ぶ",
+  "CULT_LEADER_FATE_CHAOS_RARITY.description": "特定の使徒性格を優遇しません。すべての性格の使徒カードが同じ確率で出現します。",
   "CULT_LEADER_GOLDEN_CRAYON.prompt": "強化する使徒カードを選択",
   "CULT_LEADER_HOVER_APOSTLE_NAME.title": "使徒名",
   "CULT_LEADER_HOVER_RELATED_STATUSES.title": "関連ステータス"

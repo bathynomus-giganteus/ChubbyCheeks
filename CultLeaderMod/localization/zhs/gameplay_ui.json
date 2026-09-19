@@ -4,10 +4,10 @@
   "CULT_LEADER_PERSONALITY_SELECTION.description": "咏春的祝福正在回应你。先选择两种性格，再接受涅奥的遗物。",
   "CULT_LEADER_FATE_PREDETERMINED.title": "选择既定的命运",
   "CULT_LEADER_FATE_PREDETERMINED.description": "亲自选择两种使徒性格，使对应性格的使徒牌更容易出现。",
-  "CULT_LEADER_FATE_RANDOM.title": "选择混沌的命运",
+  "CULT_LEADER_FATE_RANDOM.title": "选择随机的命运",
   "CULT_LEADER_FATE_RANDOM.description": "由命运随机选择两种使徒性格，使对应性格的使徒牌更容易出现。",
-  "CULT_LEADER_FATE_CHAOS_RARITY.title": "[jitter][red]选择混沌的命运[/red][/jitter]",
-  "CULT_LEADER_FATE_CHAOS_RARITY.description": "不再偏向任何使徒性格。所有性格的使徒牌出现概率相同，罕见和稀有卡牌的出现概率提升20%。",
+  "CULT_LEADER_FATE_CHAOS_RARITY.title": "选择混沌的命运",
+  "CULT_LEADER_FATE_CHAOS_RARITY.description": "不再偏向任何使徒性格。所有性格的使徒牌出现概率相同。",
   "CULT_LEADER_GOLDEN_CRAYON.prompt": "选择一张使徒牌强化",
   "CULT_LEADER_HOVER_APOSTLE_NAME.title": "使徒名称",
   "CULT_LEADER_HOVER_RELATED_STATUSES.title": "相关状态"
