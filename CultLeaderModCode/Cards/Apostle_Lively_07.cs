@@ -15,13 +15,13 @@ public class Apostle_Lively_07 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 2m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_07.png");
 
     public Apostle_Lively_07()
-        : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
+        : base(3, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -41,4 +41,3 @@ public class Apostle_Lively_07 : ModCardTemplate
         base.EnergyCost.UpgradeBy(-1);
     }
 }
-

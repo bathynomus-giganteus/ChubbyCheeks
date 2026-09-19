@@ -20,7 +20,7 @@ public class Apostle_Pure_05 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Pure];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(10m, ValueProp.Move), new DynamicVar("StackThreshold", 10m)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pure/最强的收集品.png");
 

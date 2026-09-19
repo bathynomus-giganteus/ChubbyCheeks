@@ -24,7 +24,7 @@ namespace CultLeaderMod.CultLeaderModCode.Relics;
 [RegisterRelic(typeof(CultLeaderModRelicPool))]
 public class GoldenCrayonRelic : CultLeaderModRelic
 {
-    private const int ThresholdValue = 5;
+    private const int ThresholdValue = 4;
 
     private int _combatCount;
 

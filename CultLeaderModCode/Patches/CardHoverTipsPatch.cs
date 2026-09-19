@@ -214,6 +214,7 @@ public static class CardHoverTipsPatch
         [nameof(Apostle_Frenzy_24)] = "伊芙利特",
         [nameof(Apostle_Frenzy_25)] = "梅森",
         [nameof(Apostle_Frenzy_26)] = "刘美美",
+        [nameof(Apostle_Frenzy_27)] = "罗尼",
         [nameof(Apostle_Calm_01)] = "阿雅",
         [nameof(Apostle_Calm_02)] = "希拉",
         [nameof(Apostle_Calm_03)] = "埃蕾娜",

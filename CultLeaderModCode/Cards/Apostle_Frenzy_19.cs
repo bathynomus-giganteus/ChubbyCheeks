@@ -16,7 +16,7 @@ public class Apostle_Frenzy_19 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Threshold", 5m), new DynamicVar("VigorGain", 2m)];
+        [new DynamicVar("Threshold", 10m), new DynamicVar("VigorGain", 3m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/向前迈进的决心.png");
@@ -40,7 +40,7 @@ public class Apostle_Frenzy_19 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Threshold"].UpgradeValueBy(-1m);
+        DynamicVars["Threshold"].UpgradeValueBy(-2m);
         DynamicVars["VigorGain"].UpgradeValueBy(1m);
     }
 }

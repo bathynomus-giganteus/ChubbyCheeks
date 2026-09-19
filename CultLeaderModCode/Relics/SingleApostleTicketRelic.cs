@@ -2,9 +2,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -24,15 +26,32 @@ public class SingleApostleTicketRelic : CultLeaderModRelic
         var allApostleCards = ModelDb.AllCards
             .Where(card => card.Tags.Contains(CultLeaderCardTags.Apostle))
             .Where(card => card.CanBeGeneratedInCombat)
+            .OrderBy(card => card.Id.ToString(), StringComparer.Ordinal)
             .ToList();
 
         var weightedPool = GumBlessRelic.FilterUnselectedCards(allApostleCards, Owner);
-        if (weightedPool.Count == 0)
+        var candidates = weightedPool
+            .OrderBy(_ => Owner.PlayerRng.Rewards.NextInt())
+            .Take(10)
+            .Select(card => Owner.RunState.CreateCard(card, Owner))
+            .ToList();
+        if (candidates.Count == 0)
             return;
 
-        var canonicalCard = weightedPool[Owner.PlayerRng.Rewards.NextInt(weightedPool.Count)];
-        var card = base.Owner.RunState.CreateCard(canonicalCard, base.Owner);
-        var addResult = await CardPileCmd.Add(card, PileType.Deck);
+        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1)
+        {
+            Cancelable = false,
+            RequireManualConfirmation = true
+        };
+        var selected = (await CardSelectCmd.FromSimpleGrid(
+            new BlockingPlayerChoiceContext(),
+            candidates,
+            Owner,
+            prefs)).SingleOrDefault();
+        if (selected == null)
+            return;
+
+        var addResult = await CardPileCmd.Add(selected, PileType.Deck);
         CardCmd.PreviewCardPileAdd([addResult], 2f);
     }
 }

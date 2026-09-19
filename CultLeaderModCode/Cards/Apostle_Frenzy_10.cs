@@ -19,7 +19,7 @@ public class Apostle_Frenzy_10 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("StrengthLoss", 5m), new DynamicVar("VigorAmt", 5m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("StrengthLoss", 3m), new DynamicVar("VigorAmt", 3m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/偏向性解说.png");
@@ -37,7 +37,7 @@ public class Apostle_Frenzy_10 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["StrengthLoss"].UpgradeValueBy(2m);
-        DynamicVars["VigorAmt"].UpgradeValueBy(2m);
+        DynamicVars["StrengthLoss"].UpgradeValueBy(1m);
+        DynamicVars["VigorAmt"].UpgradeValueBy(1m);
     }
 }

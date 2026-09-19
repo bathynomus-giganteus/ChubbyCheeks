@@ -82,6 +82,7 @@ public static class ApostleBadgePatch
         ["Apostle_Frenzy_21"] = "狂热_21", ["Apostle_Frenzy_22"] = "狂热_22",
         ["Apostle_Frenzy_23"] = "狂热_23", ["Apostle_Frenzy_24"] = "狂热_24",
         ["Apostle_Frenzy_25"] = "狂热_25", ["Apostle_Frenzy_26"] = "狂热_26",
+        ["Apostle_Frenzy_27"] = "狂热_27",
         // ── 活泼 Lively ──
         ["Apostle_Lively_01"] = "活泼_01", ["Apostle_Lively_02"] = "活泼_02",
         ["Apostle_Lively_03"] = "活泼_03", ["Apostle_Lively_04"] = "活泼_04",

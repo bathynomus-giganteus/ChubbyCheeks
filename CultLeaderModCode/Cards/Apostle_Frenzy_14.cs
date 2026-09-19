@@ -25,7 +25,7 @@ public class Apostle_Frenzy_14 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/收款的时间到了.png");
 
     public Apostle_Frenzy_14()
-        : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+        : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

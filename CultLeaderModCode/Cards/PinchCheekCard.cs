@@ -21,7 +21,7 @@ public class PinchCheekCard : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/pinch_cheek.jpg");
 
     public PinchCheekCard()
-        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+        : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -39,6 +39,6 @@ public class PinchCheekCard : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["DrawAmt"].UpgradeValueBy(1m);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

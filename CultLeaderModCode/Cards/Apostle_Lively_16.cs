@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -16,12 +17,7 @@ public class Apostle_Lively_16 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [
-            new DynamicVar("BaseDrawAmt", 1m),
-            new DynamicVar("Threshold", 5m),
-            new DynamicVar("RemoveAmt", 3m),
-            new DynamicVar("BonusDrawAmt", 2m)
-        ];
+        [new DynamicVar("DrawAmt", 3m), new DynamicVar("RetainPerCost", 3m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
 
@@ -29,21 +25,30 @@ public class Apostle_Lively_16 : ModCardTemplate
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/lively/lively_16.png");
 
     public Apostle_Lively_16()
-        : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+        : base(8, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+
+    public override bool TryModifyEnergyCostInCombat(
+        CardModel card,
+        decimal originalCost,
+        out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card != this || Owner?.Creature == null)
+            return false;
+
+        var discount = ApostleCardEffectHelpers.LivelyStacks(Owner.Creature)
+            / DynamicVars["RetainPerCost"].IntValue;
+        modifiedCost = Math.Max(0m, originalCost - discount);
+        return discount > 0;
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var owner = base.Owner.Creature;
-        await CardPileCmd.Draw(choiceContext, DynamicVars["BaseDrawAmt"].BaseValue, base.Owner);
-
-        int available = ApostleCardEffectHelpers.LivelyStacks(owner);
-        if (available < DynamicVars["Threshold"].IntValue)
-            return;
-
-        int remove = Math.Min(DynamicVars["RemoveAmt"].IntValue, available);
-        await ApostleCardEffectHelpers.RemoveLivelyStacks(choiceContext, owner, remove, this);
-        await CardPileCmd.Draw(choiceContext, DynamicVars["BonusDrawAmt"].BaseValue, base.Owner);
+        await CardPileCmd.Draw(choiceContext, DynamicVars["DrawAmt"].BaseValue, base.Owner);
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        base.EnergyCost.UpgradeBy(-2);
+    }
 }

@@ -21,7 +21,7 @@ public class Apostle_Melancholy_10 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Melancholy];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Threshold", 8m)];
+        [new DynamicVar("Threshold", 10m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/melancholy/炸猪排市长洛涅.png");

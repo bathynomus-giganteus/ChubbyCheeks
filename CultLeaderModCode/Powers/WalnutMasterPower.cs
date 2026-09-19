@@ -10,7 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// 开核桃大师：回合结束时，在覆甲等回合结束格挡结算后，按当前格挡的一半获得保留。
+/// 开核桃大师：回合结束时，在覆甲等回合结束格挡结算后，按当前格挡的四分之一获得保留。
 /// </summary>
 [RegisterPower]
 public class WalnutMasterPower : ModPowerTemplate
@@ -31,7 +31,7 @@ public class WalnutMasterPower : ModPowerTemplate
         if (side != CombatSide.Player || base.Owner == null || !participants.Contains(base.Owner) || base.Amount <= 0m)
             return;
 
-        decimal retain = Math.Floor(base.Owner.Block / 2m);
+        decimal retain = Math.Floor(base.Owner.Block / 4m);
         if (retain > 0m)
         {
             Flash();

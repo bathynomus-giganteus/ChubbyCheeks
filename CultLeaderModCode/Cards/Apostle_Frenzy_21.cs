@@ -19,7 +19,7 @@ public class Apostle_Frenzy_21 : ModCardTemplate
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("PlatingAmt", 4m), new DynamicVar("StrengthLoss", 7m), new DynamicVar("VigorNextTurn", 7m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("PlatingAmt", 3m), new DynamicVar("StrengthLoss", 7m), new DynamicVar("VigorNextTurn", 7m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/古老的誓约.png");
@@ -37,7 +37,6 @@ public class Apostle_Frenzy_21 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["PlatingAmt"].UpgradeValueBy(2m);
         DynamicVars["StrengthLoss"].UpgradeValueBy(2m);
         DynamicVars["VigorNextTurn"].UpgradeValueBy(2m);
     }

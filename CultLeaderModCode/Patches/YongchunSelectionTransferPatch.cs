@@ -16,6 +16,9 @@ public static class YongchunSelectionTransferPatch
 
         // Replace removes the starter before the upgraded relic is obtained.
         upgraded.PersonalityMask = starter.PersonalityMask;
+        upgraded.FateChoice = starter.FateChoice;
+        upgraded.HighRarityBonusPercent = starter.HighRarityBonusPercent;
+        upgraded.ChaosDescriptionVariant = starter.ChaosDescriptionVariant;
         if (upgraded.PersonalityMask == 0
             && GumBlessRelic.GetSelectedTags(starter.Owner) is { Count: 2 } selected)
             upgraded.PersonalityMask = GumBlessRelic.EncodeSelection(selected);

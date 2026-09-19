@@ -19,7 +19,7 @@ public class SingleWeaponTicketRelic : CultLeaderModRelic
 
     public override async Task AfterObtained()
     {
-        var relic = RelicFactory.PullNextRelicFromFront(base.Owner).ToMutable();
+        var relic = RelicFactory.PullNextRelicFromFront(base.Owner, RelicRarity.Rare).ToMutable();
         await RelicCmd.Obtain(relic, base.Owner);
         await CardPileCmd.AddCurseToDeck<Debt>(base.Owner);
     }

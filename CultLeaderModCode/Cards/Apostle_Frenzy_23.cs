@@ -20,7 +20,7 @@ public class Apostle_Frenzy_23 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Frenzy];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, ValueProp.Move), new DynamicVar("StunThreshold", 25m)];
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/frenzy/那个收藏品是我的.png");
 

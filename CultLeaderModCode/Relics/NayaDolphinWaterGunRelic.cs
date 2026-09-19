@@ -52,8 +52,11 @@ public class NayaDolphinWaterGunRelic : CultLeaderModRelic
         if (power is not HealingPower and not LifeEssencePower)
             return;
 
-        RegenGains++;
-        if (RegenGains % 8 == 0)
+        var gainedLayers = Math.Max(0, (int)Math.Floor(amount));
+        var previousTriggers = RegenGains / 8;
+        RegenGains += gainedLayers;
+        var triggerCount = RegenGains / 8 - previousTriggers;
+        for (var i = 0; i < triggerCount; i++)
         {
             Flash();
             await CreatureCmd.Heal(base.Owner.Creature, 1m);

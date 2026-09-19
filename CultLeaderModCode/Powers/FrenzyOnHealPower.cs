@@ -10,26 +10,18 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace CultLeaderMod.CultLeaderModCode.Powers;
 
 /// <summary>
-/// 要来见少女吗？ — 每次恢复1点生命或获得1层治愈时，获得1层活力；埃尔德形态下获得狂热。
+/// 要来见少女吗？ — 获得活力/治愈时，获得另一种增益的一半，且不会递归触发。
 /// </summary>
 [RegisterPower]
 public class FrenzyOnHealPower : ModPowerTemplate
 {
+    private bool _isConverting;
+
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override string CustomIconPath => "res://CultLeaderMod/images/badges/portraits/狂热_20.png";
     public override string CustomBigIconPath => "res://CultLeaderMod/images/badges/portraits/狂热_20.png";
-
-    public override async Task AfterCurrentHpChanged(Creature creature, decimal delta)
-    {
-        await base.AfterCurrentHpChanged(creature, delta);
-
-        if (delta <= 0m || Owner == null || creature != Owner || !creature.IsPlayer || Amount <= 0m)
-            return;
-
-        await GainVigor(choiceContext: new ThrowingPlayerChoiceContext(), delta);
-    }
 
     public override async Task AfterPowerAmountChanged(
         PlayerChoiceContext choiceContext,
@@ -40,23 +32,43 @@ public class FrenzyOnHealPower : ModPowerTemplate
     {
         await base.AfterPowerAmountChanged(choiceContext, power, amount, applier, cardSource);
 
-        if (Owner == null || power.Owner != Owner || power is not HealingPower || amount <= 0m || Amount <= 0m)
+        if (_isConverting || Owner == null || power.Owner != Owner || amount <= 0m || Amount <= 0m)
             return;
 
-        await GainVigor(choiceContext, amount);
-    }
-
-    private async Task GainVigor(PlayerChoiceContext choiceContext, decimal triggerAmount)
-    {
-        if (Owner == null || triggerAmount <= 0m || Amount <= 0m)
+        var gainedVigor = power is VigorPower or FervorPower;
+        var gainedHealing = power is HealingPower or LifeEssencePower;
+        if (!gainedVigor && !gainedHealing)
             return;
 
-        await ApostlePowerRules.ApplyApostlePower<VigorPower, FervorPower>(
-            choiceContext,
-            Owner,
-            triggerAmount * Amount,
-            Owner,
-            null
-        );
+        var convertedAmount = Math.Floor(amount * Amount / 2m);
+        if (convertedAmount <= 0m)
+            return;
+
+        _isConverting = true;
+        try
+        {
+            if (gainedVigor)
+            {
+                await ApostlePowerRules.ApplyApostlePower<HealingPower, LifeEssencePower>(
+                    choiceContext,
+                    Owner,
+                    convertedAmount,
+                    Owner,
+                    null);
+            }
+            else
+            {
+                await ApostlePowerRules.ApplyApostlePower<VigorPower, FervorPower>(
+                    choiceContext,
+                    Owner,
+                    convertedAmount,
+                    Owner,
+                    null);
+            }
+        }
+        finally
+        {
+            _isConverting = false;
+        }
     }
 }

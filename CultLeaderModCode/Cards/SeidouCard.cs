@@ -46,6 +46,9 @@ public class SeidouCard : ModCardTemplate
             .Select(card => scope.CreateCard(card, base.Owner))
             .ToList();
 
+        foreach (var card in created)
+            card.EnergyCost.SetThisCombat(0);
+
         await CardPileCmd.Add(created, PileType.Draw, CardPilePosition.Random, this, false);
     }
 

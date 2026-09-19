@@ -16,7 +16,7 @@ public class Apostle_Calm_13 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Reduction", 2m)];
+        [new DynamicVar("Reduction", 1m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/雪雾.png");
@@ -38,6 +38,6 @@ public class Apostle_Calm_13 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Reduction"].UpgradeValueBy(1m);
+        base.EnergyCost.UpgradeBy(-1);
     }
 }

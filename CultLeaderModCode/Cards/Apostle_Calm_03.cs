@@ -16,7 +16,7 @@ public class Apostle_Calm_03 : ModCardTemplate
     protected override HashSet<CardTag> CanonicalTags =>
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Calm];
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("PlatingAmt", 2m)];
+        [new DynamicVar("PlatingAmt", 1m)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [];
     public override CardAssetProfile AssetProfile =>
         new(PortraitPath: "res://CultLeaderMod/images/card_portraits/calm/战术无人机_MK_2.png");

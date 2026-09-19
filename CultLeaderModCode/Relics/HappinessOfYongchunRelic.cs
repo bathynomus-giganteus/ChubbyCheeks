@@ -19,6 +19,15 @@ public class HappinessOfYongchunRelic : CultLeaderModRelic
     [SavedProperty]
     public int PersonalityMask { get; set; }
 
+    [SavedProperty]
+    public int FateChoice { get; set; }
+
+    [SavedProperty]
+    public int HighRarityBonusPercent { get; set; }
+
+    [SavedProperty]
+    public int ChaosDescriptionVariant { get; set; }
+
     public override RelicRarity Rarity => RelicRarity.Starter;
     public override bool IsStackable => true;
     public override bool ShowCounter => false;
@@ -49,6 +58,9 @@ public class HappinessOfYongchunRelic : CultLeaderModRelic
             return true;
         });
     }
+
+    public override CardRarity ModifyMerchantCardRarity(Player player, CardRarity rarity) =>
+        player == Owner ? GumBlessRelic.ApplyMerchantRarityBonus(player, rarity) : rarity;
 
     private async Task OfferRareCardRewards()
     {

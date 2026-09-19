@@ -16,7 +16,7 @@ public class Apostle_Lively_25 : ModCardTemplate
         [CultLeaderCardTags.Apostle, CultLeaderCardTags.Lively];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("RetainAmt", 4m), new DynamicVar("HealAmt", 4m)];
+        [new DynamicVar("RetainAmt", 3m), new DynamicVar("HealAmt", 3m)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
@@ -43,7 +43,7 @@ public class Apostle_Lively_25 : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["RetainAmt"].UpgradeValueBy(2m);
-        DynamicVars["HealAmt"].UpgradeValueBy(2m);
+        DynamicVars["RetainAmt"].UpgradeValueBy(1m);
+        DynamicVars["HealAmt"].UpgradeValueBy(1m);
     }
 }

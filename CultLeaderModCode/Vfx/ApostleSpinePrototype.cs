@@ -128,6 +128,7 @@ public static class ApostleSpinePrototype
         [nameof(Apostle_Frenzy_24)] = new(nameof(Apostle_Frenzy_24), "Ifrit", "Normal", "Happy_3", ["Ultimate1_1"], [], 4.00f, "伊芙利特"),
         [nameof(Apostle_Frenzy_25)] = new(nameof(Apostle_Frenzy_25), "Maison", "Normal", "Happy_2", ["Skill1_1"], [], 2.02f, "梅森"),
         [nameof(Apostle_Frenzy_26)] = new(nameof(Apostle_Frenzy_26), "Yumimi", "Normal", "Happy_5", ["Attack1_1"], [], 1.88f, "刘美美"),
+        [nameof(Apostle_Frenzy_27)] = new(nameof(Apostle_Frenzy_27), "Ronnie", "Normal", "Tease_2", ["Skill1_1"], [], 4.00f, "罗尼"),
         [nameof(Apostle_Calm_01)] = new(nameof(Apostle_Calm_01), "Aya", "Normal", "Idle_2", ["Attack1_1"], [], 1.75f, "阿雅"),
         [nameof(Apostle_Calm_02)] = new(nameof(Apostle_Calm_02), "Sylla", "Normal", "Dance_1", ["Skill1_1"], [], 2.75f, "希拉"),
         [nameof(Apostle_Calm_03)] = new(nameof(Apostle_Calm_03), "Elena", "Normal", "Happy_4", ["Attack2_1"], [], 1.95f, "埃蕾娜"),

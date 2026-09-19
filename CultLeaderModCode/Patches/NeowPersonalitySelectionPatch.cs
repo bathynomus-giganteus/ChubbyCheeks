@@ -10,7 +10,9 @@ namespace CultLeaderMod.CultLeaderModCode.Patches;
 [HarmonyPatch]
 public static class NeowPersonalitySelectionPatch
 {
-    private const string OptionKey = "CULT_LEADER_PERSONALITY_SELECTION";
+    private const string PredeterminedOptionKey = "CULT_LEADER_FATE_PREDETERMINED";
+    private const string RandomOptionKey = "CULT_LEADER_FATE_RANDOM";
+    private const string ChaosRarityOptionKey = "CULT_LEADER_FATE_CHAOS_RARITY";
 
     [HarmonyPatch(typeof(Neow), "GenerateInitialOptions")]
     [HarmonyPostfix]
@@ -23,15 +25,25 @@ public static class NeowPersonalitySelectionPatch
         }
 
         var originalNeowOptions = __result.ToList();
-        Entry.Logger.Info("[NeowPersonalitySelectionPatch] Replacing initial Neow options with opening personality selection.");
-
-        __result = new[]
-        {
-            CreateOpeningSelectionOption(__instance, originalNeowOptions)
-        };
+        Entry.Logger.Info("[NeowPersonalitySelectionPatch] Replacing initial Neow options with three fate choices.");
+        __result = CreateFateOptions(__instance, originalNeowOptions);
     }
 
-    private static EventOption CreateOpeningSelectionOption(Neow neow, IReadOnlyList<EventOption> originalNeowOptions)
+    private static IReadOnlyList<EventOption> CreateFateOptions(
+        Neow neow,
+        IReadOnlyList<EventOption> originalNeowOptions)
+    {
+        return
+        [
+            CreatePredeterminedFateOption(neow, originalNeowOptions),
+            CreateRandomFateOption(neow, originalNeowOptions),
+            CreateChaosRarityFateOption(neow, originalNeowOptions)
+        ];
+    }
+
+    private static EventOption CreatePredeterminedFateOption(
+        Neow neow,
+        IReadOnlyList<EventOption> originalNeowOptions)
     {
         return new EventOption(
             neow,
@@ -45,11 +57,63 @@ public static class NeowPersonalitySelectionPatch
                 }
 
                 var completed = await GumBlessRelic.TriggerOpeningSelection(player);
-                RefreshNeowOptions(neow, completed ? originalNeowOptions : new[] { CreateOpeningSelectionOption(neow, originalNeowOptions) });
+                RefreshNeowOptions(
+                    neow,
+                    completed ? originalNeowOptions : CreateFateOptions(neow, originalNeowOptions));
             },
-            new LocString("gameplay_ui", "CULT_LEADER_PERSONALITY_SELECTION.title"),
-            new LocString("gameplay_ui", "CULT_LEADER_PERSONALITY_SELECTION.description"),
-            OptionKey,
+            new LocString("gameplay_ui", $"{PredeterminedOptionKey}.title"),
+            new LocString("gameplay_ui", $"{PredeterminedOptionKey}.description"),
+            PredeterminedOptionKey,
+            Array.Empty<IHoverTip>());
+    }
+
+    private static EventOption CreateRandomFateOption(
+        Neow neow,
+        IReadOnlyList<EventOption> originalNeowOptions)
+    {
+        return new EventOption(
+            neow,
+            () =>
+            {
+                var player = neow.Owner;
+                if (player == null)
+                {
+                    Entry.Logger.Error("[NeowPersonalitySelectionPatch] Neow owner was null while choosing random fate.");
+                    return Task.CompletedTask;
+                }
+
+                GumBlessRelic.SelectRandomFate(player);
+                RefreshNeowOptions(neow, originalNeowOptions);
+                return Task.CompletedTask;
+            },
+            new LocString("gameplay_ui", $"{RandomOptionKey}.title"),
+            new LocString("gameplay_ui", $"{RandomOptionKey}.description"),
+            RandomOptionKey,
+            Array.Empty<IHoverTip>());
+    }
+
+    private static EventOption CreateChaosRarityFateOption(
+        Neow neow,
+        IReadOnlyList<EventOption> originalNeowOptions)
+    {
+        return new EventOption(
+            neow,
+            () =>
+            {
+                var player = neow.Owner;
+                if (player == null)
+                {
+                    Entry.Logger.Error("[NeowPersonalitySelectionPatch] Neow owner was null while choosing chaos rarity fate.");
+                    return Task.CompletedTask;
+                }
+
+                GumBlessRelic.SelectChaosRarityFate(player);
+                RefreshNeowOptions(neow, originalNeowOptions);
+                return Task.CompletedTask;
+            },
+            new LocString("gameplay_ui", $"{ChaosRarityOptionKey}.title"),
+            new LocString("gameplay_ui", $"{ChaosRarityOptionKey}.description"),
+            ChaosRarityOptionKey,
             Array.Empty<IHoverTip>());
     }
 
