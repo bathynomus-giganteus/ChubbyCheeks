@@ -75,7 +75,7 @@
   "CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.title": "Assistant Epicon",
   "CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.description": "At the beginning of the round, gain {Amount} layer of Healing,{Amount} layer of pain,{Amount} layer of Vigor and {Amount} layer of armor.",
   "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.title": "Guaguayu",
-  "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description": "At the beginning of the round, gain Retain and restore 1 life point. The number of layers represents the number of rounds remaining.",
+  "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description": "At the start of your turn, gain {RetainAmt} Retain and restore {HealAmt} HP. Its amount is the number of turns remaining.",
   "CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.title": "Love energy",
   "CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.description": "Every time this enemy causes damage to you, it loses {Amount} points of strength.",
   "CULT_LEADER_MOD_POWER_REFLECT_NEXT_DAMAGE_POWER.title": "Damage rebound",
@@ -114,5 +114,9 @@
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.title": "Melancholy Awakening",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "At the start of your turn, move a random Melancholy apostle card from your draw pile to your hand. Upgraded: upgrade it before moving it.",
   "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.title": "Quiet Light Swarm",
-  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "Whenever you apply a debuff to an enemy, deal damage equal to twice the stacks applied."
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "Whenever you apply a debuff to an enemy, deal damage equal to twice the stacks applied.",
+  "CULT_LEADER_MOD_POWER_LITTLE_WISH_BECOMES_LIGHT_POWER.title": "A Little Wish Becomes Light",
+  "CULT_LEADER_MOD_POWER_LITTLE_WISH_BECOMES_LIGHT_POWER.description": "When you would take lethal damage, remove all debuffs, lose all Holy, and heal that much HP. Your HP cannot decrease until your turn begins.",
+  "CULT_LEADER_MOD_POWER_HOLY_POWER.title": "Holy",
+  "CULT_LEADER_MOD_POWER_HOLY_POWER.description": "While you have Holy, whenever you gain at least 3 Healing, Plating, Vigor, Retain, or Bitter Pain at once, gain 1 Holy. Damage dealt by your cards and powers increases by 1 for each Holy."
 }

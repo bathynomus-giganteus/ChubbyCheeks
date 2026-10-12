@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -15,10 +16,8 @@ namespace CultLeaderMod.CultLeaderModCode.Powers;
 [RegisterPower]
 public class FrogRainPower : ModPowerTemplate
 {
-    private sealed class Data
-    {
-        public decimal RetainPerTurn = 2m;
-    }
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DynamicVar("RetainAmt", 3m), new DynamicVar("HealAmt", 1m)];
 
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -26,14 +25,10 @@ public class FrogRainPower : ModPowerTemplate
     public override string CustomIconPath => "res://CultLeaderMod/images/powers/frog_rain.png";
     public override string CustomBigIconPath => "res://CultLeaderMod/images/powers/frog_rain.png";
 
-    protected override object InitInternalData()
+    public void Configure(decimal retainAmount, decimal healAmount)
     {
-        return new Data();
-    }
-
-    public void ConfigureRetainPerTurn(decimal amount)
-    {
-        GetInternalData<Data>().RetainPerTurn = amount;
+        DynamicVars["RetainAmt"].BaseValue = retainAmount;
+        DynamicVars["HealAmt"].BaseValue = healAmount;
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
@@ -46,11 +41,11 @@ public class FrogRainPower : ModPowerTemplate
         await ApostleCardPlayHelpers.ApplyLivelyPower(
             choiceContext,
             base.Owner,
-            GetInternalData<Data>().RetainPerTurn,
+            DynamicVars["RetainAmt"].BaseValue,
             base.Owner,
             null
         );
-        await CreatureCmd.Heal(base.Owner, 1m);
+        await CreatureCmd.Heal(base.Owner, DynamicVars["HealAmt"].BaseValue);
         await PowerCmd.Decrement(this);
     }
 }

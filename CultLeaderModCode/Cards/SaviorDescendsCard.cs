@@ -32,7 +32,7 @@ public class SaviorDescendsCard : ModCardTemplate
             this
         );
 
-        await ApostleRecruitmentHelper.OfferRandomApostleToHandForFreeThisTurn(choiceContext, base.Owner, this);
+        await ApostleRecruitmentHelper.OfferRandomApostleToHandForFreeUntilPlayed(choiceContext, base.Owner, this);
     }
 
     protected override void OnUpgrade()

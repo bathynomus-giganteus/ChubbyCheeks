@@ -75,7 +75,7 @@
   "CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.title": "조수 에피콘",
   "CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.description": "턴 시작 시 치유를 {Amount}, 고통 부여를 {Amount}, 활력을 {Amount}, 판금을 {Amount} 얻습니다.",
   "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.title": "개굴비",
-  "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description": "턴 시작 시 보존을 1 얻고 HP를 1 회복합니다. 중첩은 남은 턴 수를 나타냅니다.",
+  "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description": "턴 시작 시 보존을 {RetainAmt} 얻고 HP를 {HealAmt} 회복합니다. 중첩은 남은 턴 수를 나타냅니다.",
   "CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.title": "러브 에너지",
   "CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.description": "이 적이 플레이어에게 피해를 줄 때마다 힘을 {Amount} 잃습니다.",
   "CULT_LEADER_MOD_POWER_REFLECT_NEXT_DAMAGE_POWER.title": "피해 반사",
@@ -114,5 +114,9 @@
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.title": "우울 각성",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "턴 시작 시 뽑을 카드 더미에서 우울 성격 사도 카드 1장을 무작위로 손패로 옮깁니다. 강화된 경우 그 카드를 강화한 뒤 옮깁니다.",
   "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.title": "고요한 빛무리",
-  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "적에게 디버프를 부여할 때마다 부여한 중첩의 2배 피해를 줍니다."
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "적에게 디버프를 부여할 때마다 부여한 중첩의 2배 피해를 줍니다.",
+  "CULT_LEADER_MOD_POWER_LITTLE_WISH_BECOMES_LIGHT_POWER.title": "작은 소원이 빛이 되어",
+  "CULT_LEADER_MOD_POWER_LITTLE_WISH_BECOMES_LIGHT_POWER.description": "치명적인 피해를 받을 때 모든 약화 효과를 제거하고 신성을 모두 잃은 뒤 그만큼 HP를 회복합니다. 자신의 턴이 시작될 때까지 HP가 감소하지 않습니다.",
+  "CULT_LEADER_MOD_POWER_HOLY_POWER.title": "신성",
+  "CULT_LEADER_MOD_POWER_HOLY_POWER.description": "신성이 있을 때 치유, 판금, 활력, 보존, 고통 부여 중 하나를 한 번에 3 이상 얻을 때마다 신성을 1 얻습니다. 카드 또는 능력으로 주는 피해가 신성 1마다 1 증가합니다."
 }

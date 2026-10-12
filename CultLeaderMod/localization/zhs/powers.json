@@ -75,7 +75,7 @@
   "CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.title": "助手埃皮康",
   "CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.description": "回合开始时，获得{Amount}层治愈、{Amount}层苦痛施予、{Amount}层活力和{Amount}层覆甲。",
   "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.title": "呱呱雨",
-  "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description": "回合开始时，获得保留，回复1点生命。层数表示剩余回合数。",
+  "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description": "回合开始时，获得{RetainAmt}层保留，回复{HealAmt}点生命。层数表示剩余回合数。",
   "CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.title": "爱心能量",
   "CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.description": "这名敌人每次对你造成伤害时，失去{Amount}点力量。",
   "CULT_LEADER_MOD_POWER_REFLECT_NEXT_DAMAGE_POWER.title": "伤害反弹",
@@ -114,5 +114,9 @@
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.title": "忧郁唤醒",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "回合开始时，从抽牌堆随机将一张忧郁性格使徒牌移入手牌。升级后改为升级并移入手牌。",
   "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.title": "静谧的光群",
-  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "对敌人施予负面效果时，同时造成施予层数2倍的伤害。"
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "对敌人施予负面效果时，同时造成施予层数2倍的伤害。",
+  "CULT_LEADER_MOD_POWER_LITTLE_WISH_BECOMES_LIGHT_POWER.title": "小小的心愿化作光芒",
+  "CULT_LEADER_MOD_POWER_LITTLE_WISH_BECOMES_LIGHT_POWER.description": "受到致命伤害时，移除所有减益效果，失去所有神圣并回复等量生命。直到你的回合开始，你的生命不会减少。",
+  "CULT_LEADER_MOD_POWER_HOLY_POWER.title": "神圣",
+  "CULT_LEADER_MOD_POWER_HOLY_POWER.description": "若你拥有神圣，每当你一次性获得不少于3层治愈、覆甲、活力、保留或苦痛施予时，获得1层神圣。你使用卡牌或能力造成伤害时，每有1层神圣，伤害+1。"
 }

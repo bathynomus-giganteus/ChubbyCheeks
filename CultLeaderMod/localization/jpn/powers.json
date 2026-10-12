@@ -75,7 +75,7 @@
   "CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.title": "エピコンアシスタント",
   "CULT_LEADER_MOD_POWER_EPICON_ASSISTANT_POWER.description": "ラウンドの開始時に、{Amount}治癒層、{Amount}痛み層、{Amount}活力層、{Amount}鎧層を獲得します。",
   "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.title": "グアグアユ",
-  "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description": "ラウンド開始時にリテンションを獲得し、ライフポイントを１回復する。レイヤーの数は残りのラウンド数を表します。",
+  "CULT_LEADER_MOD_POWER_FROG_RAIN_POWER.description": "自分のターン開始時、保留を{RetainAmt}得て、HPを{HealAmt}回復する。層数は残りターン数を表す。",
   "CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.title": "愛のエネルギー",
   "CULT_LEADER_MOD_POWER_LOVE_ENERGY_POWER.description": "この敵があなたにダメージを与えるたびに、{Amount}ポイントの体力を失います。",
   "CULT_LEADER_MOD_POWER_REFLECT_NEXT_DAMAGE_POWER.title": "ダメージリバウンド",
@@ -114,5 +114,9 @@
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.title": "憂鬱覚醒",
   "CULT_LEADER_MOD_POWER_PERSONALITY_CARD_FETCH_MELANCHOLY_POWER.description": "ターン開始時、ドローパイルから憂鬱性格の使徒牌をランダムに1枚手札に移す。アップグレード後はアップグレードしてから移す。",
   "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.title": "静寂な光群",
-  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "敵にデバフを与えたとき、付与した層数の2倍のダメージを与えます。"
+  "CULT_LEADER_MOD_POWER_PRECISION_LIGHT_SWARM_POWER.description": "敵にデバフを与えたとき、付与した層数の2倍のダメージを与えます。",
+  "CULT_LEADER_MOD_POWER_LITTLE_WISH_BECOMES_LIGHT_POWER.title": "小さな願いは光となって",
+  "CULT_LEADER_MOD_POWER_LITTLE_WISH_BECOMES_LIGHT_POWER.description": "致死ダメージを受ける時、すべてのデバフを解除し、すべての神聖を失って同量のHPを回復する。自分のターン開始までHPは減少しない。",
+  "CULT_LEADER_MOD_POWER_HOLY_POWER.title": "神聖",
+  "CULT_LEADER_MOD_POWER_HOLY_POWER.description": "神聖を持っている間、治癒、装甲、活力、保留、苦痛付与のいずれかを一度に3以上得るたび、神聖を1得る。カードまたはパワーで与えるダメージは神聖1につき1増加する。"
 }

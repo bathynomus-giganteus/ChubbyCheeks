@@ -12,7 +12,7 @@ namespace CultLeaderMod.CultLeaderModCode.Cards;
 
 internal static class ApostleRecruitmentHelper
 {
-    public static async Task OfferRandomApostleToHandForFreeThisTurn(
+    public static async Task<CardModel?> OfferRandomApostleToHandForFreeUntilPlayed(
         PlayerChoiceContext choiceContext,
         Player player,
         CardModel source)
@@ -21,7 +21,7 @@ internal static class ApostleRecruitmentHelper
         if (combatState == null)
         {
             Entry.Logger.Warn("[ApostleRecruitment] No combat state; cannot offer random recruits.");
-            return;
+            return null;
         }
 
         var allApostleCards = ModelDb.AllCards
@@ -40,17 +40,22 @@ internal static class ApostleRecruitmentHelper
             .ToList();
 
         if (apostleCards.Count == 0)
-            return;
+            return null;
 
         var options = apostleCards
             .Select(card => combatState.CreateCard(card, player))
             .ToList();
 
-        var chosen = await CardSelectCmd.FromChooseACardScreen(choiceContext, options, player);
+        var chosen = await CardSelectCmd.FromChooseACardScreen(
+            choiceContext,
+            options,
+            player,
+            canSkip: true);
         if (chosen == null)
-            return;
+            return null;
 
-        chosen.EnergyCost.SetThisTurn(0);
+        chosen.EnergyCost.SetUntilPlayed(0);
         await CardPileCmd.Add(chosen, PileType.Hand, CardPilePosition.Top, source, false);
+        return chosen;
     }
 }

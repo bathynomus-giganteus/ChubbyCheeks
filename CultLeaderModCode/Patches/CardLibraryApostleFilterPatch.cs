@@ -8,6 +8,7 @@ using CultLeaderMod.CultLeaderModCode.Cards;
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Powers;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
@@ -20,35 +21,35 @@ public static class CardLibraryApostleFilterPatch
 {
     private const int ModeCount = 8;
 
-    private static readonly string[] ButtonLabels =
+    private static readonly string[] ButtonLabelKeys =
     [
-        "全部",
-        "非使徒",
-        "全性格",
-        "纯粹",
-        "狂热",
-        "冷静",
-        "活泼",
-        "忧郁",
+        "all",
+        "non_apostle",
+        "all_personalities",
+        "pure",
+        "frenzy",
+        "calm",
+        "lively",
+        "melancholy",
     ];
 
-    private static readonly string[] MenuLabels =
+    private static readonly string[] MenuLabelKeys =
     [
-        "筛选：全部",
-        "筛选：非使徒牌",
-        "筛选：全性格使徒牌",
-        "筛选：纯粹使徒牌",
-        "筛选：狂热使徒牌",
-        "筛选：冷静使徒牌",
-        "筛选：活泼使徒牌",
-        "筛选：忧郁使徒牌",
+        "all",
+        "non_apostle",
+        "all_personalities",
+        "pure",
+        "frenzy",
+        "calm",
+        "lively",
+        "melancholy",
     ];
 
     private static readonly Func<CardModel, bool>[] Predicates =
     [
         _ => true,
         card => !ApostlePowerRules.IsApostleCard(card),
-        card => card is TestRainbowCard,
+        HasAllPersonalityTags,
         card => IsApostleWithTag(card, CultLeaderCardTags.Pure),
         card => IsApostleWithTag(card, CultLeaderCardTags.Frenzy),
         card => IsApostleWithTag(card, CultLeaderCardTags.Calm),
@@ -95,7 +96,7 @@ public static class CardLibraryApostleFilterPatch
             if (sortIcon != null)
                 sortIcon.Visible = false;
 
-            duplicate.SetLabel(ButtonLabels[0]);
+            duplicate.SetLabel(GetFilterText("button", ButtonLabelKeys[0]));
             duplicate.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(OnFilterButtonPressed));
 
             var menu = new PopupMenu
@@ -108,8 +109,8 @@ public static class CardLibraryApostleFilterPatch
             menu.AddThemeConstantOverride("v_separation", 12);
             menu.AddThemeConstantOverride("item_start_padding", 18);
             menu.AddThemeConstantOverride("item_end_padding", 18);
-            for (var i = 0; i < MenuLabels.Length; i++)
-                menu.AddItem(MenuLabels[i], i);
+            for (var i = 0; i < MenuLabelKeys.Length; i++)
+                menu.AddItem(GetFilterText("menu", MenuLabelKeys[i]), i);
             duplicate.AddChild(menu);
 
             var state = new FilterState(__instance, duplicate, menu, 0);
@@ -171,7 +172,7 @@ public static class CardLibraryApostleFilterPatch
                 return;
 
             state.Index = index;
-            state.Button.SetLabel(ButtonLabels[state.Index]);
+            state.Button.SetLabel(GetFilterText("button", ButtonLabelKeys[state.Index]));
             InvokeUpdateFilter(state.Library);
         }
         catch (Exception ex)
@@ -188,7 +189,7 @@ public static class CardLibraryApostleFilterPatch
         var buttonPosition = state.Button.GlobalPosition;
         var buttonSize = state.Button.Size;
         var viewportSize = state.Button.GetViewportRect().Size;
-        var menuHeight = MenuLabels.Length * menuItemHeight;
+        var menuHeight = MenuLabelKeys.Length * menuItemHeight;
 
         var x = Mathf.RoundToInt(buttonPosition.X + buttonSize.X + 8f);
         var desiredY = Mathf.RoundToInt(buttonPosition.Y);
@@ -210,6 +211,20 @@ public static class CardLibraryApostleFilterPatch
     {
         return ApostlePowerRules.IsApostleCard(card) && card.Tags?.Contains(tag) == true;
     }
+
+    private static bool HasAllPersonalityTags(CardModel card)
+    {
+        var tags = card.Tags;
+        return ApostlePowerRules.IsApostleCard(card)
+            && tags.Contains(CultLeaderCardTags.Pure)
+            && tags.Contains(CultLeaderCardTags.Calm)
+            && tags.Contains(CultLeaderCardTags.Frenzy)
+            && tags.Contains(CultLeaderCardTags.Lively)
+            && tags.Contains(CultLeaderCardTags.Melancholy);
+    }
+
+    private static string GetFilterText(string kind, string key) =>
+        new LocString("gameplay_ui", $"CULT_LEADER_CARD_LIBRARY_FILTER.{kind}.{key}").GetFormattedText();
 
     private sealed class FilterState
     {

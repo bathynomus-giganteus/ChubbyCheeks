@@ -1,4 +1,5 @@
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Relics;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -21,7 +22,9 @@ public class TestAddApostleCards : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ApostleRecruitmentHelper.OfferRandomApostleToHandForFreeThisTurn(choiceContext, base.Owner, this);
+        var chosen = await ApostleRecruitmentHelper.OfferRandomApostleToHandForFreeUntilPlayed(choiceContext, base.Owner, this);
+        if (chosen != null)
+            RepresentativeChanceRelic.GetFor(Owner)?.RecordRecruit(chosen);
     }
 
     protected override void OnUpgrade()

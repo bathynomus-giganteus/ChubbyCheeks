@@ -53,6 +53,7 @@ public static class ApostleBadgePatch
         ["Apostle_Pure_25"] = "纯粹_乔伊",
         ["Apostle_Pure_26"] = "纯粹_斯帕洛特",
         ["TestRainbowCard"] = "乌洛斯",
+        ["Apostle_Resonance_01"] = "共鸣_薇薇安娜·阿尔根图姆（神圣）",
         // ── 冷静 Calm ──
         ["Apostle_Calm_01"] = "冷静_01", ["Apostle_Calm_02"] = "冷静_02",
         ["Apostle_Calm_03"] = "冷静_03", ["Apostle_Calm_04"] = "冷静_04",
@@ -68,6 +69,7 @@ public static class ApostleBadgePatch
         ["Apostle_Calm_23"] = "冷静_23", ["Apostle_Calm_24"] = "冷静_24",
         ["Apostle_Calm_25"] = "冷静_25",
         ["Apostle_Calm_26"] = "冷静_25",
+        ["Apostle_Calm_27"] = "冷静_雨伊（记忆）",
         // ── 狂热 Frenzy ──
         ["Apostle_Frenzy_01"] = "狂热_01", ["Apostle_Frenzy_02"] = "狂热_02",
         ["Apostle_Frenzy_03"] = "狂热_03", ["Apostle_Frenzy_04"] = "狂热_04",

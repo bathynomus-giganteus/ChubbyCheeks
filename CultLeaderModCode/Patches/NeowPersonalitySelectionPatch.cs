@@ -6,6 +6,8 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Nodes.Events;
 using MegaCrit.Sts2.addons.mega_text;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Models;
 
 namespace CultLeaderMod.CultLeaderModCode.Patches;
 
@@ -115,18 +117,23 @@ public static class NeowPersonalitySelectionPatch
     {
         return new EventOption(
             neow,
-            () =>
+            async () =>
             {
                 var player = neow.Owner;
                 if (player == null)
                 {
                     Entry.Logger.Error("[NeowPersonalitySelectionPatch] Neow owner was null while choosing chaos rarity fate.");
-                    return Task.CompletedTask;
+                    return;
                 }
 
-                GumBlessRelic.SelectChaosRarityFate(player);
+                var starter = player.Relics.OfType<GumBlessRelic>().FirstOrDefault();
+                if (starter == null)
+                {
+                    Entry.Logger.Error("[NeowPersonalitySelectionPatch] Starter relic missing for chaos fate.");
+                    return;
+                }
+                await RelicCmd.Replace(starter, ModelDb.Relic<RepresentativeChanceRelic>().ToMutable());
                 RefreshNeowOptions(neow, originalNeowOptions);
-                return Task.CompletedTask;
             },
             new LocString("gameplay_ui", $"{ChaosRarityOptionKey}.title"),
             new LocString("gameplay_ui", $"{ChaosRarityOptionKey}.description"),

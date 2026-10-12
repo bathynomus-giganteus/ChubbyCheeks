@@ -11,6 +11,15 @@ public static class YongchunSelectionTransferPatch
     [HarmonyPrefix]
     private static void Prefix(RelicModel original, RelicModel replace)
     {
+        if (original is RepresentativeChanceRelic chance
+            && replace is DoubleRepresentativeChanceRelic doubled)
+        {
+            doubled.RemainingUses = chance.RemainingUses;
+            doubled.Initialized = true;
+            chance.TransferRecruitsTo(doubled);
+            return;
+        }
+
         if (original is not GumBlessRelic starter || replace is not HappinessOfYongchunRelic upgraded)
             return;
 

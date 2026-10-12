@@ -34,5 +34,9 @@ public static class TouchOfOrobasYongchunPatch
         {
             __result = ModelDb.Relic<HappinessOfYongchunRelic>();
         }
+        else if (starterRelic is RepresentativeChanceRelic)
+        {
+            __result = ModelDb.Relic<DoubleRepresentativeChanceRelic>();
+        }
     }
 }

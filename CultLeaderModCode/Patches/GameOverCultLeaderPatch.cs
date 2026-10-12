@@ -4,6 +4,7 @@ using System.Reflection;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
@@ -17,7 +18,7 @@ namespace CultLeaderMod.CultLeaderModCode.Patches;
 [HarmonyPatch]
 public static class GameOverCultLeaderPatch
 {
-    private const string CombatDeathText = "艾里亚斯被无尽的冰雪覆盖";
+    private const string CombatDeathTextKey = "CULT_LEADER_GAME_OVER_COMBAT_DEATH.quote";
 
     [HarmonyPatch(typeof(NGameOverScreen), "InitializeBannerAndQuote")]
     [HarmonyPostfix]
@@ -28,11 +29,12 @@ public static class GameOverCultLeaderPatch
             if (!ShouldApplyCombatDeathOverride(__instance))
                 return;
 
+            var combatDeathText = new LocString("gameplay_ui", CombatDeathTextKey).GetFormattedText();
             var deathQuote = GetField<MegaRichTextLabel>(__instance, "_deathQuote");
             if (deathQuote != null)
-                deathQuote.Text = CombatDeathText;
+                deathQuote.Text = combatDeathText;
 
-            SetField(__instance, "_encounterQuote", CombatDeathText);
+            SetField(__instance, "_encounterQuote", combatDeathText);
         }
         catch (Exception ex)
         {

@@ -32,21 +32,7 @@ public class GumBlessRelic : CultLeaderModRelic
     private const ulong RandomFateMixin = 0x52414E444F4DUL;
     private const ulong ChaosFateMixin = 0x4348414F53UL;
 
-    private static readonly string[] ChaosDescriptions =
-    [
-        "▓▒░ F4T3://0x13?¿ // %%%_NULL ░▒▓",
-        "NUL::7F-2A-??::DΞST!NY//人格=∅",
-        "█▓▒ S!GNΛL_L0ST / +20%? / ▒▓█",
-        "<UNRΞΛDΛBLΞ> C0MM0N≠RΛRΞ :: ???",
-        "0xDEAD//¿¿¿//0xBEEF//FATE_OVERRUN",
-        "ERR_PERSONALITY_TABLE::∅∅∅::NO_REF",
-        "⟦χΛ0S⟧ 001101?? / RARITY↑ / ####",
-        "//VOID//命運?=NaN//▓▓▓//20::0xFF",
-        "FATE_PTR→[????] :: REDACTED :: ⊘",
-        "░0x4348414F53░ / λ=??? / !SYNC?",
-        "{DESTINY_BROKEN}::%$#@!::∞/0",
-        "▓ N0_PERS0NΛL!TY ▓ RARE++ ▓ ??? ▓"
-    ];
+    private const int ChaosDescriptionCount = 12;
 
     private static readonly CardTag[] PersonalityTags =
     [
@@ -153,7 +139,7 @@ public class GumBlessRelic : CultLeaderModRelic
     public static void SelectChaosRarityFate(Player player)
     {
         var rng = new Rng(player, ModelDb.Relic<GumBlessRelic>().Id, ChaosFateMixin);
-        var variant = rng.NextInt(ChaosDescriptions.Length);
+        var variant = rng.NextInt(ChaosDescriptionCount);
         States.GetValue(player, _ => new SelectionState()).Selected = null;
         foreach (var relic in player.Relics.OfType<GumBlessRelic>())
             ApplyFateState(relic, FateChaosRarity, 0, ChaosHighRarityBonusPercent, variant);
@@ -302,14 +288,15 @@ public class GumBlessRelic : CultLeaderModRelic
         return null;
     }
 
-    private static string GetPersonalityName(CardTag tag)
+    private static LocString GetPersonalityName(CardTag tag)
     {
-        if (tag == CultLeaderCardTags.Pure) return "纯粹";
-        if (tag == CultLeaderCardTags.Calm) return "冷静";
-        if (tag == CultLeaderCardTags.Frenzy) return "狂热";
-        if (tag == CultLeaderCardTags.Lively) return "活泼";
-        if (tag == CultLeaderCardTags.Melancholy) return "忧郁";
-        return "???";
+        var key = tag == CultLeaderCardTags.Pure ? "CULT_LEADER_MOD_KEYWORD_PURE.description"
+            : tag == CultLeaderCardTags.Calm ? "CULT_LEADER_MOD_KEYWORD_CALM.description"
+            : tag == CultLeaderCardTags.Frenzy ? "CULT_LEADER_MOD_KEYWORD_FRENZY.description"
+            : tag == CultLeaderCardTags.Lively ? "CULT_LEADER_MOD_KEYWORD_LIVELY.description"
+            : tag == CultLeaderCardTags.Melancholy ? "CULT_LEADER_MOD_KEYWORD_MELANCHOLY.description"
+            : "CULT_LEADER_MOD_KEYWORD_PURE.description";
+        return new LocString("card_keywords", key);
     }
 
     public LocString? SelectedPersonalityDescription => GetSelectionDescription(this);
@@ -335,27 +322,22 @@ public class GumBlessRelic : CultLeaderModRelic
                 HappinessOfYongchunRelic happiness => happiness.ChaosDescriptionVariant,
                 _ => 0
             };
-            variant = Math.Clamp(variant, 0, ChaosDescriptions.Length - 1);
-            var chaosKey = $"CULT_LEADER_CHAOS_FATE_{(upgraded ? "UPGRADED_" : "")}{variant}.description";
-            LocManager.Instance.GetTable("relics").MergeWith(new Dictionary<string, string>
-            {
-                [chaosKey] = ChaosDescriptions[variant]
-            });
-            return new LocString("relics", chaosKey);
+            variant = Math.Clamp(variant, 0, ChaosDescriptionCount - 1);
+            return new LocString("relics", $"CULT_LEADER_CHAOS_FATE_{variant}.description");
         }
 
         if (GetSelectedTags(relic.Owner) is not { Count: 2 } selected)
             return null;
 
         var names = PersonalityTags.Where(selected.Contains).Select(GetPersonalityName).ToList();
-        var key = $"CULT_LEADER_PERSONALITY_SELECTION_{(upgraded ? "UPGRADED_" : "")}{EncodeSelection(selected)}.description";
-        LocManager.Instance.GetTable("relics").MergeWith(new Dictionary<string, string>
-        {
-            [key] = upgraded
-                ? $"{names[0]}和{names[1]}使徒的出现概率提升，拾起时获得2次稀有卡牌奖励。"
-                : $"{names[0]}和{names[1]}使徒的出现概率提升。"
-        });
-        return new LocString("relics", key);
+        var description = new LocString(
+            "relics",
+            upgraded
+                ? "CULT_LEADER_PERSONALITY_SELECTION_DYNAMIC_UPGRADED.description"
+                : "CULT_LEADER_PERSONALITY_SELECTION_DYNAMIC.description");
+        description.Add("First", names[0]);
+        description.Add("Second", names[1]);
+        return description;
     }
 
     public static CardRarity ApplyMerchantRarityBonus(Player player, CardRarity rarity)

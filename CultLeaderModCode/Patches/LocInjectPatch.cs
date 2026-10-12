@@ -22,6 +22,7 @@ public static class LocInjectPatch
 		"events",
 		"ancients",
 		"gameplay_ui",
+		"rest_site_ui",
 	];
 
 	[HarmonyPatch(typeof(LocManager), "SetLanguageInternal", [

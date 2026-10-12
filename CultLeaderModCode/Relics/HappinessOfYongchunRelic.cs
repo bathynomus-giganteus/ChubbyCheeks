@@ -1,11 +1,14 @@
 using CultLeaderMod.CultLeaderModCode.CardTags;
 using CultLeaderMod.CultLeaderModCode.Character;
+using CultLeaderMod.CultLeaderModCode.Powers;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Rewards;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -64,17 +67,30 @@ public class HappinessOfYongchunRelic : CultLeaderModRelic
 
     private async Task OfferRareCardRewards()
     {
-        var rewards = new List<Reward>();
-        for (int i = 0; i < 2; i++)
-        {
-            var options = CardCreationOptions.ForNonCombatWithUniformOdds(
-                [base.Owner.Character.CardPool],
-                card => card.Rarity == CardRarity.Rare && card.CanBeGeneratedInCombat
-            );
-            rewards.Add(new CardReward(options, 3, base.Owner));
-        }
+        var candidates = ModelDb.AllCards
+            .Where(card => ApostlePowerRules.IsApostleCard(card) &&
+                           card.Rarity == CardRarity.Rare &&
+                           card.CanBeGeneratedInCombat)
+            .OrderBy(card => card.Id.ToString(), StringComparer.Ordinal)
+            .OrderBy(_ => Owner.PlayerRng.Rewards.NextInt())
+            .Take(15)
+            .Select(card => Owner.RunState.CreateCard(card, Owner))
+            .ToList();
+        if (candidates.Count == 0)
+            return;
 
-        await RewardsCmd.OfferCustom(base.Owner, rewards);
+        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 0, 2)
+        {
+            Cancelable = false,
+            RequireManualConfirmation = true
+        };
+        var selected = (await CardSelectCmd.FromSimpleGrid(
+            new BlockingPlayerChoiceContext(), candidates, Owner, prefs)).ToList();
+        if (selected.Count == 0)
+            return;
+
+        var addResults = await CardPileCmd.Add(selected, PileType.Deck);
+        CardCmd.PreviewCardPileAdd(addResults, 2f);
     }
 
 }

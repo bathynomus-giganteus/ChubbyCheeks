@@ -57,5 +57,8 @@ public class Apostle_Lively_14 : ModCardTemplate
             await CardPileCmd.Draw(choiceContext, draw, base.Owner);
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        base.EnergyCost.UpgradeBy(-1);
+    }
 }

@@ -4,6 +4,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.ModdingScreen;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.addons.mega_text;
 
 namespace CultLeaderMod.CultLeaderModCode.Patches;
@@ -55,7 +56,7 @@ public static class ModdingFeedbackButtonPatch
             duplicate.OffsetBottom = -margin;
 
             var label = duplicate.GetNodeOrNull<MegaLabel>("Visuals/Label");
-            label?.SetTextAutoSize("教主Mod反馈");
+            label?.SetTextAutoSize(new LocString("gameplay_ui", "CULT_LEADER_MOD_FEEDBACK_BUTTON.label").GetFormattedText());
 
             duplicate.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(OnFeedbackPressed));
 
